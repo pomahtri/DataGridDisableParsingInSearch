@@ -8,8 +8,6 @@
 
     <script type="text/javascript" src="artifacts/js/jquery.js"></script>
 
-    <script type="text/javascript" src="artifacts/js/angular.js"></script>
-
     <!--<script type="text/javascript" src="artifacts/js/cldr.js"></script>
     <script type="text/javascript" src="artifacts/js/cldr/event.js"></script>
     <script type="text/javascript" src="artifacts/js/cldr/supplemental.js"></script>
@@ -27,70 +25,54 @@
     <script type="text/javascript" src="artifacts/js/dx.all.debug.js" charset="utf-8"></script>
     <script type="text/javascript" src="demo/data.js" charset="utf-8"></script>
 </head>
+<body>
+    <div id="grid-container"> </div>
 
-<body ng-app="DemoApp">
-    <div ng-controller="DemoController">
-        <div dx-data-grid="dataGridOptions"></div>
-        <div dx-button="buttonOptions"></div>
-    </div>
-
+    searchPanel.disableParsingInSearch:
+    <div id="selectbox"></div>  
     <script>
-        var DemoApp = angular.module('DemoApp', ['dx']);
-
-        DemoApp.controller('DemoController', function DemoController($scope) {
-            $scope.disabled = false;
-
-            let dataGrid;
-
-            $scope.buttonOptions = {
-                text: "toggle disabled",
-                onClick: () => {
-                    $scope.disabled = !$scope.disabled;
-                }
-            }
-
-            $scope.dataGridOptions = {
-                dataSource: employees,
-                editing: {
-                    mode: "batch",
-                    allowUpdating: true,
-                    selectTextOnEditStart: true,
-                    startEditAction: "click"
+        $(function(){
+            var dataGrid = $("#grid-container").dxDataGrid({
+                dataSource: orders,
+                keyExpr: "string",
+                columnsAutoWidth: true,
+                showBorders: true,
+                filterRow: {
+                    visible: true,
+                    applyFilter: "auto"
                 },
-                toolbar: {
-                    items: [
-                        "saveButton",
-                        {
-                            name: "revertButton",
-                            location: "after",
-                        },
-                        {
-                            location: "before",
-                            widget: "dxSelectBox",
-                            options: {
-                                width: 200,
-                                items: [{
-                                    value: "1",
-                                    text: "Select value 1"
-                                }, {
-                                    value: "2",
-                                    text: "Select value 2"
-                                }],
-                                displayExpr: "text",
-                                valueExpr: "value",
-                                value: "1",
-                                bindingOptions: {
-                                    "disabled": "disabled"
-                                },
-                            }
-                        }
-                    ]
+                searchPanel: {
+                    visible: true,
+                    width: 240,
+                    placeholder: "Search...",
+                    text: "FIC1"
                 },
-                onInitialized: ({component}) => {
-                    window.grid = component;
+                columns: [{
+                    dataField: "number",
+                    format: '#'
+                }, "string"]
+            }).dxDataGrid('instance');
+
+            var selectbox = $("#selectbox").dxSelectBox({
+                items: [true, false],
+                text: 'disableParsingInSearch',
+                onValueChanged: function(e) {
+                    dataGrid.option("searchPanel.disableParsingInSearch",e.value);
                 }
-            };
+            });
+
         });
+
+
+        
+        var orders = [
+            {number: 1, string: 'FIC112'},
+            {number: 1, string: 'FIC115'},
+            {number: 1, string: 'FIC233'},
+            {number: 1, string: 'PIC122'},
+            {number: 1, string: 'PIC123'},
+            {number: 1, string: 'PIC125'},
+        ];
     </script>
 </body>
 </html>
