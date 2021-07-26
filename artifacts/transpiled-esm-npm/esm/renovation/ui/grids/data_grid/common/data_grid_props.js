@@ -250,7 +250,7 @@ export var DataGridProps = _extends({}, BaseWidgetProps, {
     highlightCaseSensitive: false,
     text: "",
     searchVisibleColumnsOnly: false,
-    disableParsingInSearch: false
+    strictParsing: false
   },
   sorting: {
     mode: "single",

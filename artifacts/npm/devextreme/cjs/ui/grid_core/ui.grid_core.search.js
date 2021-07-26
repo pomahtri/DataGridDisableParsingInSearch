@@ -37,11 +37,7 @@ function allowSearch(column) {
   return (0, _type.isDefined)(column.allowSearch) ? column.allowSearch : column.allowFiltering;
 }
 
-function parseValue(column, text, disableParsingInSearch) {
-  if (disableParsingInSearch) {
-    return text;
-  }
-
+function parseValue(column, text) {
   var lookup = column.lookup;
 
   if (!column.parseValue) {
@@ -66,7 +62,7 @@ var searchModule = {
         highlightCaseSensitive: false,
         text: '',
         searchVisibleColumnsOnly: false,
-        disableParsingInSearch: false
+        strictParsing: false
       }
     };
   },
@@ -99,8 +95,7 @@ var searchModule = {
 
             if (allowSearch(column) && column.calculateFilterExpression) {
               lookup = column.lookup;
-              var disableParsingInSearch = that.option('searchPanel.disableParsingInSearch');
-              var filterValue = parseValue(column, text, disableParsingInSearch);
+              var filterValue = parseValue(column, text);
 
               if (lookup && lookup.items) {
                 (0, _query.default)(lookup.items).filter(column.createFilterExpression.call({
@@ -137,7 +132,7 @@ var searchModule = {
 
             switch (args.fullName) {
               case 'searchPanel.text':
-              case 'searchPanel.disableParsingInSearch':
+              case 'searchPanel.strictParsing':
               case 'searchPanel':
                 that._applyFilter();
 
@@ -240,8 +235,7 @@ var searchModule = {
           this._searchParams = [];
         },
         _getFormattedSearchText: function _getFormattedSearchText(column, searchText) {
-          var disableParsingInSearch = this.option('searchPanel.disableParsingInSearch');
-          var value = parseValue(column, searchText, disableParsingInSearch);
+          var value = parseValue(column, searchText);
 
           var formatOptions = _uiGrid_core.default.getFormatOptionsByColumn(column, 'search');
 

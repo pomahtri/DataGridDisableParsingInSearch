@@ -2453,6 +2453,7 @@ var columnsControllerModule = {
         _createCalculatedColumnOptions: function _createCalculatedColumnOptions(columnOptions, bandColumn) {
           var calculatedColumnOptions = {};
           var dataField = columnOptions.dataField;
+          var columnController = this;
 
           if (Array.isArray(columnOptions.columns) && columnOptions.columns.length || columnOptions.isBand) {
             calculatedColumnOptions.isBand = true;
@@ -2476,10 +2477,18 @@ var columnsControllerModule = {
 
                   if (column.dataType === 'number') {
                     if ((0, _type.isString)(text) && column.format) {
-                      parsedValue = _number.default.parse(text);
+                      parsedValue = _number.default.parse(text, column.format);
 
                       if ((0, _type.isNumeric)(parsedValue)) {
-                        result = parsedValue;
+                        var formattedValue = _number.default.format(parsedValue, column.format);
+
+                        var formattedValueDefault = _number.default.format(parsedValue);
+
+                        var success = !columnController.option('searchPanel.strictParsing') || formattedValue === text || formattedValueDefault === text;
+
+                        if (success) {
+                          result = parsedValue;
+                        }
                       }
                     } else if ((0, _type.isDefined)(text) && (0, _type.isNumeric)(text)) {
                       result = Number(text);

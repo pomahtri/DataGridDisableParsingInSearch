@@ -23,11 +23,7 @@ function allowSearch(column) {
   return isDefined(column.allowSearch) ? column.allowSearch : column.allowFiltering;
 }
 
-function parseValue(column, text, disableParsingInSearch) {
-  if (disableParsingInSearch) {
-    return text;
-  }
-
+function parseValue(column, text) {
   var lookup = column.lookup;
 
   if (!column.parseValue) {
@@ -52,7 +48,7 @@ export var searchModule = {
         highlightCaseSensitive: false,
         text: '',
         searchVisibleColumnsOnly: false,
-        disableParsingInSearch: false
+        strictParsing: false
       }
     };
   },
@@ -85,8 +81,7 @@ export var searchModule = {
 
             if (allowSearch(column) && column.calculateFilterExpression) {
               lookup = column.lookup;
-              var disableParsingInSearch = that.option('searchPanel.disableParsingInSearch');
-              var filterValue = parseValue(column, text, disableParsingInSearch);
+              var filterValue = parseValue(column, text);
 
               if (lookup && lookup.items) {
                 dataQuery(lookup.items).filter(column.createFilterExpression.call({
@@ -123,7 +118,7 @@ export var searchModule = {
 
             switch (args.fullName) {
               case 'searchPanel.text':
-              case 'searchPanel.disableParsingInSearch':
+              case 'searchPanel.strictParsing':
               case 'searchPanel':
                 that._applyFilter();
 
@@ -226,8 +221,7 @@ export var searchModule = {
           this._searchParams = [];
         },
         _getFormattedSearchText: function _getFormattedSearchText(column, searchText) {
-          var disableParsingInSearch = this.option('searchPanel.disableParsingInSearch');
-          var value = parseValue(column, searchText, disableParsingInSearch);
+          var value = parseValue(column, searchText);
           var formatOptions = gridCoreUtils.getFormatOptionsByColumn(column, 'search');
           return gridCoreUtils.formatValue(value, formatOptions);
         },
