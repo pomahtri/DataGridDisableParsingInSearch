@@ -28,7 +28,7 @@
 <body>
     <div id="grid-container"> </div>
 
-    searchPanel.disableParsingInSearch:
+    searchPanel.strictParsing:
     <div id="selectbox"></div>  
     <script>
         $(function(){
@@ -55,9 +55,9 @@
 
             var selectbox = $("#selectbox").dxSelectBox({
                 items: [true, false],
-                text: 'disableParsingInSearch',
+                text: 'strictParsing',
                 onValueChanged: function(e) {
-                    dataGrid.option("searchPanel.disableParsingInSearch",e.value);
+                    dataGrid.option("searchPanel.strictParsing",e.value);
                 }
             });
 
