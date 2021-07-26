@@ -49,8 +49,8 @@
                 },
                 columns: [{
                     dataField: "number",
-                    format: '#'
-                }, "string"]
+                    format: '#$'
+                }, "string", "date"]
             }).dxDataGrid('instance');
 
             var selectbox = $("#selectbox").dxSelectBox({
@@ -66,12 +66,12 @@
 
         
         var orders = [
-            {number: 1, string: 'FIC112'},
-            {number: 1, string: 'FIC115'},
-            {number: 1, string: 'FIC233'},
-            {number: 1, string: 'PIC122'},
-            {number: 1, string: 'PIC123'},
-            {number: 1, string: 'PIC125'},
+            {number: 1, string: 'FIC112', date: new Date()},
+            {number: 1, string: 'FIC115', date: new Date()},
+            {number: 1, string: 'FIC233', date: new Date()},
+            {number: 1, string: 'PIC122', date: new Date()},
+            {number: 1, string: 'PIC123', date: new Date()},
+            {number: 1, string: 'PIC125', date: new Date()},
         ];
     </script>
 </body>
