@@ -1103,6 +1103,24 @@ var columnsControllerModule = {
         return columns;
       };
 
+      var strictParseNumber = function strictParseNumber(text, format) {
+        var cleanedText = text.replaceAll(_number.default.getThousandsSeparator(), '').replace(/^\+/, '');
+
+        var parsedValue = _number.default.parse(cleanedText, format);
+
+        if ((0, _type.isNumeric)(parsedValue)) {
+          var formattedValue = _number.default.format(parsedValue, format);
+
+          var formattedValueWithDefaultFormat = _number.default.format(parsedValue);
+
+          var success = formattedValue === text || formattedValue === cleanedText || formattedValueWithDefaultFormat === text || formattedValueWithDefaultFormat === cleanedText;
+
+          if (success) {
+            return parsedValue;
+          }
+        }
+      };
+
       return {
         _getExpandColumnOptions: function _getExpandColumnOptions() {
           return {
@@ -2451,7 +2469,6 @@ var columnsControllerModule = {
         _createCalculatedColumnOptions: function _createCalculatedColumnOptions(columnOptions, bandColumn) {
           var calculatedColumnOptions = {};
           var dataField = columnOptions.dataField;
-          var columnController = this;
 
           if (Array.isArray(columnOptions.columns) && columnOptions.columns.length || columnOptions.isBand) {
             calculatedColumnOptions.isBand = true;
@@ -2475,19 +2492,7 @@ var columnsControllerModule = {
 
                   if (column.dataType === 'number') {
                     if ((0, _type.isString)(text) && column.format) {
-                      parsedValue = _number.default.parse(text, column.format);
-
-                      if ((0, _type.isNumeric)(parsedValue)) {
-                        var formattedValue = _number.default.format(parsedValue, column.format);
-
-                        var formattedValueDefault = _number.default.format(parsedValue);
-
-                        var success = !columnController.option('searchPanel.strictParsing') || formattedValue === text || formattedValueDefault === text;
-
-                        if (success) {
-                          result = parsedValue;
-                        }
-                      }
+                      result = strictParseNumber(text.trim(), column.format);
                     } else if ((0, _type.isDefined)(text) && (0, _type.isNumeric)(text)) {
                       result = Number(text);
                     }

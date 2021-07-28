@@ -1,7 +1,7 @@
 /**
 * DevExtreme (esm/ui/grid_core/ui.grid_core.search.js)
 * Version: 21.2.0
-* Build date: Mon Jul 26 2021
+* Build date: Wed Jul 28 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
@@ -47,8 +47,7 @@ export var searchModule = {
         highlightSearchText: true,
         highlightCaseSensitive: false,
         text: '',
-        searchVisibleColumnsOnly: false,
-        strictParsing: false
+        searchVisibleColumnsOnly: false
       }
     };
   },
@@ -118,7 +117,6 @@ export var searchModule = {
 
             switch (args.fullName) {
               case 'searchPanel.text':
-              case 'searchPanel.strictParsing':
               case 'searchPanel':
                 that._applyFilter();
 

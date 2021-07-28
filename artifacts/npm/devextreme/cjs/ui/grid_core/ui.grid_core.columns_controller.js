@@ -1,7 +1,7 @@
 /**
 * DevExtreme (cjs/ui/grid_core/ui.grid_core.columns_controller.js)
 * Version: 21.2.0
-* Build date: Mon Jul 26 2021
+* Build date: Wed Jul 28 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
@@ -1109,6 +1109,24 @@ var columnsControllerModule = {
           return sign * caption1.localeCompare(caption2);
         });
         return columns;
+      };
+
+      var strictParseNumber = function strictParseNumber(text, format) {
+        var cleanedText = text.replaceAll(_number.default.getThousandsSeparator(), '').replace(/^\+/, '');
+
+        var parsedValue = _number.default.parse(cleanedText, format);
+
+        if ((0, _type.isNumeric)(parsedValue)) {
+          var formattedValue = _number.default.format(parsedValue, format);
+
+          var formattedValueWithDefaultFormat = _number.default.format(parsedValue);
+
+          var success = formattedValue === text || formattedValue === cleanedText || formattedValueWithDefaultFormat === text || formattedValueWithDefaultFormat === cleanedText;
+
+          if (success) {
+            return parsedValue;
+          }
+        }
       };
 
       return {
@@ -2453,7 +2471,6 @@ var columnsControllerModule = {
         _createCalculatedColumnOptions: function _createCalculatedColumnOptions(columnOptions, bandColumn) {
           var calculatedColumnOptions = {};
           var dataField = columnOptions.dataField;
-          var columnController = this;
 
           if (Array.isArray(columnOptions.columns) && columnOptions.columns.length || columnOptions.isBand) {
             calculatedColumnOptions.isBand = true;
@@ -2477,19 +2494,7 @@ var columnsControllerModule = {
 
                   if (column.dataType === 'number') {
                     if ((0, _type.isString)(text) && column.format) {
-                      parsedValue = _number.default.parse(text, column.format);
-
-                      if ((0, _type.isNumeric)(parsedValue)) {
-                        var formattedValue = _number.default.format(parsedValue, column.format);
-
-                        var formattedValueDefault = _number.default.format(parsedValue);
-
-                        var success = !columnController.option('searchPanel.strictParsing') || formattedValue === text || formattedValueDefault === text;
-
-                        if (success) {
-                          result = parsedValue;
-                        }
-                      }
+                      result = strictParseNumber(text.trim(), column.format);
                     } else if ((0, _type.isDefined)(text) && (0, _type.isNumeric)(text)) {
                       result = Number(text);
                     }

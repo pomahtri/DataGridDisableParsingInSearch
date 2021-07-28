@@ -1,7 +1,7 @@
 /**
 * DevExtreme (ui/data_grid.d.ts)
 * Version: 21.2.0
-* Build date: Mon Jul 26 2021
+* Build date: Wed Jul 28 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
@@ -1471,11 +1471,6 @@ export interface SearchPanel {
      * @default 160
      */
     width?: number
-    /**
-     * @docid GridBaseOptions.searchPanel.strictParsing
-     * @default false
-     */
-    strictParsing?: boolean
 }
 
 export interface Sorting {

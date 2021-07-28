@@ -39,8 +39,7 @@ export var searchModule = {
         highlightSearchText: true,
         highlightCaseSensitive: false,
         text: '',
-        searchVisibleColumnsOnly: false,
-        strictParsing: false
+        searchVisibleColumnsOnly: false
       }
     };
   },
@@ -110,7 +109,6 @@ export var searchModule = {
 
             switch (args.fullName) {
               case 'searchPanel.text':
-              case 'searchPanel.strictParsing':
               case 'searchPanel':
                 that._applyFilter();
 
