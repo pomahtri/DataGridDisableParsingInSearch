@@ -27,9 +27,6 @@
 </head>
 <body>
     <div id="grid-container"> </div>
-
-    searchPanel.strictParsing:
-    <div id="selectbox"></div>  
     <script>
         $(function(){
             var dataGrid = $("#grid-container").dxDataGrid({
@@ -52,15 +49,6 @@
                     format: '#$'
                 }, "string", "date"]
             }).dxDataGrid('instance');
-
-            var selectbox = $("#selectbox").dxSelectBox({
-                items: [true, false],
-                text: 'strictParsing',
-                onValueChanged: function(e) {
-                    dataGrid.option("searchPanel.strictParsing",e.value);
-                }
-            });
-
         });
 
 
