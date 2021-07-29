@@ -294,7 +294,9 @@ var GanttTreeList = /*#__PURE__*/function () {
       return undefined;
     }
 
-    var resultArray = _uiGantt.GanttHelper.convertTreeToList(rootNode);
+    var resultArray = [];
+
+    _uiGantt.GanttHelper.convertTreeToList(rootNode, resultArray);
 
     var getters = _uiGantt.GanttHelper.compileGettersByOption(this._gantt.option(GANTT_TASKS));
 

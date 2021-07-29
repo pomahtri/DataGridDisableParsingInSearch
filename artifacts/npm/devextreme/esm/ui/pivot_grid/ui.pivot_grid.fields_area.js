@@ -11,6 +11,7 @@ import { noop } from '../../core/utils/common';
 import { each } from '../../core/utils/iterator';
 import { AreaItem } from './ui.pivot_grid.area_item';
 import { capitalizeFirstLetter } from './ui.pivot_grid.utils';
+import { setHeight, setWidth } from '../../core/utils/style';
 import Popup from '../popup';
 import Button from '../button';
 var DIV = '<div>';
@@ -151,6 +152,12 @@ export var FieldsArea = AreaItem.inherit({
     } else {
       head.append(row);
     }
+  },
+  setGroupWidth: function setGroupWidth(value) {
+    setWidth(this.groupElement(), value);
+  },
+  setGroupHeight: function setGroupHeight(value) {
+    setHeight(this.groupElement(), value);
   },
   reset: function reset() {
     this.callBase();

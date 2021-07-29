@@ -28,6 +28,8 @@ var _element = require("../../../core/element");
 
 var _type = require("../../../core/utils/type");
 
+var _element_data = require("../../../core/element_data");
+
 var _template_wrapper = require("./template_wrapper");
 
 var _update_props_immutable = require("../utils/update_props_immutable");
@@ -182,6 +184,7 @@ var ComponentWrapper = /*#__PURE__*/function (_DOMComponent) {
     var parentNode = containerNode.parentNode;
 
     if (parentNode) {
+      (0, _element_data.cleanDataRecursive)(containerNode);
       parentNode.$V = containerNode.$V;
       (0, _inferno.render)(null, parentNode);
       parentNode.appendChild(containerNode);

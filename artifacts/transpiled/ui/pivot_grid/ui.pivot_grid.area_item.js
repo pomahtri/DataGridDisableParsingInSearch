@@ -67,6 +67,12 @@ function getFakeTableOffset(scrollPos, elementOffset, tableSize, viewPortSize) {
 
 ///#ENDDEBUG
 var AreaItem = _class.default.inherit({
+  ctor: function ctor(component) {
+    this.component = component;
+  },
+  option: function option() {
+    return this.component.option.apply(this.component, arguments);
+  },
   _getRowElement: function _getRowElement(index) {
     var that = this;
 
@@ -287,12 +293,6 @@ var AreaItem = _class.default.inherit({
       row.style.height = value + 'px';
     }
   },
-  ctor: function ctor(component) {
-    this.component = component;
-  },
-  option: function option() {
-    return this.component.option.apply(this.component, arguments);
-  },
   getRowsLength: function getRowsLength() {
     var that = this;
 
@@ -407,22 +407,25 @@ var AreaItem = _class.default.inherit({
     });
   },
   setGroupWidth: function setGroupWidth(value) {
-    if (value >= 0) {
-      this._groupWidth = value;
-      this._groupElement[0].style.width = value + 'px';
-    } else {
-      this._groupElement[0].style.width = value;
-    }
+    this._getScrollable().option('width', value);
   },
   setGroupHeight: function setGroupHeight(value) {
-    this._groupHeight = null;
+    this._getScrollable().option('height', value);
+  },
+  getGroupHeight: function getGroupHeight() {
+    return this._getGroupElementSize('height');
+  },
+  getGroupWidth: function getGroupWidth() {
+    return this._getGroupElementSize('width');
+  },
+  _getGroupElementSize: function _getGroupElementSize(dimension) {
+    var size = this.groupElement()[0].style[dimension];
 
-    if (value >= 0) {
-      this._groupHeight = value;
-      this._groupElement[0].style.height = value + 'px';
-    } else {
-      this._groupElement[0].style.height = value;
+    if (size.indexOf('px') > 0) {
+      return parseFloat(size);
     }
+
+    return null;
   },
   groupElement: function groupElement() {
     return this._groupElement;
@@ -498,7 +501,7 @@ var AreaItem = _class.default.inherit({
     var rtlEnabled = that.option('rtlEnabled');
     var offsetStyleName = rtlEnabled ? 'right' : 'left';
     var tableElementOffset = parseFloat(that.tableElement()[0].style[offsetStyleName]);
-    var offset = getFakeTableOffset(scrollPos, tableElementOffset, that._tableWidth, that._groupWidth);
+    var offset = getFakeTableOffset(scrollPos, tableElementOffset, that._tableWidth, that.getGroupWidth());
 
     if (parseFloat(that._fakeTable[0].style[offsetStyleName]) !== offset) {
       that._fakeTable[0].style[offsetStyleName] = offset + 'px';
@@ -507,7 +510,7 @@ var AreaItem = _class.default.inherit({
   _moveFakeTableTop: function _moveFakeTableTop(scrollPos) {
     var that = this;
     var tableElementOffsetTop = parseFloat(that.tableElement()[0].style.top);
-    var offsetTop = getFakeTableOffset(scrollPos, tableElementOffsetTop, that._tableHeight, that._groupHeight);
+    var offsetTop = getFakeTableOffset(scrollPos, tableElementOffsetTop, that._tableHeight, that.getGroupHeight());
 
     if (parseFloat(that._fakeTable[0].style.top) !== offsetTop) {
       that._fakeTable[0].style.top = offsetTop + 'px';

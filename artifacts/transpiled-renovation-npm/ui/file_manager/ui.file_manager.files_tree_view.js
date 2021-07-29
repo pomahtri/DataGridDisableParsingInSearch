@@ -184,6 +184,7 @@ var FileManagerFilesTreeView = /*#__PURE__*/function (_Widget) {
     var itemElement = _ref4.itemElement,
         event = _ref4.event;
     event.preventDefault();
+    event.stopPropagation();
     var itemData = (0, _renderer.default)(itemElement).data('item');
 
     this._contextMenu.showAt([itemData], itemElement, event, {

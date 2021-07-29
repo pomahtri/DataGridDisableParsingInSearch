@@ -42,15 +42,13 @@ var _remove_event = require("../../core/remove_event");
 
 var _click = require("../../events/click");
 
-var _ui = _interopRequireDefault(require("../widget/ui.errors"));
-
 var _message = _interopRequireDefault(require("../../localization/message"));
 
 var _style = require("../../core/utils/style");
 
 var _inflector = require("../../core/utils/inflector");
 
-var _ui2 = _interopRequireDefault(require("../widget/ui.widget"));
+var _ui = _interopRequireDefault(require("../widget/ui.widget"));
 
 var _validator = _interopRequireDefault(require("../validator"));
 
@@ -103,7 +101,7 @@ var TEMPLATE_WRAPPER_CLASS = 'dx-template-wrapper';
 var DATA_OPTIONS = ['dataSource', 'items'];
 var EDITORS_WITH_ARRAY_VALUE = ['dxTagBox', 'dxRangeSlider'];
 
-var LayoutManager = _ui2.default.inherit({
+var LayoutManager = _ui.default.inherit({
   _getDefaultOptions: function _getDefaultOptions() {
     return (0, _extend.extend)(this.callBase(), {
       layoutData: {},
@@ -778,6 +776,7 @@ var LayoutManager = _ui2.default.inherit({
       value: dataValue
     } : {};
     var isDeepExtend = true;
+    var editorWidget;
 
     if (EDITORS_WITH_ARRAY_VALUE.indexOf(options.editorType) !== -1) {
       defaultEditorOptions.value = defaultEditorOptions.value || [];
@@ -803,7 +802,39 @@ var LayoutManager = _ui2.default.inherit({
       labelID: options.labelID,
       isRequired: options.isRequired
     };
-    return this._createEditor(options.$container, renderOptions, editorOptions);
+
+    if (renderOptions.dataField && !editorOptions.name) {
+      editorOptions.name = renderOptions.dataField;
+    }
+
+    (0, _uiForm2.adjustEditorContainer)({
+      $container: options.$container,
+      labelLocation: this.option('labelLocation')
+    });
+
+    if (renderOptions.template) {
+      (0, _uiForm2.renderTemplateTo)({
+        $container: (0, _element.getPublicElement)(options.$container),
+        template: renderOptions.template,
+        templateOptions: (0, _uiForm2.convertToTemplateOptions)(renderOptions, editorOptions, this._getComponentOwner())
+      });
+    } else {
+      editorWidget = (0, _uiForm2.renderComponentTo)({
+        $container: options.$container,
+        createComponentCallback: this._createComponent.bind(this),
+        componentType: renderOptions.editorType,
+        componentOptions: editorOptions,
+        helpID: renderOptions.helpID,
+        labelID: renderOptions.labelID,
+        isRequired: renderOptions.isRequired
+      });
+    }
+
+    if (editorWidget && renderOptions.dataField) {
+      this._bindDataField(editorWidget, renderOptions, options.$container);
+    }
+
+    return editorWidget;
   },
   _replaceDataOptions: function _replaceDataOptions(originalOptions, resultOptions) {
     if (originalOptions) {
@@ -863,48 +894,6 @@ var LayoutManager = _ui2.default.inherit({
 
     editorInstance.on('focusIn', toggleInvalidClass).on('focusOut', toggleInvalidClass).on('enterKey', toggleInvalidClass);
   },
-  _createEditor: function _createEditor($container, renderOptions, editorOptions) {
-    var that = this;
-    var template = renderOptions.template;
-    var editorInstance;
-
-    if (renderOptions.dataField && !editorOptions.name) {
-      editorOptions.name = renderOptions.dataField;
-    }
-
-    that._addItemContentClasses($container);
-
-    if (template) {
-      var data = {
-        dataField: renderOptions.dataField,
-        editorType: renderOptions.editorType,
-        editorOptions: editorOptions,
-        component: that._getComponentOwner(),
-        name: renderOptions.name
-      };
-      template.render({
-        model: data,
-        container: (0, _element.getPublicElement)($container)
-      });
-    } else {
-      var $editor = (0, _renderer.default)('<div>').appendTo($container);
-
-      try {
-        editorInstance = that._createComponent($editor, renderOptions.editorType, editorOptions);
-        editorInstance.setAria('describedby', renderOptions.helpID);
-        editorInstance.setAria('labelledby', renderOptions.labelID);
-        editorInstance.setAria('required', renderOptions.isRequired);
-
-        if (renderOptions.dataField) {
-          that._bindDataField(editorInstance, renderOptions, $container);
-        }
-      } catch (e) {
-        _ui.default.log('E1035', e.message);
-      }
-    }
-
-    return editorInstance;
-  },
   _getComponentOwner: function _getComponentOwner() {
     return this.option('form') || this;
   },
@@ -948,20 +937,6 @@ var LayoutManager = _ui2.default.inherit({
     }
 
     return this._watch;
-  },
-  _addItemContentClasses: function _addItemContentClasses($itemContent) {
-    var locationSpecificClass = this._getItemContentLocationSpecificClass();
-
-    $itemContent.addClass([_constants.FIELD_ITEM_CONTENT_CLASS, locationSpecificClass].join(' '));
-  },
-  _getItemContentLocationSpecificClass: function _getItemContentLocationSpecificClass() {
-    var labelLocation = this.option('labelLocation');
-    var oppositeClasses = {
-      right: 'left',
-      left: 'right',
-      top: 'bottom'
-    };
-    return _constants.FIELD_ITEM_CONTENT_LOCATION_CLASS + oppositeClasses[labelLocation];
   },
   _createComponent: function _createComponent($editor, type, editorOptions) {
     var that = this;

@@ -27,7 +27,8 @@ import { ExportController } from './ui.pivot_grid.export';
 import chartIntegrationMixin from './ui.pivot_grid.chart_integration';
 import Popup from '../popup';
 import ContextMenu from '../context_menu';
-import { when, Deferred } from '../../core/utils/deferred'; // STYLE pivotGrid
+import { when, Deferred } from '../../core/utils/deferred';
+import { getScrollBarInfo } from './utils/get_scrollbar_info'; // STYLE pivotGrid
 
 var DATA_AREA_CELL_CLASS = 'dx-area-data-cell';
 var ROW_AREA_CELL_CLASS = 'dx-area-row-cell';
@@ -72,44 +73,6 @@ function unsubscribeScrollEvents(area) {
 function subscribeToScrollEvent(area, handler) {
   unsubscribeScrollEvents(area);
   area.on('scroll', handler).on('stop', handler);
-}
-
-var scrollBarInfoCache = {};
-
-function getScrollBarInfo(useNativeScrolling) {
-  if (scrollBarInfoCache[useNativeScrolling]) {
-    return scrollBarInfoCache[useNativeScrolling];
-  }
-
-  var scrollBarWidth = 0;
-  var options = {};
-  var container = $(DIV).css({
-    position: 'absolute',
-    visibility: 'hidden',
-    top: -1000,
-    left: -1000,
-    width: 100,
-    height: 100
-  }).appendTo('body');
-  var content = $('<p>').css({
-    width: '100%',
-    height: 200
-  }).appendTo(container);
-
-  if (useNativeScrolling !== 'auto') {
-    options.useNative = !!useNativeScrolling;
-    options.useSimulatedScrollbar = !useNativeScrolling;
-  }
-
-  container.dxScrollable(options);
-  var scrollBarUseNative = container.dxScrollable('instance').option('useNative');
-  scrollBarWidth = scrollBarUseNative ? container.width() - content.width() : 0;
-  container.remove();
-  scrollBarInfoCache[useNativeScrolling] = {
-    scrollBarWidth: scrollBarWidth,
-    scrollBarUseNative: scrollBarUseNative
-  };
-  return scrollBarInfoCache[useNativeScrolling];
 }
 
 function getCommonBorderWidth(elements, direction) {
@@ -1089,8 +1052,9 @@ var PivotGrid = Widget.inherit({
 
       that._renderDescriptionArea();
 
-      rowsArea.processScroll();
-      columnsArea.processScroll();
+      rowsArea.renderScrollable();
+      columnsArea.renderScrollable();
+      dataArea.renderScrollable();
     }
 
     [dataArea, rowsArea, columnsArea].forEach(function (area) {
@@ -1370,7 +1334,12 @@ var PivotGrid = Widget.inherit({
 
         var updateScrollableResults = [];
 
-        that._dataArea.processScroll(scrollBarInfo.scrollBarUseNative, that.option('rtlEnabled'), hasColumnsScroll, hasRowsScroll);
+        that._dataArea.updateScrollableOptions({
+          useNative: !!scrollBarInfo.scrollBarUseNative,
+          useSimulatedScrollbar: !scrollBarInfo.scrollBarUseNative,
+          direction: that._dataArea.getScrollableDirection(hasColumnsScroll, hasRowsScroll),
+          rtlEnabled: that.option('rtlEnabled')
+        });
 
         each([that._columnsArea, that._rowsArea, that._dataArea], function (_, area) {
           updateScrollableResults.push(area && area.updateScrollable());

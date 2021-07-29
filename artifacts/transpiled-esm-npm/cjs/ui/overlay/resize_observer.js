@@ -8,8 +8,6 @@ var window = (0, _window.getWindow)();
 
 var ResizeObserver = /*#__PURE__*/function () {
   function ResizeObserver(options) {
-    var _this = this;
-
     if (!(0, _window.hasWindow)()) {
       return;
     }
@@ -21,21 +19,15 @@ var ResizeObserver = /*#__PURE__*/function () {
         args[_key] = arguments[_key];
       }
 
-      var shouldSkip = ((_options$shouldSkipCa = options.shouldSkipCallback) === null || _options$shouldSkipCa === void 0 ? void 0 : _options$shouldSkipCa.call.apply(_options$shouldSkipCa, [options].concat(args))) || _this._shouldSkipNextResize;
+      var shouldSkip = (_options$shouldSkipCa = options.shouldSkipCallback) === null || _options$shouldSkipCa === void 0 ? void 0 : _options$shouldSkipCa.call.apply(_options$shouldSkipCa, [options].concat(args));
 
       if (!shouldSkip) {
         options.callback.apply(options, args);
       }
-
-      _this._shouldSkipNextResize = false;
     });
   }
 
   var _proto = ResizeObserver.prototype;
-
-  _proto.skipNextResize = function skipNextResize() {
-    this._shouldSkipNextResize = true;
-  };
 
   _proto.observe = function observe(element) {
     var _this$_observer;

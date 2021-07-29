@@ -285,7 +285,8 @@ export class GanttTreeList {
       return undefined;
     }
 
-    var resultArray = GanttHelper.convertTreeToList(rootNode);
+    var resultArray = [];
+    GanttHelper.convertTreeToList(rootNode, resultArray);
     var getters = GanttHelper.compileGettersByOption(this._gantt.option(GANTT_TASKS));
 
     var validatedData = this._gantt._validateSourceData(GANTT_TASKS, resultArray);

@@ -1051,15 +1051,13 @@ export var columnsControllerModule = {
       };
 
       var strictParseNumber = function strictParseNumber(text, format) {
-        var cleanedText = text.replaceAll(numberLocalization.getThousandsSeparator(), '').replace(/^\+/, '');
-        var parsedValue = numberLocalization.parse(cleanedText, format);
+        var parsedValue = numberLocalization.parse(text, format);
 
         if (isNumeric(parsedValue)) {
           var formattedValue = numberLocalization.format(parsedValue, format);
           var formattedValueWithDefaultFormat = numberLocalization.format(parsedValue);
-          var success = formattedValue === text || formattedValue === cleanedText || formattedValueWithDefaultFormat === text || formattedValueWithDefaultFormat === cleanedText;
 
-          if (success) {
+          if (formattedValue === text || formattedValueWithDefaultFormat === text) {
             return parsedValue;
           }
         }

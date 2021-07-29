@@ -60,6 +60,8 @@ var _context_menu = _interopRequireDefault(require("../context_menu"));
 
 var _deferred = require("../../core/utils/deferred");
 
+var _get_scrollbar_info = require("./utils/get_scrollbar_info");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var window = (0, _window.getWindow)();
@@ -107,44 +109,6 @@ function unsubscribeScrollEvents(area) {
 function subscribeToScrollEvent(area, handler) {
   unsubscribeScrollEvents(area);
   area.on('scroll', handler).on('stop', handler);
-}
-
-var scrollBarInfoCache = {};
-
-function getScrollBarInfo(useNativeScrolling) {
-  if (scrollBarInfoCache[useNativeScrolling]) {
-    return scrollBarInfoCache[useNativeScrolling];
-  }
-
-  var scrollBarWidth = 0;
-  var options = {};
-  var container = (0, _renderer.default)(DIV).css({
-    position: 'absolute',
-    visibility: 'hidden',
-    top: -1000,
-    left: -1000,
-    width: 100,
-    height: 100
-  }).appendTo('body');
-  var content = (0, _renderer.default)('<p>').css({
-    width: '100%',
-    height: 200
-  }).appendTo(container);
-
-  if (useNativeScrolling !== 'auto') {
-    options.useNative = !!useNativeScrolling;
-    options.useSimulatedScrollbar = !useNativeScrolling;
-  }
-
-  container.dxScrollable(options);
-  var scrollBarUseNative = container.dxScrollable('instance').option('useNative');
-  scrollBarWidth = scrollBarUseNative ? container.width() - content.width() : 0;
-  container.remove();
-  scrollBarInfoCache[useNativeScrolling] = {
-    scrollBarWidth: scrollBarWidth,
-    scrollBarUseNative: scrollBarUseNative
-  };
-  return scrollBarInfoCache[useNativeScrolling];
 }
 
 function getCommonBorderWidth(elements, direction) {
@@ -1128,8 +1092,9 @@ var PivotGrid = _ui.default.inherit({
 
       that._renderDescriptionArea();
 
-      rowsArea.processScroll();
-      columnsArea.processScroll();
+      rowsArea.renderScrollable();
+      columnsArea.renderScrollable();
+      dataArea.renderScrollable();
     }
 
     [dataArea, rowsArea, columnsArea].forEach(function (area) {
@@ -1219,7 +1184,7 @@ var PivotGrid = _ui.default.inherit({
     var hasRowsScroll;
     var hasColumnsScroll;
     var scrollingOptions = that.option('scrolling') || {};
-    var scrollBarInfo = getScrollBarInfo(scrollingOptions.useNative);
+    var scrollBarInfo = (0, _get_scrollbar_info.getScrollBarInfo)(scrollingOptions.useNative);
     var scrollBarWidth = scrollBarInfo.scrollBarWidth;
     var dataAreaCell = tableElement.find('.' + DATA_AREA_CELL_CLASS);
     var rowAreaCell = tableElement.find('.' + ROW_AREA_CELL_CLASS);
@@ -1411,7 +1376,12 @@ var PivotGrid = _ui.default.inherit({
 
         var updateScrollableResults = [];
 
-        that._dataArea.processScroll(scrollBarInfo.scrollBarUseNative, that.option('rtlEnabled'), hasColumnsScroll, hasRowsScroll);
+        that._dataArea.updateScrollableOptions({
+          useNative: !!scrollBarInfo.scrollBarUseNative,
+          useSimulatedScrollbar: !scrollBarInfo.scrollBarUseNative,
+          direction: that._dataArea.getScrollableDirection(hasColumnsScroll, hasRowsScroll),
+          rtlEnabled: that.option('rtlEnabled')
+        });
 
         (0, _iterator.each)([that._columnsArea, that._rowsArea, that._dataArea], function (_, area) {
           updateScrollableResults.push(area && area.updateScrollable());

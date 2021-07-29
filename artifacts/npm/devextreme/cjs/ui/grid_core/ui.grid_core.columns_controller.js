@@ -1112,18 +1112,14 @@ var columnsControllerModule = {
       };
 
       var strictParseNumber = function strictParseNumber(text, format) {
-        var cleanedText = text.replaceAll(_number.default.getThousandsSeparator(), '').replace(/^\+/, '');
-
-        var parsedValue = _number.default.parse(cleanedText, format);
+        var parsedValue = _number.default.parse(text, format);
 
         if ((0, _type.isNumeric)(parsedValue)) {
           var formattedValue = _number.default.format(parsedValue, format);
 
           var formattedValueWithDefaultFormat = _number.default.format(parsedValue);
 
-          var success = formattedValue === text || formattedValue === cleanedText || formattedValueWithDefaultFormat === text || formattedValueWithDefaultFormat === cleanedText;
-
-          if (success) {
+          if (formattedValue === text || formattedValueWithDefaultFormat === text) {
             return parsedValue;
           }
         }

@@ -6,6 +6,8 @@
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
 */
+import _objectWithoutPropertiesLoose from "@babel/runtime/helpers/esm/objectWithoutPropertiesLoose";
+var _excluded = ["useNative"];
 import $ from '../../core/renderer';
 import { AreaItem } from './ui.pivot_grid.area_item';
 var PIVOTGRID_AREA_CLASS = 'dx-pivotgrid-area';
@@ -18,7 +20,7 @@ export var DataArea = AreaItem.inherit({
     return 'data';
   },
   _createGroupElement: function _createGroupElement() {
-    return $('<div>').addClass(PIVOTGRID_AREA_CLASS).addClass(PIVOTGRID_AREA_DATA_CLASS);
+    return $('<div>').addClass(PIVOTGRID_AREA_CLASS).addClass(PIVOTGRID_AREA_DATA_CLASS).css('borderTopWidth', 0);
   },
   _applyCustomStyles: function _applyCustomStyles(options) {
     var cell = options.cell;
@@ -49,23 +51,32 @@ export var DataArea = AreaItem.inherit({
 
     this.callBase();
   },
-  processScroll: function processScroll(useNativeScrolling, rtlEnabled, horizontalScroll, verticalScroll) {
-    var direction = 'both';
-
-    if (horizontalScroll && !verticalScroll) {
-      direction = 'horizontal';
-    } else if (!horizontalScroll && verticalScroll) {
-      direction = 'vertical';
-    }
-
-    this._groupElement.css('borderTopWidth', 0).dxScrollable({
-      rtlEnabled,
-      useNative: !!useNativeScrolling,
-      useSimulatedScrollbar: !useNativeScrolling,
-      direction,
+  renderScrollable: function renderScrollable() {
+    this._groupElement.dxScrollable({
+      rtlEnabled: this.component.option('rtlEnabled'),
       bounceEnabled: false,
       updateManually: true
     });
+  },
+  updateScrollableOptions: function updateScrollableOptions(_ref) {
+    var {
+      useNative
+    } = _ref,
+        restOptions = _objectWithoutPropertiesLoose(_ref, _excluded);
+
+    var scrollable = this._getScrollable();
+
+    scrollable.option('useNative', useNative);
+    scrollable.option(restOptions);
+  },
+  getScrollableDirection: function getScrollableDirection(horizontal, vertical) {
+    if (horizontal && !vertical) {
+      return 'horizontal';
+    } else if (!horizontal && vertical) {
+      return 'vertical';
+    }
+
+    return 'both';
   },
   reset: function reset() {
     this.callBase();

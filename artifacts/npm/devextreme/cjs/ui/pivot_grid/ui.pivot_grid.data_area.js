@@ -14,7 +14,13 @@ var _renderer = _interopRequireDefault(require("../../core/renderer"));
 
 var _uiPivot_grid = require("./ui.pivot_grid.area_item");
 
+var _excluded = ["useNative"];
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
 
 var PIVOTGRID_AREA_CLASS = 'dx-pivotgrid-area';
 var PIVOTGRID_AREA_DATA_CLASS = 'dx-pivotgrid-area-data';
@@ -27,7 +33,7 @@ var DataArea = _uiPivot_grid.AreaItem.inherit({
     return 'data';
   },
   _createGroupElement: function _createGroupElement() {
-    return (0, _renderer.default)('<div>').addClass(PIVOTGRID_AREA_CLASS).addClass(PIVOTGRID_AREA_DATA_CLASS);
+    return (0, _renderer.default)('<div>').addClass(PIVOTGRID_AREA_CLASS).addClass(PIVOTGRID_AREA_DATA_CLASS).css('borderTopWidth', 0);
   },
   _applyCustomStyles: function _applyCustomStyles(options) {
     var cell = options.cell;
@@ -58,23 +64,30 @@ var DataArea = _uiPivot_grid.AreaItem.inherit({
 
     this.callBase();
   },
-  processScroll: function processScroll(useNativeScrolling, rtlEnabled, horizontalScroll, verticalScroll) {
-    var direction = 'both';
-
-    if (horizontalScroll && !verticalScroll) {
-      direction = 'horizontal';
-    } else if (!horizontalScroll && verticalScroll) {
-      direction = 'vertical';
-    }
-
-    this._groupElement.css('borderTopWidth', 0).dxScrollable({
-      rtlEnabled: rtlEnabled,
-      useNative: !!useNativeScrolling,
-      useSimulatedScrollbar: !useNativeScrolling,
-      direction: direction,
+  renderScrollable: function renderScrollable() {
+    this._groupElement.dxScrollable({
+      rtlEnabled: this.component.option('rtlEnabled'),
       bounceEnabled: false,
       updateManually: true
     });
+  },
+  updateScrollableOptions: function updateScrollableOptions(_ref) {
+    var useNative = _ref.useNative,
+        restOptions = _objectWithoutProperties(_ref, _excluded);
+
+    var scrollable = this._getScrollable();
+
+    scrollable.option('useNative', useNative);
+    scrollable.option(restOptions);
+  },
+  getScrollableDirection: function getScrollableDirection(horizontal, vertical) {
+    if (horizontal && !vertical) {
+      return 'horizontal';
+    } else if (!horizontal && vertical) {
+      return 'vertical';
+    }
+
+    return 'both';
   },
   reset: function reset() {
     this.callBase();

@@ -20,6 +20,8 @@ var _uiPivot_grid = require("./ui.pivot_grid.area_item");
 
 var _uiPivot_grid2 = require("./ui.pivot_grid.utils");
 
+var _style = require("../../core/utils/style");
+
 var _popup = _interopRequireDefault(require("../popup"));
 
 var _button = _interopRequireDefault(require("../button"));
@@ -165,6 +167,12 @@ var FieldsArea = _uiPivot_grid.AreaItem.inherit({
     } else {
       head.append(row);
     }
+  },
+  setGroupWidth: function setGroupWidth(value) {
+    (0, _style.setWidth)(this.groupElement(), value);
+  },
+  setGroupHeight: function setGroupHeight(value) {
+    (0, _style.setHeight)(this.groupElement(), value);
   },
   reset: function reset() {
     this.callBase();

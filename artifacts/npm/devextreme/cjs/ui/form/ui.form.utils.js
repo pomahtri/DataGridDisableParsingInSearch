@@ -14,9 +14,15 @@ exports.renderHelpText = renderHelpText;
 exports.convertAlignmentToJustifyContent = convertAlignmentToJustifyContent;
 exports.convertAlignmentToTextAlign = convertAlignmentToTextAlign;
 exports.adjustContainerAsButtonItem = adjustContainerAsButtonItem;
+exports.convertToTemplateOptions = convertToTemplateOptions;
+exports.adjustEditorContainer = adjustEditorContainer;
+exports.renderTemplateTo = renderTemplateTo;
+exports.renderComponentTo = renderComponentTo;
 exports.getItemPath = exports.isFullPathContainsTabs = exports.tryGetTabPath = exports.getOptionNameFromFullName = exports.getFullOptionName = exports.isExpectedItem = exports.getTextWithoutSpaces = exports.concatPaths = exports.createItemPathByIndex = void 0;
 
 var _renderer = _interopRequireDefault(require("../../core/renderer"));
+
+var _ui = _interopRequireDefault(require("../widget/ui.errors"));
 
 var _type = require("../../core/utils/type");
 
@@ -195,4 +201,56 @@ function adjustContainerAsButtonItem(_ref3) {
   $container.addClass(_constants.FIELD_BUTTON_ITEM_CLASS).css('textAlign', textAlign).addClass(_constants.FIELD_ITEM_CLASS).addClass(cssItemClass).addClass((0, _type.isDefined)(targetColIndex) ? 'dx-col-' + targetColIndex : ''); // TODO: try to avoid changes in $container.parent() and adjust the created $elements only
 
   $container.parent().css('justifyContent', justifyContent);
+}
+
+function convertToTemplateOptions(renderOptions, editorOptions, componentOwner) {
+  return {
+    dataField: renderOptions.dataField,
+    editorType: renderOptions.editorType,
+    editorOptions: editorOptions,
+    component: componentOwner,
+    name: renderOptions.name
+  };
+}
+
+function adjustEditorContainer(_ref4) {
+  var $container = _ref4.$container,
+      labelLocation = _ref4.labelLocation;
+  var locationClassSuffix = {
+    right: 'left',
+    left: 'right',
+    top: 'bottom'
+  };
+  $container.addClass(_constants.FIELD_ITEM_CONTENT_CLASS).addClass(_constants.FIELD_ITEM_CONTENT_LOCATION_CLASS + locationClassSuffix[labelLocation]);
+}
+
+function renderTemplateTo(_ref5) {
+  var $container = _ref5.$container,
+      template = _ref5.template,
+      templateOptions = _ref5.templateOptions;
+  template.render({
+    model: templateOptions,
+    container: $container
+  });
+}
+
+function renderComponentTo(_ref6) {
+  var $container = _ref6.$container,
+      createComponentCallback = _ref6.createComponentCallback,
+      componentType = _ref6.componentType,
+      componentOptions = _ref6.componentOptions,
+      helpID = _ref6.helpID,
+      labelID = _ref6.labelID,
+      isRequired = _ref6.isRequired;
+  var $div = (0, _renderer.default)('<div>').appendTo($container);
+
+  try {
+    var result = createComponentCallback($div, componentType, componentOptions);
+    result.setAria('describedby', helpID);
+    result.setAria('labelledby', labelID);
+    result.setAria('required', isRequired);
+    return result;
+  } catch (e) {
+    _ui.default.log('E1035', e.message);
+  }
 }

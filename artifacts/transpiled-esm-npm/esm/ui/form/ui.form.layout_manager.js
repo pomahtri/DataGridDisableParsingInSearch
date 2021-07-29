@@ -15,7 +15,6 @@ import { inArray, normalizeIndexes } from '../../core/utils/array';
 import { compileGetter } from '../../core/utils/data';
 import { removeEvent } from '../../core/remove_event';
 import { name as clickEventName } from '../../events/click';
-import errors from '../widget/ui.errors';
 import messageLocalization from '../../localization/message';
 import { styleProp } from '../../core/utils/style';
 import { captionize } from '../../core/utils/inflector';
@@ -23,13 +22,13 @@ import Widget from '../widget/ui.widget';
 import Validator from '../validator';
 import ResponsiveBox from '../responsive_box';
 import { isMaterial } from '../themes';
-import { FIELD_ITEM_CLASS, FLEX_LAYOUT_CLASS, LAYOUT_MANAGER_ONE_COLUMN, FIELD_ITEM_OPTIONAL_CLASS, FIELD_ITEM_REQUIRED_CLASS, FIELD_ITEM_CONTENT_WRAPPER_CLASS, FORM_LAYOUT_MANAGER_CLASS, LABEL_VERTICAL_ALIGNMENT_CLASS, LABEL_HORIZONTAL_ALIGNMENT_CLASS, FIELD_ITEM_LABEL_ALIGN_CLASS, FIELD_ITEM_CONTENT_LOCATION_CLASS, FIELD_ITEM_CONTENT_CLASS, FIELD_EMPTY_ITEM_CLASS, SINGLE_COLUMN_ITEM_CONTENT, ROOT_SIMPLE_ITEM_CLASS } from './constants';
+import { FIELD_ITEM_CLASS, FLEX_LAYOUT_CLASS, LAYOUT_MANAGER_ONE_COLUMN, FIELD_ITEM_OPTIONAL_CLASS, FIELD_ITEM_REQUIRED_CLASS, FIELD_ITEM_CONTENT_WRAPPER_CLASS, FORM_LAYOUT_MANAGER_CLASS, LABEL_VERTICAL_ALIGNMENT_CLASS, LABEL_HORIZONTAL_ALIGNMENT_CLASS, FIELD_ITEM_LABEL_ALIGN_CLASS, FIELD_EMPTY_ITEM_CLASS, SINGLE_COLUMN_ITEM_CONTENT, ROOT_SIMPLE_ITEM_CLASS } from './constants';
 import '../text_box';
 import '../number_box';
 import '../check_box';
 import '../date_box';
 import '../button';
-import { renderLabel, renderHelpText, adjustContainerAsButtonItem, convertAlignmentToJustifyContent, convertAlignmentToTextAlign } from './ui.form.utils';
+import { renderLabel, renderHelpText, adjustContainerAsButtonItem, convertAlignmentToJustifyContent, convertAlignmentToTextAlign, renderComponentTo, renderTemplateTo, adjustEditorContainer, convertToTemplateOptions } from './ui.form.utils';
 var FORM_EDITOR_BY_DEFAULT = 'dxTextBox';
 var LAYOUT_MANAGER_FIRST_ROW_CLASS = 'dx-first-row';
 var LAYOUT_MANAGER_LAST_ROW_CLASS = 'dx-last-row';
@@ -715,6 +714,7 @@ var LayoutManager = Widget.inherit({
       value: dataValue
     } : {};
     var isDeepExtend = true;
+    var editorWidget;
 
     if (EDITORS_WITH_ARRAY_VALUE.indexOf(options.editorType) !== -1) {
       defaultEditorOptions.value = defaultEditorOptions.value || [];
@@ -740,7 +740,39 @@ var LayoutManager = Widget.inherit({
       labelID: options.labelID,
       isRequired: options.isRequired
     };
-    return this._createEditor(options.$container, renderOptions, editorOptions);
+
+    if (renderOptions.dataField && !editorOptions.name) {
+      editorOptions.name = renderOptions.dataField;
+    }
+
+    adjustEditorContainer({
+      $container: options.$container,
+      labelLocation: this.option('labelLocation')
+    });
+
+    if (renderOptions.template) {
+      renderTemplateTo({
+        $container: getPublicElement(options.$container),
+        template: renderOptions.template,
+        templateOptions: convertToTemplateOptions(renderOptions, editorOptions, this._getComponentOwner())
+      });
+    } else {
+      editorWidget = renderComponentTo({
+        $container: options.$container,
+        createComponentCallback: this._createComponent.bind(this),
+        componentType: renderOptions.editorType,
+        componentOptions: editorOptions,
+        helpID: renderOptions.helpID,
+        labelID: renderOptions.labelID,
+        isRequired: renderOptions.isRequired
+      });
+    }
+
+    if (editorWidget && renderOptions.dataField) {
+      this._bindDataField(editorWidget, renderOptions, options.$container);
+    }
+
+    return editorWidget;
   },
   _replaceDataOptions: function _replaceDataOptions(originalOptions, resultOptions) {
     if (originalOptions) {
@@ -800,48 +832,6 @@ var LayoutManager = Widget.inherit({
 
     editorInstance.on('focusIn', toggleInvalidClass).on('focusOut', toggleInvalidClass).on('enterKey', toggleInvalidClass);
   },
-  _createEditor: function _createEditor($container, renderOptions, editorOptions) {
-    var that = this;
-    var template = renderOptions.template;
-    var editorInstance;
-
-    if (renderOptions.dataField && !editorOptions.name) {
-      editorOptions.name = renderOptions.dataField;
-    }
-
-    that._addItemContentClasses($container);
-
-    if (template) {
-      var data = {
-        dataField: renderOptions.dataField,
-        editorType: renderOptions.editorType,
-        editorOptions: editorOptions,
-        component: that._getComponentOwner(),
-        name: renderOptions.name
-      };
-      template.render({
-        model: data,
-        container: getPublicElement($container)
-      });
-    } else {
-      var $editor = $('<div>').appendTo($container);
-
-      try {
-        editorInstance = that._createComponent($editor, renderOptions.editorType, editorOptions);
-        editorInstance.setAria('describedby', renderOptions.helpID);
-        editorInstance.setAria('labelledby', renderOptions.labelID);
-        editorInstance.setAria('required', renderOptions.isRequired);
-
-        if (renderOptions.dataField) {
-          that._bindDataField(editorInstance, renderOptions, $container);
-        }
-      } catch (e) {
-        errors.log('E1035', e.message);
-      }
-    }
-
-    return editorInstance;
-  },
   _getComponentOwner: function _getComponentOwner() {
     return this.option('form') || this;
   },
@@ -884,20 +874,6 @@ var LayoutManager = Widget.inherit({
     }
 
     return this._watch;
-  },
-  _addItemContentClasses: function _addItemContentClasses($itemContent) {
-    var locationSpecificClass = this._getItemContentLocationSpecificClass();
-
-    $itemContent.addClass([FIELD_ITEM_CONTENT_CLASS, locationSpecificClass].join(' '));
-  },
-  _getItemContentLocationSpecificClass: function _getItemContentLocationSpecificClass() {
-    var labelLocation = this.option('labelLocation');
-    var oppositeClasses = {
-      right: 'left',
-      left: 'right',
-      top: 'bottom'
-    };
-    return FIELD_ITEM_CONTENT_LOCATION_CLASS + oppositeClasses[labelLocation];
   },
   _createComponent: function _createComponent($editor, type, editorOptions) {
     var that = this;

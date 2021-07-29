@@ -786,7 +786,7 @@ var Gantt = /*#__PURE__*/function (_Widget) {
   };
 
   _proto._optionChanged = function _optionChanged(args) {
-    var _this$_ganttTreeList4, _this$_sizeHelper, _this$_ganttTreeList5, _this$_actionsManager, _this$_actionsManager2, _this$_actionsManager3, _this$_actionsManager4, _this$_actionsManager5, _this$_actionsManager6, _this$_actionsManager7, _this$_actionsManager8, _this$_actionsManager9, _this$_actionsManager10, _this$_actionsManager11, _this$_actionsManager12, _this$_actionsManager13, _this$_actionsManager14, _this$_actionsManager15, _this$_actionsManager16, _this$_actionsManager17, _this$_actionsManager18, _this$_actionsManager19, _this$_actionsManager20, _this$_actionsManager21, _this$_actionsManager22, _this$_actionsManager23, _this$_actionsManager24, _this$_actionsManager25, _this$_actionsManager26, _this$_ganttTreeList6, _this$_ganttTreeList7, _this$_ganttTemplates, _this$_ganttTemplates2, _this$_ganttTemplates3, _this$_ganttTemplates4, _this$_ganttTreeList8, _this$_sizeHelper2, _this$_sizeHelper3;
+    var _this$_ganttTreeList4, _this$_sizeHelper, _this$_ganttTreeList5, _this$_actionsManager, _this$_actionsManager2, _this$_actionsManager3, _this$_actionsManager4, _this$_actionsManager5, _this$_actionsManager6, _this$_actionsManager7, _this$_actionsManager8, _this$_actionsManager9, _this$_actionsManager10, _this$_actionsManager11, _this$_actionsManager12, _this$_actionsManager13, _this$_actionsManager14, _this$_actionsManager15, _this$_actionsManager16, _this$_actionsManager17, _this$_actionsManager18, _this$_actionsManager19, _this$_actionsManager20, _this$_actionsManager21, _this$_actionsManager22, _this$_actionsManager23, _this$_actionsManager24, _this$_actionsManager25, _this$_actionsManager26, _this$_ganttTreeList6, _this$_ganttTreeList7, _this$_ganttTemplates, _this$_ganttTemplates2, _this$_ganttTemplates3, _this$_ganttTemplates4, _this$_ganttTreeList8, _this$_sizeHelper2, _this$_sizeHelper3, _this$_ganttTreeList9;
 
     switch (args.name) {
       case 'tasks':
@@ -1023,6 +1023,7 @@ var Gantt = /*#__PURE__*/function (_Widget) {
         break;
 
       case 'sorting':
+        (_this$_ganttTreeList9 = this._ganttTreeList) === null || _this$_ganttTreeList9 === void 0 ? void 0 : _this$_ganttTreeList9.setOption('sorting', args.value);
         break;
 
       default:

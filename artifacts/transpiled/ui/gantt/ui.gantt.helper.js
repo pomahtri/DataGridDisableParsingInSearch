@@ -82,34 +82,16 @@ var GanttHelper = {
   getSelectionMode: function getSelectionMode(allowSelection) {
     return allowSelection ? 'single' : 'none';
   },
-  convertTreeToList: function convertTreeToList(root) {
-    var stack = [];
-    var array = [];
-    var hashMap = {};
-    stack.push(root);
-
-    while (stack.length !== 0) {
-      var node = stack.pop();
-
-      if (!node.children || node.children.length === 0) {
-        GanttHelper.visitNode(node, hashMap, array);
-      } else {
-        array.push(node.data);
-        var childrenCount = node.children.length - 1;
-
-        for (var i = childrenCount; i >= 0; i--) {
-          stack.push(node.children[i]);
-        }
-      }
+  convertTreeToList: function convertTreeToList(node, array) {
+    if (node.data) {
+      array.push(node.data);
     }
 
-    array.shift();
-    return array;
-  },
-  visitNode: function visitNode(node, hashMap, array) {
-    if (!hashMap[node.key]) {
-      hashMap[node.key] = true;
-      array.push(node.data);
+    for (var i = 0; i < ((_node$children = node.children) === null || _node$children === void 0 ? void 0 : _node$children.length); i++) {
+      var _node$children;
+
+      var child = node.children[i];
+      GanttHelper.convertTreeToList(child, array);
     }
   },
   getDefaultOptions: function getDefaultOptions() {

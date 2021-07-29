@@ -705,6 +705,10 @@ function getScaleBreaksProcessor(convertTickInterval, getValue, addCorrection) {
       });
       var to = addCorrection(getBaseTick(b.to, [].concat(breakTicks[0], ticks[ticks.length - breakTicks.length - 1]), interval, getValue), -correction);
 
+      if (getValue(to) - getValue(from) < 0) {
+        to = addCorrection(breakTicks[0], -correction);
+      }
+
       if (getValue(to) - getValue(from) < interval && !b.gapSize) {
         return result;
       }

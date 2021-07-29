@@ -1,3 +1,4 @@
+import { extend } from '../../core/utils/extend';
 import { isDefined } from '../../core/utils/type'; // this function is large and will grow
 
 export function drawPdfTable(doc, table) {
@@ -65,9 +66,9 @@ export function drawPdfTable(doc, table) {
       if (isDefined(cell.text) && cell.text !== '') {
         // TODO: use cell.text.trim() ?
         var textY = cell._rect.y + cell._rect.h / 2;
-        doc.text(cell.text, cell._rect.x, textY, {
+        doc.text(cell.text, cell._rect.x, textY, extend({
           baseline: 'middle'
-        }); // align by vertical 'middle', https://github.com/MrRio/jsPDF/issues/1573
+        }, cell.textOptions)); // align by vertical 'middle', https://github.com/MrRio/jsPDF/issues/1573
       }
 
       drawBorder(cell._rect, cell.drawLeftBorder, cell.drawRightBorder, cell.drawTopBorder, cell.drawBottomBorder);

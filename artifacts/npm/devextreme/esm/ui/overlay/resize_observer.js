@@ -11,8 +11,6 @@ var window = getWindow();
 
 class ResizeObserver {
   constructor(options) {
-    var _this = this;
-
     if (!hasWindow()) {
       return;
     }
@@ -24,18 +22,12 @@ class ResizeObserver {
         args[_key] = arguments[_key];
       }
 
-      var shouldSkip = ((_options$shouldSkipCa = options.shouldSkipCallback) === null || _options$shouldSkipCa === void 0 ? void 0 : _options$shouldSkipCa.call(options, ...args)) || _this._shouldSkipNextResize;
+      var shouldSkip = (_options$shouldSkipCa = options.shouldSkipCallback) === null || _options$shouldSkipCa === void 0 ? void 0 : _options$shouldSkipCa.call(options, ...args);
 
       if (!shouldSkip) {
         options.callback(...args);
       }
-
-      _this._shouldSkipNextResize = false;
     });
-  }
-
-  skipNextResize() {
-    this._shouldSkipNextResize = true;
   }
 
   observe(element) {

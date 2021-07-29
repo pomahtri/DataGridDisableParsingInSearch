@@ -1,6 +1,7 @@
 import $ from '../../core/renderer';
+import errors from '../widget/ui.errors';
 import { isDefined } from '../../core/utils/type';
-import { WIDGET_CLASS, FIELD_ITEM_LABEL_TEXT_CLASS, HIDDEN_LABEL_CLASS, FIELD_ITEM_OPTIONAL_MARK_CLASS, FIELD_ITEM_REQUIRED_MARK_CLASS, FIELD_ITEM_LABEL_CONTENT_CLASS, FIELD_ITEM_LABEL_LOCATION_CLASS, FIELD_ITEM_LABEL_CLASS, FIELD_ITEM_HELP_TEXT_CLASS, FIELD_BUTTON_ITEM_CLASS, FIELD_ITEM_CLASS } from './constants';
+import { WIDGET_CLASS, FIELD_ITEM_LABEL_TEXT_CLASS, HIDDEN_LABEL_CLASS, FIELD_ITEM_OPTIONAL_MARK_CLASS, FIELD_ITEM_REQUIRED_MARK_CLASS, FIELD_ITEM_LABEL_CONTENT_CLASS, FIELD_ITEM_LABEL_LOCATION_CLASS, FIELD_ITEM_LABEL_CLASS, FIELD_ITEM_HELP_TEXT_CLASS, FIELD_BUTTON_ITEM_CLASS, FIELD_ITEM_CLASS, FIELD_ITEM_CONTENT_CLASS, FIELD_ITEM_CONTENT_LOCATION_CLASS } from './constants';
 export var createItemPathByIndex = (index, isTabs) => "".concat(isTabs ? 'tabs' : 'items', "[").concat(index, "]");
 export var concatPaths = (path1, path2) => {
   if (isDefined(path1) && isDefined(path2)) {
@@ -122,4 +123,58 @@ export function adjustContainerAsButtonItem(_ref3) {
   $container.addClass(FIELD_BUTTON_ITEM_CLASS).css('textAlign', textAlign).addClass(FIELD_ITEM_CLASS).addClass(cssItemClass).addClass(isDefined(targetColIndex) ? 'dx-col-' + targetColIndex : ''); // TODO: try to avoid changes in $container.parent() and adjust the created $elements only
 
   $container.parent().css('justifyContent', justifyContent);
+}
+export function convertToTemplateOptions(renderOptions, editorOptions, componentOwner) {
+  return {
+    dataField: renderOptions.dataField,
+    editorType: renderOptions.editorType,
+    editorOptions: editorOptions,
+    component: componentOwner,
+    name: renderOptions.name
+  };
+}
+export function adjustEditorContainer(_ref4) {
+  var {
+    $container,
+    labelLocation
+  } = _ref4;
+  var locationClassSuffix = {
+    right: 'left',
+    left: 'right',
+    top: 'bottom'
+  };
+  $container.addClass(FIELD_ITEM_CONTENT_CLASS).addClass(FIELD_ITEM_CONTENT_LOCATION_CLASS + locationClassSuffix[labelLocation]);
+}
+export function renderTemplateTo(_ref5) {
+  var {
+    $container,
+    template,
+    templateOptions
+  } = _ref5;
+  template.render({
+    model: templateOptions,
+    container: $container
+  });
+}
+export function renderComponentTo(_ref6) {
+  var {
+    $container,
+    createComponentCallback,
+    componentType,
+    componentOptions,
+    helpID,
+    labelID,
+    isRequired
+  } = _ref6;
+  var $div = $('<div>').appendTo($container);
+
+  try {
+    var result = createComponentCallback($div, componentType, componentOptions);
+    result.setAria('describedby', helpID);
+    result.setAria('labelledby', labelID);
+    result.setAria('required', isRequired);
+    return result;
+  } catch (e) {
+    errors.log('E1035', e.message);
+  }
 }

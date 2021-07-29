@@ -10,6 +10,8 @@
 
 exports.drawPdfTable = drawPdfTable;
 
+var _extend = require("../../core/utils/extend");
+
 var _type = require("../../core/utils/type");
 
 // this function is large and will grow
@@ -78,9 +80,9 @@ function drawPdfTable(doc, table) {
       if ((0, _type.isDefined)(cell.text) && cell.text !== '') {
         // TODO: use cell.text.trim() ?
         var textY = cell._rect.y + cell._rect.h / 2;
-        doc.text(cell.text, cell._rect.x, textY, {
+        doc.text(cell.text, cell._rect.x, textY, (0, _extend.extend)({
           baseline: 'middle'
-        }); // align by vertical 'middle', https://github.com/MrRio/jsPDF/issues/1573
+        }, cell.textOptions)); // align by vertical 'middle', https://github.com/MrRio/jsPDF/issues/1573
       }
 
       drawBorder(cell._rect, cell.drawLeftBorder, cell.drawRightBorder, cell.drawTopBorder, cell.drawBottomBorder);
