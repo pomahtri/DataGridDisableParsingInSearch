@@ -1240,10 +1240,18 @@ var virtualScrollingModule = {
           bottomItemIndex: function bottomItemIndex() {
             var viewportParams = this._loadViewportParams;
             return viewportParams && viewportParams.skip + viewportParams.take;
+          },
+          virtualItemsCount: function virtualItemsCount() {
+            var rowsScrollController = this._rowsScrollController;
+
+            if (rowsScrollController) {
+              return rowsScrollController.virtualItemsCount.apply(rowsScrollController, arguments);
+            }
+
+            var dataSource = this._dataSource;
+            return dataSource === null || dataSource === void 0 ? void 0 : dataSource.virtualItemsCount.apply(dataSource, arguments);
           }
         };
-
-        _uiGrid_core2.default.proxyMethod(members, 'virtualItemsCount');
 
         _uiGrid_core2.default.proxyMethod(members, 'getVirtualContentSize');
 

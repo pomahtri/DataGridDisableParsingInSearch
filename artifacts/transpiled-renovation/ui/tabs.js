@@ -306,7 +306,7 @@ var Tabs = _uiCollection_widget.default.inherit({
     var $itemContainer = this.$element().wrapInner((0, _renderer.default)('<div>').addClass(TABS_SCROLLABLE_CLASS)).children();
     this._scrollable = this._createComponent($itemContainer, _ui.default, {
       direction: 'horizontal',
-      showScrollbar: false,
+      showScrollbar: 'never',
       useKeyboard: false,
       useNative: false,
       scrollByContent: this.option('scrollByContent'),

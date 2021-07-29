@@ -9,7 +9,7 @@ import Scrollable from '../scroll_view/ui.scrollable';
 import devices from '../../core/devices';
 import fx from '../../animation/fx';
 import { resetPosition } from '../../animation/translator';
-import { restoreLocation } from '../../renovation/ui/scroll_view/utils/restore_location';
+import { convertToLocation } from '../../renovation/ui/scroll_view/utils/convert_location';
 var DATEVIEW_ROLLER_CLASS = 'dx-dateviewroller';
 var DATEVIEW_ROLLER_ACTIVE_CLASS = 'dx-state-active';
 var DATEVIEW_ROLLER_CURRENT_CLASS = 'dx-dateviewroller-current';
@@ -169,11 +169,14 @@ class DateViewRoller extends Scrollable {
   }
 
   _moveTo(targetLocation) {
-    targetLocation = restoreLocation(targetLocation);
+    var {
+      top,
+      left
+    } = convertToLocation(targetLocation);
     var location = this.scrollOffset();
     var delta = {
-      x: location.left + targetLocation.left,
-      y: location.top + targetLocation.top
+      x: location.left + left,
+      y: location.top + top
     };
 
     if (this._isVisible() && (delta.x || delta.y)) {

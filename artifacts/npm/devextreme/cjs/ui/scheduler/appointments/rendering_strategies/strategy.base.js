@@ -1,7 +1,7 @@
 /**
 * DevExtreme (cjs/ui/scheduler/appointments/rendering_strategies/strategy.base.js)
 * Version: 21.2.0
-* Build date: Wed Jul 28 2021
+* Build date: Thu Jul 29 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
@@ -521,14 +521,6 @@ var BaseRenderingStrategy = /*#__PURE__*/function () {
     return duration + diff * toMs('minute');
   };
 
-  _proto._getAppointmentDurationInMs = function _getAppointmentDurationInMs(startDate, endDate, allDay) {
-    return this.instance.fire('getAppointmentDurationInMs', {
-      startDate: startDate,
-      endDate: endDate,
-      allDay: allDay
-    });
-  };
-
   _proto._markAppointmentAsVirtual = function _markAppointmentAsVirtual(coordinates) {
     var isAllDay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
 
@@ -613,7 +605,7 @@ var BaseRenderingStrategy = /*#__PURE__*/function () {
   };
 
   _proto._calculateGeometryConfig = function _calculateGeometryConfig(coordinates) {
-    var overlappingMode = this.instance.fire('getMaxAppointmentsPerCell');
+    var overlappingMode = this.maxAppointmentsPerCell;
 
     var offsets = this._getOffsets();
 
@@ -659,7 +651,7 @@ var BaseRenderingStrategy = /*#__PURE__*/function () {
 
   _proto._getMaxAppointmentCountPerCell = function _getMaxAppointmentCountPerCell() {
     if (!this._maxAppointmentCountPerCell) {
-      var overlappingMode = this.instance.fire('getMaxAppointmentsPerCell');
+      var overlappingMode = this.maxAppointmentsPerCell;
       var appointmentCountPerCell;
 
       if ((0, _type.isNumeric)(overlappingMode)) {
@@ -725,17 +717,85 @@ var BaseRenderingStrategy = /*#__PURE__*/function () {
     return false;
   };
 
-  _createClass(BaseRenderingStrategy, [{
-    key: "key",
-    get: function get() {
-      return this.options.key;
+  _proto.getAppointmentDurationInMs = function getAppointmentDurationInMs(startDate, endDate, allDay) {
+    var appointmentDuration = endDate.getTime() - startDate.getTime();
+    var dayDuration = toMs('day');
+    var visibleDayDuration = this.visibleDayDuration;
+    var result = 0;
+
+    if (allDay) {
+      var ceilQuantityOfDays = Math.ceil(appointmentDuration / dayDuration);
+      result = ceilQuantityOfDays * visibleDayDuration;
+    } else {
+      var isDifferentDates = !_utils.default.isSameAppointmentDates(startDate, endDate);
+      var floorQuantityOfDays = Math.floor(appointmentDuration / dayDuration);
+      var tailDuration;
+
+      if (isDifferentDates) {
+        var startDateEndHour = new Date(new Date(startDate).setHours(this.endDayHour, 0, 0));
+        var hiddenDayDuration = dayDuration - visibleDayDuration - (startDate.getTime() > startDateEndHour.getTime() ? startDate.getTime() - startDateEndHour.getTime() : 0);
+        tailDuration = appointmentDuration - (floorQuantityOfDays ? floorQuantityOfDays * dayDuration : hiddenDayDuration);
+        var startDayTime = this.startDayHour * toMs('hour');
+
+        var endPartDuration = endDate - _date.default.trimTime(endDate);
+
+        if (endPartDuration < startDayTime) {
+          if (floorQuantityOfDays) {
+            tailDuration -= hiddenDayDuration;
+          }
+
+          tailDuration += startDayTime - endPartDuration;
+        }
+      } else {
+        tailDuration = appointmentDuration % dayDuration;
+      }
+
+      if (tailDuration > visibleDayDuration) {
+        tailDuration = visibleDayDuration;
+      }
+
+      result = floorQuantityOfDays * visibleDayDuration + tailDuration || toMs('minute');
     }
-  }, {
+
+    return result;
+  };
+
+  _createClass(BaseRenderingStrategy, [{
     key: "instance",
     get: function get() {
       return this.options.instance;
     } // TODO get rid of this
 
+  }, {
+    key: "key",
+    get: function get() {
+      return this.options.key;
+    }
+  }, {
+    key: "isAdaptive",
+    get: function get() {
+      return this.options.adaptivityEnabled;
+    }
+  }, {
+    key: "rtlEnabled",
+    get: function get() {
+      return this.options.rtlEnabled;
+    }
+  }, {
+    key: "startDayHour",
+    get: function get() {
+      return this.options.startDayHour;
+    }
+  }, {
+    key: "endDayHour",
+    get: function get() {
+      return this.options.endDayHour;
+    }
+  }, {
+    key: "maxAppointmentsPerCell",
+    get: function get() {
+      return this.options.maxAppointmentsPerCell;
+    }
   }, {
     key: "cellWidth",
     get: function get() {
@@ -757,19 +817,14 @@ var BaseRenderingStrategy = /*#__PURE__*/function () {
       return this.options.getResizableStep();
     }
   }, {
-    key: "isAdaptive",
-    get: function get() {
-      return this.options.isAdaptive;
-    }
-  }, {
-    key: "rtlEnabled",
-    get: function get() {
-      return this.options.rtlEnabled;
-    }
-  }, {
     key: "isGroupedByDate",
     get: function get() {
       return this.options.getIsGroupedByDate();
+    }
+  }, {
+    key: "visibleDayDuration",
+    get: function get() {
+      return this.options.getVisibleDayDuration();
     }
   }, {
     key: "isVirtualScrolling",

@@ -292,7 +292,7 @@ var Form = Widget.inherit({
     });
   },
   _getContent: function _getContent() {
-    return this.option('scrollingEnabled') ? this._scrollable.$content() : this.$element();
+    return this.option('scrollingEnabled') ? $(this._scrollable.content()) : this.$element();
   },
   _renderValidationSummary: function _renderValidationSummary() {
     var $validationSummary = this.$element().find('.' + FORM_VALIDATION_SUMMARY);

@@ -1,7 +1,7 @@
 /**
 * DevExtreme (cjs/ui/gantt/ui.gantt.js)
 * Version: 21.2.0
-* Build date: Wed Jul 28 2021
+* Build date: Thu Jul 29 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
@@ -120,6 +120,7 @@ var Gantt = /*#__PURE__*/function (_Widget) {
     (_this$_ganttView = this._ganttView) === null || _this$_ganttView === void 0 ? void 0 : _this$_ganttView._ganttViewCore.cleanMarkup();
     delete this._ganttView;
     delete this._dialogInstance;
+    delete this._loadPanel;
 
     _Widget.prototype._clean.call(this);
   };
@@ -147,6 +148,8 @@ var Gantt = /*#__PURE__*/function (_Widget) {
   _proto._renderTreeList = function _renderTreeList() {
     this._ganttTreeList = new _uiGantt11.GanttTreeList(this);
     this._treeList = this._ganttTreeList.getTreeList();
+
+    this._ganttTreeList.onAfterTreeListCreate();
   };
 
   _proto._renderSplitter = function _renderSplitter() {
@@ -251,32 +254,29 @@ var Gantt = /*#__PURE__*/function (_Widget) {
     var dataOption = this["_".concat(name, "Option")];
 
     if (dataOption) {
-      dataOption._disposeDataSource();
-
+      dataOption.dispose();
       delete this["_".concat(name, "Option")];
       delete this["_".concat(name)];
     }
 
-    if (this.option("".concat(name, ".dataSource"))) {
-      dataOption = new _uiGanttData.default(name, this._getLoadPanel(), function (name, data) {
-        _this3._dataSourceChanged(name, data);
-      });
-      dataOption.option('dataSource', this._getSpecificDataSourceOption(name));
+    dataOption = new _uiGanttData.default(name, this._getLoadPanel(), function (name, data) {
+      _this3._dataSourceChanged(name, data);
+    });
+    dataOption.option('dataSource', this._getSpecificDataSourceOption(name));
 
-      dataOption._refreshDataSource();
+    dataOption._refreshDataSource();
 
-      this["_".concat(name, "Option")] = dataOption;
-    }
+    this["_".concat(name, "Option")] = dataOption;
   };
 
   _proto._getSpecificDataSourceOption = function _getSpecificDataSourceOption(name) {
     var dataSource = this.option("".concat(name, ".dataSource"));
 
-    if (Array.isArray(dataSource)) {
+    if (!dataSource || Array.isArray(dataSource)) {
       return {
         store: {
           type: 'array',
-          data: dataSource,
+          data: dataSource !== null && dataSource !== void 0 ? dataSource : [],
           key: this.option("".concat(name, ".keyExpr"))
         }
       };
@@ -307,7 +307,7 @@ var Gantt = /*#__PURE__*/function (_Widget) {
         return value && self.indexOf(value) === index;
       });
       (_this$_ganttTreeList = this._ganttTreeList) === null || _this$_ganttTreeList === void 0 ? void 0 : _this$_ganttTreeList.setOption('expandedRowKeys', expandedRowKeys);
-      (_this$_ganttTreeList2 = this._ganttTreeList) === null || _this$_ganttTreeList2 === void 0 ? void 0 : _this$_ganttTreeList2.setOption('dataSource', validatedData);
+      (_this$_ganttTreeList2 = this._ganttTreeList) === null || _this$_ganttTreeList2 === void 0 ? void 0 : _this$_ganttTreeList2.updateDataSource(validatedData);
     }
   };
 
@@ -378,7 +378,9 @@ var Gantt = /*#__PURE__*/function (_Widget) {
     if (dataOption) {
       var data = _uiGantt6.GanttHelper.getStoreObject(this.option(optionName), record);
 
-      if (optionName === GANTT_TASKS) {
+      var isTaskInsert = optionName === GANTT_TASKS;
+
+      if (isTaskInsert) {
         this._customFieldsManager.addCustomFieldsDataFromCache(GANTT_NEW_TASK_CACHE_KEY, data);
       }
 
@@ -387,35 +389,11 @@ var Gantt = /*#__PURE__*/function (_Widget) {
         var insertedId = keyGetter(response);
         callback(insertedId);
 
-        if (optionName === GANTT_TASKS) {
-          var _this5$_ganttTreeList3;
-
-          _this5._ganttTreeList.updateDataSource();
-
-          var parentId = record.parentId;
-
-          if (parentId !== undefined) {
-            var _this5$_ganttTreeList;
-
-            var expandedRowKeys = (_this5$_ganttTreeList = _this5._ganttTreeList) === null || _this5$_ganttTreeList === void 0 ? void 0 : _this5$_ganttTreeList.getOption('expandedRowKeys');
-
-            if (expandedRowKeys.indexOf(parentId) === -1) {
-              var _this5$_ganttTreeList2;
-
-              expandedRowKeys.push(parentId);
-              (_this5$_ganttTreeList2 = _this5._ganttTreeList) === null || _this5$_ganttTreeList2 === void 0 ? void 0 : _this5$_ganttTreeList2.setOption('expandedRowKeys', expandedRowKeys);
-            }
+        dataOption._reloadDataSource().done(function (data) {
+          if (isTaskInsert) {
+            _this5._ganttTreeList.onTaskInserted(insertedId, record.parentId);
           }
-
-          _this5._ganttTreeList.selectRows(_uiGantt6.GanttHelper.getArrayFromOneElement(insertedId));
-
-          (_this5$_ganttTreeList3 = _this5._ganttTreeList) === null || _this5$_ganttTreeList3 === void 0 ? void 0 : _this5$_ganttTreeList3.setOption('focusedRowKey', insertedId);
-          setTimeout(function () {
-            _this5._sizeHelper.updateGanttRowHeights();
-          }, 300);
-        }
-
-        dataOption._reloadDataSource();
+        });
 
         _this5._actionsManager.raiseInsertedAction(optionName, data, insertedId);
       });
@@ -440,10 +418,6 @@ var Gantt = /*#__PURE__*/function (_Widget) {
       }
 
       dataOption.update(key, data, function () {
-        if (isTaskUpdated) {
-          _this6._ganttTreeList.updateDataSource();
-        }
-
         dataOption._reloadDataSource();
 
         _this6._actionsManager.raiseUpdatedAction(optionName, data, key);
@@ -458,10 +432,6 @@ var Gantt = /*#__PURE__*/function (_Widget) {
 
     if (dataOption) {
       dataOption.remove(key, function () {
-        if (optionName === GANTT_TASKS) {
-          _this7._ganttTreeList.updateDataSource();
-        }
-
         dataOption._reloadDataSource();
 
         _this7._actionsManager.raiseDeletedAction(optionName, key, _this7._mappingHelper.convertCoreToMappedData(optionName, data));
@@ -476,13 +446,40 @@ var Gantt = /*#__PURE__*/function (_Widget) {
   };
 
   _proto._onParentTasksRecalculated = function _onParentTasksRecalculated(data) {
-    var _this$_ganttTreeList3;
+    if (!this.isSorting) {
+      var _this$_ganttTreeList3;
 
-    var setters = _uiGantt6.GanttHelper.compileSettersByOption(this.option(GANTT_TASKS));
+      var setters = _uiGantt6.GanttHelper.compileSettersByOption(this.option(GANTT_TASKS));
 
-    var treeDataSource = this._customFieldsManager.appendCustomFields(data.map(_uiGantt6.GanttHelper.prepareSetterMapHandler(setters)));
+      var treeDataSource = this._customFieldsManager.appendCustomFields(data.map(_uiGantt6.GanttHelper.prepareSetterMapHandler(setters)));
 
-    (_this$_ganttTreeList3 = this._ganttTreeList) === null || _this$_ganttTreeList3 === void 0 ? void 0 : _this$_ganttTreeList3.setOption('dataSource', treeDataSource);
+      (_this$_ganttTreeList3 = this._ganttTreeList) === null || _this$_ganttTreeList3 === void 0 ? void 0 : _this$_ganttTreeList3.setOption('dataSource', treeDataSource);
+    }
+
+    this.isSorting = false;
+  };
+
+  _proto._sort = function _sort() {
+    var columns = this._treeList.getVisibleColumns();
+
+    var sortColumn = columns.filter(function (c) {
+      return c.sortIndex === 0;
+    })[0];
+    var isClearSorting = this.sortColumn && !sortColumn;
+
+    if (sortColumn || isClearSorting) {
+      var sortedItems = this._ganttTreeList.getSortedItems();
+
+      var sortOptions = {
+        sortedItems: sortedItems,
+        sortColumn: sortColumn
+      };
+      this.isSorting = !isClearSorting;
+
+      this._setGanttViewOption('sorting', isClearSorting ? undefined : sortOptions);
+    }
+
+    this.sortColumn = sortColumn;
   };
 
   _proto._getToolbarItems = function _getToolbarItems() {
@@ -1031,6 +1028,9 @@ var Gantt = /*#__PURE__*/function (_Widget) {
         _Widget.prototype._optionChanged.call(this, args);
 
         (_this$_sizeHelper3 = this._sizeHelper) === null || _this$_sizeHelper3 === void 0 ? void 0 : _this$_sizeHelper3.setGanttHeight(this._$element.height());
+        break;
+
+      case 'sorting':
         break;
 
       default:

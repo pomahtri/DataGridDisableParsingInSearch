@@ -267,7 +267,7 @@ var AdaptiveColumnsController = modules.ViewController.inherit({
           containerWidth: containerWidth
         });
       } else {
-        return widthOption;
+        return parseFloat(widthOption);
       }
     } else {
       var columnAutoWidth = this.option('columnAutoWidth');

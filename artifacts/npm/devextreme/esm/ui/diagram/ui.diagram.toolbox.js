@@ -1,14 +1,14 @@
 /**
 * DevExtreme (esm/ui/diagram/ui.diagram.toolbox.js)
 * Version: 21.2.0
-* Build date: Wed Jul 28 2021
+* Build date: Thu Jul 29 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
 */
 import $ from '../../core/renderer';
 import { extend } from '../../core/utils/extend';
-import { hasWindow } from '../../core/utils/window';
+import { hasWindow, getWindow } from '../../core/utils/window';
 import { Deferred } from '../../core/utils/deferred';
 import messageLocalization from '../../localization/message';
 import TextBox from '../text_box';
@@ -268,10 +268,7 @@ class DiagramToolbox extends DiagramFloatingPanel {
   }
 
   _createTooltips(targets) {
-    var {
-      Browser
-    } = getDiagram();
-    if (Browser.TouchUI) return;
+    if (this._isTouchMode()) return;
     var $container = this.$element();
     targets.each((index, element) => {
       var $target = $(element);
@@ -302,6 +299,23 @@ class DiagramToolbox extends DiagramFloatingPanel {
         });
       }
     });
+  }
+
+  _isTouchMode() {
+    var {
+      Browser
+    } = getDiagram();
+
+    if (Browser.TouchUI) {
+      return true;
+    }
+
+    if (!hasWindow()) {
+      return false;
+    }
+
+    var window = getWindow();
+    return window.navigator && window.navigator.maxTouchPoints > 0;
   }
 
   _renderAccordion($container) {

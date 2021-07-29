@@ -1,7 +1,7 @@
 /**
 * DevExtreme (esm/localization/default_messages.js)
 * Version: 21.2.0
-* Build date: Wed Jul 28 2021
+* Build date: Thu Jul 29 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
@@ -571,6 +571,9 @@ export var defaultMessages = {
     "dxGantt-zoomIn": "Zoom In",
     "dxGantt-zoomOut": "Zoom Out",
     "dxGantt-fullScreen": "Full Screen",
-    "dxGantt-quarter": "Q{0}"
+    "dxGantt-quarter": "Q{0}",
+    "dxGantt-sortingAscendingText": "Sort Ascending",
+    "dxGantt-sortingDescendingText": "Sort Descending",
+    "dxGantt-sortingClearText": "Clear Sorting"
   }
 };

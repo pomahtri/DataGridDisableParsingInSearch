@@ -22,10 +22,13 @@ var GanttTemplatesManager = /*#__PURE__*/function () {
 
     var template = taskTooltipContentTemplateOption && this._gantt._getTemplate(taskTooltipContentTemplateOption);
 
-    var createTemplateFunction = template && function (container, item) {
+    var createTemplateFunction = template && function (container, item, callback) {
       template.render({
         model: _this._gantt.getTaskDataByCoreData(item),
-        container: (0, _element.getPublicElement)((0, _renderer.default)(container))
+        container: (0, _element.getPublicElement)((0, _renderer.default)(container)),
+        onRendered: function onRendered() {
+          callback();
+        }
       });
       return isTooltipShowing;
     };
@@ -38,12 +41,12 @@ var GanttTemplatesManager = /*#__PURE__*/function () {
 
     var template = taskTooltipContentTemplateOption && this._gantt._getTemplate(taskTooltipContentTemplateOption);
 
-    var createTemplateFunction = template && function (container, item, callback, posX) {
+    var createTemplateFunction = template && function (container, item, callback) {
       template.render({
         model: item,
         container: (0, _element.getPublicElement)((0, _renderer.default)(container)),
         onRendered: function onRendered() {
-          callback(posX);
+          callback();
         }
       });
       return isTooltipShowing;
@@ -57,12 +60,12 @@ var GanttTemplatesManager = /*#__PURE__*/function () {
 
     var template = taskTooltipContentTemplateOption && this._gantt._getTemplate(taskTooltipContentTemplateOption);
 
-    var createTemplateFunction = template && function (container, item, callback, posX) {
+    var createTemplateFunction = template && function (container, item, callback) {
       template.render({
         model: item,
         container: (0, _element.getPublicElement)((0, _renderer.default)(container)),
         onRendered: function onRendered() {
-          callback(posX);
+          callback();
         }
       });
       return isTooltipShowing;

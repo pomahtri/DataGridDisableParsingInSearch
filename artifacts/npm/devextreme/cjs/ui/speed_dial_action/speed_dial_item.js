@@ -1,7 +1,7 @@
 /**
 * DevExtreme (cjs/ui/speed_dial_action/speed_dial_item.js)
 * Version: 21.2.0
-* Build date: Wed Jul 28 2021
+* Build date: Thu Jul 29 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
@@ -27,6 +27,8 @@ var _ui = _interopRequireDefault(require("../overlay/ui.overlay"));
 var _utils = require("../widget/utils.ink_ripple");
 
 var _themes = require("../themes");
+
+var _type = require("../../core/utils/type");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -101,7 +103,22 @@ var SpeedDialItem = /*#__PURE__*/function (_Overlay) {
   };
 
   _proto._isPositionLeft = function _isPositionLeft(position) {
-    var currentLocation = position ? position.at ? position.at.x ? position.at.x : position.at : typeof position === 'string' ? position : '' : '';
+    var currentLocation = '';
+
+    if (position) {
+      if ((0, _type.isPlainObject)(position) && position.at) {
+        if (position.at.x) {
+          currentLocation = position.at.x;
+        } else {
+          currentLocation = position.at;
+        }
+      } else {
+        if (typeof position === 'string') {
+          currentLocation = position;
+        }
+      }
+    }
+
     return currentLocation.split(' ')[0] === 'left';
   };
 

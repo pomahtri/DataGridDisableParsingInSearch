@@ -1,281 +1,241 @@
+import _extends from "@babel/runtime/helpers/esm/extends";
 import $ from '../../../core/renderer';
-import { isObject, isDefined } from '../../../core/utils/type';
 import { extend } from '../../../core/utils/extend';
-import { each } from '../../../core/utils/iterator';
-import { inArray } from '../../../core/utils/array';
-import { camelize } from '../../../core/utils/inflector';
 import registerComponent from '../../../core/component_registrator';
-import Widget from '../../widget/ui.widget';
-import { Navigator } from './navigator';
-import DropDownMenu from '../../drop_down_menu';
-import Tabs from '../../tabs';
-import { TABS_EXPANDED_CLASS } from '../../tabs/constants';
 import errors from '../../../core/errors';
-import messageLocalization from '../../../localization/message';
+import devices from '../../../core/devices';
+import Widget from '../../widget/ui.widget';
+import Toolbar from '../../toolbar';
+import SchedulerCalendar from './calendar';
+import { getViewSwitcher, getDropDownViewSwitcher } from './viewSwitcher';
+import { getDateNavigator } from './dateNavigator';
+import { getCaption, getNextIntervalDate, validateViews, getStep } from './utils';
+var DEFAULT_ELEMENT = 'defaultElement';
+var VIEW_SWITCHER = 'viewSwitcher';
+var DATE_NAVIGATOR = 'dateNavigator';
 var COMPONENT_CLASS = 'dx-scheduler-header';
-var VIEW_SWITCHER_CLASS = 'dx-scheduler-view-switcher';
-var VIEW_SWITCHER_LABEL_CLASS = 'dx-scheduler-view-switcher-label';
-var STEP_MAP = {
-  day: 'day',
-  week: 'week',
-  workWeek: 'workWeek',
-  month: 'month',
-  timelineDay: 'day',
-  timelineWeek: 'week',
-  timelineWorkWeek: 'workWeek',
-  timelineMonth: 'month',
-  agenda: 'agenda'
-};
-var VIEWS = ['day', 'week', 'workWeek', 'month', 'timelineDay', 'timelineWeek', 'timelineWorkWeek', 'timelineMonth', 'agenda'];
-export class Header extends Widget {
+export class SchedulerHeader extends Widget {
+  get currentView() {
+    return this.option('currentView');
+  }
+
+  get views() {
+    return this.option('views');
+  }
+
+  get date() {
+    return this.option('displayedDate') || this.option('currentDate');
+  }
+
+  get captionText() {
+    return this._getCaption(this.date).text;
+  }
+
+  get intervalOptions() {
+    var step = getStep(this.option('currentView'));
+    var intervalCount = this.option('intervalCount');
+    var firstDayOfWeek = this.option('firstDayOfWeek');
+    var agendaDuration = this.option('agendaDuration');
+    return {
+      step,
+      intervalCount,
+      firstDayOfWeek,
+      agendaDuration
+    };
+  }
+
   _getDefaultOptions() {
     return extend(super._getDefaultOptions(), {
-      views: [],
-      isAdaptive: false,
-      intervalCount: 1,
-      currentView: 'day',
-      firstDayOfWeek: undefined,
-      currentDate: new Date(),
-      min: undefined,
-      max: undefined,
-      useDropDownViewSwitcher: false,
-      _dropDownButtonIcon: 'overlay'
+      _useShortDateFormat: !devices.real().generic || devices.isSimulator()
     });
   }
 
-  _setOptionsByReference() {
-    super._setOptionsByReference();
+  _createEventMap() {
+    this.eventMap = new Map([['items', [this.repaint.bind(this)]], ['views', [validateViews]], ['currentDate', [this._getCalendarDateUpdater()]], ['displayedDate', [this._getCalendarDateUpdater()]], ['min', [this._getCalendarOptionUpdater('min')]], ['max', [this._getCalendarOptionUpdater('max')]], ['tabIndex', [this.repaint.bind(this)]], ['focusStateEnabled', [this.repaint.bind(this)]], ['useDropDownViewSwitcher', [this.repaint.bind(this)]]]);
+  }
 
-    extend(this._optionsByReference, {
-      currentView: true
-    });
+  _addEvent(name, event) {
+    if (!this.eventMap.has(name)) {
+      this.eventMap.set(name, []);
+    }
+
+    var events = this.eventMap.get(name);
+    this.eventMap.set(name, [...events, event]);
   }
 
   _optionChanged(args) {
-    var value = args.value;
+    var {
+      name,
+      value
+    } = args;
 
-    switch (args.name) {
-      case 'views':
-        this._validateViews();
-
-        this._viewSwitcher.option({
-          items: value,
-          selectedItem: this.option('currentView')
-        });
-
-        break;
-
-      case 'customizeDateNavigatorText':
-        this._navigator.option(args.name, value);
-
-        break;
-
-      case 'currentView':
-        this._viewSwitcher.option('selectedItem', value);
-
-        this._navigator.option('step', STEP_MAP[this._getCurrentViewType()]);
-
-        this._changeViewSwitcherLabelText();
-
-        break;
-
-      case 'currentDate':
-        this._navigator.option('date', value);
-
-        break;
-
-      case 'displayedDate':
-        this._navigator.option('displayedDate', value);
-
-        break;
-
-      case 'min':
-      case 'max':
-      case 'firstDayOfWeek':
-      case 'intervalCount':
-        this._navigator.option(args.name, value);
-
-        break;
-
-      case 'tabIndex':
-      case 'focusStateEnabled':
-        this._viewSwitcher.option(args.name, value);
-
-        this._navigator.option(args.name, value);
-
-        super._optionChanged(args);
-
-        break;
-
-      case 'useDropDownViewSwitcher':
-        this._refreshViewSwitcher();
-
-        break;
-
-      default:
-        super._optionChanged(args);
-
+    if (this.eventMap.has(name)) {
+      var events = this.eventMap.get(name);
+      events.forEach(event => {
+        event(value);
+      });
     }
   }
 
   _init() {
     super._init();
 
+    this._createEventMap();
+
     this.$element().addClass(COMPONENT_CLASS);
   }
 
-  _initMarkup() {
-    super._initMarkup();
+  _render() {
+    super._render();
 
-    this._renderNavigator();
+    this._createEventMap();
 
-    this._renderViewSwitcher();
+    this._renderToolbar();
   }
 
-  _renderNavigator() {
-    this._navigator = this._createComponent('<div>', Navigator, {
+  _renderToolbar() {
+    var config = this._createToolbarConfig();
+
+    var toolbarElement = $('<div>');
+    toolbarElement.appendTo(this.$element());
+    this._toolbar = this._createComponent(toolbarElement, Toolbar, config);
+  }
+
+  _createToolbarConfig() {
+    var items = this.option('items');
+    var parsedItems = items.map(element => {
+      return this._parseItem(element);
+    });
+    return {
+      items: parsedItems
+    };
+  }
+
+  _parseItem(item) {
+    var isDefaultElement = this._isDefaultItem(item);
+
+    if (isDefaultElement) {
+      var defaultElementType = item[DEFAULT_ELEMENT];
+
+      switch (defaultElementType) {
+        case VIEW_SWITCHER:
+          if (this.option('useDropDownViewSwitcher')) {
+            return getDropDownViewSwitcher(this, item);
+          }
+
+          return getViewSwitcher(this, item);
+
+        case DATE_NAVIGATOR:
+          this._renderCalendar();
+
+          return getDateNavigator(this, item);
+
+        default:
+          errors.log("Unknown default element type: ".concat(defaultElementType));
+          break;
+      }
+    }
+
+    return item;
+  }
+
+  _callEvent(event, arg) {
+    if (this.eventMap.has(event)) {
+      var events = this.eventMap.get(event);
+      events.forEach(event => event(arg));
+    }
+  }
+
+  _updateCurrentView(view) {
+    var onCurrentViewChange = this.option('onCurrentViewChange');
+    onCurrentViewChange(view.name);
+
+    this._callEvent('currentView', view);
+  }
+
+  _updateCurrentDate(date) {
+    var onCurrentDateChange = this.option('onCurrentDateChange');
+    onCurrentDateChange(date);
+
+    this._callEvent('currentDate', date);
+  }
+
+  _renderCalendar() {
+    this._calendar = this._createComponent('<div>', SchedulerCalendar, {
+      date: this.date,
       min: this.option('min'),
       max: this.option('max'),
-      intervalCount: this.option('intervalCount'),
-      date: this.option('currentDate'),
-      step: STEP_MAP[this._getCurrentViewType()],
       firstDayOfWeek: this.option('firstDayOfWeek'),
-      tabIndex: this.option('tabIndex'),
       focusStateEnabled: this.option('focusStateEnabled'),
-      observer: this.option('observer'),
-      customizeDateNavigatorText: this.option('customizeDateNavigatorText'),
-      todayDate: this.option('todayDate')
-    });
-
-    this._navigator.$element().appendTo(this.$element());
-  }
-
-  _renderViewSwitcher() {
-    this._validateViews();
-
-    var $viewSwitcher = $('<div>').addClass(VIEW_SWITCHER_CLASS).appendTo(this.$element());
-    this.option('useDropDownViewSwitcher') ? this._renderViewSwitcherDropDownMenu($viewSwitcher) : this._renderViewSwitcherTabs($viewSwitcher);
-  }
-
-  _validateViews() {
-    var views = this.option('views');
-    each(views, function (_, view) {
-      var isViewIsObject = isObject(view);
-      var viewType = isViewIsObject && view.type ? view.type : view;
-
-      if (inArray(viewType, VIEWS) === -1) {
-        errors.log('W0008', viewType);
-      }
-    });
-  }
-
-  _getCurrentViewType() {
-    var currentView = this.option('currentView');
-    return currentView.type || currentView;
-  }
-
-  _renderViewSwitcherTabs($element) {
-    var that = this;
-    $element.addClass(TABS_EXPANDED_CLASS);
-    this._viewSwitcher = this._createComponent($element, Tabs, {
-      selectionRequired: true,
-      scrollingEnabled: true,
-      onSelectionChanged: this._updateCurrentView.bind(this),
-      items: this.option('views'),
-      itemTemplate: function itemTemplate(item) {
-        return $('<span>').addClass('dx-tab-text').text(that._getItemText(item));
-      },
-      selectedItem: this.option('currentView'),
       tabIndex: this.option('tabIndex'),
-      focusStateEnabled: this.option('focusStateEnabled')
-    });
-  }
+      onValueChanged: e => {
+        var date = e.value;
 
-  _getItemText(item) {
-    return item.name || messageLocalization.format('dxScheduler-switcher' + camelize(item.type || item, true));
-  }
+        this._updateCurrentDate(date);
 
-  _refreshViewSwitcher() {
-    this._viewSwitcher._dispose();
-
-    this._viewSwitcher.$element().remove();
-
-    delete this._viewSwitcher;
-
-    this._removeViewSwitcherLabel();
-
-    this._renderViewSwitcher();
-  }
-
-  _removeViewSwitcherLabel() {
-    if (isDefined(this._$viewSwitcherLabel)) {
-      this._$viewSwitcherLabel.detach();
-
-      this._$viewSwitcherLabel.remove();
-
-      delete this._$viewSwitcherLabel;
-    }
-  }
-
-  _renderViewSwitcherDropDownMenu($element) {
-    var that = this;
-    this._$viewSwitcherLabel = $('<div>').addClass(VIEW_SWITCHER_LABEL_CLASS).appendTo(this.$element());
-
-    this._changeViewSwitcherLabelText();
-
-    this._viewSwitcher = this._createComponent($element, DropDownMenu, {
-      onItemClick: this._updateCurrentView.bind(this),
-      buttonIcon: this.option('_dropDownButtonIcon'),
-      items: this.option('views'),
-      selectionMode: this.option('isAdaptive') ? 'single' : 'none',
-      selectedItemKeys: [this.option('currentView')],
-      itemTemplate: function itemTemplate(item) {
-        return $('<span>').addClass('dx-dropdownmenu-item-text').text(that._getItemText(item));
+        this._calendar.hide();
       }
     });
+
+    this._calendar.$element().appendTo(this.$element());
   }
 
-  _changeViewSwitcherLabelText() {
-    if (!isDefined(this._$viewSwitcherLabel)) {
-      return;
-    }
-
-    var currentView = this.option('currentView');
-
-    var currentViewText = this._getItemText(currentView);
-
-    this._$viewSwitcherLabel.text(currentViewText);
+  _getCalendarOptionUpdater(name) {
+    return value => {
+      if (this._calendar) {
+        this._calendar.option(name, value);
+      }
+    };
   }
 
-  _getCurrentViewName(currentView) {
-    return isObject(currentView) ? currentView.name || currentView.type : currentView;
+  _getCalendarDateUpdater() {
+    return () => {
+      if (this._calendar) {
+        var date = this.date;
+
+        this._calendar.option('date', date);
+      }
+    };
   }
 
-  _updateCurrentView(e) {
-    var selectedItem = e.itemData || e.component.option('selectedItem');
+  _getNextDate(direction) {
+    var initialDate = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+    var date = initialDate || this.option('currentDate');
 
-    var viewName = this._getCurrentViewName(selectedItem);
+    var options = _extends({}, this.intervalOptions, {
+      date
+    });
 
-    this.notifyObserver('currentViewUpdated', viewName);
+    return getNextIntervalDate(options, direction);
   }
 
-  _renderFocusTarget() {}
+  _getCaption(date) {
+    var options = _extends({}, this.intervalOptions, {
+      date
+    });
 
-  notifyObserver(subject, args) {
-    var observer = this.option('observer');
-
-    if (observer) {
-      observer.fire(subject, args);
-    }
+    var customizationFunction = this.option('customizeDateNavigatorText');
+    var useShortDateFormat = this.option('_useShortDateFormat');
+    return getCaption(options, useShortDateFormat, customizationFunction);
   }
 
-  invoke() {
-    var observer = this.option('observer');
+  _updateDateByDirection(direction) {
+    var date = this._getNextDate(direction);
 
-    if (observer) {
-      return observer.fire.apply(observer, arguments);
-    }
+    this._updateCurrentDate(date);
+  }
+
+  _showCalendar(e) {
+    this._calendar.show(e.element);
+  }
+
+  _hideCalendar() {
+    this._calendar.hide();
+  }
+
+  _isDefaultItem(item) {
+    return Object.prototype.hasOwnProperty.call(item, DEFAULT_ELEMENT);
   }
 
 }
-registerComponent('dxSchedulerHeader', Header);
+registerComponent('dxSchedulerHeader', SchedulerHeader);

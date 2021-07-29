@@ -1,7 +1,7 @@
 /**
 * DevExtreme (esm/ui/tree_view/ui.tree_view.base.js)
 * Version: 21.2.0
-* Build date: Wed Jul 28 2021
+* Build date: Thu Jul 29 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
@@ -500,7 +500,7 @@ var TreeViewBase = HierarchicalCollectionWidget.inherit({
     }
 
     if (this._scrollableContainer) {
-      return this._scrollableContainer.$content().children();
+      return $(this._scrollableContainer.content()).children();
     }
 
     return $();
@@ -516,8 +516,7 @@ var TreeViewBase = HierarchicalCollectionWidget.inherit({
 
     if (this._isRootLevel(parentId)) {
       if (!this._scrollableContainer) this._renderScrollableContainer();
-
-      this._scrollableContainer.$content().append($container);
+      $(this._scrollableContainer.content()).append($container);
     }
 
     return $container;
@@ -552,7 +551,7 @@ var TreeViewBase = HierarchicalCollectionWidget.inherit({
   _renderContentImpl: function _renderContentImpl() {
     var $nodeContainer = this._renderNodeContainer();
 
-    this._scrollableContainer.$content().append($nodeContainer);
+    $(this._scrollableContainer.content()).append($nodeContainer);
 
     if (!this.option('items') || !this.option('items').length) {
       return;

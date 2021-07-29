@@ -1,7 +1,7 @@
 /**
 * DevExtreme (cjs/ui/gantt/ui.gantt.templates.js)
 * Version: 21.2.0
-* Build date: Wed Jul 28 2021
+* Build date: Thu Jul 29 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
@@ -30,10 +30,13 @@ var GanttTemplatesManager = /*#__PURE__*/function () {
 
     var template = taskTooltipContentTemplateOption && this._gantt._getTemplate(taskTooltipContentTemplateOption);
 
-    var createTemplateFunction = template && function (container, item) {
+    var createTemplateFunction = template && function (container, item, callback) {
       template.render({
         model: _this._gantt.getTaskDataByCoreData(item),
-        container: (0, _element.getPublicElement)((0, _renderer.default)(container))
+        container: (0, _element.getPublicElement)((0, _renderer.default)(container)),
+        onRendered: function onRendered() {
+          callback();
+        }
       });
       return isTooltipShowing;
     };
@@ -46,12 +49,12 @@ var GanttTemplatesManager = /*#__PURE__*/function () {
 
     var template = taskTooltipContentTemplateOption && this._gantt._getTemplate(taskTooltipContentTemplateOption);
 
-    var createTemplateFunction = template && function (container, item, callback, posX) {
+    var createTemplateFunction = template && function (container, item, callback) {
       template.render({
         model: item,
         container: (0, _element.getPublicElement)((0, _renderer.default)(container)),
         onRendered: function onRendered() {
-          callback(posX);
+          callback();
         }
       });
       return isTooltipShowing;
@@ -65,12 +68,12 @@ var GanttTemplatesManager = /*#__PURE__*/function () {
 
     var template = taskTooltipContentTemplateOption && this._gantt._getTemplate(taskTooltipContentTemplateOption);
 
-    var createTemplateFunction = template && function (container, item, callback, posX) {
+    var createTemplateFunction = template && function (container, item, callback) {
       template.render({
         model: item,
         container: (0, _element.getPublicElement)((0, _renderer.default)(container)),
         onRendered: function onRendered() {
-          callback(posX);
+          callback();
         }
       });
       return isTooltipShowing;

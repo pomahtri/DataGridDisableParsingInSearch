@@ -527,7 +527,7 @@ var TreeViewBase = _ui.default.inherit({
     }
 
     if (this._scrollableContainer) {
-      return this._scrollableContainer.$content().children();
+      return (0, _renderer.default)(this._scrollableContainer.content()).children();
     }
 
     return (0, _renderer.default)();
@@ -543,8 +543,7 @@ var TreeViewBase = _ui.default.inherit({
 
     if (this._isRootLevel(parentId)) {
       if (!this._scrollableContainer) this._renderScrollableContainer();
-
-      this._scrollableContainer.$content().append($container);
+      (0, _renderer.default)(this._scrollableContainer.content()).append($container);
     }
 
     return $container;
@@ -579,7 +578,7 @@ var TreeViewBase = _ui.default.inherit({
   _renderContentImpl: function _renderContentImpl() {
     var $nodeContainer = this._renderNodeContainer();
 
-    this._scrollableContainer.$content().append($nodeContainer);
+    (0, _renderer.default)(this._scrollableContainer.content()).append($nodeContainer);
 
     if (!this.option('items') || !this.option('items').length) {
       return;

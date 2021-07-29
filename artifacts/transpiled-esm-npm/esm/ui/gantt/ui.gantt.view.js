@@ -40,7 +40,8 @@ export class GanttView extends Widget {
       taskTooltipContentTemplate: this.option('taskTooltipContentTemplate'),
       taskProgressTooltipContentTemplate: this.option('taskProgressTooltipContentTemplate'),
       taskTimeTooltipContentTemplate: this.option('taskTimeTooltipContentTemplate'),
-      taskContentTemplate: this.option('taskContentTemplate')
+      taskContentTemplate: this.option('taskContentTemplate'),
+      sorting: this.option('sorting')
     });
 
     this._selectTask(this.option('selectedRowKey'));
@@ -196,6 +197,8 @@ export class GanttView extends Widget {
       case 'dependencies':
       case 'resources':
       case 'resourceAssignments':
+        this._sortOptions = undefined;
+
         this._update();
 
         break;
@@ -274,6 +277,11 @@ export class GanttView extends Widget {
 
         break;
 
+      case 'sorting':
+        this._sort(args.value);
+
+        break;
+
       default:
         super._optionChanged(args);
 
@@ -294,7 +302,28 @@ export class GanttView extends Widget {
   }
 
   getGanttTasksData() {
-    return this.option('tasks');
+    var tasks = this.option('tasks');
+    var sortingOptions = this.getSortingOptions();
+
+    if (sortingOptions !== null && sortingOptions !== void 0 && sortingOptions.sortedItems && sortingOptions !== null && sortingOptions !== void 0 && sortingOptions.sortColumn) {
+      return sortingOptions.sortedItems;
+    }
+
+    return tasks;
+  }
+
+  _sort(args) {
+    this._sortOptions = args;
+
+    this._update(true);
+
+    var selectedRowKey = this.option('selectedRowKey');
+
+    this._selectTask(selectedRowKey);
+  }
+
+  getSortingOptions() {
+    return this._sortOptions;
   }
 
   getGanttDependenciesData() {

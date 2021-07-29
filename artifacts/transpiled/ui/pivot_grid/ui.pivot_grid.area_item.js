@@ -406,21 +406,15 @@ var AreaItem = _class.default.inherit({
       tableLayout: ''
     });
   },
-  groupWidth: function groupWidth(value) {
-    if (value === undefined) {
-      return this._groupElement.width();
-    } else if (value >= 0) {
+  setGroupWidth: function setGroupWidth(value) {
+    if (value >= 0) {
       this._groupWidth = value;
-      return this._groupElement[0].style.width = value + 'px';
+      this._groupElement[0].style.width = value + 'px';
     } else {
-      return this._groupElement[0].style.width = value;
+      this._groupElement[0].style.width = value;
     }
   },
-  groupHeight: function groupHeight(value) {
-    if (value === undefined) {
-      return this._groupElement.height();
-    }
-
+  setGroupHeight: function setGroupHeight(value) {
     this._groupHeight = null;
 
     if (value >= 0) {
@@ -474,8 +468,8 @@ var AreaItem = _class.default.inherit({
     that._fakeTable && that._fakeTable.detach();
     that._fakeTable = null;
     that.disableVirtualMode();
-    that.groupWidth('100%');
-    that.groupHeight('auto');
+    that.setGroupWidth('100%');
+    that.setGroupHeight('auto');
     that.resetColumnsWidth();
 
     if (tableElement) {

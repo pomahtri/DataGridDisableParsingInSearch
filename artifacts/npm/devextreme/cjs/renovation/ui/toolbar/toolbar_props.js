@@ -1,14 +1,14 @@
 /**
 * DevExtreme (cjs/renovation/ui/toolbar/toolbar_props.js)
 * Version: 21.2.0
-* Build date: Wed Jul 28 2021
+* Build date: Thu Jul 29 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
 */
 "use strict";
 
-exports.ToolbarProps = exports.ToolbarItemType = exports.ToolbarItem = exports.ToolbarItemOptionType = exports.ToolbarDropDownButtonProps = exports.ToolbarDropDownButtonItemPropsType = exports.ToolbarDropDownButtonItemProps = exports.ToolbarButtonProps = exports.ToolbarButtonGroupProps = exports.ToolbarButtonGroupItemPropsType = exports.ToolbarButtonGroupItemProps = exports.CollectionWidgetItem = void 0;
+exports.ToolbarProps = exports.ToolbarItemType = exports.ToolbarItem = exports.ToolbarDropDownButtonProps = exports.ToolbarDropDownButtonItemPropsType = exports.ToolbarDropDownButtonItemProps = exports.ToolbarButtonProps = exports.ToolbarButtonGroupProps = exports.ToolbarButtonGroupItemPropsType = exports.ToolbarButtonGroupItemProps = exports.ToolbarCheckBoxProps = exports.ToolbarTextBoxProps = exports.CollectionWidgetItem = void 0;
 
 var _base_props = require("../common/base_props");
 
@@ -16,6 +16,14 @@ function _extends() { _extends = Object.assign || function (target) { for (var i
 
 var CollectionWidgetItem = {};
 exports.CollectionWidgetItem = CollectionWidgetItem;
+var ToolbarTextBoxProps = {
+  value: ""
+};
+exports.ToolbarTextBoxProps = ToolbarTextBoxProps;
+var ToolbarCheckBoxProps = {
+  value: false
+};
+exports.ToolbarCheckBoxProps = ToolbarCheckBoxProps;
 
 var ToolbarButtonGroupItemProps = _extends({}, CollectionWidgetItem);
 
@@ -34,8 +42,6 @@ var ToolbarDropDownButtonItemPropsType = {};
 exports.ToolbarDropDownButtonItemPropsType = ToolbarDropDownButtonItemPropsType;
 var ToolbarDropDownButtonProps = {};
 exports.ToolbarDropDownButtonProps = ToolbarDropDownButtonProps;
-var ToolbarItemOptionType = {};
-exports.ToolbarItemOptionType = ToolbarItemOptionType;
 
 var ToolbarItem = _extends({}, CollectionWidgetItem);
 

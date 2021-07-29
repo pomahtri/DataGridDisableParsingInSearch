@@ -1,12 +1,20 @@
 "use strict";
 
-exports.getCaption = exports.getNextIntervalDate = void 0;
+exports.formatViews = exports.validateViews = exports.getViewText = exports.getViewName = exports.getViewType = exports.getStep = exports.getCaption = exports.getNextIntervalDate = void 0;
 
 var _date = _interopRequireDefault(require("../../../core/utils/date"));
 
 var _date2 = _interopRequireDefault(require("../../../localization/date"));
 
+var _message = _interopRequireDefault(require("../../../localization/message"));
+
+var _inflector = require("../../../core/utils/inflector");
+
 var _type = require("../../../core/utils/type");
+
+var _errors = _interopRequireDefault(require("../../../core/errors"));
+
+var _constants = require("../constants");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -326,3 +334,84 @@ var getCaption = function getCaption(options, isShort, customizationFunction) {
 };
 
 exports.getCaption = getCaption;
+var STEP_MAP = {
+  day: 'day',
+  week: 'week',
+  workWeek: 'workWeek',
+  month: 'month',
+  timelineDay: 'day',
+  timelineWeek: 'week',
+  timelineWorkWeek: 'workWeek',
+  timelineMonth: 'month',
+  agenda: 'agenda'
+};
+
+var getStep = function getStep(view) {
+  return STEP_MAP[getViewType(view)];
+};
+
+exports.getStep = getStep;
+
+var getViewType = function getViewType(view) {
+  if ((0, _type.isObject)(view) && view.type) {
+    return view.type;
+  }
+
+  return view;
+};
+
+exports.getViewType = getViewType;
+
+var getViewName = function getViewName(view) {
+  if ((0, _type.isObject)(view)) {
+    return view.name ? view.name : view.type;
+  }
+
+  return view;
+};
+
+exports.getViewName = getViewName;
+
+var getViewText = function getViewText(view) {
+  if (view.name) return view.name;
+  var viewName = (0, _inflector.camelize)(view.type || view, true);
+  return _message.default.format('dxScheduler-switcher' + viewName);
+};
+
+exports.getViewText = getViewText;
+
+var isValidView = function isValidView(view) {
+  return Object.values(_constants.VIEWS).includes(view);
+};
+
+var validateViews = function validateViews(views) {
+  views.forEach(function (view) {
+    var viewType = getViewType(view);
+
+    if (!isValidView(viewType)) {
+      _errors.default.log('W0008', viewType);
+    }
+  });
+};
+
+exports.validateViews = validateViews;
+
+var formatViews = function formatViews(views) {
+  validateViews(views);
+  return views.map(function (view) {
+    var text = getViewText(view);
+    var type = getViewType(view);
+    var name = getViewName(view);
+    return {
+      text: text,
+      name: name,
+      view: {
+        text: text,
+        type: type,
+        name: name
+      }
+    };
+  });
+};
+
+exports.formatViews = formatViews;

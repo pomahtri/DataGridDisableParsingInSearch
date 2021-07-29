@@ -1,7 +1,7 @@
 /**
 * DevExtreme (esm/exporter/jspdf/export_data_grid_row_info.js)
 * Version: 21.2.0
-* Build date: Wed Jul 28 2021
+* Build date: Thu Jul 29 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
@@ -12,6 +12,7 @@ function createRowInfo(_ref) {
   var {
     dataProvider,
     rowIndex,
+    rowOptions,
     prevRowInfo
   } = _ref;
   var rowType = dataProvider.getCellData(rowIndex, 0, true).cellSourceData.rowType;
@@ -25,6 +26,7 @@ function createRowInfo(_ref) {
   var columns = dataProvider.getColumns();
   var rowInfo = {
     rowType: rowType,
+    rowHeight: rowOptions.rowHeight,
     indentLevel: indentLevel,
     startNewTableWithIndent,
     cellsInfo: [],
@@ -33,6 +35,7 @@ function createRowInfo(_ref) {
 
   _fillRowCellsInfo({
     rowInfo,
+    rowOptions,
     dataProvider,
     columns
   });
@@ -46,13 +49,15 @@ function createPdfCell(cellInfo) {
     rowSpan: cellInfo.rowSpan,
     colSpan: cellInfo.colSpan,
     drawLeftBorder: cellInfo.drawLeftBorder,
-    drawRightBorder: cellInfo.drawRightBorder
+    drawRightBorder: cellInfo.drawRightBorder,
+    backgroundColor: cellInfo.backgroundColor
   };
 }
 
 function _createCellInfo(_ref2) {
   var {
     rowInfo,
+    rowOptions,
     dataProvider,
     cellIndex
   } = _ref2;
@@ -63,6 +68,8 @@ function _createCellInfo(_ref2) {
   };
 
   if (rowInfo.rowType === 'header') {
+    var _rowOptions$headerSty;
+
     var cellMerging = dataProvider.getCellMerging(rowInfo.rowIndex, cellIndex);
 
     if (cellMerging && cellMerging.rowspan > 0) {
@@ -72,7 +79,13 @@ function _createCellInfo(_ref2) {
     if (cellMerging && cellMerging.colspan > 0) {
       cellInfo.colSpan = cellMerging.colspan;
     }
+
+    if (isDefined((_rowOptions$headerSty = rowOptions.headerStyles) === null || _rowOptions$headerSty === void 0 ? void 0 : _rowOptions$headerSty.backgroundColor)) {
+      cellInfo.backgroundColor = rowOptions.headerStyles.backgroundColor;
+    }
   } else if (rowInfo.rowType === 'group') {
+    var _rowOptions$groupStyl;
+
     cellInfo.drawLeftBorder = false;
     cellInfo.drawRightBorder = false;
 
@@ -89,6 +102,16 @@ function _createCellInfo(_ref2) {
         cellInfo.colSpan = rowInfo.cellsInfo.length;
       }
     }
+
+    if (isDefined((_rowOptions$groupStyl = rowOptions.groupStyles) === null || _rowOptions$groupStyl === void 0 ? void 0 : _rowOptions$groupStyl.backgroundColor)) {
+      cellInfo.backgroundColor = rowOptions.groupStyles.backgroundColor;
+    }
+  } else if (rowInfo.rowType === 'groupFooter' || rowInfo.rowType === 'totalFooter') {
+    var _rowOptions$totalStyl;
+
+    if (isDefined((_rowOptions$totalStyl = rowOptions.totalStyles) === null || _rowOptions$totalStyl === void 0 ? void 0 : _rowOptions$totalStyl.backgroundColor)) {
+      cellInfo.backgroundColor = rowOptions.totalStyles.backgroundColor;
+    }
   }
 
   return cellInfo;
@@ -97,6 +120,7 @@ function _createCellInfo(_ref2) {
 function _fillRowCellsInfo(_ref3) {
   var {
     rowInfo,
+    rowOptions,
     dataProvider,
     columns
   } = _ref3;
@@ -104,6 +128,7 @@ function _fillRowCellsInfo(_ref3) {
   for (var cellIndex = 0; cellIndex < columns.length; cellIndex++) {
     rowInfo.cellsInfo.push(_createCellInfo({
       rowInfo,
+      rowOptions,
       dataProvider,
       cellIndex
     }));

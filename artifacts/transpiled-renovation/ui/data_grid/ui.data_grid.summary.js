@@ -412,15 +412,15 @@ _uiData_grid.default.registerModule('summary', {
         skipEmptyValues: true,
         recalculateWhileEditing: false,
         texts: {
-          sum: _message.default.getFormatter('dxDataGrid-summarySum'),
-          sumOtherColumn: _message.default.getFormatter('dxDataGrid-summarySumOtherColumn'),
-          min: _message.default.getFormatter('dxDataGrid-summaryMin'),
-          minOtherColumn: _message.default.getFormatter('dxDataGrid-summaryMinOtherColumn'),
-          max: _message.default.getFormatter('dxDataGrid-summaryMax'),
-          maxOtherColumn: _message.default.getFormatter('dxDataGrid-summaryMaxOtherColumn'),
-          avg: _message.default.getFormatter('dxDataGrid-summaryAvg'),
-          avgOtherColumn: _message.default.getFormatter('dxDataGrid-summaryAvgOtherColumn'),
-          count: _message.default.getFormatter('dxDataGrid-summaryCount')
+          sum: _message.default.format('dxDataGrid-summarySum'),
+          sumOtherColumn: _message.default.format('dxDataGrid-summarySumOtherColumn'),
+          min: _message.default.format('dxDataGrid-summaryMin'),
+          minOtherColumn: _message.default.format('dxDataGrid-summaryMinOtherColumn'),
+          max: _message.default.format('dxDataGrid-summaryMax'),
+          maxOtherColumn: _message.default.format('dxDataGrid-summaryMaxOtherColumn'),
+          avg: _message.default.format('dxDataGrid-summaryAvg'),
+          avgOtherColumn: _message.default.format('dxDataGrid-summaryAvgOtherColumn'),
+          count: _message.default.format('dxDataGrid-summaryCount')
         }
       },
       sortByGroupSummaryInfo: undefined

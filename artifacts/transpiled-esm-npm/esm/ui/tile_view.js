@@ -45,7 +45,7 @@ var TileView = CollectionWidget.inherit({
       items: null,
       direction: 'horizontal',
       hoverStateEnabled: true,
-      showScrollbar: false,
+      showScrollbar: 'never',
       height: 500,
       baseItemWidth: 100,
       baseItemHeight: 100,

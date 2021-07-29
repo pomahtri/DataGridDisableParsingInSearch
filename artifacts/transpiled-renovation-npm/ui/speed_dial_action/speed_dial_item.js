@@ -20,6 +20,8 @@ var _utils = require("../widget/utils.ink_ripple");
 
 var _themes = require("../themes");
 
+var _type = require("../../core/utils/type");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; _setPrototypeOf(subClass, superClass); }
@@ -93,7 +95,22 @@ var SpeedDialItem = /*#__PURE__*/function (_Overlay) {
   };
 
   _proto._isPositionLeft = function _isPositionLeft(position) {
-    var currentLocation = position ? position.at ? position.at.x ? position.at.x : position.at : typeof position === 'string' ? position : '' : '';
+    var currentLocation = '';
+
+    if (position) {
+      if ((0, _type.isPlainObject)(position) && position.at) {
+        if (position.at.x) {
+          currentLocation = position.at.x;
+        } else {
+          currentLocation = position.at;
+        }
+      } else {
+        if (typeof position === 'string') {
+          currentLocation = position;
+        }
+      }
+    }
+
     return currentLocation.split(' ')[0] === 'left';
   };
 

@@ -1,7 +1,7 @@
 /**
 * DevExtreme (cjs/ui/date_box/ui.date_view_roller.js)
 * Version: 21.2.0
-* Build date: Wed Jul 28 2021
+* Build date: Thu Jul 29 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
@@ -32,7 +32,7 @@ var _fx = _interopRequireDefault(require("../../animation/fx"));
 
 var _translator = require("../../animation/translator");
 
-var _restore_location = require("../../renovation/ui/scroll_view/utils/restore_location");
+var _convert_location = require("../../renovation/ui/scroll_view/utils/convert_location");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -212,11 +212,14 @@ var DateViewRoller = /*#__PURE__*/function (_Scrollable) {
   };
 
   _proto._moveTo = function _moveTo(targetLocation) {
-    targetLocation = (0, _restore_location.restoreLocation)(targetLocation);
+    var _convertToLocation = (0, _convert_location.convertToLocation)(targetLocation),
+        top = _convertToLocation.top,
+        left = _convertToLocation.left;
+
     var location = this.scrollOffset();
     var delta = {
-      x: location.left + targetLocation.left,
-      y: location.top + targetLocation.top
+      x: location.left + left,
+      y: location.top + top
     };
 
     if (this._isVisible() && (delta.x || delta.y)) {

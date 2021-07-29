@@ -30,9 +30,7 @@ var ScrollableWrapper = /*#__PURE__*/function (_Component) {
     return new _deferred.Deferred().resolve();
   };
 
-  _proto._visibilityChanged = function _visibilityChanged() {
-    _Component.prototype.repaint.call(this);
-  };
+  _proto._visibilityChanged = function _visibilityChanged() {};
 
   _proto._container = function _container() {
     return this.$element().find(".dx-scrollable-container").eq(0);

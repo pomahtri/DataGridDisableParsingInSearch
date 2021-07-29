@@ -1,7 +1,7 @@
 /**
 * DevExtreme (esm/ui/gantt/ui.gantt.custom_fields.js)
 * Version: 21.2.0
-* Build date: Wed Jul 28 2021
+* Build date: Thu Jul 29 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
@@ -103,9 +103,9 @@ export class GanttCustomFieldsManager {
             var updatedCustomFields = {};
             this.addCustomFieldsData(key, updatedCustomFields);
 
-            this._gantt._ganttTreeList.updateDataSource(isCustomFieldsUpdateOnly);
-
-            dataOption._reloadDataSource();
+            dataOption._reloadDataSource().done(data => {
+              this._gantt._ganttTreeList.updateDataSource(data !== null && data !== void 0 ? data : dataOption._dataSource, isCustomFieldsUpdateOnly);
+            });
 
             var selectedRowKey = this._gantt.option('selectedRowKey');
 

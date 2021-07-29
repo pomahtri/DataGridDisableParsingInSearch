@@ -98,10 +98,17 @@ class DataOption extends Component {
   }
 
   _reloadDataSource() {
-    var isArray = !!this._getStore()._array;
+    return this._dataSource.load();
+  }
 
-    if (!isArray) {
-      this._dataSource.load();
+  dispose() {
+    this._disposeDataSource();
+  }
+
+  _optionChanged(args) {
+    switch (args.name) {
+      case 'dataSource':
+        break;
     }
   }
 

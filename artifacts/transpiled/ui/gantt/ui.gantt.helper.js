@@ -4,6 +4,10 @@ exports.GanttHelper = void 0;
 
 var _data = require("../../core/utils/data");
 
+var _message = _interopRequireDefault(require("../../localization/message"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 var GanttHelper = {
   prepareMapHandler: function prepareMapHandler(getters) {
     return function (data) {
@@ -77,6 +81,36 @@ var GanttHelper = {
   },
   getSelectionMode: function getSelectionMode(allowSelection) {
     return allowSelection ? 'single' : 'none';
+  },
+  convertTreeToList: function convertTreeToList(root) {
+    var stack = [];
+    var array = [];
+    var hashMap = {};
+    stack.push(root);
+
+    while (stack.length !== 0) {
+      var node = stack.pop();
+
+      if (!node.children || node.children.length === 0) {
+        GanttHelper.visitNode(node, hashMap, array);
+      } else {
+        array.push(node.data);
+        var childrenCount = node.children.length - 1;
+
+        for (var i = childrenCount; i >= 0; i--) {
+          stack.push(node.children[i]);
+        }
+      }
+    }
+
+    array.shift();
+    return array;
+  },
+  visitNode: function visitNode(node, hashMap, array) {
+    if (!hashMap[node.key]) {
+      hashMap[node.key] = true;
+      array.push(node.data);
+    }
   },
   getDefaultOptions: function getDefaultOptions() {
     return {
@@ -176,7 +210,14 @@ var GanttHelper = {
       taskProgressTooltipContentTemplate: null,
       taskTimeTooltipContentTemplate: null,
       taskContentTemplate: null,
-      rootValue: 0
+      rootValue: 0,
+      sorting: {
+        ascendingText: _message.default.format('dxGantt-sortingAscendingText'),
+        descendingText: _message.default.format('dxGantt-sortingDescendingText'),
+        clearText: _message.default.format('dxGantt-sortingClearText'),
+        mode: 'none',
+        showSortIndexes: false
+      }
     };
   }
 };

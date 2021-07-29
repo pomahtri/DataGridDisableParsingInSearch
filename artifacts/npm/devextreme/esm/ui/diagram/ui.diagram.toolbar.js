@@ -1,7 +1,7 @@
 /**
 * DevExtreme (esm/ui/diagram/ui.diagram.toolbar.js)
 * Version: 21.2.0
-* Build date: Wed Jul 28 2021
+* Build date: Thu Jul 29 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
@@ -11,7 +11,7 @@ import Toolbar from '../toolbar';
 import ContextMenu from '../context_menu';
 import DiagramBar from './diagram.bar';
 import { extend } from '../../core/utils/extend';
-import { hasWindow } from '../../core/utils/window';
+import { hasWindow, getWindow } from '../../core/utils/window';
 import DiagramPanel from './ui.diagram.panel';
 import DiagramMenuHelper from './ui.diagram.menu_helper';
 import { getDiagram } from './diagram.importer';
@@ -318,11 +318,9 @@ class DiagramToolbar extends DiagramPanel {
   }
 
   _onItemContentReady(widget, item, actionHandler) {
-    var {
-      Browser
-    } = getDiagram();
-
     if ((widget.NAME === 'dxButton' || widget.NAME === 'dxTextBox') && item.items) {
+      var isTouchMode = this._isTouchMode();
+
       var $menuContainer = $('<div>').appendTo(this.$element());
       widget._contextMenu = this._createComponent($menuContainer, ContextMenu, {
         items: item.items,
@@ -330,7 +328,7 @@ class DiagramToolbar extends DiagramPanel {
         cssClass: DiagramMenuHelper.getContextMenuCssClass(),
         showEvent: '',
         closeOnOutsideClick: e => {
-          return !Browser.TouchUI && $(e.target).closest(widget._contextMenu._dropDownButtonElement).length === 0;
+          return !isTouchMode && $(e.target).closest(widget._contextMenu._dropDownButtonElement).length === 0;
         },
         focusStateEnabled: false,
         position: {
@@ -376,7 +374,7 @@ class DiagramToolbar extends DiagramPanel {
         }
       }); // prevent showing context menu by toggle "close" click
 
-      if (!Browser.TouchUI) {
+      if (!isTouchMode) {
         widget._contextMenu._dropDownButtonElement = widget.$element(); // i.e. widget.NAME === 'dxButton'
 
         if (widget.NAME === 'dxTextBox') {
@@ -384,6 +382,23 @@ class DiagramToolbar extends DiagramPanel {
         }
       }
     }
+  }
+
+  _isTouchMode() {
+    var {
+      Browser
+    } = getDiagram();
+
+    if (Browser.TouchUI) {
+      return true;
+    }
+
+    if (!hasWindow()) {
+      return false;
+    }
+
+    var window = getWindow();
+    return window.navigator && window.navigator.maxTouchPoints > 0;
   }
 
   _onContextMenuInitialized(widget, item, rootWidget) {

@@ -1,7 +1,7 @@
 /**
 * DevExtreme (cjs/ui/scheduler/ui.scheduler.js)
 * Version: 21.2.0
-* Build date: Wed Jul 28 2021
+* Build date: Thu Jul 29 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
@@ -126,6 +126,10 @@ function _extends() { _extends = Object.assign || function (target) { for (var i
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
@@ -139,6 +143,7 @@ var WIDGET_READONLY_CLASS = "".concat(WIDGET_CLASS, "-readonly");
 var WIDGET_SMALL_WIDTH = 400;
 var FULL_DATE_FORMAT = 'yyyyMMddTHHmmss';
 var UTC_FULL_DATE_FORMAT = FULL_DATE_FORMAT + 'Z';
+var DEFAULT_AGENDA_DURATION = 7;
 var VIEWS_CONFIG = {
   day: {
     workSpace: _uiScheduler6.default,
@@ -401,7 +406,14 @@ var Scheduler = /*#__PURE__*/function (_Widget) {
       _dropDownButtonIcon: 'overflow',
       _appointmentCountPerCell: 2,
       _collectorOffset: 0,
-      _appointmentOffset: 26
+      _appointmentOffset: 26,
+      toolbar: [{
+        location: 'before',
+        defaultElement: 'dateNavigator'
+      }, {
+        location: 'after',
+        defaultElement: 'viewSwitcher'
+      }]
       /**
           * @name dxSchedulerOptions.activeStateEnabled
           * @hidden
@@ -519,12 +531,6 @@ var Scheduler = /*#__PURE__*/function (_Widget) {
     return resolveCallbacks.promise();
   };
 
-  _proto.reinitRenderingStrategy = function reinitRenderingStrategy() {
-    var strategy = this._getAppointmentsRenderingStrategy();
-
-    this.getLayoutManager().initRenderingStrategy(strategy);
-  };
-
   _proto._optionChanged = function _optionChanged(args) {
     var _this2 = this;
 
@@ -587,7 +593,7 @@ var Scheduler = /*#__PURE__*/function (_Widget) {
         break;
 
       case 'views':
-        this._processCurrentView();
+        this.modelProvider.updateCurrentView();
 
         if (this._getCurrentViewOptions()) {
           this.repaint();
@@ -603,11 +609,11 @@ var Scheduler = /*#__PURE__*/function (_Widget) {
         break;
 
       case 'currentView':
-        this._processCurrentView();
+        this.modelProvider.updateCurrentView();
+
+        this.getLayoutManager()._initRenderingStrategy();
 
         this._validateDayHours();
-
-        this.reinitRenderingStrategy();
 
         this._validateCellDuration();
 
@@ -898,6 +904,11 @@ var Scheduler = /*#__PURE__*/function (_Widget) {
 
         break;
 
+      case 'toolbar':
+        this._header.option('items', value);
+
+        break;
+
       default:
         _Widget.prototype._optionChanged.call(this, args);
 
@@ -905,21 +916,15 @@ var Scheduler = /*#__PURE__*/function (_Widget) {
   };
 
   _proto._updateHeader = function _updateHeader() {
-    var viewCountConfig = this._getViewCountConfig();
-
-    this._header.option('intervalCount', viewCountConfig.intervalCount);
-
-    this._header.option('displayedDate', this._workSpace._getViewStartByOptions());
-
-    this._header.option('min', this._dateOption('min'));
-
-    this._header.option('max', this._dateOption('max'));
-
-    this._header.option('currentDate', this._dateOption('currentDate'));
-
-    this._header.option('firstDayOfWeek', this._getCurrentViewOption('firstDayOfWeek'));
-
-    this._header.option('currentView', this._currentView);
+    this._header.option({
+      'intervalCount': this._getViewCountConfig().intervalCount,
+      'displayedDate': this._workSpace._getViewStartByOptions(),
+      'min': this._dateOption('min'),
+      'max': this._dateOption('max'),
+      'currentDate': this._dateOption('currentDate'),
+      'firstDayOfWeek': this.getFirstDayOfWeek(),
+      'currentView': this.modelProvider.currentView
+    });
   };
 
   _proto._dateOption = function _dateOption(optionName) {
@@ -959,7 +964,7 @@ var Scheduler = /*#__PURE__*/function (_Widget) {
   };
 
   _proto._isAgenda = function _isAgenda() {
-    return this._getAppointmentsRenderingStrategy() === 'agenda';
+    return this.modelProvider.getViewRenderingStrategyName() === 'agenda';
   };
 
   _proto._allowDragging = function _allowDragging() {
@@ -975,7 +980,8 @@ var Scheduler = /*#__PURE__*/function (_Widget) {
   };
 
   _proto._supportAllDayResizing = function _supportAllDayResizing() {
-    return this._getCurrentViewType() !== 'day' || this._currentView.intervalCount > 1;
+    // TODO get rid of mapping
+    return this.modelProvider.supportAllDayResizing();
   };
 
   _proto._isAllDayExpanded = function _isAllDayExpanded(items) {
@@ -1126,7 +1132,13 @@ var Scheduler = /*#__PURE__*/function (_Widget) {
 
   _proto.updateFactoryInstances = function updateFactoryInstances() {
     var model = this._options._optionManager._options;
-    this.key = (0, _instanceFactory.createFactoryInstances)({
+
+    if (!(0, _type.isDefined)(this.key)) {
+      this.key = (0, _instanceFactory.generateKey)();
+      (0, _instanceFactory.createModelProvider)(this.key, model);
+    }
+
+    (0, _instanceFactory.createFactoryInstances)({
       key: this.key,
       scheduler: this,
       model: model,
@@ -1234,10 +1246,7 @@ var Scheduler = /*#__PURE__*/function (_Widget) {
     var _getAppointmentDataPr3 = (0, _instanceFactory.getAppointmentDataProvider)(this.key),
         filteredItems = _getAppointmentDataPr3.filteredItems;
 
-    workspace.preRenderAppointments({
-      allDayExpanded: this._isAllDayExpanded(filteredItems),
-      appointments: filteredItems
-    });
+    workspace.option('allDayExpanded', this._isAllDayExpanded(filteredItems));
 
     if (filteredItems.length && this._isVisible()) {
       this._appointments.option('items', this._getAppointmentsToRepaint());
@@ -1405,11 +1414,11 @@ var Scheduler = /*#__PURE__*/function (_Widget) {
 
     this._validateCellDuration();
 
-    this._processCurrentView();
+    this.modelProvider.updateCurrentView();
 
     this._renderHeader();
 
-    this._layoutManager = new _appointments.default(this, this._getAppointmentsRenderingStrategy());
+    this._layoutManager = new _appointments.default(this);
     this._appointments = this._createComponent('<div>', _appointmentCollection.default, this._appointmentsConfig());
 
     this._appointments.option('itemTemplate', this._getAppointmentTemplate('appointmentTemplate'));
@@ -1593,7 +1602,7 @@ var Scheduler = /*#__PURE__*/function (_Widget) {
 
   _proto._renderHeader = function _renderHeader() {
     var $header = (0, _renderer.default)('<div>').appendTo(this.$element());
-    this._header = this._createComponent($header, _header.Header, this._headerConfig());
+    this._header = this._createComponent($header, _header.SchedulerHeader, this._headerConfig());
   };
 
   _proto._headerConfig = function _headerConfig() {
@@ -1604,23 +1613,31 @@ var Scheduler = /*#__PURE__*/function (_Widget) {
     var countConfig = this._getViewCountConfig();
 
     var result = (0, _extend.extend)({
-      isAdaptive: this.option('adaptivityEnabled'),
-      firstDayOfWeek: this.option('firstDayOfWeek'),
-      currentView: this._currentView,
+      firstDayOfWeek: this.getFirstDayOfWeek(),
+      currentView: this.modelProvider.currentView,
+      isAdaptive: this.modelProvider.adaptivityEnabled,
       tabIndex: this.option('tabIndex'),
       focusStateEnabled: this.option('focusStateEnabled'),
-      width: this.option('width'),
-      rtlEnabled: this.option('rtlEnabled'),
+      rtlEnabled: this.modelProvider.rtlEnabled,
       useDropDownViewSwitcher: this.option('useDropDownViewSwitcher'),
-      _dropDownButtonIcon: this.option('_dropDownButtonIcon'),
-      customizeDateNavigatorText: this.option('customizeDateNavigatorText')
+      customizeDateNavigatorText: this.option('customizeDateNavigatorText'),
+      agendaDuration: this.option('agendaDuration') || DEFAULT_AGENDA_DURATION
     }, currentViewOptions);
-    result.observer = this;
     result.intervalCount = countConfig.intervalCount;
     result.views = this.option('views');
     result.min = new Date(this._dateOption('min'));
     result.max = new Date(this._dateOption('max'));
     result.currentDate = _date.default.trimTime(new Date(this._dateOption('currentDate')));
+
+    result.onCurrentViewChange = function (name) {
+      return _this10.option('currentView', name);
+    };
+
+    result.onCurrentDateChange = function (date) {
+      return _this10.option('currentDate', date);
+    };
+
+    result.items = this.option('toolbar');
 
     result.todayDate = function () {
       var result = (0, _instanceFactory.getTimeZoneCalculator)(_this10.key).createDate(new Date(), {
@@ -1676,33 +1693,6 @@ var Scheduler = /*#__PURE__*/function (_Widget) {
     return this._getCurrentViewOption('cellDuration');
   };
 
-  _proto._processCurrentView = function _processCurrentView() {
-    var views = this.option('views');
-    var currentView = this.option('currentView');
-    var that = this;
-    this._currentView = null;
-    (0, _iterator.each)(views, function (_, view) {
-      var isViewIsObject = (0, _type.isObject)(view);
-      var viewName = isViewIsObject ? view.name : view;
-      var viewType = view.type;
-
-      if (currentView === viewName || currentView === viewType) {
-        that._currentView = view;
-        return false;
-      }
-    });
-
-    if (!this._currentView) {
-      var isCurrentViewValid = !!VIEWS_CONFIG[currentView];
-
-      if (isCurrentViewValid) {
-        this._currentView = currentView;
-      } else {
-        this._currentView = views[0];
-      }
-    }
-  };
-
   _proto._validateCellDuration = function _validateCellDuration() {
     var endDayHour = this._getCurrentViewOption('endDayHour');
 
@@ -1716,11 +1706,8 @@ var Scheduler = /*#__PURE__*/function (_Widget) {
   };
 
   _proto._getCurrentViewType = function _getCurrentViewType() {
-    return this._currentView.type || this._currentView;
-  };
-
-  _proto._getAppointmentsRenderingStrategy = function _getAppointmentsRenderingStrategy() {
-    return VIEWS_CONFIG[this._getCurrentViewType()].renderingStrategy;
+    // TODO get rid of mapping
+    return this.modelProvider.currentViewType;
   };
 
   _proto._renderWorkSpace = function _renderWorkSpace(groups) {
@@ -1872,17 +1859,13 @@ var Scheduler = /*#__PURE__*/function (_Widget) {
   };
 
   _proto._getCurrentViewOptions = function _getCurrentViewOptions() {
-    return this._currentView;
+    // TODO get rid of mapping
+    return this.modelProvider.currentViewOptions;
   };
 
   _proto._getCurrentViewOption = function _getCurrentViewOption(optionName) {
-    var currentViewOptions = this._getCurrentViewOptions();
-
-    if (currentViewOptions && currentViewOptions[optionName] !== undefined) {
-      return currentViewOptions[optionName];
-    }
-
-    return this.option(optionName);
+    // TODO get rid of mapping
+    return this.modelProvider.getCurrentViewOption(optionName);
   };
 
   _proto._getAppointmentTemplate = function _getAppointmentTemplate(optionName) {
@@ -1952,10 +1935,6 @@ var Scheduler = /*#__PURE__*/function (_Widget) {
 
   _proto.getHeader = function getHeader() {
     return this._header;
-  };
-
-  _proto.getMaxAppointmentsPerCell = function getMaxAppointmentsPerCell() {
-    return this._getCurrentViewOption('maxAppointmentsPerCell');
   };
 
   _proto._cleanPopup = function _cleanPopup() {
@@ -2587,6 +2566,13 @@ var Scheduler = /*#__PURE__*/function (_Widget) {
       * @hidden
       */
   ;
+
+  _createClass(Scheduler, [{
+    key: "modelProvider",
+    get: function get() {
+      return (0, _instanceFactory.getModelProvider)(this.key);
+    }
+  }]);
 
   return Scheduler;
 }(_ui2.default);

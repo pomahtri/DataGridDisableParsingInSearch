@@ -1,7 +1,7 @@
 /**
 * DevExtreme (esm/ui/pivot_grid/ui.pivot_grid.area_item.js)
 * Version: 21.2.0
-* Build date: Wed Jul 28 2021
+* Build date: Thu Jul 29 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
@@ -396,21 +396,15 @@ export var AreaItem = Class.inherit({
       tableLayout: ''
     });
   },
-  groupWidth: function groupWidth(value) {
-    if (value === undefined) {
-      return this._groupElement.width();
-    } else if (value >= 0) {
+  setGroupWidth: function setGroupWidth(value) {
+    if (value >= 0) {
       this._groupWidth = value;
-      return this._groupElement[0].style.width = value + 'px';
+      this._groupElement[0].style.width = value + 'px';
     } else {
-      return this._groupElement[0].style.width = value;
+      this._groupElement[0].style.width = value;
     }
   },
-  groupHeight: function groupHeight(value) {
-    if (value === undefined) {
-      return this._groupElement.height();
-    }
-
+  setGroupHeight: function setGroupHeight(value) {
     this._groupHeight = null;
 
     if (value >= 0) {
@@ -464,8 +458,8 @@ export var AreaItem = Class.inherit({
     that._fakeTable && that._fakeTable.detach();
     that._fakeTable = null;
     that.disableVirtualMode();
-    that.groupWidth('100%');
-    that.groupHeight('auto');
+    that.setGroupWidth('100%');
+    that.setGroupHeight('auto');
     that.resetColumnsWidth();
 
     if (tableElement) {

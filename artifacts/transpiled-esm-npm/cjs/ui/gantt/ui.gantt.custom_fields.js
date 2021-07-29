@@ -115,9 +115,9 @@ var GanttCustomFieldsManager = /*#__PURE__*/function () {
 
             _this.addCustomFieldsData(key, updatedCustomFields);
 
-            _this._gantt._ganttTreeList.updateDataSource(isCustomFieldsUpdateOnly);
-
-            dataOption._reloadDataSource();
+            dataOption._reloadDataSource().done(function (data) {
+              _this._gantt._ganttTreeList.updateDataSource(data !== null && data !== void 0 ? data : dataOption._dataSource, isCustomFieldsUpdateOnly);
+            });
 
             var selectedRowKey = _this._gantt.option('selectedRowKey');
 

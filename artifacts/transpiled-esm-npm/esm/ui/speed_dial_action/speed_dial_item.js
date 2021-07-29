@@ -7,6 +7,7 @@ import { getImageContainer } from '../../core/utils/icon';
 import Overlay from '../overlay/ui.overlay';
 import { render } from '../widget/utils.ink_ripple';
 import { isMaterial } from '../themes';
+import { isPlainObject } from '../../core/utils/type';
 var FAB_CLASS = 'dx-fa-button';
 var FAB_ICON_CLASS = 'dx-fa-button-icon';
 var FAB_LABEL_CLASS = 'dx-fa-button-label';
@@ -67,7 +68,22 @@ class SpeedDialItem extends Overlay {
   }
 
   _isPositionLeft(position) {
-    var currentLocation = position ? position.at ? position.at.x ? position.at.x : position.at : typeof position === 'string' ? position : '' : '';
+    var currentLocation = '';
+
+    if (position) {
+      if (isPlainObject(position) && position.at) {
+        if (position.at.x) {
+          currentLocation = position.at.x;
+        } else {
+          currentLocation = position.at;
+        }
+      } else {
+        if (typeof position === 'string') {
+          currentLocation = position;
+        }
+      }
+    }
+
     return currentLocation.split(' ')[0] === 'left';
   }
 

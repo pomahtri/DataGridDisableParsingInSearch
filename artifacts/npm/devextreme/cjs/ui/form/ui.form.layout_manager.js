@@ -1,7 +1,7 @@
 /**
 * DevExtreme (cjs/ui/form/ui.form.layout_manager.js)
 * Version: 21.2.0
-* Build date: Wed Jul 28 2021
+* Build date: Thu Jul 29 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
@@ -596,45 +596,30 @@ var LayoutManager = _ui2.default.inherit({
   _renderEmptyItem: function _renderEmptyItem($container) {
     return $container.addClass(_constants.FIELD_EMPTY_ITEM_CLASS).html('&nbsp;');
   },
-  _getButtonHorizontalAlignment: function _getButtonHorizontalAlignment(item) {
-    if ((0, _type.isDefined)(item.horizontalAlignment)) {
-      return item.horizontalAlignment;
-    }
-
-    return 'right';
-  },
-  _getButtonVerticalAlignment: function _getButtonVerticalAlignment(item) {
-    switch (item.verticalAlignment) {
-      case 'center':
-        return 'center';
-
-      case 'bottom':
-        return 'flex-end';
-
-      default:
-        return 'flex-start';
-    }
-  },
   _renderButtonItem: function _renderButtonItem(item, $container) {
-    var $button = (0, _renderer.default)('<div>').appendTo($container);
-    var defaultOptions = {
-      validationGroup: this.option('validationGroup')
-    };
-    $container.addClass(_constants.FIELD_BUTTON_ITEM_CLASS).css('textAlign', this._getButtonHorizontalAlignment(item));
-    $container.parent().css('justifyContent', this._getButtonVerticalAlignment(item));
+    // TODO: try to create $container in this function and return it
+    (0, _uiForm2.adjustContainerAsButtonItem)({
+      $container: $container,
+      justifyContent: (0, _uiForm2.convertAlignmentToJustifyContent)(item.verticalAlignment),
+      textAlign: (0, _uiForm2.convertAlignmentToTextAlign)(item.horizontalAlignment),
+      cssItemClass: this.option('cssItemClass'),
+      targetColIndex: item.col
+    });
+    var $button = (0, _renderer.default)('<div>');
+    $container.append($button);
 
-    var instance = this._createComponent($button, 'dxButton', (0, _extend.extend)(defaultOptions, item.buttonOptions));
+    var buttonWidget = this._createComponent($button, 'dxButton', (0, _extend.extend)({
+      validationGroup: this.option('validationGroup')
+    }, item.buttonOptions)); // TODO: try to remove '_itemsRunTimeInfo' from 'render' function
+
 
     this._itemsRunTimeInfo.add({
       item: item,
-      widgetInstance: instance,
+      widgetInstance: buttonWidget,
+      // TODO: try to remove 'widgetInstance'
       guid: item.guid,
       $itemContainer: $container
     });
-
-    this._addItemClasses($container, item.col);
-
-    return $button;
   },
   _addItemClasses: function _addItemClasses($item, column) {
     $item.addClass(_constants.FIELD_ITEM_CLASS).addClass(this.option('cssItemClass')).addClass((0, _type.isDefined)(column) ? 'dx-col-' + column : '');

@@ -1,7 +1,7 @@
 /**
 * DevExtreme (esm/ui/diagram/ui.diagram.context_toolbox.js)
 * Version: 21.2.0
-* Build date: Wed Jul 28 2021
+* Build date: Thu Jul 29 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
@@ -10,6 +10,7 @@ import $ from '../../core/renderer';
 import Widget from '../widget/ui.widget';
 import Popover from '../popover';
 import { getDiagram } from './diagram.importer';
+import { hasWindow, getWindow } from '../../core/utils/window';
 var DIAGRAM_CONTEXT_TOOLBOX_TARGET_CLASS = 'dx-diagram-context-toolbox-target';
 var DIAGRAM_CONTEXT_TOOLBOX_CLASS = 'dx-diagram-context-toolbox';
 var DIAGRAM_TOUCH_CONTEXT_TOOLBOX_CLASS = 'dx-diagram-touch-context-toolbox';
@@ -80,12 +81,9 @@ class DiagramContextToolbox extends Widget {
 
     this._$popoverTargetElement = $('<div>').addClass(DIAGRAM_CONTEXT_TOOLBOX_TARGET_CLASS).appendTo(this.$element());
     var $popoverElement = $('<div>').appendTo(this.$element());
-    var {
-      Browser
-    } = getDiagram();
     var popoverClass = DIAGRAM_CONTEXT_TOOLBOX_CLASS;
 
-    if (Browser.TouchUI) {
+    if (this._isTouchMode()) {
       popoverClass += ' ' + DIAGRAM_TOUCH_CONTEXT_TOOLBOX_CLASS;
     }
 
@@ -96,6 +94,23 @@ class DiagramContextToolbox extends Widget {
         class: popoverClass
       }
     });
+  }
+
+  _isTouchMode() {
+    var {
+      Browser
+    } = getDiagram();
+
+    if (Browser.TouchUI) {
+      return true;
+    }
+
+    if (!hasWindow()) {
+      return false;
+    }
+
+    var window = getWindow();
+    return window.navigator && window.navigator.maxTouchPoints > 0;
   }
 
   _show(x, y, side, category, callback) {

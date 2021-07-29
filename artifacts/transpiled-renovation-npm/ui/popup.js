@@ -524,20 +524,23 @@ var Popup = _ui.default.inherit({
   _getDragTarget: function _getDragTarget() {
     return this.topToolbar();
   },
-  _renderGeometryImpl: function _renderGeometryImpl(isDimensionChanged) {
-    if (!isDimensionChanged) {
-      this._resetContentHeight();
-    }
+  _renderGeometryImpl: function _renderGeometryImpl() {
+    // NOTE: for correct new position calculation
+    this._resetContentHeight();
 
-    this.callBase.apply(this, arguments);
+    this.callBase();
 
     this._setContentHeight();
   },
   _resetContentHeight: function _resetContentHeight() {
-    this.$content().css({
-      'height': 'auto',
-      'maxHeight': 'none'
-    });
+    var height = this._getOptionValue('height');
+
+    if (height === 'auto') {
+      this.$content().css({
+        height: 'auto',
+        maxHeight: 'none'
+      });
+    }
   },
   _renderDrag: function _renderDrag() {
     this.callBase();
@@ -653,7 +656,7 @@ var Popup = _ui.default.inherit({
         maxHeight: ''
       });
     } else {
-      this.callBase.apply(this, arguments);
+      this.callBase();
     }
 
     if ((0, _window.hasWindow)()) {
@@ -672,6 +675,14 @@ var Popup = _ui.default.inherit({
         top: 0,
         left: 0
       });
+      return {
+        h: {
+          location: 0
+        },
+        v: {
+          location: 0
+        }
+      };
     } else {
       (this.option('forceApplyBindings') || _common.noop)();
 

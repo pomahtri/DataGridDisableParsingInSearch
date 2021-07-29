@@ -10,6 +10,8 @@ var _popover = _interopRequireDefault(require("../popover"));
 
 var _diagram = require("./diagram.importer");
 
+var _window = require("../../core/utils/window");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; _setPrototypeOf(subClass, superClass); }
@@ -94,13 +96,9 @@ var DiagramContextToolbox = /*#__PURE__*/function (_Widget) {
 
     this._$popoverTargetElement = (0, _renderer.default)('<div>').addClass(DIAGRAM_CONTEXT_TOOLBOX_TARGET_CLASS).appendTo(this.$element());
     var $popoverElement = (0, _renderer.default)('<div>').appendTo(this.$element());
-
-    var _getDiagram = (0, _diagram.getDiagram)(),
-        Browser = _getDiagram.Browser;
-
     var popoverClass = DIAGRAM_CONTEXT_TOOLBOX_CLASS;
 
-    if (Browser.TouchUI) {
+    if (this._isTouchMode()) {
       popoverClass += ' ' + DIAGRAM_TOUCH_CONTEXT_TOOLBOX_CLASS;
     }
 
@@ -111,6 +109,22 @@ var DiagramContextToolbox = /*#__PURE__*/function (_Widget) {
         class: popoverClass
       }
     });
+  };
+
+  _proto._isTouchMode = function _isTouchMode() {
+    var _getDiagram = (0, _diagram.getDiagram)(),
+        Browser = _getDiagram.Browser;
+
+    if (Browser.TouchUI) {
+      return true;
+    }
+
+    if (!(0, _window.hasWindow)()) {
+      return false;
+    }
+
+    var window = (0, _window.getWindow)();
+    return window.navigator && window.navigator.maxTouchPoints > 0;
   };
 
   _proto._show = function _show(x, y, side, category, callback) {

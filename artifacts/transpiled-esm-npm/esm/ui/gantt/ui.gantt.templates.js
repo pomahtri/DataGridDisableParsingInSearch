@@ -10,10 +10,13 @@ export class GanttTemplatesManager {
 
     var template = taskTooltipContentTemplateOption && this._gantt._getTemplate(taskTooltipContentTemplateOption);
 
-    var createTemplateFunction = template && ((container, item) => {
+    var createTemplateFunction = template && ((container, item, callback) => {
       template.render({
         model: this._gantt.getTaskDataByCoreData(item),
-        container: getPublicElement($(container))
+        container: getPublicElement($(container)),
+        onRendered: () => {
+          callback();
+        }
       });
       return isTooltipShowing;
     });
@@ -26,12 +29,12 @@ export class GanttTemplatesManager {
 
     var template = taskTooltipContentTemplateOption && this._gantt._getTemplate(taskTooltipContentTemplateOption);
 
-    var createTemplateFunction = template && ((container, item, callback, posX) => {
+    var createTemplateFunction = template && ((container, item, callback) => {
       template.render({
         model: item,
         container: getPublicElement($(container)),
         onRendered: () => {
-          callback(posX);
+          callback();
         }
       });
       return isTooltipShowing;
@@ -45,12 +48,12 @@ export class GanttTemplatesManager {
 
     var template = taskTooltipContentTemplateOption && this._gantt._getTemplate(taskTooltipContentTemplateOption);
 
-    var createTemplateFunction = template && ((container, item, callback, posX) => {
+    var createTemplateFunction = template && ((container, item, callback) => {
       template.render({
         model: item,
         container: getPublicElement($(container)),
         onRendered: () => {
-          callback(posX);
+          callback();
         }
       });
       return isTooltipShowing;

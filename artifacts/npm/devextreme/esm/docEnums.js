@@ -1,7 +1,7 @@
 /**
 * DevExtreme (esm/docEnums.js)
 * Version: 21.2.0
-* Build date: Wed Jul 28 2021
+* Build date: Thu Jul 29 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
@@ -1189,6 +1189,11 @@
 /**
  * @typedef {string} Enums.GanttScaleType
  * @enum {'auto'|'minutes'|'hours'|'days'|'weeks'|'months'|'quarters'|'years'}
+ */
+
+/**
+ * @typedef {string} Enums.GanttSortingMode
+ * @enum {'multiple'|'none'|'single'}
  */
 
 /**

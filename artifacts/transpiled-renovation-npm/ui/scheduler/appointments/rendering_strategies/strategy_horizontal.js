@@ -39,12 +39,10 @@ var HorizontalRenderingStrategy = /*#__PURE__*/function (_BaseAppointmentsStra) 
 
     var startDate = position.info.appointment.startDate;
     var normalizedEndDate = position.info.appointment.normalizedEndDate;
-
-    var appointmentDuration = this._getAppointmentDurationInMs(startDate, normalizedEndDate, allDay);
-
-    appointmentDuration = this._adjustDurationByDaylightDiff(appointmentDuration, startDate, normalizedEndDate);
+    var duration = this.getAppointmentDurationInMs(startDate, normalizedEndDate, allDay);
+    duration = this._adjustDurationByDaylightDiff(duration, startDate, normalizedEndDate);
     var cellDuration = this.instance.getAppointmentDurationInMinutes() * toMs('minute');
-    var durationInCells = appointmentDuration / cellDuration;
+    var durationInCells = duration / cellDuration;
     var width = this.cropAppointmentWidth(durationInCells * cellWidth, cellWidth);
     return width;
   };

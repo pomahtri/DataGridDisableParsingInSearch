@@ -1,7 +1,7 @@
 /*!
  * DevExpress Diagram (dx-diagram)
- * Version: 2.1.23
- * Build date: Thu Jul 15 2021
+ * Version: 2.1.25
+ * Build date: Tue Jul 27 2021
  * 
  * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
  * Read about DevExpress licensing here: https://www.devexpress.com/Support/EULAs
@@ -104,85 +104,6 @@ return /******/ (function(modules) { // webpackBootstrap
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var Point = (function () {
-    function Point(x, y) {
-        this.x = x;
-        this.y = y;
-    }
-    Point.zero = function () {
-        return new Point(0, 0);
-    };
-    Point.fromNumber = function (num) {
-        return new Point(num, num);
-    };
-    Point.prototype.isZero = function () {
-        return this.x === 0 && this.y === 0;
-    };
-    Point.prototype.toString = function () {
-        return JSON.stringify(this);
-    };
-    Point.prototype.copyFrom = function (obj) {
-        this.x = obj.x;
-        this.y = obj.y;
-    };
-    Point.prototype.clone = function () {
-        return new Point(this.x, this.y);
-    };
-    Point.prototype.equals = function (obj) {
-        return this.x === obj.x && this.y === obj.y;
-    };
-    Point.prototype.offset = function (offsetX, offsetY) {
-        this.x += offsetX;
-        this.y += offsetY;
-        return this;
-    };
-    Point.prototype.offsetByPoint = function (offset) {
-        this.x += offset.x;
-        this.y += offset.y;
-        return this;
-    };
-    Point.prototype.multiply = function (multiplierX, multiplierY) {
-        this.x *= multiplierX;
-        this.y *= multiplierY;
-        return this;
-    };
-    Point.prototype.negative = function () {
-        this.x *= -1;
-        this.y *= -1;
-        return this;
-    };
-    Point.prototype.applyConverter = function (converter) {
-        this.x = converter(this.x);
-        this.y = converter(this.y);
-        return this;
-    };
-    Point.plus = function (a, b) {
-        return new Point(a.x + b.x, a.y + b.y);
-    };
-    Point.minus = function (a, b) {
-        return new Point(a.x - b.x, a.y - b.y);
-    };
-    Point.xComparer = function (a, b) {
-        return a.x - b.x;
-    };
-    Point.yComparer = function (a, b) {
-        return a.y - b.y;
-    };
-    Point.equals = function (a, b) {
-        return a.x === b.x && a.y === b.y;
-    };
-    return Point;
-}());
-exports.Point = Point;
-
-
-/***/ }),
-/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -307,6 +228,85 @@ var ShapeType;
 
 
 /***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var Point = (function () {
+    function Point(x, y) {
+        this.x = x;
+        this.y = y;
+    }
+    Point.zero = function () {
+        return new Point(0, 0);
+    };
+    Point.fromNumber = function (num) {
+        return new Point(num, num);
+    };
+    Point.prototype.isZero = function () {
+        return this.x === 0 && this.y === 0;
+    };
+    Point.prototype.toString = function () {
+        return JSON.stringify(this);
+    };
+    Point.prototype.copyFrom = function (obj) {
+        this.x = obj.x;
+        this.y = obj.y;
+    };
+    Point.prototype.clone = function () {
+        return new Point(this.x, this.y);
+    };
+    Point.prototype.equals = function (obj) {
+        return this.x === obj.x && this.y === obj.y;
+    };
+    Point.prototype.offset = function (offsetX, offsetY) {
+        this.x += offsetX;
+        this.y += offsetY;
+        return this;
+    };
+    Point.prototype.offsetByPoint = function (offset) {
+        this.x += offset.x;
+        this.y += offset.y;
+        return this;
+    };
+    Point.prototype.multiply = function (multiplierX, multiplierY) {
+        this.x *= multiplierX;
+        this.y *= multiplierY;
+        return this;
+    };
+    Point.prototype.negative = function () {
+        this.x *= -1;
+        this.y *= -1;
+        return this;
+    };
+    Point.prototype.applyConverter = function (converter) {
+        this.x = converter(this.x);
+        this.y = converter(this.y);
+        return this;
+    };
+    Point.plus = function (a, b) {
+        return new Point(a.x + b.x, a.y + b.y);
+    };
+    Point.minus = function (a, b) {
+        return new Point(a.x - b.x, a.y - b.y);
+    };
+    Point.xComparer = function (a, b) {
+        return a.x - b.x;
+    };
+    Point.yComparer = function (a, b) {
+        return a.y - b.y;
+    };
+    Point.equals = function (a, b) {
+        return a.x === b.x && a.y === b.y;
+    };
+    return Point;
+}());
+exports.Point = Point;
+
+
+/***/ }),
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -382,12 +382,57 @@ exports.Size = Size;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ObjectUtils = exports.GeometryUtils = exports.Utils = exports.EventDispatcher = exports.Range = void 0;
+exports.ObjectUtils = exports.GeometryUtils = exports.Utils = exports.EventDispatcher = exports.Range = exports.LineEquation = void 0;
 __webpack_require__(175);
 var size_1 = __webpack_require__(2);
-var point_1 = __webpack_require__(0);
+var point_1 = __webpack_require__(1);
 var rectangle_1 = __webpack_require__(12);
-var search_1 = __webpack_require__(40);
+var search_1 = __webpack_require__(41);
+var metrics_1 = __webpack_require__(35);
+var math_1 = __webpack_require__(32);
+var vector_1 = __webpack_require__(58);
+var segment_1 = __webpack_require__(33);
+var Style_1 = __webpack_require__(27);
+var LineEquation = /** @class */ (function () {
+    function LineEquation(aParam, bParam, cParam) {
+        this.aParam = aParam;
+        this.bParam = bParam;
+        this.cParam = cParam;
+    }
+    LineEquation.fromPoints = function (pointA, pointB, accuracy) {
+        if (accuracy === void 0) { accuracy = 0.00001; }
+        return !GeometryUtils.areDuplicatedPoints(pointA, pointB, accuracy) ?
+            new LineEquation(pointB.y - pointA.y, pointA.x - pointB.x, pointB.x * pointA.y - pointA.x * pointB.y) : undefined;
+    };
+    LineEquation.prototype.getPointIntersection = function (other, accuracy) {
+        if (accuracy === void 0) { accuracy = 0.00001; }
+        var A1 = this.aParam;
+        var B1 = this.bParam;
+        var C1 = this.cParam;
+        var A2 = other.aParam;
+        var B2 = other.bParam;
+        var C2 = other.cParam;
+        var v = A2 * B1 - A1 * B2;
+        if (math_1.MathUtils.numberCloseTo(v, 0, accuracy))
+            return null;
+        if (A1 === 0) {
+            var x = (B2 * C1 - C2 * B1) / (B1 * A2);
+            return this.createPoint(x, -C1 / B1);
+        }
+        var y = (C2 * A1 - C1 * A2) / v;
+        return this.createPoint((-B1 * y - C1) / A1, y);
+    };
+    LineEquation.prototype.containsPoint = function (point, accuracy) {
+        if (accuracy === void 0) { accuracy = 0.00001; }
+        return math_1.MathUtils.numberCloseTo(this.aParam * point.x + this.bParam * point.y + this.cParam, 0, accuracy);
+    };
+    LineEquation.prototype.createPoint = function (x, y, accuracy) {
+        if (accuracy === void 0) { accuracy = 0.00001; }
+        return new point_1.Point(math_1.MathUtils.numberCloseTo(x, 0, accuracy) ? 0 : x, math_1.MathUtils.numberCloseTo(y, 0, accuracy) ? 0 : y);
+    };
+    return LineEquation;
+}());
+exports.LineEquation = LineEquation;
 var Range = /** @class */ (function () {
     function Range(from, to) {
         this.from = from;
@@ -549,97 +594,295 @@ var GeometryUtils = /** @class */ (function () {
         var y3 = point.y + arrowHeight * sin;
         return { point1: new point_1.Point(x1, y1), point2: new point_1.Point(x2, y2), point3: new point_1.Point(x3, y3) };
     };
-    GeometryUtils.removeUnnecessaryLinePoints = function (points, removeCallback, checkCallback) {
-        if (checkCallback === void 0) { checkCallback = (function (pt) { return pt !== undefined; }); }
-        this.removeDuplicatedPoints(points, removeCallback, checkCallback);
-        this.removeOneLinePoints(points, removeCallback, checkCallback);
-        this.removeBackwardPoints(points, removeCallback, checkCallback);
+    GeometryUtils.createSegments = function (points) {
+        var result = [];
+        for (var i = 1; i < points.length; i++)
+            result.push(new segment_1.Segment(points[i - 1], points[i]));
+        return result;
     };
-    GeometryUtils.removeBackwardPoints = function (points, removeCallback, checkCallback) {
-        if (checkCallback === void 0) { checkCallback = (function (pt) { return pt !== undefined; }); }
-        var index = 0;
-        var point;
-        while (point = points[index]) {
-            if (points.length <= 2)
-                break;
-            var nextPoint = this.getNextPoint(points, index, true, checkCallback);
-            var prevPoint = this.getNextPoint(points, index, false, checkCallback);
-            if (prevPoint && nextPoint) {
-                if (point.x === prevPoint.x && point.x === nextPoint.x)
-                    if ((point.y > prevPoint.y && point.y > nextPoint.y) ||
-                        (point.y < prevPoint.y && point.y < nextPoint.y))
-                        if (removeCallback(points[index], index))
-                            continue;
-                if (point.y === prevPoint.y && point.y === nextPoint.y)
-                    if ((point.x > prevPoint.x && point.x > nextPoint.x) ||
-                        (point.x < prevPoint.x && point.x < nextPoint.x))
-                        if (removeCallback(points[index], index))
-                            continue;
-            }
-            index++;
-        }
+    GeometryUtils.createRectagle = function (points) {
+        var xarr = points.map(function (p) { return p.x; });
+        var yarr = points.map(function (p) { return p.y; });
+        var minX = xarr.reduce(function (prev, cur) { return Math.min(prev, cur); }, Number.MAX_VALUE);
+        var maxX = xarr.reduce(function (prev, cur) { return Math.max(prev, cur); }, -Number.MAX_VALUE);
+        var minY = yarr.reduce(function (prev, cur) { return Math.min(prev, cur); }, Number.MAX_VALUE);
+        var maxY = yarr.reduce(function (prev, cur) { return Math.max(prev, cur); }, -Number.MAX_VALUE);
+        return new rectangle_1.Rectangle(minX, minY, maxX - minX, maxY - minY);
     };
-    GeometryUtils.removeOneLinePoints = function (points, removeCallback, checkCallback) {
-        if (checkCallback === void 0) { checkCallback = (function (pt) { return pt !== undefined; }); }
-        var index = 0;
-        var point;
-        while (point = points[index]) {
-            if (points.length <= 2)
-                break;
-            var nextPoint = this.getNextPoint(points, index, true, checkCallback);
-            var prevPoint = this.getNextPoint(points, index, false, checkCallback);
-            if (prevPoint && nextPoint) {
-                if ((point.x === prevPoint.x && point.x === nextPoint.x) ||
-                    (point.y === prevPoint.y && point.y === nextPoint.y))
-                    if (removeCallback(points[index], index))
-                        continue;
-                var tg = (nextPoint.y - prevPoint.y) / (nextPoint.x - prevPoint.x);
-                if (nextPoint.y - points[index].y === (nextPoint.x - points[index].x) * tg)
-                    if (removeCallback(points[index], index))
-                        continue;
-            }
-            index++;
-        }
+    GeometryUtils.createSegmentsFromRectangle = function (rect) {
+        var result = [];
+        var topLeft = new point_1.Point(rect.x, rect.y);
+        var topRight = new point_1.Point(rect.right, rect.y);
+        var bottomRight = new point_1.Point(rect.right, rect.bottom);
+        var bottomLeft = new point_1.Point(rect.x, rect.bottom);
+        result.push(new segment_1.Segment(topLeft, topRight));
+        result.push(new segment_1.Segment(topRight, bottomRight));
+        result.push(new segment_1.Segment(bottomRight, bottomLeft));
+        result.push(new segment_1.Segment(bottomLeft, topLeft));
+        return result;
     };
-    GeometryUtils.removeDuplicatedPoints = function (points, removeCallback, checkCallback) {
-        if (checkCallback === void 0) { checkCallback = (function (pt) { return pt !== undefined; }); }
-        var index = 0;
-        var point;
-        while (point = points[index]) {
-            if (points.length <= 2)
-                break;
-            var nextPoint = this.getNextPoint(points, index, true, checkCallback);
-            if (nextPoint)
-                if (point.x === nextPoint.x && point.y === nextPoint.y) {
-                    var indexToRemove = index + 1;
-                    if (indexToRemove === points.length - 1)
-                        indexToRemove--;
-                    if (removeCallback(points[indexToRemove], indexToRemove))
-                        continue;
+    GeometryUtils.areSegmentsCutRectangle = function (segments, rect) {
+        if (!rect)
+            return false;
+        var rectanlePolygonalChain = GeometryUtils.createSegmentsFromRectangle(rect);
+        var hasSegmentIn = false;
+        var hasSegmentOut = false;
+        var _loop_2 = function (i) {
+            if (hasSegmentIn && hasSegmentOut)
+                return { value: true };
+            var segment = segments[i];
+            if (segment.isIntersectedByRect(rect)) {
+                var startPoint_1 = segment.startPoint;
+                var endPoint_1 = segment.endPoint;
+                var currentContainsStart = rect.containsPoint(startPoint_1);
+                var currentContainsEnd = rect.containsPoint(endPoint_1);
+                if (!currentContainsStart && !currentContainsEnd)
+                    return { value: true };
+                if (currentContainsStart && !currentContainsEnd) {
+                    var rectLinesContainsStart_1 = rectanlePolygonalChain.filter(function (s) { return s.containsPoint(startPoint_1); });
+                    if (rectLinesContainsStart_1.length > 0) {
+                        var otherRectSegments = rectanlePolygonalChain.filter(function (s) {
+                            if (rectLinesContainsStart_1.length === 1)
+                                return !s.containsPoint(rectLinesContainsStart_1[0].startPoint) && !s.containsPoint(rectLinesContainsStart_1[0].endPoint);
+                            return s !== rectLinesContainsStart_1[0] && s !== rectLinesContainsStart_1[1];
+                        });
+                        if (otherRectSegments.some(function (s) { return segment.isIntersected(s); }) && !hasSegmentIn)
+                            hasSegmentIn = true;
+                    }
+                    if (!hasSegmentOut)
+                        hasSegmentOut = true;
+                    return "continue";
                 }
+                if (!currentContainsStart && currentContainsEnd) {
+                    if (!hasSegmentIn) {
+                        hasSegmentIn = true;
+                        if (hasSegmentOut)
+                            hasSegmentOut = false;
+                    }
+                    var rectLinesContainsEnd_1 = rectanlePolygonalChain.filter(function (s) { return s.containsPoint(endPoint_1); });
+                    if (rectLinesContainsEnd_1.length > 0) {
+                        var otherRectSegments = rectanlePolygonalChain.filter(function (s) {
+                            if (rectLinesContainsEnd_1.length === 1)
+                                return !s.containsPoint(rectLinesContainsEnd_1[0].startPoint) && !s.containsPoint(rectLinesContainsEnd_1[0].endPoint);
+                            return s !== rectLinesContainsEnd_1[0] && s !== rectLinesContainsEnd_1[1];
+                        });
+                        if (otherRectSegments.some(function (s) { return segment.isIntersected(s); }) && !hasSegmentOut)
+                            hasSegmentOut = true;
+                    }
+                    return "continue";
+                }
+                var rectLinesContainsStart = rectanlePolygonalChain.filter(function (s) { return s.containsPoint(startPoint_1); });
+                var rectLinesContainsEnd = rectanlePolygonalChain.filter(function (s) { return s.containsPoint(endPoint_1); });
+                if (rectLinesContainsStart.length === 2 && rectLinesContainsEnd.length === 2)
+                    return { value: true };
+                if (rectLinesContainsStart.length === 1 && rectLinesContainsEnd.length === 1 &&
+                    rectLinesContainsStart[0] !== rectLinesContainsEnd[0])
+                    return { value: true };
+                if (!hasSegmentOut && rectLinesContainsEnd.length === 1 && !rectLinesContainsStart.length)
+                    hasSegmentOut = true;
+                if (!hasSegmentIn && rectLinesContainsStart.length === 1 && !rectLinesContainsEnd.length) {
+                    hasSegmentIn = true;
+                    if (hasSegmentOut)
+                        hasSegmentOut = false;
+                }
+            }
+        };
+        for (var i = 0; i < segments.length; i++) {
+            var state_1 = _loop_2(i);
+            if (typeof state_1 === "object")
+                return state_1.value;
+        }
+        return hasSegmentIn && hasSegmentOut;
+    };
+    GeometryUtils.areIntersectedSegments = function (segments, otherSegments) {
+        if (!otherSegments)
+            return false;
+        var segmentIndex = 0;
+        var segment;
+        while (segment = segments[segmentIndex]) {
+            var otherSegmentIndex = 0;
+            var otherSegment = void 0;
+            while (otherSegment = otherSegments[otherSegmentIndex]) {
+                if (otherSegment.isIntersected(segment))
+                    return true;
+                otherSegmentIndex++;
+            }
+            segmentIndex++;
+        }
+        return false;
+    };
+    GeometryUtils.isLineIntersected = function (beginLinePoint, endLinePoint, segment, excludeBeginPoint, excludeEndPoint) {
+        var line = LineEquation.fromPoints(beginLinePoint, endLinePoint);
+        var segmentStartPoint = segment.startPoint;
+        var segmentEndPoint = segment.endPoint;
+        if (line.containsPoint(segmentStartPoint) && line.containsPoint(segmentEndPoint))
+            return !excludeBeginPoint && !excludeEndPoint;
+        var segmentLine = LineEquation.fromPoints(segmentStartPoint, segmentEndPoint);
+        var intersection = segmentLine.getPointIntersection(line);
+        if (!intersection || !segment.containsPoint(intersection))
+            return false;
+        if (excludeBeginPoint)
+            return !GeometryUtils.areDuplicatedPoints(segmentStartPoint, intersection);
+        if (excludeEndPoint)
+            return !GeometryUtils.areDuplicatedPoints(segmentEndPoint, intersection);
+        return true;
+    };
+    GeometryUtils.removeUnnecessaryPoints = function (points, removeCallback, checkCallback, accuracy) {
+        if (checkCallback === void 0) { checkCallback = function (p) { return p !== undefined; }; }
+        if (accuracy === void 0) { accuracy = 0.00001; }
+        this.removeUnnecessaryPointsCore(points, removeCallback, checkCallback, accuracy);
+        this.removeBackwardPoints(points, removeCallback, checkCallback, accuracy);
+        this.removeUnnecessaryPointsCore(points, removeCallback, checkCallback, accuracy);
+    };
+    GeometryUtils.removeUnnecessaryRightAnglePoints = function (points, removeCallback, checkCallback, accuracy) {
+        if (checkCallback === void 0) { checkCallback = function (p) { return p !== undefined; }; }
+        if (accuracy === void 0) { accuracy = 0.00001; }
+        this.removeUnnecessaryPointsCore(points, removeCallback, checkCallback, accuracy);
+        this.removeBackwardPoints(points, removeCallback, checkCallback, accuracy);
+        this.removeNotRightAnglePoints(points, removeCallback, checkCallback, accuracy);
+        this.removeUnnecessaryPointsCore(points, removeCallback, checkCallback, accuracy);
+    };
+    GeometryUtils.removeUnnecessaryPointsCore = function (points, removeCallback, checkCallback, accuracy) {
+        if (checkCallback === void 0) { checkCallback = function (p) { return p !== undefined; }; }
+        if (accuracy === void 0) { accuracy = 0.00001; }
+        this.removeDuplicatedPoints(points, removeCallback, checkCallback, accuracy);
+        this.removeNotCornersPoints(points, removeCallback, checkCallback, accuracy);
+    };
+    GeometryUtils.removeNotRightAnglePoints = function (points, removeCallback, checkCallback, accuracy) {
+        if (checkCallback === void 0) { checkCallback = function (p) { return p !== undefined; }; }
+        if (accuracy === void 0) { accuracy = 0.00001; }
+        var index = 0;
+        var point;
+        while ((point = points[index]) && points.length > 2) {
+            var nextPoint = this.getNextPoint(points, index, 1, checkCallback);
+            var prevPoint = this.getNextPoint(points, index, -1, checkCallback);
+            if (!prevPoint || !nextPoint ||
+                GeometryUtils.isRightAngleCorner(prevPoint, point, nextPoint, accuracy) ||
+                !removeCallback(point, index))
+                index++;
+        }
+    };
+    GeometryUtils.removeDuplicatedPoints = function (points, removeCallback, checkCallback, accuracy) {
+        if (checkCallback === void 0) { checkCallback = function (p) { return p !== undefined; }; }
+        if (accuracy === void 0) { accuracy = 0.00001; }
+        var index = 0;
+        var point;
+        while ((point = points[index]) && points.length > 2) {
+            var nextPoint = this.getNextPoint(points, index, 1, checkCallback);
+            if (nextPoint && GeometryUtils.areDuplicatedPoints(point, nextPoint, accuracy)) {
+                var actualIndex = index === points.length - 2 ? index : index + 1;
+                if (removeCallback(points[actualIndex], actualIndex))
+                    continue;
+            }
             index++;
         }
     };
-    GeometryUtils.getNextPoint = function (points, index, direction, checkCallback) {
+    GeometryUtils.removeNotCornersPoints = function (points, removeCallback, checkCallback, accuracy) {
+        if (checkCallback === void 0) { checkCallback = function (p) { return p !== undefined; }; }
+        if (accuracy === void 0) { accuracy = 0.00001; }
+        var index = 0;
+        var point;
+        while ((point = points[index]) && points.length > 2) {
+            var nextPoint = this.getNextPoint(points, index, 1, checkCallback);
+            var prevPoint = this.getNextPoint(points, index, -1, checkCallback);
+            if (!prevPoint || !nextPoint ||
+                GeometryUtils.isCorner(prevPoint, point, nextPoint, accuracy) ||
+                !removeCallback(point, index))
+                index++;
+        }
+    };
+    GeometryUtils.removeBackwardPoints = function (points, removeCallback, checkCallback, accuracy) {
+        if (checkCallback === void 0) { checkCallback = function (p) { return p !== undefined; }; }
+        if (accuracy === void 0) { accuracy = 0.00001; }
+        var index = 0;
+        var point;
+        while ((point = points[index]) && points.length > 2) {
+            var nextPoint = this.getNextPoint(points, index, 1, checkCallback);
+            var prevPoint = this.getNextPoint(points, index, -1, checkCallback);
+            if (!prevPoint || !nextPoint ||
+                !GeometryUtils.isBackwardPoint(prevPoint, point, nextPoint, accuracy) ||
+                !removeCallback(point, index))
+                index++;
+        }
+    };
+    GeometryUtils.isRightAngleCorner = function (prev, current, next, accuracy) {
+        if (accuracy === void 0) { accuracy = 0.00001; }
+        return math_1.MathUtils.numberCloseTo(GeometryUtils.createAngle(prev, current, next), Math.PI / 2.0, accuracy) ||
+            math_1.MathUtils.numberCloseTo(GeometryUtils.createAngle(prev, current, next), Math.PI, accuracy) ||
+            math_1.MathUtils.numberCloseTo(GeometryUtils.createAngle(prev, current, next), 3.0 * Math.PI / 2.0, accuracy);
+    };
+    GeometryUtils.isCorner = function (prev, current, next, accuracy) {
+        if (accuracy === void 0) { accuracy = 0.00001; }
+        return !math_1.MathUtils.numberCloseTo(GeometryUtils.createAngle(prev, current, next), 0, accuracy);
+    };
+    GeometryUtils.areDuplicatedPoints = function (current, next, accuracy) {
+        if (accuracy === void 0) { accuracy = 0.00001; }
+        return (math_1.MathUtils.numberCloseTo(current.x, next.x, accuracy) && math_1.MathUtils.numberCloseTo(current.y, next.y, accuracy));
+    };
+    GeometryUtils.isBackwardPoint = function (prev, current, next, accuracy) {
+        if (accuracy === void 0) { accuracy = 0.00001; }
+        return math_1.MathUtils.numberCloseTo(GeometryUtils.createAngle(prev, current, next), Math.PI, accuracy);
+    };
+    GeometryUtils.createAngle = function (prev, current, next) {
+        var vector1 = vector_1.Vector.fromPoints(current, next);
+        var vector2 = vector_1.Vector.fromPoints(prev, current);
+        var vector1X = vector1.x;
+        var vector1Y = vector1.y;
+        var vector2X = vector2.x;
+        var vector2Y = vector2.y;
+        var atan = Math.atan2(vector1X * vector2Y - vector2X * vector1Y, vector1X * vector2X + vector1Y * vector2Y);
+        return atan < 0 ? 2 * Math.PI + atan : atan;
+    };
+    GeometryUtils.getNextPoint = function (points, index, step, checkCallback) {
         var result;
-        var newIndex = index + (direction ? 1 : -1);
+        var newIndex = index + step;
         while (result = points[newIndex]) {
             if (checkCallback(result))
                 return result;
-            newIndex = newIndex + (direction ? 1 : -1);
+            newIndex = newIndex + step;
         }
     };
-    GeometryUtils.getDistance = function (a, b) {
-        return Math.sqrt(Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2));
+    GeometryUtils.addSelectedLinesTo = function (prevPt, pt, nextPt, offsetX, offsetY, offsetXNegative, offsetYNegative, nextOffsetX, nextOffsetY, nextOffsetXNegative, nextOffsetYNegative, addSelectedLine, addSelectedLineWB, accuracy) {
+        if (accuracy === void 0) { accuracy = 0.00001; }
+        var a1 = pt.y - prevPt.y;
+        var a2 = nextPt.y - pt.y;
+        var b1 = prevPt.x - pt.x;
+        var b2 = pt.x - nextPt.x;
+        var det = a1 * b2 - a2 * b1;
+        if (!math_1.MathUtils.numberCloseTo(det, 0, accuracy)) {
+            var c1 = a1 * (prevPt.x + offsetX) + b1 * (prevPt.y + offsetY);
+            var c2 = a2 * (pt.x + nextOffsetX) + b2 * (pt.y + nextOffsetY);
+            addSelectedLine((b2 * c1 - b1 * c2) / det, (a1 * c2 - a2 * c1) / det);
+            var c1WB = a1 * (prevPt.x + offsetXNegative) + b1 * (prevPt.y + offsetYNegative);
+            var c2WB = a2 * (pt.x + nextOffsetXNegative) + b2 * (pt.y + nextOffsetYNegative);
+            addSelectedLineWB((b2 * c1WB - b1 * c2WB) / det, (a1 * c2WB - a2 * c1WB) / det);
+        }
+    };
+    GeometryUtils.getSelectionOffsetPoint = function (prev, current, distance) {
+        return new point_1.Point((prev.y - current.y) / distance, (current.x - prev.x) / distance);
+    };
+    GeometryUtils.getSelectionTextStartEndPoints = function (prev, current, distance, center, size, align) {
+        var cos = (current.x - prev.x) / distance;
+        var sin = (current.y - prev.y) / distance;
+        var width = size.width * cos + size.height * sin;
+        switch (align) {
+            case Style_1.TextAlignment.Left:
+                return [center, new point_1.Point(center.x + cos * width, center.y + sin * width)];
+            case Style_1.TextAlignment.Right:
+                return [new point_1.Point(center.x - cos * width, center.y - sin * width), center];
+            default:
+                return [
+                    new point_1.Point(center.x - 0.5 * cos * width, center.y - 0.5 * sin * width),
+                    new point_1.Point(center.x + 0.5 * cos * width, center.y + 0.5 * sin * width)
+                ];
+        }
     };
     GeometryUtils.getPathLength = function (points) {
         var length = 0;
         var prevPt;
         points.forEach(function (pt) {
-            if (prevPt !== undefined) {
-                var lineLength = GeometryUtils.getDistance(pt, prevPt);
-                length += lineLength;
-            }
+            if (prevPt !== undefined)
+                length += metrics_1.Metrics.euclideanDistance(pt, prevPt);
             prevPt = pt;
         });
         return length;
@@ -655,7 +898,7 @@ var GeometryUtils = /** @class */ (function () {
         var targetLength = length * relativePosition;
         var currentLength = 0;
         for (var i = 1; i < points.length; i++) {
-            var lineLength = GeometryUtils.getDistance(points[i], points[i - 1]);
+            var lineLength = metrics_1.Metrics.euclideanDistance(points[i], points[i - 1]);
             if (currentLength + lineLength >= targetLength) {
                 var delta = targetLength - currentLength;
                 var cos = (points[i].x - points[i - 1].x) / lineLength;
@@ -699,8 +942,8 @@ var GeometryUtils = /** @class */ (function () {
             }
             var beginAngle = this.getTriangleBeginAngle(beginPoint, endPoint, point);
             var endAngle = this.getTriangleEndAngle(beginPoint, endPoint, point);
-            var beginDistance = GeometryUtils.getDistance(point, beginPoint);
-            var endDistance = GeometryUtils.getDistance(point, endPoint);
+            var beginDistance = metrics_1.Metrics.euclideanDistance(point, beginPoint);
+            var endDistance = metrics_1.Metrics.euclideanDistance(point, endPoint);
             var orthOffset = beginDistance * Math.sin(beginAngle);
             var currentDistance = void 0;
             if (Math.PI / 2 <= beginAngle && beginAngle <= Math.PI * 3 / 2)
@@ -751,7 +994,7 @@ var GeometryUtils = /** @class */ (function () {
         for (var i = 1; i < points.length; i++) {
             var beginPoint = points[i - 1];
             var endPoint = points[i];
-            var lineLength = GeometryUtils.getDistance(endPoint, beginPoint);
+            var lineLength = metrics_1.Metrics.euclideanDistance(endPoint, beginPoint);
             var angle = Math.atan((endPoint.y - beginPoint.y) / (endPoint.x - beginPoint.x));
             var round = Math.fround || Math.round;
             if ((point.x === endPoint.x && point.x === beginPoint.x) || (point.y === endPoint.y && point.y === beginPoint.y) ||
@@ -838,204 +1081,46 @@ exports.ObjectUtils = ObjectUtils;
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.PathPrimitiveClosePathCommand = exports.PathPrimitiveArcToCommand = exports.PathPrimitiveQuadraticCurveToCommand = exports.PathPrimitiveCubicCurveToCommand = exports.PathPrimitiveLineToCommand = exports.PathPrimitiveMoveToCommand = exports.PathPrimitiveCommand = exports.PathPrimitive = void 0;
-var RenderHelper_1 = __webpack_require__(15);
-var Primitive_1 = __webpack_require__(25);
-var PrimitiveObject_1 = __webpack_require__(112);
-var PathPrimitive = /** @class */ (function (_super) {
-    __extends(PathPrimitive, _super);
-    function PathPrimitive(commands, style, className, clipPathId, onApplyProperties) {
-        var _this = _super.call(this, style, className, clipPathId, onApplyProperties) || this;
-        _this.commands = commands.map(function (command) {
-            command.style = style;
-            return command;
-        });
-        return _this;
-    }
-    PathPrimitive.prototype.createMainElement = function () {
-        return document.createElementNS(RenderHelper_1.svgNS, "path");
-    };
-    PathPrimitive.prototype.applyElementProperties = function (element, measurer) {
-        element.setAttribute("d", this.commands.map(function (c) { return c.toString(); }).join(" "));
-        this.setPositionCorrectionAttribute(element);
-        _super.prototype.applyElementProperties.call(this, element, measurer);
-    };
-    return PathPrimitive;
-}(Primitive_1.SvgPrimitive));
-exports.PathPrimitive = PathPrimitive;
-var PathPrimitiveCommand = /** @class */ (function (_super) {
-    __extends(PathPrimitiveCommand, _super);
-    function PathPrimitiveCommand() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    return PathPrimitiveCommand;
-}(PrimitiveObject_1.PrimitiveObject));
-exports.PathPrimitiveCommand = PathPrimitiveCommand;
-var PathPrimitiveMoveToCommand = /** @class */ (function (_super) {
-    __extends(PathPrimitiveMoveToCommand, _super);
-    function PathPrimitiveMoveToCommand(x, y) {
-        var _this = _super.call(this) || this;
-        _this.x = x;
-        _this.y = y;
-        return _this;
-    }
-    PathPrimitiveMoveToCommand.prototype.toString = function () {
-        return "M " + this.getUnitVaue(this.x) + " " + this.getUnitVaue(this.y);
-    };
-    PathPrimitiveMoveToCommand.fromPoint = function (point) {
-        return new PathPrimitiveMoveToCommand(point.x, point.y);
-    };
-    return PathPrimitiveMoveToCommand;
-}(PathPrimitiveCommand));
-exports.PathPrimitiveMoveToCommand = PathPrimitiveMoveToCommand;
-var PathPrimitiveLineToCommand = /** @class */ (function (_super) {
-    __extends(PathPrimitiveLineToCommand, _super);
-    function PathPrimitiveLineToCommand(x, y) {
-        var _this = _super.call(this) || this;
-        _this.x = x;
-        _this.y = y;
-        return _this;
-    }
-    PathPrimitiveLineToCommand.prototype.toString = function () {
-        return "L " + this.getUnitVaue(this.x) + " " + this.getUnitVaue(this.y);
-    };
-    PathPrimitiveLineToCommand.fromPoint = function (point) {
-        return new PathPrimitiveLineToCommand(point.x, point.y);
-    };
-    return PathPrimitiveLineToCommand;
-}(PathPrimitiveCommand));
-exports.PathPrimitiveLineToCommand = PathPrimitiveLineToCommand;
-var PathPrimitiveCubicCurveToCommand = /** @class */ (function (_super) {
-    __extends(PathPrimitiveCubicCurveToCommand, _super);
-    function PathPrimitiveCubicCurveToCommand(x1, y1, x2, y2, x3, y3) {
-        var _this = _super.call(this) || this;
-        _this.x1 = x1;
-        _this.y1 = y1;
-        _this.x2 = x2;
-        _this.y2 = y2;
-        _this.x3 = x3;
-        _this.y3 = y3;
-        return _this;
-    }
-    PathPrimitiveCubicCurveToCommand.prototype.toString = function () {
-        return "C " + this.getUnitVaue(this.x1) + " " + this.getUnitVaue(this.y1) + "," +
-            this.getUnitVaue(this.x2) + " " + this.getUnitVaue(this.y2) + "," +
-            this.getUnitVaue(this.x3) + " " + this.getUnitVaue(this.y3);
-    };
-    return PathPrimitiveCubicCurveToCommand;
-}(PathPrimitiveCommand));
-exports.PathPrimitiveCubicCurveToCommand = PathPrimitiveCubicCurveToCommand;
-var PathPrimitiveQuadraticCurveToCommand = /** @class */ (function (_super) {
-    __extends(PathPrimitiveQuadraticCurveToCommand, _super);
-    function PathPrimitiveQuadraticCurveToCommand(x1, y1, x2, y2) {
-        var _this = _super.call(this) || this;
-        _this.x1 = x1;
-        _this.y1 = y1;
-        _this.x2 = x2;
-        _this.y2 = y2;
-        return _this;
-    }
-    PathPrimitiveQuadraticCurveToCommand.prototype.toString = function () {
-        return "Q " + this.getUnitVaue(this.x1) + " " + this.getUnitVaue(this.y1) + "," +
-            this.getUnitVaue(this.x2) + " " + this.getUnitVaue(this.y2);
-    };
-    return PathPrimitiveQuadraticCurveToCommand;
-}(PathPrimitiveCommand));
-exports.PathPrimitiveQuadraticCurveToCommand = PathPrimitiveQuadraticCurveToCommand;
-var PathPrimitiveArcToCommand = /** @class */ (function (_super) {
-    __extends(PathPrimitiveArcToCommand, _super);
-    function PathPrimitiveArcToCommand(rx, ry, xAxisRotation, largeArcFlag, sweepFag, x, y) {
-        var _this = _super.call(this) || this;
-        _this.rx = rx;
-        _this.ry = ry;
-        _this.xAxisRotation = xAxisRotation;
-        _this.largeArcFlag = largeArcFlag;
-        _this.sweepFag = sweepFag;
-        _this.x = x;
-        _this.y = y;
-        return _this;
-    }
-    PathPrimitiveArcToCommand.prototype.toString = function () {
-        return "A " + this.getUnitVaue(this.rx) + " " + this.getUnitVaue(this.ry) + " " +
-            this.getUnitVaue(this.xAxisRotation) + " " +
-            (this.largeArcFlag ? "1" : "0") + " " + (this.sweepFag ? "1" : "0") +
-            this.getUnitVaue(this.x) + "," + this.getUnitVaue(this.y);
-    };
-    return PathPrimitiveArcToCommand;
-}(PathPrimitiveCommand));
-exports.PathPrimitiveArcToCommand = PathPrimitiveArcToCommand;
-var PathPrimitiveClosePathCommand = /** @class */ (function (_super) {
-    __extends(PathPrimitiveClosePathCommand, _super);
-    function PathPrimitiveClosePathCommand() {
-        return _super.call(this) || this;
-    }
-    PathPrimitiveClosePathCommand.prototype.toString = function () {
-        return "z";
-    };
-    return PathPrimitiveClosePathCommand;
-}(PathPrimitiveCommand));
-exports.PathPrimitiveClosePathCommand = PathPrimitiveClosePathCommand;
-
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ModelUtils = void 0;
 var unit_converter_1 = __webpack_require__(11);
-var point_1 = __webpack_require__(0);
+var metrics_1 = __webpack_require__(35);
+var point_1 = __webpack_require__(1);
 var rectangle_1 = __webpack_require__(12);
 var size_1 = __webpack_require__(2);
-var vector_1 = __webpack_require__(57);
-var math_1 = __webpack_require__(33);
-var Enums_1 = __webpack_require__(48);
-var AddConnectionHistoryItem_1 = __webpack_require__(49);
+var vector_1 = __webpack_require__(58);
+var math_1 = __webpack_require__(32);
+var Enums_1 = __webpack_require__(49);
+var AddConnectionHistoryItem_1 = __webpack_require__(50);
 var AddConnectorHistoryItem_1 = __webpack_require__(64);
-var AddConnectorPointHistoryItem_1 = __webpack_require__(189);
-var AddShapeHistoryItem_1 = __webpack_require__(52);
-var ChangeShapeParametersHistoryItem_1 = __webpack_require__(116);
+var AddConnectorPointHistoryItem_1 = __webpack_require__(188);
+var AddShapeHistoryItem_1 = __webpack_require__(53);
+var ChangeConnectorPointsHistoryItem_1 = __webpack_require__(86);
+var ChangeShapeParametersHistoryItem_1 = __webpack_require__(115);
 var DeleteConnectionHistoryItem_1 = __webpack_require__(65);
-var DeleteConnectorHistoryItem_1 = __webpack_require__(117);
-var DeleteConnectorPointHistoryItem_1 = __webpack_require__(190);
-var DeleteShapeHistoryItem_1 = __webpack_require__(118);
-var InsertToContainerHistoryItem_1 = __webpack_require__(191);
-var MoveConnectorPointHistoryItem_1 = __webpack_require__(192);
-var MoveShapeHistoryItem_1 = __webpack_require__(193);
-var RemoveFromContainerHistoryItem_1 = __webpack_require__(194);
-var ResizeShapeHistoryItem_1 = __webpack_require__(119);
+var DeleteConnectorHistoryItem_1 = __webpack_require__(116);
+var DeleteShapeHistoryItem_1 = __webpack_require__(117);
+var InsertToContainerHistoryItem_1 = __webpack_require__(189);
+var MoveConnectorPointHistoryItem_1 = __webpack_require__(190);
+var MoveShapeHistoryItem_1 = __webpack_require__(191);
+var RemoveFromContainerHistoryItem_1 = __webpack_require__(192);
+var ResizeShapeHistoryItem_1 = __webpack_require__(118);
 var SetSelectionHistoryItem_1 = __webpack_require__(66);
-var ModelResizeHistoryItem_1 = __webpack_require__(195);
-var UpdatePositionsOnPageResizeHistoryItem_1 = __webpack_require__(196);
+var ModelResizeHistoryItem_1 = __webpack_require__(193);
+var UpdatePositionsOnPageResizeHistoryItem_1 = __webpack_require__(194);
 var ChangeConnectorPropertyHistoryItem_1 = __webpack_require__(88);
 var ChangeConnectorTextHistoryItem_1 = __webpack_require__(67);
-var ChangeLockedHistoryItem_1 = __webpack_require__(120);
+var ChangeLockedHistoryItem_1 = __webpack_require__(119);
 var ChangeStyleHistoryItem_1 = __webpack_require__(89);
 var ChangeStyleTextHistoryItem_1 = __webpack_require__(68);
 var Graph_1 = __webpack_require__(69);
-var GraphInfo_1 = __webpack_require__(197);
-var Structures_1 = __webpack_require__(37);
+var GraphInfo_1 = __webpack_require__(195);
+var Structures_1 = __webpack_require__(38);
 var Utils_1 = __webpack_require__(3);
-var Connector_1 = __webpack_require__(7);
-var ConnectorProperties_1 = __webpack_require__(31);
-var ConnectorRenderPoint_1 = __webpack_require__(28);
-var ConnectorRenderPointsContext_1 = __webpack_require__(86);
+var Connector_1 = __webpack_require__(6);
+var ConnectorProperties_1 = __webpack_require__(30);
+var ConnectorRenderPoint_1 = __webpack_require__(29);
+var ConnectorRenderPointsContext_1 = __webpack_require__(85);
 var Shape_1 = __webpack_require__(14);
 var ModelUtils = /** @class */ (function () {
     function ModelUtils() {
@@ -1051,45 +1136,89 @@ var ModelUtils = /** @class */ (function () {
     ModelUtils.addConnectorPoint = function (history, connectorKey, pointIndex, position) {
         history.addAndRedo(new AddConnectorPointHistoryItem_1.AddConnectorPointHistoryItem(connectorKey, pointIndex, position));
     };
-    ModelUtils.deleteConnectorPoint = function (history, connectorKey, index) {
-        history.addAndRedo(new DeleteConnectorPointHistoryItem_1.DeleteConnectorPointHistoryItem(connectorKey, index));
+    ModelUtils.deleteConnectorCustomPoints = function (history, connector) {
+        if (connector.points.length > 2) {
+            var oldContext = connector.createRenderPointsContext();
+            if (connector.properties.lineOption === ConnectorProperties_1.ConnectorLineOption.Straight || !oldContext)
+                history.addAndRedo(new ChangeConnectorPointsHistoryItem_1.ReplaceConnectorPointsHistoryItem(connector.key, [
+                    connector.points[0].clone(),
+                    connector.points[connector.points.length - 1].clone()
+                ]));
+            else {
+                var beginPoint = connector.points[0].clone();
+                var lastPoint = connector.points[connector.points.length - 1].clone();
+                history.addAndRedo(new ChangeConnectorPointsHistoryItem_1.ChangeConnectorPointsHistoryItem(connector.key, [beginPoint, lastPoint], new ConnectorRenderPointsContext_1.ConnectorRenderPointsContext([
+                    new ConnectorRenderPoint_1.ConnectorRenderPoint(beginPoint.x, beginPoint.y, 0),
+                    new ConnectorRenderPoint_1.ConnectorRenderPoint(lastPoint.x, lastPoint.y, 1)
+                ], false, oldContext.actualRoutingMode)));
+            }
+        }
     };
-    ModelUtils.deleteConnectorPoints = function (history, connector) {
-        while (connector.points.length > 2)
-            this.deleteConnectorPoint(history, connector.key, 1);
+    ModelUtils.deleteConnectorUnnecessaryPoints = function (history, connector) {
+        var oldRenderPoints = connector.getRenderPoints(true).map(function (p) { return p.clone(); });
+        if (connector.properties.lineOption === ConnectorProperties_1.ConnectorLineOption.Straight) {
+            var unnecessaryPoints = ModelUtils.createUnnecessaryRenderPoints(oldRenderPoints.filter(function (p) { return !p.skipped; }).map(function (p) { return p.clone(); }), connector.skippedRenderPoints, function (removedPoint) { return ModelUtils.findFirstPointIndex(oldRenderPoints, function (p) { return p.equals(removedPoint); }); });
+            if (Object.keys(unnecessaryPoints).length)
+                ModelUtils.replaceConnectorPoints(history, connector, unnecessaryPoints);
+        }
+        else {
+            var newRenderPoints = oldRenderPoints.filter(function (p) { return !p.skipped; }).map(function (p) { return p.clone(); });
+            var unnecessaryPoints = ModelUtils.createUnnecessaryRightAngleRenderPoints(newRenderPoints, connector.skippedRenderPoints, function (removedPoint) { return ModelUtils.findFirstPointIndex(oldRenderPoints, function (p) { return p.equals(removedPoint); }); });
+            if (Object.keys(unnecessaryPoints).length) {
+                var oldContext = connector.createRenderPointsContext();
+                if (oldContext) {
+                    var newPoints = ModelUtils.createNecessaryPoints(connector.points.map(function (p) { return p.clone(); }), unnecessaryPoints);
+                    var newRenderContext = new ConnectorRenderPointsContext_1.ConnectorRenderPointsContext(ModelUtils.validateRenderPointIndexes(newPoints, newRenderPoints, 0), oldContext.lockCreateRenderPoints, oldContext.actualRoutingMode);
+                    history.addAndRedo(new ChangeConnectorPointsHistoryItem_1.ChangeConnectorPointsHistoryItem(connector.key, newPoints, newRenderContext));
+                }
+                else
+                    ModelUtils.replaceConnectorPoints(history, connector, unnecessaryPoints);
+            }
+        }
     };
-    ModelUtils.deleteConnectorUnnecessaryPoints = function (history, connector, validateRenderPoints) {
-        if (validateRenderPoints === void 0) { validateRenderPoints = false; }
-        var unnecessaryPoints = this.createUnnecessaryPoints(connector.points, connector.skippedRenderPoints);
-        if (Object.keys(unnecessaryPoints).length > 0)
-            history.addAndRedo(new DeleteConnectorPointHistoryItem_1.DeleteConnectorUnnecessaryPointsHistoryItem(connector.key, unnecessaryPoints, validateRenderPoints));
+    ModelUtils.replaceConnectorPoints = function (history, connector, unnecessaryPoints) {
+        history.addAndRedo(new ChangeConnectorPointsHistoryItem_1.ReplaceConnectorPointsHistoryItem(connector.key, ModelUtils.createNecessaryPoints(connector.points.map(function (p) { return p.clone(); }), unnecessaryPoints)));
     };
-    ModelUtils.createUnnecessaryPoints = function (points, skippedRenderPoints, predicate) {
+    ModelUtils.skipUnnecessaryRenderPoints = function (points) {
+        var clonedPoints = points.map(function (p) { return p.clone(); });
+        ModelUtils.removeUnnecessaryRenderPoints(clonedPoints);
+        points.forEach(function (p) { return p.skipped = clonedPoints.some(function (cp) { return cp.skipped && cp.equals(p); }); });
+        points[0].skipped = false;
+        points[points.length - 1].skipped = false;
+    };
+    ModelUtils.skipUnnecessaryRightAngleRenderPoints = function (points) {
+        var clonedPoints = points.map(function (p) { return p.clone(); });
+        ModelUtils.removeUnnecessaryRightAngleRenderPoints(clonedPoints);
+        points.forEach(function (p) { return p.skipped = clonedPoints.some(function (cp) { return cp.skipped && cp.equals(p); }); });
+        points[0].skipped = false;
+        points[points.length - 1].skipped = false;
+    };
+    ModelUtils.removeUnnecessaryRenderPoints = function (points) {
+        Utils_1.GeometryUtils.removeUnnecessaryPoints(points, function (pt, index) { return ModelUtils.removeUnnecessaryPoint(points, pt, index); }, function (pt) { return pt !== undefined && !pt.skipped; });
+        points[0].skipped = false;
+        points[points.length - 1].skipped = false;
+    };
+    ModelUtils.removeUnnecessaryRightAngleRenderPoints = function (points) {
+        Utils_1.GeometryUtils.removeUnnecessaryRightAnglePoints(points, function (p, index) { return ModelUtils.removeUnnecessaryPoint(points, p, index); }, function (p) { return p !== undefined && !p.skipped; });
+        points[0].skipped = false;
+        points[points.length - 1].skipped = false;
+    };
+    ModelUtils.createUnnecessaryRenderPoints = function (renderPointsWithoutSkipped, skippedRenderPoints, getPosition, predicate) {
         if (predicate === void 0) { predicate = function (_) { return true; }; }
         var result = {};
-        var clonePoints = points.map(function (p) { return p.clone(); });
-        Utils_1.GeometryUtils.removeUnnecessaryLinePoints(clonePoints, function (cp) {
-            if (predicate(cp)) {
-                var index = ModelUtils.findFirstPointIndex(points, function (p) { return p.equals(cp); });
-                clonePoints.splice(index, 1);
-                if (result[index] === undefined)
-                    result[index] = cp;
-                if (index > 0 && result[index - 1] === undefined && cp.equals(points[index - 1]))
-                    result[index - 1] = cp;
-                if (index < points.length - 1 && result[index + 1] === undefined && cp.equals(points[index + 1]))
-                    result[index + 1] = cp;
-                return true;
-            }
+        Utils_1.GeometryUtils.removeUnnecessaryPoints(renderPointsWithoutSkipped, function (removedPoint, removedIndex) {
+            return ModelUtils.collectNotSkippedRenderPoints(result, renderPointsWithoutSkipped, removedPoint, removedIndex, getPosition, predicate);
         });
-        if (!skippedRenderPoints)
-            return result;
-        skippedRenderPoints.forEach(function (p) {
-            if (predicate(p)) {
-                var pointIndex = p.pointIndex;
-                if (pointIndex >= 0 && result[pointIndex] === undefined)
-                    result[pointIndex] = new point_1.Point(p.x, p.y);
-            }
+        ModelUtils.collectSkippedRenderPoints(result, skippedRenderPoints, getPosition, predicate);
+        return result;
+    };
+    ModelUtils.createUnnecessaryRightAngleRenderPoints = function (renderPointsWithoutSkipped, skippedRenderPoints, getPosition, predicate) {
+        if (predicate === void 0) { predicate = function (_) { return true; }; }
+        var result = {};
+        Utils_1.GeometryUtils.removeUnnecessaryRightAnglePoints(renderPointsWithoutSkipped, function (removedPoint, removedIndex) {
+            return ModelUtils.collectNotSkippedRenderPoints(result, renderPointsWithoutSkipped, removedPoint, removedIndex, getPosition, predicate);
         });
+        ModelUtils.collectSkippedRenderPoints(result, skippedRenderPoints, getPosition, predicate);
         return result;
     };
     ModelUtils.createNecessaryPoints = function (points, unnecessaryPoints) {
@@ -1102,18 +1231,41 @@ var ModelUtils = /** @class */ (function () {
         });
         return result;
     };
-    ModelUtils.createNecessaryRenderPoints = function (points, unnecessaryPoints) {
-        var _this = this;
-        var result = [];
-        var lastPointIndex = points.length - 1;
-        points.forEach(function (p, index) {
-            if (index === 0 || index === lastPointIndex || _this.isNecessaryPoint(p, p.pointIndex, unnecessaryPoints))
-                result.push(p.clone());
-        });
-        return result;
-    };
     ModelUtils.isNecessaryPoint = function (point, pointIndex, unnecessaryPoints) {
-        return unnecessaryPoints[pointIndex] === undefined && !Object.keys(unnecessaryPoints).some(function (key) { return point.equals(unnecessaryPoints[key]); });
+        return !Object.keys(unnecessaryPoints).some(function (key) {
+            var unnecessaryPoint = unnecessaryPoints[key];
+            return unnecessaryPoint.pointIndex === pointIndex && Utils_1.GeometryUtils.areDuplicatedPoints(point, unnecessaryPoint);
+        });
+    };
+    ModelUtils.collectSkippedRenderPoints = function (targetRenderPoints, skippedRenderPoints, getPosition, predicate) {
+        if (predicate === void 0) { predicate = function (_) { return true; }; }
+        skippedRenderPoints && skippedRenderPoints.forEach(function (skippedPoint) {
+            if (predicate(skippedPoint)) {
+                var positionIndex = getPosition(skippedPoint);
+                if (targetRenderPoints[positionIndex] === undefined)
+                    targetRenderPoints[positionIndex] = skippedPoint;
+            }
+        });
+    };
+    ModelUtils.collectNotSkippedRenderPoints = function (targetRenderPoints, sourceRenderPoints, removedPoint, removedIndex, getPosition, predicate) {
+        if (predicate === void 0) { predicate = function (_) { return true; }; }
+        if (!predicate(removedPoint))
+            return false;
+        var positionIndex = getPosition(removedPoint);
+        if (targetRenderPoints[positionIndex] === undefined) {
+            targetRenderPoints[positionIndex] = removedPoint;
+            removedPoint.skipped = true;
+            sourceRenderPoints.splice(removedIndex, 1);
+        }
+        return true;
+    };
+    ModelUtils.removeUnnecessaryPoint = function (points, point, removedIndex) {
+        if (point.pointIndex === -1) {
+            points.splice(removedIndex, 1);
+            return true;
+        }
+        point.skipped = true;
+        return false;
     };
     ModelUtils.validateRenderPointIndexes = function (points, renderPoints, startIndex) {
         var _this = this;
@@ -1129,6 +1281,11 @@ var ModelUtils = /** @class */ (function () {
             if (predicate(points[i]))
                 return i;
         return -1;
+    };
+    ModelUtils.moveConnectorRightAnglePoints = function (history, connector, firstPoint, firstPointIndex, lastPoint, lastPointIndex) {
+        if (!Utils_1.GeometryUtils.areDuplicatedPoints(connector.points[firstPointIndex], firstPoint) ||
+            !Utils_1.GeometryUtils.areDuplicatedPoints(connector.points[lastPointIndex], lastPoint))
+            history.addAndRedo(new MoveConnectorPointHistoryItem_1.MoveConnectorRightAnglePointsHistoryItem(connector.key, firstPointIndex, firstPoint, lastPointIndex, lastPoint));
     };
     ModelUtils.moveConnectorPoint = function (history, connector, pointIndex, newPosition) {
         if (!connector.points[pointIndex].equals(newPosition))
@@ -1264,41 +1421,35 @@ var ModelUtils = /** @class */ (function () {
         var _this = this;
         var connectionPointIndex = -1;
         shape.getConnectionPoints().forEach(function (pt, index) {
-            if (Utils_1.GeometryUtils.getDistance(point, pt) < _this.connectionPointActionSize)
+            if (metrics_1.Metrics.euclideanDistance(point, pt) < _this.connectionPointActionSize)
                 connectionPointIndex = index;
         });
         return connectionPointIndex;
     };
-    ModelUtils.shouldRemoveConnectorIntermediatePoints = function (connector) {
-        return connector.properties.lineOption === ConnectorProperties_1.ConnectorLineOption.Orthogonal && connector.points.length > 2 &&
-            (this.isShapeIntersectConnectorPointsLine(connector.beginItem, connector) ||
-                this.isShapeIntersectConnectorPointsLine(connector.endItem, connector));
-    };
-    ModelUtils.removeConnectorIntermediatePoints = function (history, connector) {
-        if (this.shouldRemoveConnectorIntermediatePoints(connector)) {
-            history.beginTransaction();
-            this.deleteConnectorPoints(history, connector);
-            history.endTransaction();
-        }
-    };
-    ModelUtils.isShapeIntersectConnectorPointsLine = function (shape, connector) {
-        if (!shape)
+    ModelUtils.shouldRemoveConnectorIntermediatePoints = function (connector, shapes) {
+        if (connector.properties.lineOption !== ConnectorProperties_1.ConnectorLineOption.Orthogonal || connector.points.length === 2 || !shapes || !shapes.length)
             return false;
-        var offset = Connector_1.Connector.minOffset - unit_converter_1.UnitConverter.pixelsToTwips(1);
-        var rect = shape.rectangle.clone().inflate(offset, offset);
-        var prevPt;
-        for (var i = 1; i < connector.points.length - 1; i++) {
-            if (prevPt !== undefined) {
-                if (prevPt.x === connector.points[i].x)
-                    if (rect.x <= prevPt.x && prevPt.x <= rect.right)
-                        return true;
-                if (prevPt.y === connector.points[i].y)
-                    if (rect.y <= prevPt.y && prevPt.y <= rect.bottom)
-                        return true;
-            }
-            prevPt = connector.points[i];
+        var index = 0;
+        var shape;
+        while (shape = shapes[index]) {
+            if (this.isShapeIntersectConnectorCustomPoints(shape, connector))
+                return true;
+            index++;
         }
         return false;
+    };
+    ModelUtils.removeConnectorIntermediatePoints = function (history, connector) {
+        if (this.shouldRemoveConnectorIntermediatePoints(connector, [connector.beginItem, connector.endItem]))
+            this.deleteConnectorCustomPoints(history, connector);
+    };
+    ModelUtils.isShapeIntersectConnectorCustomPoints = function (shape, connector) {
+        if (!shape)
+            return false;
+        var customRenderPoints = connector.getCustomRenderPoints(true);
+        if (!customRenderPoints.length)
+            return false;
+        var offset = Connector_1.Connector.minOffset - unit_converter_1.UnitConverter.pixelsToTwips(1);
+        return Utils_1.GeometryUtils.areIntersectedSegments(Utils_1.GeometryUtils.createSegments(customRenderPoints), Utils_1.GeometryUtils.createSegmentsFromRectangle(shape.rectangle.clone().inflate(offset, offset)));
     };
     ModelUtils.getSnappedPos = function (model, gridSize, pos, isHorizontal) {
         var snapOffset = isHorizontal ? model.snapStartPoint.x : model.snapStartPoint.y;
@@ -1717,7 +1868,7 @@ var ModelUtils = /** @class */ (function () {
             }
             _this.updateConnectorAttachedPoints(history, model, connector);
             if (edgeLayout)
-                _this.deleteConnectorPoints(history, connector);
+                _this.deleteConnectorCustomPoints(history, connector);
         });
     };
     ModelUtils.adjustLayoutToSnapGrid = function (model, layout, gridSize) {
@@ -1855,7 +2006,7 @@ exports.ModelUtils = ModelUtils;
 
 
 /***/ }),
-/* 6 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1874,60 +2025,147 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CompositionHistoryItem = exports.HistoryItem = void 0;
-var HistoryItem = /** @class */ (function () {
-    function HistoryItem() {
-        this.uniqueId = -1;
-    }
-    HistoryItem.prototype.changeModified = function () {
-        return true;
-    };
-    HistoryItem.prototype.getName = function () {
-        return this.constructor.name;
-    };
-    return HistoryItem;
-}());
-exports.HistoryItem = HistoryItem;
-var CompositionHistoryItem = /** @class */ (function (_super) {
-    __extends(CompositionHistoryItem, _super);
-    function CompositionHistoryItem() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.historyItems = [];
-        _this.dataSyncItems = [];
+exports.PathPrimitiveClosePathCommand = exports.PathPrimitiveArcToCommand = exports.PathPrimitiveQuadraticCurveToCommand = exports.PathPrimitiveCubicCurveToCommand = exports.PathPrimitiveLineToCommand = exports.PathPrimitiveMoveToCommand = exports.PathPrimitiveCommand = exports.PathPrimitive = void 0;
+var RenderHelper_1 = __webpack_require__(15);
+var Primitive_1 = __webpack_require__(25);
+var PrimitiveObject_1 = __webpack_require__(112);
+var PathPrimitive = /** @class */ (function (_super) {
+    __extends(PathPrimitive, _super);
+    function PathPrimitive(commands, style, className, clipPathId, onApplyProperties) {
+        var _this = _super.call(this, style, className, clipPathId, onApplyProperties) || this;
+        _this.commands = commands.map(function (command) {
+            command.style = style;
+            return command;
+        });
         return _this;
     }
-    CompositionHistoryItem.prototype.changeModified = function () {
-        var item;
-        for (var i = 0; item = this.historyItems[i]; i++)
-            if (item.changeModified())
-                return true;
-        return false;
+    PathPrimitive.prototype.createMainElement = function () {
+        return document.createElementNS(RenderHelper_1.svgNS, "path");
     };
-    CompositionHistoryItem.prototype.redo = function (manipulator) {
-        var item;
-        for (var i = 0; item = this.historyItems[i]; i++)
-            item.redo(manipulator);
+    PathPrimitive.prototype.applyElementProperties = function (element, measurer) {
+        element.setAttribute("d", this.commands.map(function (c) { return c.toString(); }).join(" "));
+        this.setPositionCorrectionAttribute(element);
+        _super.prototype.applyElementProperties.call(this, element, measurer);
     };
-    CompositionHistoryItem.prototype.undo = function (manipulator) {
-        var item;
-        for (var i = this.dataSyncItems.length - 1; item = this.dataSyncItems[i]; i--)
-            item.undo(manipulator);
-        this.dataSyncItems = [];
-        for (var i = this.historyItems.length - 1; item = this.historyItems[i]; i--)
-            item.undo(manipulator);
+    return PathPrimitive;
+}(Primitive_1.SvgPrimitive));
+exports.PathPrimitive = PathPrimitive;
+var PathPrimitiveCommand = /** @class */ (function (_super) {
+    __extends(PathPrimitiveCommand, _super);
+    function PathPrimitiveCommand() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    return PathPrimitiveCommand;
+}(PrimitiveObject_1.PrimitiveObject));
+exports.PathPrimitiveCommand = PathPrimitiveCommand;
+var PathPrimitiveMoveToCommand = /** @class */ (function (_super) {
+    __extends(PathPrimitiveMoveToCommand, _super);
+    function PathPrimitiveMoveToCommand(x, y) {
+        var _this = _super.call(this) || this;
+        _this.x = x;
+        _this.y = y;
+        return _this;
+    }
+    PathPrimitiveMoveToCommand.prototype.toString = function () {
+        return "M " + this.getUnitVaue(this.x) + " " + this.getUnitVaue(this.y);
     };
-    CompositionHistoryItem.prototype.add = function (historyItem) {
-        if (historyItem == null)
-            throw new Error("cannot be null");
-        this.historyItems.push(historyItem);
+    PathPrimitiveMoveToCommand.fromPoint = function (point) {
+        return new PathPrimitiveMoveToCommand(point.x, point.y);
     };
-    return CompositionHistoryItem;
-}(HistoryItem));
-exports.CompositionHistoryItem = CompositionHistoryItem;
+    return PathPrimitiveMoveToCommand;
+}(PathPrimitiveCommand));
+exports.PathPrimitiveMoveToCommand = PathPrimitiveMoveToCommand;
+var PathPrimitiveLineToCommand = /** @class */ (function (_super) {
+    __extends(PathPrimitiveLineToCommand, _super);
+    function PathPrimitiveLineToCommand(x, y) {
+        var _this = _super.call(this) || this;
+        _this.x = x;
+        _this.y = y;
+        return _this;
+    }
+    PathPrimitiveLineToCommand.prototype.toString = function () {
+        return "L " + this.getUnitVaue(this.x) + " " + this.getUnitVaue(this.y);
+    };
+    PathPrimitiveLineToCommand.fromPoint = function (point) {
+        return new PathPrimitiveLineToCommand(point.x, point.y);
+    };
+    return PathPrimitiveLineToCommand;
+}(PathPrimitiveCommand));
+exports.PathPrimitiveLineToCommand = PathPrimitiveLineToCommand;
+var PathPrimitiveCubicCurveToCommand = /** @class */ (function (_super) {
+    __extends(PathPrimitiveCubicCurveToCommand, _super);
+    function PathPrimitiveCubicCurveToCommand(x1, y1, x2, y2, x3, y3) {
+        var _this = _super.call(this) || this;
+        _this.x1 = x1;
+        _this.y1 = y1;
+        _this.x2 = x2;
+        _this.y2 = y2;
+        _this.x3 = x3;
+        _this.y3 = y3;
+        return _this;
+    }
+    PathPrimitiveCubicCurveToCommand.prototype.toString = function () {
+        return "C " + this.getUnitVaue(this.x1) + " " + this.getUnitVaue(this.y1) + "," +
+            this.getUnitVaue(this.x2) + " " + this.getUnitVaue(this.y2) + "," +
+            this.getUnitVaue(this.x3) + " " + this.getUnitVaue(this.y3);
+    };
+    return PathPrimitiveCubicCurveToCommand;
+}(PathPrimitiveCommand));
+exports.PathPrimitiveCubicCurveToCommand = PathPrimitiveCubicCurveToCommand;
+var PathPrimitiveQuadraticCurveToCommand = /** @class */ (function (_super) {
+    __extends(PathPrimitiveQuadraticCurveToCommand, _super);
+    function PathPrimitiveQuadraticCurveToCommand(x1, y1, x2, y2) {
+        var _this = _super.call(this) || this;
+        _this.x1 = x1;
+        _this.y1 = y1;
+        _this.x2 = x2;
+        _this.y2 = y2;
+        return _this;
+    }
+    PathPrimitiveQuadraticCurveToCommand.prototype.toString = function () {
+        return "Q " + this.getUnitVaue(this.x1) + " " + this.getUnitVaue(this.y1) + "," +
+            this.getUnitVaue(this.x2) + " " + this.getUnitVaue(this.y2);
+    };
+    return PathPrimitiveQuadraticCurveToCommand;
+}(PathPrimitiveCommand));
+exports.PathPrimitiveQuadraticCurveToCommand = PathPrimitiveQuadraticCurveToCommand;
+var PathPrimitiveArcToCommand = /** @class */ (function (_super) {
+    __extends(PathPrimitiveArcToCommand, _super);
+    function PathPrimitiveArcToCommand(rx, ry, xAxisRotation, largeArcFlag, sweepFag, x, y) {
+        var _this = _super.call(this) || this;
+        _this.rx = rx;
+        _this.ry = ry;
+        _this.xAxisRotation = xAxisRotation;
+        _this.largeArcFlag = largeArcFlag;
+        _this.sweepFag = sweepFag;
+        _this.x = x;
+        _this.y = y;
+        return _this;
+    }
+    PathPrimitiveArcToCommand.prototype.toString = function () {
+        return "A " + this.getUnitVaue(this.rx) + " " + this.getUnitVaue(this.ry) + " " +
+            this.getUnitVaue(this.xAxisRotation) + " " +
+            (this.largeArcFlag ? "1" : "0") + " " + (this.sweepFag ? "1" : "0") +
+            this.getUnitVaue(this.x) + "," + this.getUnitVaue(this.y);
+    };
+    return PathPrimitiveArcToCommand;
+}(PathPrimitiveCommand));
+exports.PathPrimitiveArcToCommand = PathPrimitiveArcToCommand;
+var PathPrimitiveClosePathCommand = /** @class */ (function (_super) {
+    __extends(PathPrimitiveClosePathCommand, _super);
+    function PathPrimitiveClosePathCommand() {
+        return _super.call(this) || this;
+    }
+    PathPrimitiveClosePathCommand.prototype.toString = function () {
+        return "z";
+    };
+    return PathPrimitiveClosePathCommand;
+}(PathPrimitiveCommand));
+exports.PathPrimitiveClosePathCommand = PathPrimitiveClosePathCommand;
 
 
 /***/ }),
-/* 7 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1949,25 +2187,25 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Connector = exports.CONNECTOR_DEFAULT_TEXT_POSITION = exports.ConnectorPosition = void 0;
 var unit_converter_1 = __webpack_require__(11);
 var rectangle_1 = __webpack_require__(12);
-var segment_1 = __webpack_require__(34);
+var segment_1 = __webpack_require__(33);
 var size_1 = __webpack_require__(2);
-var CanvasManagerBase_1 = __webpack_require__(41);
-var NativeItem_1 = __webpack_require__(85);
+var CanvasManagerBase_1 = __webpack_require__(42);
+var NativeItem_1 = __webpack_require__(84);
 var Event_1 = __webpack_require__(13);
-var ITextMeasurer_1 = __webpack_require__(44);
-var PathPrimitive_1 = __webpack_require__(4);
-var TextPrimitive_1 = __webpack_require__(61);
+var ITextMeasurer_1 = __webpack_require__(45);
+var PathPrimitive_1 = __webpack_require__(5);
+var TextPrimitive_1 = __webpack_require__(62);
 var Utils_1 = __webpack_require__(16);
-var Settings_1 = __webpack_require__(27);
+var Settings_1 = __webpack_require__(28);
 var Utils_2 = __webpack_require__(3);
 var DiagramItem_1 = __webpack_require__(9);
-var ModelUtils_1 = __webpack_require__(5);
+var ModelUtils_1 = __webpack_require__(4);
 var ConnectorPointsCalculator_1 = __webpack_require__(179);
 var ConnectorPointsOrthogonalCalculator_1 = __webpack_require__(180);
-var ConnectorLineEndingStrategies_1 = __webpack_require__(187);
-var ConnectorProperties_1 = __webpack_require__(31);
-var ConnectorTexts_1 = __webpack_require__(188);
-var ConnectorRenderPointsContext_1 = __webpack_require__(86);
+var ConnectorLineEndingStrategies_1 = __webpack_require__(186);
+var ConnectorProperties_1 = __webpack_require__(30);
+var ConnectorTexts_1 = __webpack_require__(187);
+var ConnectorRenderPointsContext_1 = __webpack_require__(85);
 var ConnectorPosition;
 (function (ConnectorPosition) {
     ConnectorPosition[ConnectorPosition["Begin"] = 0] = "Begin";
@@ -1989,14 +2227,7 @@ var Connector = /** @class */ (function (_super) {
     }
     Object.defineProperty(Connector.prototype, "rectangle", {
         get: function () {
-            var points = this.getRenderPoints();
-            var xarr = points.map(function (p) { return p.x; });
-            var yarr = points.map(function (p) { return p.y; });
-            var minX = xarr.reduce(function (prev, cur) { return Math.min(prev, cur); }, Number.MAX_VALUE);
-            var maxX = xarr.reduce(function (prev, cur) { return Math.max(prev, cur); }, -Number.MAX_VALUE);
-            var minY = yarr.reduce(function (prev, cur) { return Math.min(prev, cur); }, Number.MAX_VALUE);
-            var maxY = yarr.reduce(function (prev, cur) { return Math.max(prev, cur); }, -Number.MAX_VALUE);
-            return new rectangle_1.Rectangle(minX, minY, maxX - minX, maxY - minY);
+            return Utils_2.GeometryUtils.createRectagle(this.getRenderPoints(true));
         },
         enumerable: false,
         configurable: true
@@ -2074,6 +2305,29 @@ var Connector = /** @class */ (function (_super) {
     Connector.prototype.getTextRectangle = function (position) {
         return rectangle_1.Rectangle.fromGeometry(this.getTextPoint(position), new size_1.Size(0, 0));
     };
+    Connector.prototype.changeRoutingStrategy = function (strategy) {
+        this.routingStrategy = strategy;
+        this.invalidateRenderPoints();
+    };
+    Connector.prototype.clearRoutingStrategy = function () {
+        delete this.routingStrategy;
+        delete this.renderPoints;
+        delete this.renderPointsWithoutSkipped;
+        delete this.lockCreateRenderPoints;
+        delete this.actualRoutingMode;
+        delete this.shouldInvalidateRenderPoints;
+        this.invalidateRenderPoints();
+    };
+    Connector.prototype.getCustomRenderPoints = function (keepSkipped) {
+        if (keepSkipped === void 0) { keepSkipped = false; }
+        var renderPoints = this.getRenderPoints(keepSkipped);
+        var result = [];
+        renderPoints.forEach(function (p, index) {
+            if (index > 0 && index < renderPoints.length - 1)
+                result.push(p);
+        });
+        return result;
+    };
     Connector.prototype.getRenderPoints = function (keepSkipped) {
         if (keepSkipped === void 0) { keepSkipped = false; }
         if (this.shouldInvalidateRenderPoints === undefined || this.shouldInvalidateRenderPoints) {
@@ -2133,20 +2387,20 @@ var Connector = /** @class */ (function (_super) {
         else
             this.invalidateRenderPoints();
     };
-    Connector.prototype.onDeleteUnnecessaryPoints = function (unnecessaryPoints) {
-        if (this.shouldChangeRenderPoints) {
-            var necessaryPoints = ModelUtils_1.ModelUtils.createNecessaryRenderPoints(this.renderPoints, unnecessaryPoints);
-            if (necessaryPoints.length > 0)
-                this.replaceRenderPointsCore(ModelUtils_1.ModelUtils.validateRenderPointIndexes(this.points, necessaryPoints, 0), this.lockCreateRenderPoints, Settings_1.ConnectorRoutingMode.AllShapesOnly);
-        }
-        else
-            this.invalidateRenderPoints();
-    };
     Connector.prototype.onMovePoint = function (pointIndex, point) {
         if (this.shouldChangeRenderPoints) {
             if (pointIndex === 0 || pointIndex === this.points.length - 1)
                 this.lockCreateRenderPoints = false;
             this.replaceRenderPointsCore(this.routingStrategy.onMovePoint(this.points, pointIndex, point, this.renderPoints), this.lockCreateRenderPoints, Settings_1.ConnectorRoutingMode.AllShapesOnly);
+        }
+        else
+            this.invalidateRenderPoints();
+    };
+    Connector.prototype.onMovePoints = function (beginPointIndex, beginPoint, lastPointIndex, lastPoint) {
+        if (this.shouldChangeRenderPoints) {
+            if (beginPointIndex === 0 || lastPointIndex === this.points.length - 1)
+                this.lockCreateRenderPoints = false;
+            this.replaceRenderPointsCore(this.routingStrategy.onMovePoints(this.points, beginPointIndex, beginPoint, lastPointIndex, lastPoint, this.renderPoints), this.lockCreateRenderPoints, Settings_1.ConnectorRoutingMode.AllShapesOnly);
         }
         else
             this.invalidateRenderPoints();
@@ -2318,7 +2572,7 @@ exports.Connector = Connector;
 
 
 /***/ }),
-/* 8 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2327,12 +2581,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ShapeDescription = exports.ShapeTextPadding = exports.ShapeDefaultSize = exports.ShapeMinDimension = exports.ShapeDefaultDimension = void 0;
 var unit_converter_1 = __webpack_require__(11);
 var size_1 = __webpack_require__(2);
-var LocalizationService_1 = __webpack_require__(35);
-var ITextMeasurer_1 = __webpack_require__(44);
+var LocalizationService_1 = __webpack_require__(36);
+var ITextMeasurer_1 = __webpack_require__(45);
 var RectaglePrimitive_1 = __webpack_require__(21);
-var TextPrimitive_1 = __webpack_require__(61);
+var TextPrimitive_1 = __webpack_require__(62);
 var Utils_1 = __webpack_require__(3);
-var ConnectionPoint_1 = __webpack_require__(46);
+var ConnectionPoint_1 = __webpack_require__(47);
 var DiagramItem_1 = __webpack_require__(9);
 exports.ShapeDefaultDimension = 1440;
 exports.ShapeMinDimension = 360;
@@ -2505,6 +2759,78 @@ exports.ShapeDescription = ShapeDescription;
 
 
 /***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.CompositionHistoryItem = exports.HistoryItem = void 0;
+var HistoryItem = /** @class */ (function () {
+    function HistoryItem() {
+        this.uniqueId = -1;
+    }
+    HistoryItem.prototype.changeModified = function () {
+        return true;
+    };
+    HistoryItem.prototype.getName = function () {
+        return this.constructor.name;
+    };
+    return HistoryItem;
+}());
+exports.HistoryItem = HistoryItem;
+var CompositionHistoryItem = /** @class */ (function (_super) {
+    __extends(CompositionHistoryItem, _super);
+    function CompositionHistoryItem() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.historyItems = [];
+        _this.dataSyncItems = [];
+        return _this;
+    }
+    CompositionHistoryItem.prototype.changeModified = function () {
+        var item;
+        for (var i = 0; item = this.historyItems[i]; i++)
+            if (item.changeModified())
+                return true;
+        return false;
+    };
+    CompositionHistoryItem.prototype.redo = function (manipulator) {
+        var item;
+        for (var i = 0; item = this.historyItems[i]; i++)
+            item.redo(manipulator);
+    };
+    CompositionHistoryItem.prototype.undo = function (manipulator) {
+        var item;
+        for (var i = this.dataSyncItems.length - 1; item = this.dataSyncItems[i]; i--)
+            item.undo(manipulator);
+        this.dataSyncItems = [];
+        for (var i = this.historyItems.length - 1; item = this.historyItems[i]; i--)
+            item.undo(manipulator);
+    };
+    CompositionHistoryItem.prototype.add = function (historyItem) {
+        if (historyItem == null)
+            throw new Error("cannot be null");
+        this.historyItems.push(historyItem);
+    };
+    return CompositionHistoryItem;
+}(HistoryItem));
+exports.CompositionHistoryItem = CompositionHistoryItem;
+
+
+/***/ }),
 /* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2512,9 +2838,10 @@ exports.ShapeDescription = ShapeDescription;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DiagramItem = exports.DEFAULT_ZINDEX = exports.ConnectionPointSide = void 0;
-var Utils_1 = __webpack_require__(3);
 var rectangle_1 = __webpack_require__(12);
-var Style_1 = __webpack_require__(30);
+var metrics_1 = __webpack_require__(35);
+var Utils_1 = __webpack_require__(3);
+var Style_1 = __webpack_require__(27);
 var ConnectionPointSide;
 (function (ConnectionPointSide) {
     ConnectionPointSide[ConnectionPointSide["Undefined"] = -1] = "Undefined";
@@ -2560,7 +2887,7 @@ var DiagramItem = /** @class */ (function () {
         var distance = Number.MAX_VALUE;
         var result;
         this.getConnectionPoints().forEach(function (pt, index) {
-            var ptDistance = Utils_1.GeometryUtils.getDistance(pt, targetPoint);
+            var ptDistance = metrics_1.Metrics.euclideanDistance(pt, targetPoint);
             if (ptDistance < distance) {
                 distance = ptDistance;
                 result = index;
@@ -2658,10 +2985,10 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SimpleCommandBase = void 0;
-var CommandBase_1 = __webpack_require__(199);
-var CommandStates_1 = __webpack_require__(200);
-var ModelUtils_1 = __webpack_require__(5);
-var LocalizationService_1 = __webpack_require__(35);
+var CommandBase_1 = __webpack_require__(197);
+var CommandStates_1 = __webpack_require__(198);
+var ModelUtils_1 = __webpack_require__(4);
+var LocalizationService_1 = __webpack_require__(36);
 var SimpleCommandBase = /** @class */ (function (_super) {
     __extends(SimpleCommandBase, _super);
     function SimpleCommandBase() {
@@ -2791,7 +3118,10 @@ var UnitConverter = (function () {
         return Math.round(UnitConverter.DPI * value);
     };
     UnitConverter.centimeterToPixel = function (value) {
-        return Math.round(value / (UnitConverter.CENTIMETERS_PER_INCH / UnitConverter.DPI));
+        return Math.round(this.centimeterToPixelF(value));
+    };
+    UnitConverter.centimeterToPixelF = function (value) {
+        return value * UnitConverter.DPI / UnitConverter.CENTIMETERS_PER_INCH;
     };
     UnitConverter.millimetersToPixel = function (value) {
         return Math.round(value / (UnitConverter.CENTIMETERS_PER_INCH / UnitConverter.DPI) / 10);
@@ -2862,7 +3192,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var flag_1 = __webpack_require__(163);
 var algorithms_1 = __webpack_require__(164);
 var fixed_1 = __webpack_require__(109);
-var point_1 = __webpack_require__(0);
+var point_1 = __webpack_require__(1);
 var size_1 = __webpack_require__(2);
 var Rectangle = (function () {
     function Rectangle(x, y, width, height) {
@@ -3360,12 +3690,12 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Shape = void 0;
 var rectangle_1 = __webpack_require__(12);
-var ShapeDescription_1 = __webpack_require__(8);
-var ShapeParameters_1 = __webpack_require__(36);
+var ShapeDescription_1 = __webpack_require__(7);
+var ShapeParameters_1 = __webpack_require__(37);
 var DiagramItem_1 = __webpack_require__(9);
-var ConnectionPoint_1 = __webpack_require__(46);
-var ImageInfo_1 = __webpack_require__(50);
-var NativeItem_1 = __webpack_require__(85);
+var ConnectionPoint_1 = __webpack_require__(47);
+var ImageInfo_1 = __webpack_require__(51);
+var NativeItem_1 = __webpack_require__(84);
 var Shape = /** @class */ (function (_super) {
     __extends(Shape, _super);
     function Shape(description, position, forToolbox) {
@@ -3587,7 +3917,7 @@ exports.Shape = Shape;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RenderHelper = exports.svgNS = void 0;
-var Diagnostics_1 = __webpack_require__(58);
+var Diagnostics_1 = __webpack_require__(59);
 exports.svgNS = "http://www.w3.org/2000/svg";
 var RenderHelper = /** @class */ (function () {
     function RenderHelper() {
@@ -3628,10 +3958,10 @@ exports.RenderHelper = RenderHelper;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.raiseEvent = exports.isLeftButtonPressed = exports.RenderUtils = void 0;
 var Event_1 = __webpack_require__(13);
-var math_1 = __webpack_require__(33);
-var browser_1 = __webpack_require__(17);
-var common_1 = __webpack_require__(42);
-var evt_1 = __webpack_require__(43);
+var math_1 = __webpack_require__(32);
+var browser_1 = __webpack_require__(20);
+var common_1 = __webpack_require__(43);
+var evt_1 = __webpack_require__(44);
 var RenderUtils = /** @class */ (function () {
     function RenderUtils() {
     }
@@ -3746,229 +4076,6 @@ exports.raiseEvent = raiseEvent;
 
 /***/ }),
 /* 17 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var Browser = (function () {
-    function Browser() {
-    }
-    Browser.IdentUserAgent = function (userAgent, ignoreDocumentMode) {
-        if (ignoreDocumentMode === void 0) { ignoreDocumentMode = false; }
-        var browserTypesOrderedList = ['Mozilla', 'IE', 'Firefox', 'Netscape', 'Safari', 'Chrome', 'Opera', 'Opera10', 'Edge'];
-        var defaultBrowserType = 'IE';
-        var defaultPlatform = 'Win';
-        var defaultVersions = { Safari: 2, Chrome: 0.1, Mozilla: 1.9, Netscape: 8, Firefox: 2, Opera: 9, IE: 6, Edge: 12 };
-        if (!userAgent || userAgent.length === 0) {
-            Browser.fillUserAgentInfo(browserTypesOrderedList, defaultBrowserType, defaultVersions[defaultBrowserType], defaultPlatform);
-            return;
-        }
-        userAgent = userAgent.toLowerCase();
-        Browser.indentPlatformMajorVersion(userAgent);
-        try {
-            var platformIdentStrings = {
-                'Windows': 'Win',
-                'Macintosh': 'Mac',
-                'Mac OS': 'Mac',
-                'Mac_PowerPC': 'Mac',
-                'cpu os': 'MacMobile',
-                'cpu iphone os': 'MacMobile',
-                'Android': 'Android',
-                '!Windows Phone': 'WinPhone',
-                '!WPDesktop': 'WinPhone',
-                '!ZuneWP': 'WinPhone'
-            };
-            var optSlashOrSpace = '(?:/|\\s*)?';
-            var versionString = '(\\d+)(?:\\.((?:\\d+?[1-9])|\\d)0*?)?';
-            var optVersion = '(?:' + versionString + ')?';
-            var patterns = {
-                Safari: 'applewebkit(?:.*?(?:version/' + versionString + '[\\.\\w\\d]*?(?:\\s+mobile/\\S*)?\\s+safari))?',
-                Chrome: '(?:chrome|crios)(?!frame)' + optSlashOrSpace + optVersion,
-                Mozilla: 'mozilla(?:.*rv:' + optVersion + '.*Gecko)?',
-                Netscape: '(?:netscape|navigator)\\d*/?\\s*' + optVersion,
-                Firefox: 'firefox' + optSlashOrSpace + optVersion,
-                Opera: '(?:opera|\\sopr)' + optSlashOrSpace + optVersion,
-                Opera10: 'opera.*\\s*version' + optSlashOrSpace + optVersion,
-                IE: 'msie\\s*' + optVersion,
-                Edge: 'edge' + optSlashOrSpace + optVersion
-            };
-            var browserType = null;
-            var version = -1;
-            for (var i = 0; i < browserTypesOrderedList.length; i++) {
-                var browserTypeCandidate = browserTypesOrderedList[i];
-                var regExp = new RegExp(patterns[browserTypeCandidate], 'i');
-                var matches = regExp.exec(userAgent);
-                if (matches && matches.index >= 0) {
-                    if (browserType === 'IE' && version >= 11 && browserTypeCandidate === 'Safari')
-                        continue;
-                    browserType = browserTypeCandidate;
-                    if (browserType === 'Opera10')
-                        browserType = 'Opera';
-                    var tridentPattern = 'trident' + optSlashOrSpace + optVersion;
-                    version = Browser.GetBrowserVersion(userAgent, matches, tridentPattern, Browser.getIECompatibleVersionString());
-                    if (browserType === 'Mozilla' && version >= 11)
-                        browserType = 'IE';
-                }
-            }
-            if (!browserType)
-                browserType = defaultBrowserType;
-            var browserVersionDetected = version !== -1;
-            if (!browserVersionDetected)
-                version = defaultVersions[browserType];
-            var platform = null;
-            var minOccurenceIndex = Number.MAX_VALUE;
-            for (var identStr in platformIdentStrings) {
-                if (!Object.prototype.hasOwnProperty.call(platformIdentStrings, identStr))
-                    continue;
-                var importantIdent = identStr.substr(0, 1) === '!';
-                var occurenceIndex = userAgent.indexOf((importantIdent ? identStr.substr(1) : identStr).toLowerCase());
-                if (occurenceIndex >= 0 && (occurenceIndex < minOccurenceIndex || importantIdent)) {
-                    minOccurenceIndex = importantIdent ? 0 : occurenceIndex;
-                    platform = platformIdentStrings[identStr];
-                }
-            }
-            var samsungPattern = 'SM-[A-Z]';
-            var m = userAgent.toUpperCase().match(samsungPattern);
-            var isSamsungAndroidDevice = m && m.length > 0;
-            if (platform === 'WinPhone' && version < 9)
-                version = Math.floor(Browser.getVersionFromTrident(userAgent, 'trident' + optSlashOrSpace + optVersion));
-            if (!ignoreDocumentMode && browserType === 'IE' && version > 7 && document.documentMode < version)
-                version = document.documentMode;
-            if (platform === 'WinPhone')
-                version = Math.max(9, version);
-            if (!platform)
-                platform = defaultPlatform;
-            if (platform === platformIdentStrings['cpu os'] && !browserVersionDetected)
-                version = 4;
-            Browser.fillUserAgentInfo(browserTypesOrderedList, browserType, version, platform, isSamsungAndroidDevice);
-        }
-        catch (e) {
-            Browser.fillUserAgentInfo(browserTypesOrderedList, defaultBrowserType, defaultVersions[defaultBrowserType], defaultPlatform);
-        }
-    };
-    Browser.GetBrowserVersion = function (userAgent, matches, tridentPattern, ieCompatibleVersionString) {
-        var version = Browser.getVersionFromMatches(matches);
-        if (ieCompatibleVersionString) {
-            var versionFromTrident = Browser.getVersionFromTrident(userAgent, tridentPattern);
-            if (ieCompatibleVersionString === 'edge' || parseInt(ieCompatibleVersionString) === versionFromTrident)
-                return versionFromTrident;
-        }
-        return version;
-    };
-    Browser.getIECompatibleVersionString = function () {
-        if (document.compatible) {
-            for (var i = 0; i < document.compatible.length; i++) {
-                if (document.compatible[i].userAgent === 'IE' && document.compatible[i].version)
-                    return document.compatible[i].version.toLowerCase();
-            }
-        }
-        return '';
-    };
-    Browser.isTouchEnabled = function () {
-        return Browser.hasTouchStart() || Browser.hasMaxTouchPoints();
-    };
-    Browser.hasTouchStart = function () {
-        return ('ontouchstart' in window);
-    };
-    Browser.hasMaxTouchPoints = function () {
-        return Browser.hasNavigator() && ('maxTouchPoints' in navigator && navigator['maxTouchPoints'] > 0 || 'msMaxTouchPoints' in navigator && navigator['msMaxTouchPoints'] > 0);
-    };
-    Browser.hasNavigator = function () {
-        return typeof navigator !== 'undefined';
-    };
-    Browser.fillUserAgentInfo = function (browserTypesOrderedList, browserType, version, platform, isSamsungAndroidDevice) {
-        if (isSamsungAndroidDevice === void 0) { isSamsungAndroidDevice = false; }
-        for (var i = 0; i < browserTypesOrderedList.length; i++) {
-            var type = browserTypesOrderedList[i];
-            Browser[type] = type === browserType;
-        }
-        Browser.Version = Math.floor(10.0 * version) / 10.0;
-        Browser.MajorVersion = Math.floor(Browser.Version);
-        Browser.WindowsPlatform = platform === 'Win' || platform === 'WinPhone';
-        Browser.MacOSMobilePlatform = platform === 'MacMobile' || (platform === 'Mac' && Browser.isTouchEnabled());
-        Browser.MacOSPlatform = platform === 'Mac' && !Browser.MacOSMobilePlatform;
-        Browser.AndroidMobilePlatform = platform === 'Android';
-        Browser.WindowsPhonePlatform = platform === 'WinPhone';
-        Browser.WebKitFamily = Browser.Safari || Browser.Chrome || Browser.Opera && Browser.MajorVersion >= 15;
-        Browser.NetscapeFamily = Browser.Netscape || Browser.Mozilla || Browser.Firefox;
-        Browser.HardwareAcceleration = (Browser.IE && Browser.MajorVersion >= 9) || (Browser.Firefox && Browser.MajorVersion >= 4) ||
-            (Browser.AndroidMobilePlatform && Browser.Chrome) || (Browser.Chrome && Browser.MajorVersion >= 37) ||
-            (Browser.Safari && !Browser.WindowsPlatform) || Browser.Edge || (Browser.Opera && Browser.MajorVersion >= 46);
-        Browser.WebKitTouchUI = Browser.MacOSMobilePlatform || Browser.AndroidMobilePlatform;
-        var isIETouchUI = Browser.IE && Browser.MajorVersion > 9 && Browser.WindowsPlatform && Browser.UserAgent.toLowerCase().indexOf('touch') >= 0;
-        Browser.MSTouchUI = isIETouchUI || (Browser.Edge && !!window.navigator.maxTouchPoints);
-        Browser.TouchUI = Browser.WebKitTouchUI || Browser.MSTouchUI || Browser.hasMaxTouchPoints();
-        Browser.MobileUI = Browser.WebKitTouchUI || Browser.WindowsPhonePlatform;
-        Browser.AndroidDefaultBrowser = Browser.AndroidMobilePlatform && !Browser.Chrome;
-        Browser.AndroidChromeBrowser = Browser.AndroidMobilePlatform && Browser.Chrome;
-        if (isSamsungAndroidDevice)
-            Browser.SamsungAndroidDevice = isSamsungAndroidDevice;
-        if (Browser.MSTouchUI) {
-            var isARMArchitecture = Browser.UserAgent.toLowerCase().indexOf('arm;') > -1;
-            Browser.VirtualKeyboardSupported = isARMArchitecture || Browser.WindowsPhonePlatform;
-        }
-        else
-            Browser.VirtualKeyboardSupported = Browser.WebKitTouchUI;
-        Browser.fillDocumentElementBrowserTypeClassNames(browserTypesOrderedList);
-    };
-    Browser.indentPlatformMajorVersion = function (userAgent) {
-        var regex = /(?:(?:windows nt|macintosh|mac os|cpu os|cpu iphone os|android|windows phone|linux) )(\d+)(?:[-0-9_.])*/;
-        var matches = regex.exec(userAgent);
-        if (matches)
-            Browser.PlaformMajorVersion = matches[1];
-    };
-    Browser.getVersionFromMatches = function (matches) {
-        var result = -1;
-        var versionStr = '';
-        if (matches) {
-            if (matches[1]) {
-                versionStr += matches[1];
-                if (matches[2])
-                    versionStr += '.' + matches[2];
-            }
-            if (versionStr !== '') {
-                result = parseFloat(versionStr);
-                if (isNaN(result))
-                    result = -1;
-            }
-        }
-        return result;
-    };
-    Browser.getVersionFromTrident = function (userAgent, tridentPattern) {
-        var tridentDiffFromVersion = 4;
-        var matches = new RegExp(tridentPattern, 'i').exec(userAgent);
-        return Browser.getVersionFromMatches(matches) + tridentDiffFromVersion;
-    };
-    Browser.fillDocumentElementBrowserTypeClassNames = function (browserTypesOrderedList) {
-        var documentElementClassName = '';
-        var browserTypeslist = browserTypesOrderedList.concat(['WindowsPlatform', 'MacOSPlatform', 'MacOSMobilePlatform', 'AndroidMobilePlatform',
-            'WindowsPhonePlatform', 'WebKitFamily', 'WebKitTouchUI', 'MSTouchUI', 'TouchUI', 'AndroidDefaultBrowser']);
-        for (var i = 0; i < browserTypeslist.length; i++) {
-            var type = browserTypeslist[i];
-            if (Browser[type])
-                documentElementClassName += 'dx' + type + ' ';
-        }
-        documentElementClassName += 'dxBrowserVersion-' + Browser.MajorVersion;
-        if (typeof document !== 'undefined' && document && document.documentElement) {
-            if (document.documentElement.className !== '')
-                documentElementClassName = ' ' + documentElementClassName;
-            document.documentElement.className += documentElementClassName;
-            Browser.Info = documentElementClassName;
-        }
-    };
-    Browser.getUserAgent = function () {
-        return Browser.hasNavigator() && navigator.userAgent ? navigator.userAgent.toLowerCase() : '';
-    };
-    Browser.UserAgent = Browser.getUserAgent();
-    Browser._foo = Browser.IdentUserAgent(Browser.UserAgent);
-    return Browser;
-}());
-exports.Browser = Browser;
-
-
-/***/ }),
-/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4123,7 +4230,7 @@ var DiagramModelOperation;
 
 
 /***/ }),
-/* 19 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4143,10 +4250,10 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RectangleShapeDescription = void 0;
-var ShapeDescription_1 = __webpack_require__(8);
+var ShapeDescription_1 = __webpack_require__(7);
 var size_1 = __webpack_require__(2);
 var RectaglePrimitive_1 = __webpack_require__(21);
-var ShapeTypes_1 = __webpack_require__(1);
+var ShapeTypes_1 = __webpack_require__(0);
 var RectangleShapeDescription = /** @class */ (function (_super) {
     __extends(RectangleShapeDescription, _super);
     function RectangleShapeDescription(defaultSize, hasDefaultText) {
@@ -4181,7 +4288,7 @@ exports.RectangleShapeDescription = RectangleShapeDescription;
 
 
 /***/ }),
-/* 20 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4201,7 +4308,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Alignment = exports.DataLayoutOrientation = exports.LogicalDirectionKind = exports.TreeLayoutSettings = exports.LayoutSettings = void 0;
-var Connector_1 = __webpack_require__(7);
+var Connector_1 = __webpack_require__(6);
 var LayoutSettings = /** @class */ (function () {
     function LayoutSettings(gridSize) {
         this.orientation = DataLayoutOrientation.Vertical;
@@ -4241,6 +4348,232 @@ var Alignment;
     Alignment[Alignment["Left"] = 0] = "Left";
     Alignment[Alignment["Center"] = 1] = "Center";
 })(Alignment = exports.Alignment || (exports.Alignment = {}));
+
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var Browser = (function () {
+    function Browser() {
+    }
+    Browser.IdentUserAgent = function (userAgent, ignoreDocumentMode) {
+        if (ignoreDocumentMode === void 0) { ignoreDocumentMode = false; }
+        var browserTypesOrderedList = ['Mozilla', 'IE', 'Firefox', 'Netscape', 'Safari', 'Chrome', 'Opera', 'Opera10', 'Edge'];
+        var defaultBrowserType = 'IE';
+        var defaultPlatform = 'Win';
+        var defaultVersions = { Safari: 2, Chrome: 0.1, Mozilla: 1.9, Netscape: 8, Firefox: 2, Opera: 9, IE: 6, Edge: 12 };
+        if (!userAgent || userAgent.length === 0) {
+            Browser.fillUserAgentInfo(browserTypesOrderedList, defaultBrowserType, defaultVersions[defaultBrowserType], defaultPlatform);
+            return;
+        }
+        userAgent = userAgent.toLowerCase();
+        Browser.indentPlatformMajorVersion(userAgent);
+        try {
+            var platformIdentStrings = {
+                'Windows': 'Win',
+                'Macintosh': 'Mac',
+                'Mac OS': 'Mac',
+                'Mac_PowerPC': 'Mac',
+                'cpu os': 'MacMobile',
+                'cpu iphone os': 'MacMobile',
+                'Android': 'Android',
+                '!Windows Phone': 'WinPhone',
+                '!WPDesktop': 'WinPhone',
+                '!ZuneWP': 'WinPhone'
+            };
+            var optSlashOrSpace = '(?:/|\\s*)?';
+            var versionString = '(\\d+)(?:\\.((?:\\d+?[1-9])|\\d)0*?)?';
+            var optVersion = '(?:' + versionString + ')?';
+            var patterns = {
+                Safari: 'applewebkit(?:.*?(?:version/' + versionString + '[\\.\\w\\d]*?(?:\\s+mobile/\\S*)?\\s+safari))?',
+                Chrome: '(?:chrome|crios)(?!frame)' + optSlashOrSpace + optVersion,
+                Mozilla: 'mozilla(?:.*rv:' + optVersion + '.*Gecko)?',
+                Netscape: '(?:netscape|navigator)\\d*/?\\s*' + optVersion,
+                Firefox: 'firefox' + optSlashOrSpace + optVersion,
+                Opera: '(?:opera|\\sopr)' + optSlashOrSpace + optVersion,
+                Opera10: 'opera.*\\s*version' + optSlashOrSpace + optVersion,
+                IE: 'msie\\s*' + optVersion,
+                Edge: 'edge' + optSlashOrSpace + optVersion
+            };
+            var browserType = null;
+            var version = -1;
+            for (var i = 0; i < browserTypesOrderedList.length; i++) {
+                var browserTypeCandidate = browserTypesOrderedList[i];
+                var regExp = new RegExp(patterns[browserTypeCandidate], 'i');
+                var matches = regExp.exec(userAgent);
+                if (matches && matches.index >= 0) {
+                    if (browserType === 'IE' && version >= 11 && browserTypeCandidate === 'Safari')
+                        continue;
+                    browserType = browserTypeCandidate;
+                    if (browserType === 'Opera10')
+                        browserType = 'Opera';
+                    var tridentPattern = 'trident' + optSlashOrSpace + optVersion;
+                    version = Browser.GetBrowserVersion(userAgent, matches, tridentPattern, Browser.getIECompatibleVersionString());
+                    if (browserType === 'Mozilla' && version >= 11)
+                        browserType = 'IE';
+                }
+            }
+            if (!browserType)
+                browserType = defaultBrowserType;
+            var browserVersionDetected = version !== -1;
+            if (!browserVersionDetected)
+                version = defaultVersions[browserType];
+            var platform = null;
+            var minOccurenceIndex = Number.MAX_VALUE;
+            for (var identStr in platformIdentStrings) {
+                if (!Object.prototype.hasOwnProperty.call(platformIdentStrings, identStr))
+                    continue;
+                var importantIdent = identStr.substr(0, 1) === '!';
+                var occurenceIndex = userAgent.indexOf((importantIdent ? identStr.substr(1) : identStr).toLowerCase());
+                if (occurenceIndex >= 0 && (occurenceIndex < minOccurenceIndex || importantIdent)) {
+                    minOccurenceIndex = importantIdent ? 0 : occurenceIndex;
+                    platform = platformIdentStrings[identStr];
+                }
+            }
+            var samsungPattern = 'SM-[A-Z]';
+            var m = userAgent.toUpperCase().match(samsungPattern);
+            var isSamsungAndroidDevice = m && m.length > 0;
+            if (platform === 'WinPhone' && version < 9)
+                version = Math.floor(Browser.getVersionFromTrident(userAgent, 'trident' + optSlashOrSpace + optVersion));
+            if (!ignoreDocumentMode && browserType === 'IE' && version > 7 && document.documentMode < version)
+                version = document.documentMode;
+            if (platform === 'WinPhone')
+                version = Math.max(9, version);
+            if (!platform)
+                platform = defaultPlatform;
+            if (platform === platformIdentStrings['cpu os'] && !browserVersionDetected)
+                version = 4;
+            Browser.fillUserAgentInfo(browserTypesOrderedList, browserType, version, platform, isSamsungAndroidDevice);
+        }
+        catch (e) {
+            Browser.fillUserAgentInfo(browserTypesOrderedList, defaultBrowserType, defaultVersions[defaultBrowserType], defaultPlatform);
+        }
+    };
+    Browser.GetBrowserVersion = function (userAgent, matches, tridentPattern, ieCompatibleVersionString) {
+        var version = Browser.getVersionFromMatches(matches);
+        if (ieCompatibleVersionString) {
+            var versionFromTrident = Browser.getVersionFromTrident(userAgent, tridentPattern);
+            if (ieCompatibleVersionString === 'edge' || parseInt(ieCompatibleVersionString) === versionFromTrident)
+                return versionFromTrident;
+        }
+        return version;
+    };
+    Browser.getIECompatibleVersionString = function () {
+        if (document.compatible) {
+            for (var i = 0; i < document.compatible.length; i++) {
+                if (document.compatible[i].userAgent === 'IE' && document.compatible[i].version)
+                    return document.compatible[i].version.toLowerCase();
+            }
+        }
+        return '';
+    };
+    Browser.isTouchEnabled = function () {
+        return Browser.hasTouchStart() || Browser.hasMaxTouchPoints() || Browser.hasMsMaxTouchPoints();
+    };
+    Browser.hasTouchStart = function () {
+        return ('ontouchstart' in window);
+    };
+    Browser.hasMaxTouchPoints = function () {
+        return navigator['maxTouchPoints'] > 0;
+    };
+    Browser.hasMsMaxTouchPoints = function () {
+        return navigator['msMaxTouchPoints'] > 0;
+    };
+    Browser.hasNavigator = function () {
+        return typeof navigator !== 'undefined';
+    };
+    Browser.fillUserAgentInfo = function (browserTypesOrderedList, browserType, version, platform, isSamsungAndroidDevice) {
+        if (isSamsungAndroidDevice === void 0) { isSamsungAndroidDevice = false; }
+        for (var i = 0; i < browserTypesOrderedList.length; i++) {
+            var type = browserTypesOrderedList[i];
+            Browser[type] = type === browserType;
+        }
+        Browser.Version = Math.floor(10.0 * version) / 10.0;
+        Browser.MajorVersion = Math.floor(Browser.Version);
+        Browser.WindowsPlatform = platform === 'Win' || platform === 'WinPhone';
+        Browser.MacOSMobilePlatform = platform === 'MacMobile' || (platform === 'Mac' && Browser.isTouchEnabled());
+        Browser.MacOSPlatform = platform === 'Mac' && !Browser.MacOSMobilePlatform;
+        Browser.AndroidMobilePlatform = platform === 'Android';
+        Browser.WindowsPhonePlatform = platform === 'WinPhone';
+        Browser.WebKitFamily = Browser.Safari || Browser.Chrome || Browser.Opera && Browser.MajorVersion >= 15;
+        Browser.NetscapeFamily = Browser.Netscape || Browser.Mozilla || Browser.Firefox;
+        Browser.HardwareAcceleration = (Browser.IE && Browser.MajorVersion >= 9) || (Browser.Firefox && Browser.MajorVersion >= 4) ||
+            (Browser.AndroidMobilePlatform && Browser.Chrome) || (Browser.Chrome && Browser.MajorVersion >= 37) ||
+            (Browser.Safari && !Browser.WindowsPlatform) || Browser.Edge || (Browser.Opera && Browser.MajorVersion >= 46);
+        Browser.WebKitTouchUI = Browser.MacOSMobilePlatform || Browser.AndroidMobilePlatform;
+        var isIETouchUI = Browser.IE && Browser.MajorVersion > 9 && Browser.WindowsPlatform && Browser.UserAgent.toLowerCase().indexOf('touch') >= 0;
+        Browser.MSTouchUI = isIETouchUI || (Browser.Edge && !!window.navigator.maxTouchPoints);
+        Browser.TouchUI = Browser.WebKitTouchUI || Browser.MSTouchUI;
+        Browser.MobileUI = Browser.WebKitTouchUI || Browser.WindowsPhonePlatform;
+        Browser.AndroidDefaultBrowser = Browser.AndroidMobilePlatform && !Browser.Chrome;
+        Browser.AndroidChromeBrowser = Browser.AndroidMobilePlatform && Browser.Chrome;
+        if (isSamsungAndroidDevice)
+            Browser.SamsungAndroidDevice = isSamsungAndroidDevice;
+        if (Browser.MSTouchUI) {
+            var isARMArchitecture = Browser.UserAgent.toLowerCase().indexOf('arm;') > -1;
+            Browser.VirtualKeyboardSupported = isARMArchitecture || Browser.WindowsPhonePlatform;
+        }
+        else
+            Browser.VirtualKeyboardSupported = Browser.WebKitTouchUI;
+        Browser.fillDocumentElementBrowserTypeClassNames(browserTypesOrderedList);
+    };
+    Browser.indentPlatformMajorVersion = function (userAgent) {
+        var regex = /(?:(?:windows nt|macintosh|mac os|cpu os|cpu iphone os|android|windows phone|linux) )(\d+)(?:[-0-9_.])*/;
+        var matches = regex.exec(userAgent);
+        if (matches)
+            Browser.PlaformMajorVersion = matches[1];
+    };
+    Browser.getVersionFromMatches = function (matches) {
+        var result = -1;
+        var versionStr = '';
+        if (matches) {
+            if (matches[1]) {
+                versionStr += matches[1];
+                if (matches[2])
+                    versionStr += '.' + matches[2];
+            }
+            if (versionStr !== '') {
+                result = parseFloat(versionStr);
+                if (isNaN(result))
+                    result = -1;
+            }
+        }
+        return result;
+    };
+    Browser.getVersionFromTrident = function (userAgent, tridentPattern) {
+        var tridentDiffFromVersion = 4;
+        var matches = new RegExp(tridentPattern, 'i').exec(userAgent);
+        return Browser.getVersionFromMatches(matches) + tridentDiffFromVersion;
+    };
+    Browser.fillDocumentElementBrowserTypeClassNames = function (browserTypesOrderedList) {
+        var documentElementClassName = '';
+        var browserTypeslist = browserTypesOrderedList.concat(['WindowsPlatform', 'MacOSPlatform', 'MacOSMobilePlatform', 'AndroidMobilePlatform',
+            'WindowsPhonePlatform', 'WebKitFamily', 'WebKitTouchUI', 'MSTouchUI', 'TouchUI', 'AndroidDefaultBrowser']);
+        for (var i = 0; i < browserTypeslist.length; i++) {
+            var type = browserTypeslist[i];
+            if (Browser[type])
+                documentElementClassName += 'dx' + type + ' ';
+        }
+        documentElementClassName += 'dxBrowserVersion-' + Browser.MajorVersion;
+        if (typeof document !== 'undefined' && document && document.documentElement) {
+            if (document.documentElement.className !== '')
+                documentElementClassName = ' ' + documentElementClassName;
+            document.documentElement.className += documentElementClassName;
+            Browser.Info = documentElementClassName;
+        }
+    };
+    Browser.getUserAgent = function () {
+        return Browser.hasNavigator() && navigator.userAgent ? navigator.userAgent.toLowerCase() : '';
+    };
+    Browser.UserAgent = Browser.getUserAgent();
+    Browser._foo = Browser.IdentUserAgent(Browser.UserAgent);
+    return Browser;
+}());
+exports.Browser = Browser;
 
 
 /***/ }),
@@ -4299,7 +4632,7 @@ exports.RectanglePrimitive = RectanglePrimitive;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var string_1 = __webpack_require__(59);
+var string_1 = __webpack_require__(60);
 var ColorUtils = (function () {
     function ColorUtils() {
     }
@@ -4457,10 +4790,10 @@ exports.ColorUtils = ColorUtils;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var browser_1 = __webpack_require__(17);
-var common_1 = __webpack_require__(42);
-var math_1 = __webpack_require__(33);
-var string_1 = __webpack_require__(59);
+var browser_1 = __webpack_require__(20);
+var common_1 = __webpack_require__(43);
+var math_1 = __webpack_require__(32);
+var string_1 = __webpack_require__(60);
 var DomUtils = (function () {
     function DomUtils() {
     }
@@ -5080,9 +5413,9 @@ exports.SvgPrimitive = SvgPrimitive;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var browser_1 = __webpack_require__(17);
+var browser_1 = __webpack_require__(20);
 var encode_1 = __webpack_require__(173);
-var string_1 = __webpack_require__(59);
+var string_1 = __webpack_require__(60);
 var KeyUtils = (function () {
     function KeyUtils() {
     }
@@ -5357,12 +5690,235 @@ var KeyCode;
 
 "use strict";
 
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.EmptyStyle = exports.StrokeStyle = exports.TextAlignment = exports.TextStyle = exports.Style = exports.DEFAULT_STROKE_DASHARRAY = exports.DEFAULT_STROKE_WIDTH = exports.StyleBase = void 0;
+var color_1 = __webpack_require__(22);
+var Svg_1 = __webpack_require__(113);
+var unit_converter_1 = __webpack_require__(11);
+var StyleBase = /** @class */ (function () {
+    function StyleBase() {
+        this.createDefaultProperties();
+    }
+    StyleBase.prototype.clone = function () {
+        var _this = this;
+        var style = this.createInstance();
+        this.forEach(function (propertyName) { style[propertyName] = _this[propertyName]; });
+        return style;
+    };
+    StyleBase.prototype.forEach = function (callback) {
+        for (var propertyName in this)
+            if (Object.prototype.hasOwnProperty.call(this, propertyName))
+                callback(propertyName);
+    };
+    Object.defineProperty(StyleBase.prototype, "strokeWidthPx", {
+        get: function () {
+            return 0;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(StyleBase.prototype, "strokeWidth", {
+        get: function () {
+            return unit_converter_1.UnitConverter.pixelsToTwips(this.strokeWidthPx);
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(StyleBase.prototype, "strokeOffset", {
+        get: function () {
+            return 0.5;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    StyleBase.prototype.toHash = function () {
+        var obj = this.toObject();
+        return !obj ? "" : Object.keys(obj).map(function (k) { return k + "|" + obj[k]; }).join("");
+    };
+    StyleBase.prototype.toObject = function () {
+        var _this = this;
+        var result = {};
+        var modified = false;
+        var defaultStyle = this.getDefaultInstance();
+        this.forEach(function (key) {
+            if (_this[key] !== defaultStyle[key]) {
+                result[key] = _this[key];
+                modified = true;
+            }
+        });
+        return modified ? result : null;
+    };
+    StyleBase.prototype.fromObject = function (obj) {
+        for (var key in obj)
+            if (Object.prototype.hasOwnProperty.call(obj, key)) {
+                var value = Svg_1.isColorProperty(key) ? color_1.ColorUtils.stringToHash(obj[key]) : obj[key];
+                this[key] = value;
+            }
+    };
+    return StyleBase;
+}());
+exports.StyleBase = StyleBase;
+exports.DEFAULT_STROKE_WIDTH = 2;
+exports.DEFAULT_STROKE_DASHARRAY = "";
+var Style = /** @class */ (function (_super) {
+    __extends(Style, _super);
+    function Style() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    Style.prototype.createInstance = function () {
+        return new Style();
+    };
+    Style.prototype.createDefaultProperties = function () {
+        // Default values must be the same with css
+        this["fill"] = "#ffffff";
+        this["stroke"] = "#000000";
+        this["stroke-width"] = exports.DEFAULT_STROKE_WIDTH.toString();
+        this["stroke-dasharray"] = exports.DEFAULT_STROKE_DASHARRAY;
+    };
+    Style.prototype.getDefaultInstance = function () {
+        return Style.defaultInstance;
+    };
+    Style.prototype.isDefaultStrokeDashArray = function () {
+        return this["stroke-dasharray"] === exports.DEFAULT_STROKE_DASHARRAY;
+    };
+    Style.prototype.resetStrokeDashArray = function () {
+        this["stroke-dasharray"] = exports.DEFAULT_STROKE_DASHARRAY;
+    };
+    Object.defineProperty(Style.prototype, "strokeWidthPx", {
+        get: function () {
+            return parseInt(this["stroke-width"]);
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Style.defaultInstance = new Style();
+    return Style;
+}(StyleBase));
+exports.Style = Style;
+var TextStyle = /** @class */ (function (_super) {
+    __extends(TextStyle, _super);
+    function TextStyle() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    TextStyle.prototype.createInstance = function () {
+        return new TextStyle();
+    };
+    TextStyle.prototype.createDefaultProperties = function () {
+        // Default values must be the same with css
+        this["fill"] = "#000000";
+        this["font-family"] = "Arial";
+        this["font-size"] = "10pt";
+        this["font-weight"] = "";
+        this["font-style"] = "";
+        this["text-decoration"] = "";
+        this["text-anchor"] = "middle";
+    };
+    TextStyle.prototype.getDefaultInstance = function () {
+        return TextStyle.defaultInstance;
+    };
+    TextStyle.prototype.getAlignment = function () {
+        switch (this["text-anchor"]) {
+            case "left":
+                return TextAlignment.Left;
+            case "right":
+                return TextAlignment.Right;
+            default:
+                return TextAlignment.Center;
+        }
+    };
+    TextStyle.defaultInstance = new TextStyle();
+    return TextStyle;
+}(StyleBase));
+exports.TextStyle = TextStyle;
+var TextAlignment;
+(function (TextAlignment) {
+    TextAlignment[TextAlignment["Left"] = 0] = "Left";
+    TextAlignment[TextAlignment["Right"] = 1] = "Right";
+    TextAlignment[TextAlignment["Center"] = 2] = "Center";
+})(TextAlignment = exports.TextAlignment || (exports.TextAlignment = {}));
+var StrokeStyle = /** @class */ (function (_super) {
+    __extends(StrokeStyle, _super);
+    function StrokeStyle(strokeWidthPx, strokeOffset) {
+        var _this = _super.call(this) || this;
+        _this._strokeWidthPx = strokeWidthPx;
+        _this._strokeOffset = strokeOffset;
+        return _this;
+    }
+    StrokeStyle.prototype.createInstance = function () {
+        return new StrokeStyle();
+    };
+    StrokeStyle.prototype.createDefaultProperties = function () {
+    };
+    StrokeStyle.prototype.getDefaultInstance = function () {
+        return TextStyle.defaultInstance;
+    };
+    Object.defineProperty(StrokeStyle.prototype, "strokeWidthPx", {
+        get: function () {
+            return this._strokeWidthPx || 0;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(StrokeStyle.prototype, "strokeOffset", {
+        get: function () {
+            return this._strokeOffset || 0;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    StrokeStyle.default1pxInstance = new StrokeStyle(1, 0.5);
+    StrokeStyle.default1pxNegativeOffsetInstance = new StrokeStyle(1, -0.5);
+    StrokeStyle.default2pxInstance = new StrokeStyle(2);
+    return StrokeStyle;
+}(Style));
+exports.StrokeStyle = StrokeStyle;
+var EmptyStyle = /** @class */ (function (_super) {
+    __extends(EmptyStyle, _super);
+    function EmptyStyle(styles) {
+        var _this = _super.call(this) || this;
+        if (styles)
+            Object.keys(styles).forEach(function (k) { return _this[k] = styles[k]; });
+        return _this;
+    }
+    EmptyStyle.prototype.createInstance = function () {
+        return new EmptyStyle();
+    };
+    EmptyStyle.prototype.createDefaultProperties = function () {
+    };
+    EmptyStyle.prototype.getDefaultInstance = function () {
+        return TextStyle.defaultInstance;
+    };
+    EmptyStyle.defaultInstance = new EmptyStyle();
+    return EmptyStyle;
+}(Style));
+exports.EmptyStyle = EmptyStyle;
+
+
+/***/ }),
+/* 28 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ConnectorRoutingMode = exports.AutoZoomMode = exports.DiagramSettings = void 0;
 var Utils_1 = __webpack_require__(3);
 var size_1 = __webpack_require__(2);
-var Enums_1 = __webpack_require__(48);
-var ModelUtils_1 = __webpack_require__(5);
+var Enums_1 = __webpack_require__(49);
+var ModelUtils_1 = __webpack_require__(4);
 var DiagramSettings = /** @class */ (function () {
     function DiagramSettings() {
         this.onZoomChanged = new Utils_1.EventDispatcher();
@@ -5599,7 +6155,7 @@ var ConnectorRoutingMode;
 
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5619,7 +6175,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ConnectorRenderPoint = void 0;
-var point_1 = __webpack_require__(0);
+var point_1 = __webpack_require__(1);
 var ConnectorRenderPoint = /** @class */ (function (_super) {
     __extends(ConnectorRenderPoint, _super);
     function ConnectorRenderPoint(x, y, pointIndex, skipped) {
@@ -5651,248 +6207,7 @@ exports.ConnectorRenderPoint = ConnectorRenderPoint;
 
 
 /***/ }),
-/* 29 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.ShapeParameterPoint = void 0;
-var ShapeParameterPoint = /** @class */ (function () {
-    function ShapeParameterPoint(key, point) {
-        this.key = key;
-        this.point = point;
-    }
-    return ShapeParameterPoint;
-}());
-exports.ShapeParameterPoint = ShapeParameterPoint;
-
-
-/***/ }),
 /* 30 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.EmptyStyle = exports.StrokeStyle = exports.TextAlignment = exports.TextStyle = exports.Style = exports.DEFAULT_STROKE_DASHARRAY = exports.DEFAULT_STROKE_WIDTH = exports.StyleBase = void 0;
-var color_1 = __webpack_require__(22);
-var Svg_1 = __webpack_require__(113);
-var unit_converter_1 = __webpack_require__(11);
-var StyleBase = /** @class */ (function () {
-    function StyleBase() {
-        this.createDefaultProperties();
-    }
-    StyleBase.prototype.clone = function () {
-        var _this = this;
-        var style = this.createInstance();
-        this.forEach(function (propertyName) { style[propertyName] = _this[propertyName]; });
-        return style;
-    };
-    StyleBase.prototype.forEach = function (callback) {
-        for (var propertyName in this)
-            if (Object.prototype.hasOwnProperty.call(this, propertyName))
-                callback(propertyName);
-    };
-    Object.defineProperty(StyleBase.prototype, "strokeWidthPx", {
-        get: function () {
-            return 0;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(StyleBase.prototype, "strokeWidth", {
-        get: function () {
-            return unit_converter_1.UnitConverter.pixelsToTwips(this.strokeWidthPx);
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(StyleBase.prototype, "strokeOffset", {
-        get: function () {
-            return 0.5;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    StyleBase.prototype.toHash = function () {
-        var obj = this.toObject();
-        return !obj ? "" : Object.keys(obj).map(function (k) { return k + "|" + obj[k]; }).join("");
-    };
-    StyleBase.prototype.toObject = function () {
-        var _this = this;
-        var result = {};
-        var modified = false;
-        var defaultStyle = this.getDefaultInstance();
-        this.forEach(function (key) {
-            if (_this[key] !== defaultStyle[key]) {
-                result[key] = _this[key];
-                modified = true;
-            }
-        });
-        return modified ? result : null;
-    };
-    StyleBase.prototype.fromObject = function (obj) {
-        for (var key in obj)
-            if (Object.prototype.hasOwnProperty.call(obj, key)) {
-                var value = Svg_1.isColorProperty(key) ? color_1.ColorUtils.stringToHash(obj[key]) : obj[key];
-                this[key] = value;
-            }
-    };
-    return StyleBase;
-}());
-exports.StyleBase = StyleBase;
-exports.DEFAULT_STROKE_WIDTH = 2;
-exports.DEFAULT_STROKE_DASHARRAY = "";
-var Style = /** @class */ (function (_super) {
-    __extends(Style, _super);
-    function Style() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    Style.prototype.createInstance = function () {
-        return new Style();
-    };
-    Style.prototype.createDefaultProperties = function () {
-        // Default values must be the same with css
-        this["fill"] = "#ffffff";
-        this["stroke"] = "#000000";
-        this["stroke-width"] = exports.DEFAULT_STROKE_WIDTH.toString();
-        this["stroke-dasharray"] = exports.DEFAULT_STROKE_DASHARRAY;
-    };
-    Style.prototype.getDefaultInstance = function () {
-        return Style.defaultInstance;
-    };
-    Style.prototype.isDefaultStrokeDashArray = function () {
-        return this["stroke-dasharray"] === exports.DEFAULT_STROKE_DASHARRAY;
-    };
-    Style.prototype.resetStrokeDashArray = function () {
-        this["stroke-dasharray"] = exports.DEFAULT_STROKE_DASHARRAY;
-    };
-    Object.defineProperty(Style.prototype, "strokeWidthPx", {
-        get: function () {
-            return parseInt(this["stroke-width"]);
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Style.defaultInstance = new Style();
-    return Style;
-}(StyleBase));
-exports.Style = Style;
-var TextStyle = /** @class */ (function (_super) {
-    __extends(TextStyle, _super);
-    function TextStyle() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    TextStyle.prototype.createInstance = function () {
-        return new TextStyle();
-    };
-    TextStyle.prototype.createDefaultProperties = function () {
-        // Default values must be the same with css
-        this["fill"] = "#000000";
-        this["font-family"] = "Arial";
-        this["font-size"] = "10pt";
-        this["font-weight"] = "";
-        this["font-style"] = "";
-        this["text-decoration"] = "";
-        this["text-anchor"] = "middle";
-    };
-    TextStyle.prototype.getDefaultInstance = function () {
-        return TextStyle.defaultInstance;
-    };
-    TextStyle.prototype.getAlignment = function () {
-        switch (this["text-anchor"]) {
-            case "left":
-                return TextAlignment.Left;
-            case "right":
-                return TextAlignment.Right;
-            default:
-                return TextAlignment.Center;
-        }
-    };
-    TextStyle.defaultInstance = new TextStyle();
-    return TextStyle;
-}(StyleBase));
-exports.TextStyle = TextStyle;
-var TextAlignment;
-(function (TextAlignment) {
-    TextAlignment[TextAlignment["Left"] = 0] = "Left";
-    TextAlignment[TextAlignment["Right"] = 1] = "Right";
-    TextAlignment[TextAlignment["Center"] = 2] = "Center";
-})(TextAlignment = exports.TextAlignment || (exports.TextAlignment = {}));
-var StrokeStyle = /** @class */ (function (_super) {
-    __extends(StrokeStyle, _super);
-    function StrokeStyle(strokeWidthPx, strokeOffset) {
-        var _this = _super.call(this) || this;
-        _this._strokeWidthPx = strokeWidthPx;
-        _this._strokeOffset = strokeOffset;
-        return _this;
-    }
-    StrokeStyle.prototype.createInstance = function () {
-        return new StrokeStyle();
-    };
-    StrokeStyle.prototype.createDefaultProperties = function () {
-    };
-    StrokeStyle.prototype.getDefaultInstance = function () {
-        return TextStyle.defaultInstance;
-    };
-    Object.defineProperty(StrokeStyle.prototype, "strokeWidthPx", {
-        get: function () {
-            return this._strokeWidthPx || 0;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(StrokeStyle.prototype, "strokeOffset", {
-        get: function () {
-            return this._strokeOffset || 0;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    StrokeStyle.default1pxInstance = new StrokeStyle(1, 0.5);
-    StrokeStyle.default1pxNegativeOffsetInstance = new StrokeStyle(1, -0.5);
-    StrokeStyle.default2pxInstance = new StrokeStyle(2);
-    return StrokeStyle;
-}(Style));
-exports.StrokeStyle = StrokeStyle;
-var EmptyStyle = /** @class */ (function (_super) {
-    __extends(EmptyStyle, _super);
-    function EmptyStyle(styles) {
-        var _this = _super.call(this) || this;
-        if (styles)
-            Object.keys(styles).forEach(function (k) { return _this[k] = styles[k]; });
-        return _this;
-    }
-    EmptyStyle.prototype.createInstance = function () {
-        return new EmptyStyle();
-    };
-    EmptyStyle.prototype.createDefaultProperties = function () {
-    };
-    EmptyStyle.prototype.getDefaultInstance = function () {
-        return TextStyle.defaultInstance;
-    };
-    EmptyStyle.defaultInstance = new EmptyStyle();
-    return EmptyStyle;
-}(Style));
-exports.EmptyStyle = EmptyStyle;
-
-
-/***/ }),
-/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5963,121 +6278,25 @@ exports.ConnectorProperties = ConnectorProperties;
 
 
 /***/ }),
-/* 32 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MouseHandlerDraggingState = void 0;
-var MouseHandlerStateBase_1 = __webpack_require__(39);
-var Event_1 = __webpack_require__(13);
-var unit_converter_1 = __webpack_require__(11);
-var MouseHandlerDraggingState = /** @class */ (function (_super) {
-    __extends(MouseHandlerDraggingState, _super);
-    function MouseHandlerDraggingState(handler, history) {
-        var _this = _super.call(this, handler) || this;
-        _this.history = history;
-        return _this;
+exports.ShapeParameterPoint = void 0;
+var ShapeParameterPoint = /** @class */ (function () {
+    function ShapeParameterPoint(key, point) {
+        this.key = key;
+        this.point = point;
     }
-    MouseHandlerDraggingState.prototype.canApplyChangesOnMouseMove = function (initPosition, position) {
-        return !initPosition || !position ||
-            Math.abs(initPosition.x - position.x) > MouseHandlerDraggingState.dragStartLimit ||
-            Math.abs(initPosition.y - position.y) > MouseHandlerDraggingState.dragStartLimit;
-    };
-    MouseHandlerDraggingState.prototype.onAfterApplyChanges = function () {
-        if (!this.modified)
-            this.handler.raiseDragStart(this.getDraggingElementKeys());
-        this.modified = true;
-        this.mouseDownPoint = undefined;
-    };
-    MouseHandlerDraggingState.prototype.onMouseDown = function (evt) {
-        this.mouseDownPoint = evt.modelPoint.clone();
-    };
-    MouseHandlerDraggingState.prototype.onMouseMove = function (evt) {
-        this.mouseMoveEvent = evt;
-        if (evt.button !== Event_1.MouseButton.Left) {
-            this.cancelChanges();
-            this.handler.switchToDefaultState();
-        }
-        else if (evt.button === Event_1.MouseButton.Left && this.canApplyChangesOnMouseMove(this.mouseDownPoint, evt.modelPoint)) {
-            this.onApplyChanges(evt);
-            this.onAfterApplyChanges();
-        }
-    };
-    MouseHandlerDraggingState.prototype.onKeyDown = function (evt) {
-        if (this.mouseMoveEvent && (evt.keyCode === 16 || evt.keyCode === 17 || evt.keyCode === 18)) // Shift, Ctrl, Alt
-            this.performMouseMoveEvent(evt.modifiers);
-    };
-    MouseHandlerDraggingState.prototype.onKeyUp = function (evt) {
-        if (this.mouseMoveEvent && (evt.keyCode === 16 || evt.keyCode === 17 || evt.keyCode === 18)) // Shift, Ctrl, Alt
-            this.performMouseMoveEvent(evt.modifiers);
-    };
-    MouseHandlerDraggingState.prototype.onMouseUp = function (evt) {
-        this.mouseDownPoint = undefined;
-        this.mouseMoveEvent = undefined;
-        this.handler.switchToDefaultState();
-    };
-    MouseHandlerDraggingState.prototype.performMouseMoveEvent = function (modifiers) {
-        this.mouseMoveEvent.modifiers = modifiers;
-        this.onMouseMove(this.mouseMoveEvent);
-    };
-    MouseHandlerDraggingState.prototype.start = function () {
-        this.handler.beginStorePermissions();
-        this.history.beginTransaction();
-    };
-    MouseHandlerDraggingState.prototype.finish = function () {
-        this.checkStoredPermissionsOnFinish();
-        if (this.modified) {
-            this.onFinishWithChanges();
-            this.modified = false;
-            this.history.endTransaction();
-            this.handler.raiseDragEnd(this.getDraggingElementKeys());
-        }
-        else
-            this.history.endTransaction();
-        this.handler.endStorePermissions();
-        this.handler.clearInteractingItems();
-    };
-    MouseHandlerDraggingState.prototype.checkStoredPermissionsOnFinish = function () {
-        if (!this.handler.isStoredPermissionsGranted()) {
-            this.cancelChanges();
-            this.modified = false;
-        }
-    };
-    MouseHandlerDraggingState.prototype.onFinishWithChanges = function () { };
-    MouseHandlerDraggingState.prototype.cancelChanges = function () {
-        this.handler.lockPermissions();
-        this.history.undoTransaction();
-        this.handler.unlockPermissions();
-        if (this.modified)
-            this.handler.raiseDragEnd(this.getDraggingElementKeys());
-        this.modified = false;
-    };
-    MouseHandlerDraggingState.prototype.getSnappedPoint = function (evt, point) {
-        return this.handler.getSnappedPointOnDragPoint(evt, point);
-    };
-    MouseHandlerDraggingState.dragStartLimit = unit_converter_1.UnitConverter.pixelsToTwips(4);
-    return MouseHandlerDraggingState;
-}(MouseHandlerStateBase_1.MouseHandlerCancellableState));
-exports.MouseHandlerDraggingState = MouseHandlerDraggingState;
+    return ShapeParameterPoint;
+}());
+exports.ShapeParameterPoint = ShapeParameterPoint;
 
 
 /***/ }),
-/* 33 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6137,15 +6356,15 @@ exports.MathUtils = MathUtils;
 
 
 /***/ }),
-/* 34 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var math_1 = __webpack_require__(33);
-var metrics_1 = __webpack_require__(83);
-var point_1 = __webpack_require__(0);
+var math_1 = __webpack_require__(32);
+var metrics_1 = __webpack_require__(35);
+var point_1 = __webpack_require__(1);
 var rectangle_1 = __webpack_require__(12);
 var Segment = (function () {
     function Segment(startPoint, endPoint) {
@@ -6232,15 +6451,152 @@ exports.Segment = Segment;
 
 
 /***/ }),
+/* 34 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.MouseHandlerDraggingState = void 0;
+var MouseHandlerStateBase_1 = __webpack_require__(40);
+var Event_1 = __webpack_require__(13);
+var unit_converter_1 = __webpack_require__(11);
+var MouseHandlerDraggingState = /** @class */ (function (_super) {
+    __extends(MouseHandlerDraggingState, _super);
+    function MouseHandlerDraggingState(handler, history) {
+        var _this = _super.call(this, handler) || this;
+        _this.history = history;
+        return _this;
+    }
+    MouseHandlerDraggingState.prototype.canApplyChangesOnMouseMove = function (initPosition, position) {
+        return !initPosition || !position ||
+            Math.abs(initPosition.x - position.x) > MouseHandlerDraggingState.dragStartLimit ||
+            Math.abs(initPosition.y - position.y) > MouseHandlerDraggingState.dragStartLimit;
+    };
+    MouseHandlerDraggingState.prototype.onAfterApplyChanges = function () {
+        if (!this.modified)
+            this.handler.onDocumentDragStart(this.getDraggingElementKeys());
+        this.modified = true;
+        this.mouseDownPoint = undefined;
+    };
+    MouseHandlerDraggingState.prototype.onMouseDown = function (evt) {
+        this.mouseDownPoint = evt.modelPoint.clone();
+    };
+    MouseHandlerDraggingState.prototype.onMouseMove = function (evt) {
+        this.mouseMoveEvent = evt;
+        if (evt.button !== Event_1.MouseButton.Left) {
+            this.cancelChanges();
+            this.handler.switchToDefaultState();
+        }
+        else if (evt.button === Event_1.MouseButton.Left && this.canApplyChangesOnMouseMove(this.mouseDownPoint, evt.modelPoint)) {
+            this.onApplyChanges(evt);
+            this.onAfterApplyChanges();
+        }
+    };
+    MouseHandlerDraggingState.prototype.onKeyDown = function (evt) {
+        if (this.mouseMoveEvent && (evt.keyCode === 16 || evt.keyCode === 17 || evt.keyCode === 18)) // Shift, Ctrl, Alt
+            this.performMouseMoveEvent(evt.modifiers);
+    };
+    MouseHandlerDraggingState.prototype.onKeyUp = function (evt) {
+        if (this.mouseMoveEvent && (evt.keyCode === 16 || evt.keyCode === 17 || evt.keyCode === 18)) // Shift, Ctrl, Alt
+            this.performMouseMoveEvent(evt.modifiers);
+    };
+    MouseHandlerDraggingState.prototype.onMouseUp = function (evt) {
+        this.mouseDownPoint = undefined;
+        this.mouseMoveEvent = undefined;
+        this.handler.switchToDefaultState();
+    };
+    MouseHandlerDraggingState.prototype.performMouseMoveEvent = function (modifiers) {
+        this.mouseMoveEvent.modifiers = modifiers;
+        this.onMouseMove(this.mouseMoveEvent);
+    };
+    MouseHandlerDraggingState.prototype.start = function () {
+        this.handler.beginStorePermissions();
+        this.history.beginTransaction();
+    };
+    MouseHandlerDraggingState.prototype.finish = function () {
+        this.checkStoredPermissionsOnFinish();
+        if (this.modified) {
+            this.onFinishWithChanges();
+            this.modified = false;
+            this.history.endTransaction();
+            this.handler.onDocumentDragEnd(this.getDraggingElementKeys());
+        }
+        else
+            this.history.endTransaction();
+        this.handler.endStorePermissions();
+        this.handler.clearInteractingItems();
+    };
+    MouseHandlerDraggingState.prototype.checkStoredPermissionsOnFinish = function () {
+        if (!this.handler.isStoredPermissionsGranted()) {
+            this.cancelChanges();
+            this.modified = false;
+        }
+    };
+    MouseHandlerDraggingState.prototype.onFinishWithChanges = function () { };
+    MouseHandlerDraggingState.prototype.cancelChanges = function () {
+        this.handler.lockPermissions();
+        this.history.undoTransaction();
+        this.handler.unlockPermissions();
+        if (this.modified)
+            this.handler.onDocumentDragEnd(this.getDraggingElementKeys());
+        this.modified = false;
+    };
+    MouseHandlerDraggingState.prototype.getSnappedPoint = function (evt, point) {
+        return this.handler.getSnappedPointOnDragPoint(evt, point);
+    };
+    MouseHandlerDraggingState.dragStartLimit = unit_converter_1.UnitConverter.pixelsToTwips(4);
+    return MouseHandlerDraggingState;
+}(MouseHandlerStateBase_1.MouseHandlerCancellableState));
+exports.MouseHandlerDraggingState = MouseHandlerDraggingState;
+
+
+/***/ }),
 /* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+var Metrics = (function () {
+    function Metrics() {
+    }
+    Metrics.euclideanDistance = function (a, b) {
+        var xDist = a.x - b.x;
+        var yDist = a.y - b.y;
+        return Math.sqrt(xDist * xDist + yDist * yDist);
+    };
+    Metrics.manhattanDistance = function (a, b) {
+        return Math.abs(a.x - b.x) + Math.abs(a.y - b.y);
+    };
+    return Metrics;
+}());
+exports.Metrics = Metrics;
+
+
+/***/ }),
+/* 36 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.DiagramLocalizationService = void 0;
-var ShapeTypes_1 = __webpack_require__(1);
-var Enums_1 = __webpack_require__(48);
+var ShapeTypes_1 = __webpack_require__(0);
+var Enums_1 = __webpack_require__(49);
 var DiagramLocalizationService = /** @class */ (function () {
     function DiagramLocalizationService() {
     }
@@ -6304,7 +6660,7 @@ DiagramLocalizationService.shapeTexts[ShapeTypes_1.ShapeTypes.CardWithImageOnRig
 
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6366,7 +6722,7 @@ exports.ShapeParameters = ShapeParameters;
 
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6407,7 +6763,7 @@ var ConnectionMode;
 
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6457,7 +6813,7 @@ exports.GroupPrimitive = GroupPrimitive;
 
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6521,7 +6877,7 @@ exports.MouseHandlerCancellableState = MouseHandlerCancellableState;
 
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6594,7 +6950,7 @@ exports.SearchUtils = SearchUtils;
 
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6646,13 +7002,13 @@ exports.CanvasManagerBase = CanvasManagerBase;
 
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var string_1 = __webpack_require__(59);
+var string_1 = __webpack_require__(60);
 function isDefined(value) {
     return value !== undefined && value !== null;
 }
@@ -6698,20 +7054,22 @@ exports.numberToStringHex = numberToStringHex;
 
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var browser_1 = __webpack_require__(17);
-var common_1 = __webpack_require__(42);
+var browser_1 = __webpack_require__(20);
+var common_1 = __webpack_require__(43);
 var dom_1 = __webpack_require__(23);
 var touch_1 = __webpack_require__(174);
 var EvtUtils = (function () {
     function EvtUtils() {
     }
     EvtUtils.preventEvent = function (evt) {
+        if (!evt.cancelable)
+            return;
         if (evt.preventDefault)
             evt.preventDefault();
         else
@@ -6803,7 +7161,7 @@ exports.EvtUtils = EvtUtils;
 
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6820,7 +7178,7 @@ var TextOwner;
 
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6828,7 +7186,7 @@ var TextOwner;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Data = exports.SetAbsoluteY = exports.SetAbsoluteX = void 0;
 var dom_1 = __webpack_require__(23);
-var common_1 = __webpack_require__(42);
+var common_1 = __webpack_require__(43);
 function IsNumber(str) {
     return !isNaN(parseFloat(str)) && isFinite(str);
 }
@@ -7121,7 +7479,7 @@ exports.Data = Data;
 
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7141,7 +7499,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ConnectionPoint = void 0;
-var point_1 = __webpack_require__(0);
+var point_1 = __webpack_require__(1);
 var DiagramItem_1 = __webpack_require__(9);
 var ConnectionPoint = /** @class */ (function (_super) {
     __extends(ConnectionPoint, _super);
@@ -7171,15 +7529,15 @@ exports.ConnectionPoint = ConnectionPoint;
 
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ImageCache = exports.CacheImageInfo = void 0;
-var base64_1 = __webpack_require__(84);
-var ImageInfo_1 = __webpack_require__(50);
+var base64_1 = __webpack_require__(83);
+var ImageInfo_1 = __webpack_require__(51);
 var Utils_1 = __webpack_require__(3);
 var CacheImageInfo = /** @class */ (function () {
     function CacheImageInfo(base64, actualId, imageUrl, referenceInfo, isLoaded) {
@@ -7343,7 +7701,7 @@ exports.ImageCache = ImageCache;
 
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7364,7 +7722,7 @@ var PageOrientation;
 
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7384,8 +7742,8 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SetConnectionPointIndexHistoryItem = exports.AddConnectionHistoryItem = void 0;
-var HistoryItem_1 = __webpack_require__(6);
-var Connector_1 = __webpack_require__(7);
+var HistoryItem_1 = __webpack_require__(8);
+var Connector_1 = __webpack_require__(6);
 var AddConnectionHistoryItem = /** @class */ (function (_super) {
     __extends(AddConnectionHistoryItem, _super);
     function AddConnectionHistoryItem(connector, item, connectionPointIndex, position) {
@@ -7432,14 +7790,14 @@ exports.SetConnectionPointIndexHistoryItem = SetConnectionPointIndexHistoryItem;
 
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ImageInfo = void 0;
-var base64_1 = __webpack_require__(84);
+var base64_1 = __webpack_require__(83);
 var ImageInfo = /** @class */ (function () {
     function ImageInfo(imageUrlOrBase64) {
         this.url = undefined;
@@ -7500,7 +7858,7 @@ exports.ImageInfo = ImageInfo;
 
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7509,7 +7867,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ConnectorPointsOrthogonalSideCalculatorBase = void 0;
 var rectangle_1 = __webpack_require__(12);
 var DiagramItem_1 = __webpack_require__(9);
-var Connector_1 = __webpack_require__(7);
+var Connector_1 = __webpack_require__(6);
 var ConnectorPointsOrthogonalSideCalculatorBase = /** @class */ (function () {
     function ConnectorPointsOrthogonalSideCalculatorBase(parent) {
         this.parent = parent;
@@ -7596,7 +7954,7 @@ var ConnectorPointsOrthogonalSideCalculatorBase = /** @class */ (function () {
         return this.beginRect && this.endRect && (this.beginRect.containsPoint(endPoint) || this.endRect.containsPoint(beginPoint));
     };
     ConnectorPointsOrthogonalSideCalculatorBase.prototype.isOriginRectContainsTargetPoint = function (originRect, targetPoint) {
-        return originRect && originRect.containsPoint(targetPoint);
+        return originRect && targetPoint && originRect.containsPoint(targetPoint);
     };
     return ConnectorPointsOrthogonalSideCalculatorBase;
 }());
@@ -7604,7 +7962,7 @@ exports.ConnectorPointsOrthogonalSideCalculatorBase = ConnectorPointsOrthogonalS
 
 
 /***/ }),
-/* 52 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7624,7 +7982,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AddShapeHistoryItem = void 0;
-var HistoryItem_1 = __webpack_require__(6);
+var HistoryItem_1 = __webpack_require__(8);
 var Shape_1 = __webpack_require__(14);
 var AddShapeHistoryItem = /** @class */ (function (_super) {
     __extends(AddShapeHistoryItem, _super);
@@ -7654,7 +8012,7 @@ exports.AddShapeHistoryItem = AddShapeHistoryItem;
 
 
 /***/ }),
-/* 53 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7703,7 +8061,7 @@ exports.EllipsePrimitive = EllipsePrimitive;
 
 
 /***/ }),
-/* 54 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7749,7 +8107,7 @@ exports.ClipPathPrimitive = ClipPathPrimitive;
 
 
 /***/ }),
-/* 55 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7784,7 +8142,7 @@ exports.ExportImportCommandBase = ExportImportCommandBase;
 
 
 /***/ }),
-/* 56 */
+/* 57 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8042,7 +8400,7 @@ function __classPrivateFieldSet(receiver, privateMap, value) {
 
 
 /***/ }),
-/* 57 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8108,7 +8466,7 @@ exports.Vector = Vector;
 
 
 /***/ }),
-/* 58 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8238,7 +8596,7 @@ exports.Diagnostics = Diagnostics;
 
 
 /***/ }),
-/* 59 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8362,7 +8720,7 @@ exports.StringUtils = StringUtils;
 
 
 /***/ }),
-/* 60 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8370,15 +8728,15 @@ exports.StringUtils = StringUtils;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DiagramModel = void 0;
 var Shape_1 = __webpack_require__(14);
-var Connector_1 = __webpack_require__(7);
+var Connector_1 = __webpack_require__(6);
 var Utils_1 = __webpack_require__(3);
 var rectangle_1 = __webpack_require__(12);
 var size_1 = __webpack_require__(2);
-var point_1 = __webpack_require__(0);
-var ImageCache_1 = __webpack_require__(47);
+var point_1 = __webpack_require__(1);
+var ImageCache_1 = __webpack_require__(48);
 var color_1 = __webpack_require__(22);
-var Enums_1 = __webpack_require__(48);
-var ModelUtils_1 = __webpack_require__(5);
+var Enums_1 = __webpack_require__(49);
+var ModelUtils_1 = __webpack_require__(4);
 var DiagramModel = /** @class */ (function () {
     function DiagramModel(pageSize) {
         if (pageSize === void 0) { pageSize = new size_1.Size(8391, 11906); }
@@ -8641,7 +8999,7 @@ exports.DiagramModel = DiagramModel;
 
 
 /***/ }),
-/* 61 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8665,7 +9023,7 @@ var unit_converter_1 = __webpack_require__(11);
 var RenderHelper_1 = __webpack_require__(15);
 var Primitive_1 = __webpack_require__(25);
 var Utils_1 = __webpack_require__(16);
-var TextUtils_1 = __webpack_require__(62);
+var TextUtils_1 = __webpack_require__(63);
 var TextAngle;
 (function (TextAngle) {
     TextAngle[TextAngle["Angle0deg"] = 0] = "Angle0deg";
@@ -8944,7 +9302,7 @@ exports.TextPrimitive270degRenderHelper = TextPrimitive270degRenderHelper;
 
 
 /***/ }),
-/* 62 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8953,7 +9311,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getLineHeight = exports.getTextHeight = exports.getTextLineSize = exports.getOptimalTextRectangle = exports.TEXTRECT_RATIO_EPS = exports.textToParagraphs = exports.textToWords = exports.wordsByLines = exports.LINE_HEIGHT = void 0;
 var Utils_1 = __webpack_require__(3);
 var size_1 = __webpack_require__(2);
-var Data_1 = __webpack_require__(45);
+var Data_1 = __webpack_require__(46);
 var WHITESPACES = /\s/gm;
 exports.LINE_HEIGHT = 1.05;
 function wordsByLines(absLineWidth, words, measureWords) {
@@ -9101,238 +9459,6 @@ exports.getLineHeight = getLineHeight;
 
 
 /***/ }),
-/* 63 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.RightAngleConnectorRoutingMathOperations = void 0;
-var point_1 = __webpack_require__(0);
-var vector_1 = __webpack_require__(57);
-var segment_1 = __webpack_require__(34);
-var line_equation_1 = __webpack_require__(186);
-var math_1 = __webpack_require__(33);
-var AStarMetrics_1 = __webpack_require__(115);
-var Utils_1 = __webpack_require__(3);
-var DiagramItem_1 = __webpack_require__(9);
-var RightAngleConnectorRoutingMathOperations = /** @class */ (function () {
-    function RightAngleConnectorRoutingMathOperations() {
-    }
-    RightAngleConnectorRoutingMathOperations.createSegments = function (points) {
-        var result = [];
-        for (var i = 1; i < points.length; i++)
-            result.push(new segment_1.Segment(points[i - 1], points[i]));
-        return result;
-    };
-    RightAngleConnectorRoutingMathOperations.createUnionSegments = function (segments, shouldCreateSegment) {
-        var result = [];
-        var startRenderPoint = segments[0].startPoint;
-        var endRenderPoint = segments[0].endPoint;
-        for (var i = 1; i < segments.length; i++) {
-            var currentSegment = segments[i];
-            if (shouldCreateSegment(endRenderPoint, currentSegment.startPoint)) {
-                result.push(new segment_1.Segment(startRenderPoint.clone(), endRenderPoint.clone()));
-                startRenderPoint = currentSegment.startPoint;
-            }
-            endRenderPoint = currentSegment.endPoint;
-        }
-        result.push(new segment_1.Segment(startRenderPoint, endRenderPoint));
-        return result;
-    };
-    RightAngleConnectorRoutingMathOperations.unionPoints = function (points) {
-        var index = 0;
-        while (index < points.length - 2)
-            if (this.isCorner(points[index], points[index + 1], points[index + 2]))
-                index++;
-            else {
-                points.splice(index + 1, 1);
-                index = Math.max(0, index - 1);
-            }
-    };
-    RightAngleConnectorRoutingMathOperations.isCorner = function (p1, p2, p3) {
-        return !math_1.MathUtils.numberCloseTo(this.createAngle(p1, p2, p3), 0);
-    };
-    RightAngleConnectorRoutingMathOperations.createAngle = function (p1, p2, p3) {
-        var vector1 = vector_1.Vector.fromPoints(p2, p3);
-        var vector2 = vector_1.Vector.fromPoints(p1, p2);
-        var atan = Math.atan2(vector1.x * vector2.y - vector2.x * vector1.y, vector1.x * vector2.x + vector1.y * vector2.y);
-        return atan >= 0 ? atan : 2 * Math.PI + atan;
-    };
-    RightAngleConnectorRoutingMathOperations.getTurnDirection = function (angle) {
-        if (math_1.MathUtils.numberCloseTo(angle, 0))
-            return AStarMetrics_1.RightAngleTurnDirection.Straight;
-        if (math_1.MathUtils.numberCloseTo(angle, Math.PI))
-            return AStarMetrics_1.RightAngleTurnDirection.Backwards;
-        return angle < Math.PI ? AStarMetrics_1.RightAngleTurnDirection.Left : AStarMetrics_1.RightAngleTurnDirection.Right;
-    };
-    RightAngleConnectorRoutingMathOperations.createRectanlePolygonalChain = function (rect) {
-        var result = [];
-        var topLeft = new point_1.Point(rect.x, rect.y);
-        var topRight = new point_1.Point(rect.right, rect.y);
-        var bottomRight = new point_1.Point(rect.right, rect.bottom);
-        var bottomLeft = new point_1.Point(rect.x, rect.bottom);
-        result.push(new segment_1.Segment(topLeft, topRight));
-        result.push(new segment_1.Segment(topRight, bottomRight));
-        result.push(new segment_1.Segment(bottomRight, bottomLeft));
-        result.push(new segment_1.Segment(bottomLeft, topLeft));
-        return result;
-    };
-    RightAngleConnectorRoutingMathOperations.isLineIntersected = function (line, segment, excludeBeginPoint, excludeEndPoint) {
-        var intersection = line_equation_1.LineEquation.fromPoints(segment.startPoint, segment.endPoint).getIntersection(line);
-        if (!intersection || !segment.containsPoint(intersection))
-            return false;
-        if (excludeBeginPoint)
-            return !segment.startPoint.equals(intersection);
-        if (excludeEndPoint)
-            return !segment.endPoint.equals(intersection);
-        return true;
-    };
-    RightAngleConnectorRoutingMathOperations.isSegmentNormal = function (segment, isHorizontal) {
-        return isHorizontal ? segment.startPoint.y === segment.endPoint.y : segment.startPoint.x === segment.endPoint.x;
-    };
-    RightAngleConnectorRoutingMathOperations.isConnectionRectanleLineIntersected = function (rect, segment, side, excludeBeginPoint, excludeEndPoint, createPoint) {
-        switch (side) {
-            case DiagramItem_1.ConnectionPointSide.North:
-                return this.isLineIntersected(line_equation_1.LineEquation.fromPoints(createPoint(rect.x, rect.y), createPoint(rect.right, rect.y)), segment, excludeBeginPoint, excludeEndPoint);
-            case DiagramItem_1.ConnectionPointSide.South:
-                return this.isLineIntersected(line_equation_1.LineEquation.fromPoints(createPoint(rect.right, rect.bottom), createPoint(rect.x, rect.bottom)), segment, excludeBeginPoint, excludeEndPoint);
-            case DiagramItem_1.ConnectionPointSide.West:
-                return this.isLineIntersected(line_equation_1.LineEquation.fromPoints(createPoint(rect.x, rect.y), createPoint(rect.x, rect.bottom)), segment, excludeBeginPoint, excludeEndPoint);
-            case DiagramItem_1.ConnectionPointSide.East:
-                return this.isLineIntersected(line_equation_1.LineEquation.fromPoints(createPoint(rect.right, rect.y), createPoint(rect.right, rect.bottom)), segment, excludeBeginPoint, excludeEndPoint);
-            default:
-                return false;
-        }
-    };
-    RightAngleConnectorRoutingMathOperations.isRectangleCut = function (segments, rect) {
-        if (!rect)
-            return false;
-        var rectanlePolygonalChain = this.createRectanlePolygonalChain(rect);
-        var hasSegmentIn = false;
-        var hasSegmentOut = false;
-        var _loop_1 = function (i) {
-            if (hasSegmentIn && hasSegmentOut)
-                return { value: true };
-            var segment = segments[i];
-            if (segment.isIntersectedByRect(rect)) {
-                var startPoint_1 = segment.startPoint;
-                var endPoint_1 = segment.endPoint;
-                var currentContainsStart = rect.containsPoint(startPoint_1);
-                var currentContainsEnd = rect.containsPoint(endPoint_1);
-                if (!currentContainsStart && !currentContainsEnd)
-                    return { value: true };
-                if (currentContainsStart && !currentContainsEnd) {
-                    var rectLinesContainsStart_1 = rectanlePolygonalChain.filter(function (s) { return s.containsPoint(startPoint_1); });
-                    if (rectLinesContainsStart_1.length > 0) {
-                        var otherRectSegments = rectanlePolygonalChain.filter(function (s) {
-                            if (rectLinesContainsStart_1.length === 1)
-                                return !s.containsPoint(rectLinesContainsStart_1[0].startPoint) && !s.containsPoint(rectLinesContainsStart_1[0].endPoint);
-                            return s !== rectLinesContainsStart_1[0] && s !== rectLinesContainsStart_1[1];
-                        });
-                        if (otherRectSegments.some(function (s) { return segment.isIntersected(s); }) && !hasSegmentIn)
-                            hasSegmentIn = true;
-                    }
-                    if (!hasSegmentOut)
-                        hasSegmentOut = true;
-                    return "continue";
-                }
-                if (!currentContainsStart && currentContainsEnd) {
-                    if (!hasSegmentIn) {
-                        hasSegmentIn = true;
-                        if (hasSegmentOut)
-                            hasSegmentOut = false;
-                    }
-                    var rectLinesContainsEnd_1 = rectanlePolygonalChain.filter(function (s) { return s.containsPoint(endPoint_1); });
-                    if (rectLinesContainsEnd_1.length > 0) {
-                        var otherRectSegments = rectanlePolygonalChain.filter(function (s) {
-                            if (rectLinesContainsEnd_1.length === 1)
-                                return !s.containsPoint(rectLinesContainsEnd_1[0].startPoint) && !s.containsPoint(rectLinesContainsEnd_1[0].endPoint);
-                            return s !== rectLinesContainsEnd_1[0] && s !== rectLinesContainsEnd_1[1];
-                        });
-                        if (otherRectSegments.some(function (s) { return segment.isIntersected(s); }) && !hasSegmentOut)
-                            hasSegmentOut = true;
-                    }
-                    return "continue";
-                }
-                var rectLinesContainsStart = rectanlePolygonalChain.filter(function (s) { return s.containsPoint(startPoint_1); });
-                var rectLinesContainsEnd = rectanlePolygonalChain.filter(function (s) { return s.containsPoint(endPoint_1); });
-                if (rectLinesContainsStart.length === 2 && rectLinesContainsEnd.length === 2)
-                    return { value: true };
-                if (rectLinesContainsStart.length === 1 && rectLinesContainsEnd.length === 1 &&
-                    rectLinesContainsStart[0] !== rectLinesContainsEnd[0])
-                    return { value: true };
-                if (!hasSegmentOut && rectLinesContainsEnd.length === 1 && !rectLinesContainsStart.length)
-                    hasSegmentOut = true;
-                if (!hasSegmentIn && rectLinesContainsStart.length === 1 && !rectLinesContainsEnd.length) {
-                    hasSegmentIn = true;
-                    if (hasSegmentOut)
-                        hasSegmentOut = false;
-                }
-            }
-        };
-        for (var i = 0; i < segments.length; i++) {
-            var state_1 = _loop_1(i);
-            if (typeof state_1 === "object")
-                return state_1.value;
-        }
-        return hasSegmentIn && hasSegmentOut;
-    };
-    RightAngleConnectorRoutingMathOperations.createBeginConnectionSegment = function (beginConnectionSide, beginPoint, offset, createPoint) {
-        switch (beginConnectionSide) {
-            case DiagramItem_1.ConnectionPointSide.North:
-                return new segment_1.Segment(beginPoint, createPoint(beginPoint.x, beginPoint.y - offset));
-            case DiagramItem_1.ConnectionPointSide.South:
-                return new segment_1.Segment(beginPoint, createPoint(beginPoint.x, beginPoint.y + offset));
-            case DiagramItem_1.ConnectionPointSide.West:
-                return new segment_1.Segment(beginPoint, createPoint(beginPoint.x - offset, beginPoint.y));
-            case DiagramItem_1.ConnectionPointSide.East:
-                return new segment_1.Segment(beginPoint, createPoint(beginPoint.x + offset, beginPoint.y));
-            default:
-                return beginPoint;
-        }
-    };
-    RightAngleConnectorRoutingMathOperations.createEndConnectionSegment = function (endConnectionSide, endPoint, offset, createPoint) {
-        switch (endConnectionSide) {
-            case DiagramItem_1.ConnectionPointSide.North:
-                return new segment_1.Segment(createPoint(endPoint.x, endPoint.y - offset), endPoint);
-            case DiagramItem_1.ConnectionPointSide.South:
-                return new segment_1.Segment(createPoint(endPoint.x, endPoint.y + offset), endPoint);
-            case DiagramItem_1.ConnectionPointSide.West:
-                return new segment_1.Segment(createPoint(endPoint.x - offset, endPoint.y), endPoint);
-            case DiagramItem_1.ConnectionPointSide.East:
-                return new segment_1.Segment(createPoint(endPoint.x + offset, endPoint.y), endPoint);
-            default:
-                return endPoint;
-        }
-    };
-    RightAngleConnectorRoutingMathOperations.removeOrSkipUnnecessaryPoints = function (points) {
-        Utils_1.GeometryUtils.removeUnnecessaryLinePoints(points, function (pt, index) {
-            if (pt.pointIndex === -1) {
-                points.splice(index, 1);
-                return true;
-            }
-            else {
-                pt.skipped = true;
-                return false;
-            }
-        }, function (pt) {
-            return pt !== undefined && !pt.skipped;
-        });
-    };
-    RightAngleConnectorRoutingMathOperations.skipUnnecessaryPoints = function (renderPoints) {
-        var skippedRenderPoints = renderPoints.map(function (p) { return p.clone(); });
-        this.removeOrSkipUnnecessaryPoints(skippedRenderPoints);
-        renderPoints.forEach(function (p) { return p.skipped = skippedRenderPoints.some(function (sp) { return sp.equals(p) && sp.skipped; }); });
-        renderPoints[0].skipped = false;
-        renderPoints[renderPoints.length - 1].skipped = false;
-    };
-    return RightAngleConnectorRoutingMathOperations;
-}());
-exports.RightAngleConnectorRoutingMathOperations = RightAngleConnectorRoutingMathOperations;
-
-
-/***/ }),
 /* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9353,8 +9479,8 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AddConnectorHistoryItem = void 0;
-var HistoryItem_1 = __webpack_require__(6);
-var Connector_1 = __webpack_require__(7);
+var HistoryItem_1 = __webpack_require__(8);
+var Connector_1 = __webpack_require__(6);
 var AddConnectorHistoryItem = /** @class */ (function (_super) {
     __extends(AddConnectorHistoryItem, _super);
     function AddConnectorHistoryItem(points, dataKey, renderPointsContext) {
@@ -9403,8 +9529,8 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DeleteConnectionHistoryItem = void 0;
-var HistoryItem_1 = __webpack_require__(6);
-var Connector_1 = __webpack_require__(7);
+var HistoryItem_1 = __webpack_require__(8);
+var Connector_1 = __webpack_require__(6);
 var DeleteConnectionHistoryItem = /** @class */ (function (_super) {
     __extends(DeleteConnectionHistoryItem, _super);
     function DeleteConnectionHistoryItem(connector, position) {
@@ -9450,7 +9576,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SetSelectionHistoryItem = void 0;
-var HistoryItem_1 = __webpack_require__(6);
+var HistoryItem_1 = __webpack_require__(8);
 var SetSelectionHistoryItem = /** @class */ (function (_super) {
     __extends(SetSelectionHistoryItem, _super);
     function SetSelectionHistoryItem(selection, selectedKeys, forceChange) {
@@ -9493,7 +9619,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ChangeConnectorTextHistoryItem = void 0;
-var HistoryItem_1 = __webpack_require__(6);
+var HistoryItem_1 = __webpack_require__(8);
 var ChangeConnectorTextHistoryItem = /** @class */ (function (_super) {
     __extends(ChangeConnectorTextHistoryItem, _super);
     function ChangeConnectorTextHistoryItem(connector, position, text) {
@@ -9538,7 +9664,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ChangeStyleTextHistoryItem = void 0;
-var ChangeStyleHistoryItemBase_1 = __webpack_require__(121);
+var ChangeStyleHistoryItemBase_1 = __webpack_require__(120);
 var ChangeStyleTextHistoryItem = /** @class */ (function (_super) {
     __extends(ChangeStyleTextHistoryItem, _super);
     function ChangeStyleTextHistoryItem(itemKey, styleProperty, styleValue) {
@@ -9579,9 +9705,9 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GraphIterator = exports.FastGraph = exports.Graph = void 0;
-var Structures_1 = __webpack_require__(37);
+var Structures_1 = __webpack_require__(38);
 var Shape_1 = __webpack_require__(14);
-var search_1 = __webpack_require__(40);
+var search_1 = __webpack_require__(41);
 var ListUtils_1 = __webpack_require__(90);
 var GraphBase = /** @class */ (function () {
     function GraphBase(nodes, edges) {
@@ -9884,10 +10010,10 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EllipseShapeDescription = void 0;
-var ShapeDescription_1 = __webpack_require__(8);
+var ShapeDescription_1 = __webpack_require__(7);
 var size_1 = __webpack_require__(2);
-var EllipsePrimitive_1 = __webpack_require__(53);
-var ShapeTypes_1 = __webpack_require__(1);
+var EllipsePrimitive_1 = __webpack_require__(54);
+var ShapeTypes_1 = __webpack_require__(0);
 var Utils_1 = __webpack_require__(3);
 var rectangle_1 = __webpack_require__(12);
 var EllipseShapeDescription = /** @class */ (function (_super) {
@@ -9934,7 +10060,7 @@ exports.EllipseShapeDescription = EllipseShapeDescription;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Exporter = void 0;
 var Shape_1 = __webpack_require__(14);
-var Connector_1 = __webpack_require__(7);
+var Connector_1 = __webpack_require__(6);
 var Utils_1 = __webpack_require__(3);
 var Exporter = /** @class */ (function () {
     function Exporter() {
@@ -10074,9 +10200,9 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ToggleStyleTextPropertyCommand = void 0;
-var StylePropertyCommandBase_1 = __webpack_require__(137);
+var StylePropertyCommandBase_1 = __webpack_require__(136);
 var ChangeStyleTextHistoryItem_1 = __webpack_require__(68);
-var Style_1 = __webpack_require__(30);
+var Style_1 = __webpack_require__(27);
 var ToggleStyleTextPropertyCommand = /** @class */ (function (_super) {
     __extends(ToggleStyleTextPropertyCommand, _super);
     function ToggleStyleTextPropertyCommand() {
@@ -10131,9 +10257,9 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ChangeStylePropertyCommand = void 0;
-var ChangeStylePropertyCommandBase_1 = __webpack_require__(138);
+var ChangeStylePropertyCommandBase_1 = __webpack_require__(137);
 var ChangeStyleHistoryItem_1 = __webpack_require__(89);
-var Style_1 = __webpack_require__(30);
+var Style_1 = __webpack_require__(27);
 var ChangeStylePropertyCommand = /** @class */ (function (_super) {
     __extends(ChangeStylePropertyCommand, _super);
     function ChangeStylePropertyCommand() {
@@ -10180,13 +10306,13 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AutoLayoutCommandBase = void 0;
-var ModelUtils_1 = __webpack_require__(5);
+var ModelUtils_1 = __webpack_require__(4);
 var SimpleCommandBase_1 = __webpack_require__(10);
 var Shape_1 = __webpack_require__(14);
-var Connector_1 = __webpack_require__(7);
+var Connector_1 = __webpack_require__(6);
 var Utils_1 = __webpack_require__(3);
 var rectangle_1 = __webpack_require__(12);
-var ScrollIntoViewHistoryItem_1 = __webpack_require__(253);
+var ScrollIntoViewHistoryItem_1 = __webpack_require__(251);
 var AutoLayoutCommandBase = /** @class */ (function (_super) {
     __extends(AutoLayoutCommandBase, _super);
     function AutoLayoutCommandBase() {
@@ -10255,7 +10381,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ChangePagePropertyCommand = void 0;
-var ModelUtils_1 = __webpack_require__(5);
+var ModelUtils_1 = __webpack_require__(4);
 var SimpleCommandBase_1 = __webpack_require__(10);
 var ChangePagePropertyCommand = /** @class */ (function (_super) {
     __extends(ChangePagePropertyCommand, _super);
@@ -10302,13 +10428,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CanvasItemsManager = exports.CONNECTOR_CAN_MOVE = exports.NOT_VALID_CSSCLASS = void 0;
 var ModelChange_1 = __webpack_require__(99);
 var Event_1 = __webpack_require__(13);
-var GroupPrimitive_1 = __webpack_require__(38);
+var GroupPrimitive_1 = __webpack_require__(39);
 var Utils_1 = __webpack_require__(16);
 var Shape_1 = __webpack_require__(14);
-var Connector_1 = __webpack_require__(7);
+var Connector_1 = __webpack_require__(6);
 var dom_1 = __webpack_require__(23);
-var CanvasManager_1 = __webpack_require__(143);
-var ModelUtils_1 = __webpack_require__(5);
+var CanvasManager_1 = __webpack_require__(142);
+var ModelUtils_1 = __webpack_require__(4);
 exports.NOT_VALID_CSSCLASS = "not-valid";
 exports.CONNECTOR_CAN_MOVE = "can-move";
 var CanvasItemsManager = /** @class */ (function (_super) {
@@ -10658,10 +10784,10 @@ exports.TextMeasurer = void 0;
 var size_1 = __webpack_require__(2);
 var Utils_1 = __webpack_require__(16);
 var Shape_1 = __webpack_require__(14);
-var Connector_1 = __webpack_require__(7);
-var ITextMeasurer_1 = __webpack_require__(44);
+var Connector_1 = __webpack_require__(6);
+var ITextMeasurer_1 = __webpack_require__(45);
 var RenderHelper_1 = __webpack_require__(15);
-var TextUtils_1 = __webpack_require__(62);
+var TextUtils_1 = __webpack_require__(63);
 var TextMeasurer = /** @class */ (function () {
     function TextMeasurer(parent) {
         this.cache = {};
@@ -10873,17 +10999,17 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EdgeOnLayer = exports.NodeOnLayer = exports.SugiyamaNodesOrderer = exports.SugiyamaLayerDistributor = exports.SugiyamaLayoutBuilder = void 0;
-var BaseBuilder_1 = __webpack_require__(142);
+var BaseBuilder_1 = __webpack_require__(141);
 var Graph_1 = __webpack_require__(69);
 var NodeLayout_1 = __webpack_require__(70);
-var Structures_1 = __webpack_require__(37);
+var Structures_1 = __webpack_require__(38);
 var ListUtils_1 = __webpack_require__(90);
-var search_1 = __webpack_require__(40);
-var point_1 = __webpack_require__(0);
-var LayoutSettings_1 = __webpack_require__(20);
-var GraphLayout_1 = __webpack_require__(141);
-var Connector_1 = __webpack_require__(7);
-var CycleRemover_1 = __webpack_require__(272);
+var search_1 = __webpack_require__(41);
+var point_1 = __webpack_require__(1);
+var LayoutSettings_1 = __webpack_require__(19);
+var GraphLayout_1 = __webpack_require__(140);
+var Connector_1 = __webpack_require__(6);
+var CycleRemover_1 = __webpack_require__(270);
 var SugiyamaLayoutBuilder = /** @class */ (function (_super) {
     __extends(SugiyamaLayoutBuilder, _super);
     function SugiyamaLayoutBuilder() {
@@ -11559,65 +11685,65 @@ exports.EmptyBatchUpdatableObject = EmptyBatchUpdatableObject;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CommandManager = exports.DiagramCommand = void 0;
 var DeleteCommand_1 = __webpack_require__(162);
-var UndoCommand_1 = __webpack_require__(201);
-var RedoCommand_1 = __webpack_require__(202);
-var ImportCommand_1 = __webpack_require__(203);
-var ExportCommand_1 = __webpack_require__(240);
-var ToggleFontBoldCommand_1 = __webpack_require__(241);
-var ToggleFontItalicCommand_1 = __webpack_require__(242);
-var ToggleFontUnderlineCommand_1 = __webpack_require__(243);
-var ChangeFontNameCommand_1 = __webpack_require__(244);
-var ChangeFontSizeCommand_1 = __webpack_require__(245);
-var ChangeFontColorCommand_1 = __webpack_require__(246);
-var ChangeFillColorCommand_1 = __webpack_require__(247);
-var ChangeStrokeColorCommand_1 = __webpack_require__(248);
-var ChangeTextAlignCommand_1 = __webpack_require__(249);
-var ChangeConnectorLineEndingCommand_1 = __webpack_require__(250);
-var ChangeConnectorLineOptionCommand_1 = __webpack_require__(251);
-var SelectAllCommand_1 = __webpack_require__(252);
+var UndoCommand_1 = __webpack_require__(199);
+var RedoCommand_1 = __webpack_require__(200);
+var ImportCommand_1 = __webpack_require__(201);
+var ExportCommand_1 = __webpack_require__(238);
+var ToggleFontBoldCommand_1 = __webpack_require__(239);
+var ToggleFontItalicCommand_1 = __webpack_require__(240);
+var ToggleFontUnderlineCommand_1 = __webpack_require__(241);
+var ChangeFontNameCommand_1 = __webpack_require__(242);
+var ChangeFontSizeCommand_1 = __webpack_require__(243);
+var ChangeFontColorCommand_1 = __webpack_require__(244);
+var ChangeFillColorCommand_1 = __webpack_require__(245);
+var ChangeStrokeColorCommand_1 = __webpack_require__(246);
+var ChangeTextAlignCommand_1 = __webpack_require__(247);
+var ChangeConnectorLineEndingCommand_1 = __webpack_require__(248);
+var ChangeConnectorLineOptionCommand_1 = __webpack_require__(249);
+var SelectAllCommand_1 = __webpack_require__(250);
 var key_1 = __webpack_require__(26);
-var AutoLayoutTreeVerticalCommand_1 = __webpack_require__(140);
-var ChangeSnapToGridCommand_1 = __webpack_require__(255);
-var ChangeGridSizeCommand_1 = __webpack_require__(256);
-var ChangePageLandscapeCommand_1 = __webpack_require__(257);
-var ChangePageSizeCommand_1 = __webpack_require__(259);
-var ExportPngCommand_1 = __webpack_require__(261);
-var ExportSvgCommand_1 = __webpack_require__(263);
-var ExportJpgCommand_1 = __webpack_require__(264);
-var CopySelectionCommand_1 = __webpack_require__(265);
-var CutSelectionCommand_1 = __webpack_require__(266);
-var PasteSelectionCommand_1 = __webpack_require__(267);
-var ImportBPMNCommand_1 = __webpack_require__(270);
-var SendToBackCommand_1 = __webpack_require__(273);
-var BringToFrontCommand_1 = __webpack_require__(274);
-var AutoLayoutLayeredHorizontalCommand_1 = __webpack_require__(145);
-var MoveCommands_1 = __webpack_require__(275);
-var ChangeZoomLevelCommand_1 = __webpack_require__(276);
-var BindDocumentCommand_1 = __webpack_require__(277);
-var UnbindDocumentCommand_1 = __webpack_require__(278);
-var AutoLayoutTreeHorizontalCommand_1 = __webpack_require__(146);
-var AutoLayoutLayeredVerticalCommand_1 = __webpack_require__(147);
-var LockCommand_1 = __webpack_require__(279);
-var UnlockCommand_1 = __webpack_require__(280);
-var CloneCommand_1 = __webpack_require__(281);
-var ChangeUnitsCommand_1 = __webpack_require__(282);
-var ChangePageColorCommand_1 = __webpack_require__(284);
-var ChangeShowGridCommand_1 = __webpack_require__(286);
-var ToggleFullscreenCommand_1 = __webpack_require__(287);
-var ToggleSimpleViewCommand_1 = __webpack_require__(288);
-var ToggleReadOnlyCommand_1 = __webpack_require__(289);
-var EditShapeImageCommand_1 = __webpack_require__(290);
-var PasteSelectionInPosition_1 = __webpack_require__(291);
-var ImportXMLCommand_1 = __webpack_require__(292);
-var InsertShapeImageCommand_1 = __webpack_require__(294);
-var DeleteShapeImageCommand_1 = __webpack_require__(295);
-var ChangeStrokeStyleCommand_1 = __webpack_require__(296);
-var ChangeStrokeWidthCommand_1 = __webpack_require__(297);
-var AutoLayoutTreeVerticalBottomToTopCommand_1 = __webpack_require__(298);
-var AutoLayoutTreeHorizontalRightToLeftCommand_1 = __webpack_require__(299);
-var AutoLayoutLayeredVerticalBottomToTopCommand_1 = __webpack_require__(300);
-var AutoLayoutLayeredHorizontalRightToLeftCommand_1 = __webpack_require__(301);
-var ChangeConnectorRoutingModeCommand_1 = __webpack_require__(302);
+var AutoLayoutTreeVerticalCommand_1 = __webpack_require__(139);
+var ChangeSnapToGridCommand_1 = __webpack_require__(253);
+var ChangeGridSizeCommand_1 = __webpack_require__(254);
+var ChangePageLandscapeCommand_1 = __webpack_require__(255);
+var ChangePageSizeCommand_1 = __webpack_require__(257);
+var ExportPngCommand_1 = __webpack_require__(259);
+var ExportSvgCommand_1 = __webpack_require__(261);
+var ExportJpgCommand_1 = __webpack_require__(262);
+var CopySelectionCommand_1 = __webpack_require__(263);
+var CutSelectionCommand_1 = __webpack_require__(264);
+var PasteSelectionCommand_1 = __webpack_require__(265);
+var ImportBPMNCommand_1 = __webpack_require__(268);
+var SendToBackCommand_1 = __webpack_require__(271);
+var BringToFrontCommand_1 = __webpack_require__(272);
+var AutoLayoutLayeredHorizontalCommand_1 = __webpack_require__(144);
+var MoveCommands_1 = __webpack_require__(273);
+var ChangeZoomLevelCommand_1 = __webpack_require__(274);
+var BindDocumentCommand_1 = __webpack_require__(275);
+var UnbindDocumentCommand_1 = __webpack_require__(276);
+var AutoLayoutTreeHorizontalCommand_1 = __webpack_require__(145);
+var AutoLayoutLayeredVerticalCommand_1 = __webpack_require__(146);
+var LockCommand_1 = __webpack_require__(277);
+var UnlockCommand_1 = __webpack_require__(278);
+var CloneCommand_1 = __webpack_require__(279);
+var ChangeUnitsCommand_1 = __webpack_require__(280);
+var ChangePageColorCommand_1 = __webpack_require__(282);
+var ChangeShowGridCommand_1 = __webpack_require__(284);
+var ToggleFullscreenCommand_1 = __webpack_require__(285);
+var ToggleSimpleViewCommand_1 = __webpack_require__(286);
+var ToggleReadOnlyCommand_1 = __webpack_require__(287);
+var EditShapeImageCommand_1 = __webpack_require__(288);
+var PasteSelectionInPosition_1 = __webpack_require__(289);
+var ImportXMLCommand_1 = __webpack_require__(290);
+var InsertShapeImageCommand_1 = __webpack_require__(292);
+var DeleteShapeImageCommand_1 = __webpack_require__(293);
+var ChangeStrokeStyleCommand_1 = __webpack_require__(294);
+var ChangeStrokeWidthCommand_1 = __webpack_require__(295);
+var AutoLayoutTreeVerticalBottomToTopCommand_1 = __webpack_require__(296);
+var AutoLayoutTreeHorizontalRightToLeftCommand_1 = __webpack_require__(297);
+var AutoLayoutLayeredVerticalBottomToTopCommand_1 = __webpack_require__(298);
+var AutoLayoutLayeredHorizontalRightToLeftCommand_1 = __webpack_require__(299);
+var ChangeConnectorRoutingModeCommand_1 = __webpack_require__(300);
 var DiagramCommand;
 (function (DiagramCommand) {
     DiagramCommand[DiagramCommand["Undo"] = 0] = "Undo";
@@ -12323,29 +12449,6 @@ exports.ListUtils = ListUtils;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var Metrics = (function () {
-    function Metrics() {
-    }
-    Metrics.euclideanDistance = function (a, b) {
-        var xDist = a.x - b.x;
-        var yDist = a.y - b.y;
-        return Math.sqrt(xDist * xDist + yDist * yDist);
-    };
-    Metrics.manhattanDistance = function (a, b) {
-        return Math.abs(a.x - b.x) + Math.abs(a.y - b.y);
-    };
-    return Metrics;
-}());
-exports.Metrics = Metrics;
-
-
-/***/ }),
-/* 84 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
 var file_1 = __webpack_require__(177);
 var mime_type_1 = __webpack_require__(178);
 var Base64Utils = (function () {
@@ -12411,7 +12514,7 @@ exports.Base64Utils = Base64Utils;
 
 
 /***/ }),
-/* 85 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12431,7 +12534,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.NativeConnector = exports.NativeShape = exports.NativeItem = void 0;
-var ModelUtils_1 = __webpack_require__(5);
+var ModelUtils_1 = __webpack_require__(4);
 var NativeItem = /** @class */ (function () {
     function NativeItem(id, key) {
         this.id = id;
@@ -12478,7 +12581,7 @@ exports.NativeConnector = NativeConnector;
 
 
 /***/ }),
-/* 86 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12494,6 +12597,88 @@ var ConnectorRenderPointsContext = /** @class */ (function () {
     return ConnectorRenderPointsContext;
 }());
 exports.ConnectorRenderPointsContext = ConnectorRenderPointsContext;
+
+
+/***/ }),
+/* 86 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ReplaceConnectorPointsHistoryItem = exports.ChangeConnectorPointsHistoryItem = exports.UpdateConnectorPointsHistoryItem = void 0;
+var HistoryItem_1 = __webpack_require__(8);
+var UpdateConnectorPointsHistoryItem = /** @class */ (function (_super) {
+    __extends(UpdateConnectorPointsHistoryItem, _super);
+    function UpdateConnectorPointsHistoryItem(connectorKey, newPoints) {
+        var _this = _super.call(this) || this;
+        _this.connectorKey = connectorKey;
+        _this.newPoints = newPoints;
+        return _this;
+    }
+    UpdateConnectorPointsHistoryItem.prototype.redo = function (manipulator) {
+        var _this = this;
+        var connector = manipulator.model.findConnector(this.connectorKey);
+        this.oldRenderContext = connector.createRenderPointsContext();
+        this.oldPoints = connector.points.map(function (p) { return p.clone(); });
+        manipulator.changeConnectorPoints(connector, function (connector) {
+            connector.points = _this.newPoints;
+            _this.updateRenderPoints(connector);
+        });
+    };
+    UpdateConnectorPointsHistoryItem.prototype.undo = function (manipulator) {
+        var _this = this;
+        var connector = manipulator.model.findConnector(this.connectorKey);
+        manipulator.changeConnectorPoints(connector, function (connector) {
+            connector.points = _this.oldPoints;
+            connector.replaceRenderPoints(_this.oldRenderContext);
+        });
+    };
+    return UpdateConnectorPointsHistoryItem;
+}(HistoryItem_1.HistoryItem));
+exports.UpdateConnectorPointsHistoryItem = UpdateConnectorPointsHistoryItem;
+var ChangeConnectorPointsHistoryItem = /** @class */ (function (_super) {
+    __extends(ChangeConnectorPointsHistoryItem, _super);
+    function ChangeConnectorPointsHistoryItem(connectorKey, newPoints, newRenderContext) {
+        var _this = _super.call(this, connectorKey, newPoints) || this;
+        _this.connectorKey = connectorKey;
+        _this.newPoints = newPoints;
+        _this.newRenderContext = newRenderContext;
+        return _this;
+    }
+    ChangeConnectorPointsHistoryItem.prototype.updateRenderPoints = function (connector) {
+        connector.replaceRenderPoints(this.newRenderContext);
+    };
+    return ChangeConnectorPointsHistoryItem;
+}(UpdateConnectorPointsHistoryItem));
+exports.ChangeConnectorPointsHistoryItem = ChangeConnectorPointsHistoryItem;
+var ReplaceConnectorPointsHistoryItem = /** @class */ (function (_super) {
+    __extends(ReplaceConnectorPointsHistoryItem, _super);
+    function ReplaceConnectorPointsHistoryItem(connectorKey, newPoints) {
+        var _this = _super.call(this, connectorKey, newPoints) || this;
+        _this.connectorKey = connectorKey;
+        _this.newPoints = newPoints;
+        return _this;
+    }
+    ReplaceConnectorPointsHistoryItem.prototype.updateRenderPoints = function (connector) {
+        connector.clearRenderPoints();
+    };
+    return ReplaceConnectorPointsHistoryItem;
+}(UpdateConnectorPointsHistoryItem));
+exports.ReplaceConnectorPointsHistoryItem = ReplaceConnectorPointsHistoryItem;
 
 
 /***/ }),
@@ -12630,7 +12815,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ChangeConnectorPropertyHistoryItem = void 0;
-var HistoryItem_1 = __webpack_require__(6);
+var HistoryItem_1 = __webpack_require__(8);
 var ChangeConnectorPropertyHistoryItem = /** @class */ (function (_super) {
     __extends(ChangeConnectorPropertyHistoryItem, _super);
     function ChangeConnectorPropertyHistoryItem(connectorKey, propertyName, value) {
@@ -12675,7 +12860,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ChangeStyleHistoryItem = void 0;
-var ChangeStyleHistoryItemBase_1 = __webpack_require__(121);
+var ChangeStyleHistoryItemBase_1 = __webpack_require__(120);
 var ChangeStyleHistoryItem = /** @class */ (function (_super) {
     __extends(ChangeStyleHistoryItem, _super);
     function ChangeStyleHistoryItem(itemKey, styleProperty, styleValue) {
@@ -12769,51 +12954,51 @@ exports.HashSet = HashSet;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ShapeDescriptionManager = void 0;
-var ProcessShapeDescription_1 = __webpack_require__(204);
-var DecisionShapeDescription_1 = __webpack_require__(205);
-var ManualInputShapeDescription_1 = __webpack_require__(206);
-var DataShapeDescription_1 = __webpack_require__(207);
-var TerminatorShapeDescription_1 = __webpack_require__(208);
-var PredefinedProcessShapeDescription_1 = __webpack_require__(209);
-var ArrowUpDownShapeDescription_1 = __webpack_require__(210);
-var ArrowRightShapeDescription_1 = __webpack_require__(211);
-var ArrowUpShapeDescription_1 = __webpack_require__(212);
-var CrossShapeDescription_1 = __webpack_require__(213);
-var DiamondShapeDescription_1 = __webpack_require__(123);
+var ProcessShapeDescription_1 = __webpack_require__(202);
+var DecisionShapeDescription_1 = __webpack_require__(203);
+var ManualInputShapeDescription_1 = __webpack_require__(204);
+var DataShapeDescription_1 = __webpack_require__(205);
+var TerminatorShapeDescription_1 = __webpack_require__(206);
+var PredefinedProcessShapeDescription_1 = __webpack_require__(207);
+var ArrowUpDownShapeDescription_1 = __webpack_require__(208);
+var ArrowRightShapeDescription_1 = __webpack_require__(209);
+var ArrowUpShapeDescription_1 = __webpack_require__(210);
+var CrossShapeDescription_1 = __webpack_require__(211);
+var DiamondShapeDescription_1 = __webpack_require__(122);
 var EllipseShapeDescription_1 = __webpack_require__(71);
-var HeartShapeDescription_1 = __webpack_require__(214);
-var RectangleShapeDescription_1 = __webpack_require__(19);
-var TextShapeDescription_1 = __webpack_require__(124);
-var PentagonShapeDescription_1 = __webpack_require__(125);
-var HexagonShapeDescription_1 = __webpack_require__(126);
-var OctagonShapeDescription_1 = __webpack_require__(215);
-var StarShapeDescription_1 = __webpack_require__(216);
-var ArrowDownShapeDescription_1 = __webpack_require__(217);
-var ArrowLeftRightShapeDescription_1 = __webpack_require__(218);
-var ArrowLeftShapeDescription_1 = __webpack_require__(219);
-var TriangleShapeDescription_1 = __webpack_require__(127);
-var DocumentShapeDescription_1 = __webpack_require__(128);
-var MultipleDocumentsShapeDescription_1 = __webpack_require__(220);
-var PreparationShapeDescription_1 = __webpack_require__(221);
-var HardDiskShapeDescription_1 = __webpack_require__(222);
-var DatabaseShapeDescription_1 = __webpack_require__(223);
-var InternalStorageShapeDescription_1 = __webpack_require__(224);
-var PaperTapeShapeDescription_1 = __webpack_require__(225);
-var ManualOperationShapeDescription_1 = __webpack_require__(226);
-var DelayShapeDescription_1 = __webpack_require__(227);
-var StoredDataShapeDescription_1 = __webpack_require__(228);
-var MergeShapeDescription_1 = __webpack_require__(229);
-var DisplayShapeDescription_1 = __webpack_require__(230);
-var OrShapeDescription_1 = __webpack_require__(231);
-var SummingJunctionShapeDescription_1 = __webpack_require__(232);
-var CustomShapeDescription_1 = __webpack_require__(129);
-var VerticalContainerDescription_1 = __webpack_require__(234);
-var HorizontalContainerDescription_1 = __webpack_require__(235);
-var CardWithImageOnTopDescription_1 = __webpack_require__(236);
-var ShapeTypes_1 = __webpack_require__(1);
-var ConnectorShapeDescription_1 = __webpack_require__(238);
+var HeartShapeDescription_1 = __webpack_require__(212);
+var RectangleShapeDescription_1 = __webpack_require__(18);
+var TextShapeDescription_1 = __webpack_require__(123);
+var PentagonShapeDescription_1 = __webpack_require__(124);
+var HexagonShapeDescription_1 = __webpack_require__(125);
+var OctagonShapeDescription_1 = __webpack_require__(213);
+var StarShapeDescription_1 = __webpack_require__(214);
+var ArrowDownShapeDescription_1 = __webpack_require__(215);
+var ArrowLeftRightShapeDescription_1 = __webpack_require__(216);
+var ArrowLeftShapeDescription_1 = __webpack_require__(217);
+var TriangleShapeDescription_1 = __webpack_require__(126);
+var DocumentShapeDescription_1 = __webpack_require__(127);
+var MultipleDocumentsShapeDescription_1 = __webpack_require__(218);
+var PreparationShapeDescription_1 = __webpack_require__(219);
+var HardDiskShapeDescription_1 = __webpack_require__(220);
+var DatabaseShapeDescription_1 = __webpack_require__(221);
+var InternalStorageShapeDescription_1 = __webpack_require__(222);
+var PaperTapeShapeDescription_1 = __webpack_require__(223);
+var ManualOperationShapeDescription_1 = __webpack_require__(224);
+var DelayShapeDescription_1 = __webpack_require__(225);
+var StoredDataShapeDescription_1 = __webpack_require__(226);
+var MergeShapeDescription_1 = __webpack_require__(227);
+var DisplayShapeDescription_1 = __webpack_require__(228);
+var OrShapeDescription_1 = __webpack_require__(229);
+var SummingJunctionShapeDescription_1 = __webpack_require__(230);
+var CustomShapeDescription_1 = __webpack_require__(128);
+var VerticalContainerDescription_1 = __webpack_require__(232);
+var HorizontalContainerDescription_1 = __webpack_require__(233);
+var CardWithImageOnTopDescription_1 = __webpack_require__(234);
+var ShapeTypes_1 = __webpack_require__(0);
+var ConnectorShapeDescription_1 = __webpack_require__(236);
 var Utils_1 = __webpack_require__(3);
-var CardWithHorizontalImageDescription_1 = __webpack_require__(239);
+var CardWithHorizontalImageDescription_1 = __webpack_require__(237);
 var ShapeDescriptionManager = /** @class */ (function () {
     function ShapeDescriptionManager() {
         this.descriptions = {};
@@ -12963,9 +13148,9 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ArrowVerticalShapeDescription = exports.ArrowVerticalLineWidthParameterName = exports.ArrowVerticalTriangleHeightParameterName = void 0;
-var ShapeDescription_1 = __webpack_require__(8);
+var ShapeDescription_1 = __webpack_require__(7);
 var size_1 = __webpack_require__(2);
-var ShapeParameters_1 = __webpack_require__(36);
+var ShapeParameters_1 = __webpack_require__(37);
 var DiagramItem_1 = __webpack_require__(9);
 exports.ArrowVerticalTriangleHeightParameterName = "th";
 exports.ArrowVerticalLineWidthParameterName = "lw";
@@ -13029,9 +13214,9 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ArrowHorizontalShapeDescription = exports.ArrowVerticalLineHeightParameterName = exports.ArrowVerticalTriangleWidthParameterName = void 0;
-var ShapeDescription_1 = __webpack_require__(8);
+var ShapeDescription_1 = __webpack_require__(7);
 var size_1 = __webpack_require__(2);
-var ShapeParameters_1 = __webpack_require__(36);
+var ShapeParameters_1 = __webpack_require__(37);
 var DiagramItem_1 = __webpack_require__(9);
 exports.ArrowVerticalTriangleWidthParameterName = "tw";
 exports.ArrowVerticalLineHeightParameterName = "lh";
@@ -13095,7 +13280,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PolygonShapeDescription = void 0;
-var ShapeDescription_1 = __webpack_require__(8);
+var ShapeDescription_1 = __webpack_require__(7);
 var PolygonShapeDescription = /** @class */ (function (_super) {
     __extends(PolygonShapeDescription, _super);
     function PolygonShapeDescription(hasDefaultText) {
@@ -13171,9 +13356,9 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ChangeStyleTextPropertyCommand = void 0;
-var ChangeStylePropertyCommandBase_1 = __webpack_require__(138);
+var ChangeStylePropertyCommandBase_1 = __webpack_require__(137);
 var ChangeStyleTextHistoryItem_1 = __webpack_require__(68);
-var Style_1 = __webpack_require__(30);
+var Style_1 = __webpack_require__(27);
 var ChangeStyleTextPropertyCommand = /** @class */ (function (_super) {
     __extends(ChangeStyleTextPropertyCommand, _super);
     function ChangeStyleTextPropertyCommand() {
@@ -13220,15 +13405,15 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TreeLayoutBuilder = void 0;
-var GraphLayout_1 = __webpack_require__(141);
-var Tree_1 = __webpack_require__(254);
+var GraphLayout_1 = __webpack_require__(140);
+var Tree_1 = __webpack_require__(252);
 var NodeLayout_1 = __webpack_require__(70);
 var Utils_1 = __webpack_require__(3);
-var point_1 = __webpack_require__(0);
-var BaseBuilder_1 = __webpack_require__(142);
-var Structures_1 = __webpack_require__(37);
+var point_1 = __webpack_require__(1);
+var BaseBuilder_1 = __webpack_require__(141);
+var Structures_1 = __webpack_require__(38);
 var DiagramItem_1 = __webpack_require__(9);
-var LayoutSettings_1 = __webpack_require__(20);
+var LayoutSettings_1 = __webpack_require__(19);
 var TreeLayoutBuilder = /** @class */ (function (_super) {
     __extends(TreeLayoutBuilder, _super);
     function TreeLayoutBuilder() {
@@ -13392,13 +13577,13 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ExportImageCommand = void 0;
 var CanvasItemsManager_1 = __webpack_require__(77);
-var CanvasExportManager_1 = __webpack_require__(262);
-var ExportImportCommandBase_1 = __webpack_require__(55);
+var CanvasExportManager_1 = __webpack_require__(260);
+var ExportImportCommandBase_1 = __webpack_require__(56);
 var Exporter_1 = __webpack_require__(72);
 var RenderHelper_1 = __webpack_require__(15);
 var TextMeasurer_1 = __webpack_require__(78);
 var DOMManipulator_1 = __webpack_require__(100);
-var ImageCache_1 = __webpack_require__(47);
+var ImageCache_1 = __webpack_require__(48);
 var ExportImageCommand = /** @class */ (function (_super) {
     __extends(ExportImageCommand, _super);
     function ExportImageCommand(control) {
@@ -13511,7 +13696,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ExportDOMManipulator = exports.DOMManipulator = void 0;
-var Diagnostics_1 = __webpack_require__(58);
+var Diagnostics_1 = __webpack_require__(59);
 var RAF_CHANGES_LIMIT = 2000;
 var DOMManipulator = /** @class */ (function () {
     function DOMManipulator(measurer) {
@@ -13659,7 +13844,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ChangeZindexHistoryItem = void 0;
-var HistoryItem_1 = __webpack_require__(6);
+var HistoryItem_1 = __webpack_require__(8);
 var ChangeZindexHistoryItem = /** @class */ (function (_super) {
     __extends(ChangeZindexHistoryItem, _super);
     function ChangeZindexHistoryItem(item, zIndex) {
@@ -13690,7 +13875,7 @@ exports.ChangeZindexHistoryItem = ChangeZindexHistoryItem;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DataLayoutParameters = exports.DataLayoutType = void 0;
-var LayoutSettings_1 = __webpack_require__(20);
+var LayoutSettings_1 = __webpack_require__(19);
 var WideTree_1 = __webpack_require__(97);
 var Sugiyama_1 = __webpack_require__(79);
 var DataLayoutType;
@@ -13748,7 +13933,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EditShapeImageCommandBase = void 0;
-var ChangeShapeImageHistoryItem_1 = __webpack_require__(149);
+var ChangeShapeImageHistoryItem_1 = __webpack_require__(148);
 var SimpleCommandBase_1 = __webpack_require__(10);
 var EditShapeImageCommandBase = /** @class */ (function (_super) {
     __extends(EditShapeImageCommandBase, _super);
@@ -13788,11 +13973,12 @@ exports.EditShapeImageCommandBase = EditShapeImageCommandBase;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ToolboxDragEventsHandlerBase = void 0;
-var evt_1 = __webpack_require__(43);
-var point_1 = __webpack_require__(0);
+var evt_1 = __webpack_require__(44);
+var point_1 = __webpack_require__(1);
 var Utils_1 = __webpack_require__(16);
 var ToolboxDragEventsHandlerBase = /** @class */ (function () {
-    function ToolboxDragEventsHandlerBase() {
+    function ToolboxDragEventsHandlerBase(isTouchUIEnabled) {
+        this.isTouchUIEnabled = isTouchUIEnabled;
     }
     ToolboxDragEventsHandlerBase.prototype.attach = function (source) {
         if (!source || !source.mainElement)
@@ -13889,12 +14075,13 @@ exports.DBL_CLICK_TIMEOUT = 500;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RenderManagerDragEventsHandlerBase = void 0;
-var evt_1 = __webpack_require__(43);
-var browser_1 = __webpack_require__(17);
+var evt_1 = __webpack_require__(44);
+var browser_1 = __webpack_require__(20);
 var Utils_1 = __webpack_require__(16);
 var Event_1 = __webpack_require__(13);
 var RenderManagerDragEventsHandlerBase = /** @class */ (function () {
-    function RenderManagerDragEventsHandlerBase() {
+    function RenderManagerDragEventsHandlerBase(isTouchUIEnabled) {
+        this.isTouchUIEnabled = isTouchUIEnabled;
         this.isMoveLocked = false;
         this.lockMoveTimer = -1;
     }
@@ -14000,50 +14187,50 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.DiagramModelOperation = exports.Diagnostics = exports.RenderHelper = exports.DiagramLocalizationService = exports.NativeConnector = exports.NativeShape = exports.ShapeType = exports.ColorUtils = exports.PageOrientation = exports.ConnectorPosition = exports.ConnectorLineOption = exports.ConnectorLineEnding = exports.AutoZoomMode = exports.Browser = exports.UnitConverter = exports.EventDispatcher = exports.DataLayoutOrientation = exports.DataLayoutType = exports.ShapeCategories = exports.ShapeTypes = exports.DiagramUnit = exports.default = exports.DiagramControl = exports.DiagramCommand = exports.Point = exports.Size = void 0;
 var CommandManager_1 = __webpack_require__(81);
 Object.defineProperty(exports, "DiagramCommand", { enumerable: true, get: function () { return CommandManager_1.DiagramCommand; } });
-var Diagram_1 = __webpack_require__(303);
+var Diagram_1 = __webpack_require__(301);
 Object.defineProperty(exports, "DiagramControl", { enumerable: true, get: function () { return Diagram_1.DiagramControl; } });
 Object.defineProperty(exports, "default", { enumerable: true, get: function () { return Diagram_1.DiagramControl; } });
 var size_1 = __webpack_require__(2);
 Object.defineProperty(exports, "Size", { enumerable: true, get: function () { return size_1.Size; } });
-var point_1 = __webpack_require__(0);
+var point_1 = __webpack_require__(1);
 Object.defineProperty(exports, "Point", { enumerable: true, get: function () { return point_1.Point; } });
 var Utils_1 = __webpack_require__(3);
 Object.defineProperty(exports, "EventDispatcher", { enumerable: true, get: function () { return Utils_1.EventDispatcher; } });
-var ShapeTypes_1 = __webpack_require__(1);
+var ShapeTypes_1 = __webpack_require__(0);
 Object.defineProperty(exports, "ShapeTypes", { enumerable: true, get: function () { return ShapeTypes_1.ShapeTypes; } });
 Object.defineProperty(exports, "ShapeCategories", { enumerable: true, get: function () { return ShapeTypes_1.ShapeCategories; } });
 Object.defineProperty(exports, "ShapeType", { enumerable: true, get: function () { return ShapeTypes_1.ShapeType; } });
 var unit_converter_1 = __webpack_require__(11);
 Object.defineProperty(exports, "UnitConverter", { enumerable: true, get: function () { return unit_converter_1.UnitConverter; } });
-var browser_1 = __webpack_require__(17);
+var browser_1 = __webpack_require__(20);
 Object.defineProperty(exports, "Browser", { enumerable: true, get: function () { return browser_1.Browser; } });
-var Settings_1 = __webpack_require__(27);
+var Settings_1 = __webpack_require__(28);
 Object.defineProperty(exports, "AutoZoomMode", { enumerable: true, get: function () { return Settings_1.AutoZoomMode; } });
 var DataLayoutParameters_1 = __webpack_require__(103);
 Object.defineProperty(exports, "DataLayoutType", { enumerable: true, get: function () { return DataLayoutParameters_1.DataLayoutType; } });
-var LayoutSettings_1 = __webpack_require__(20);
+var LayoutSettings_1 = __webpack_require__(19);
 Object.defineProperty(exports, "DataLayoutOrientation", { enumerable: true, get: function () { return LayoutSettings_1.DataLayoutOrientation; } });
-__webpack_require__(389);
-var ConnectorProperties_1 = __webpack_require__(31);
+__webpack_require__(387);
+var ConnectorProperties_1 = __webpack_require__(30);
 Object.defineProperty(exports, "ConnectorLineEnding", { enumerable: true, get: function () { return ConnectorProperties_1.ConnectorLineEnding; } });
 Object.defineProperty(exports, "ConnectorLineOption", { enumerable: true, get: function () { return ConnectorProperties_1.ConnectorLineOption; } });
 var color_1 = __webpack_require__(22);
 Object.defineProperty(exports, "ColorUtils", { enumerable: true, get: function () { return color_1.ColorUtils; } });
-var Diagnostics_1 = __webpack_require__(58);
+var Diagnostics_1 = __webpack_require__(59);
 Object.defineProperty(exports, "Diagnostics", { enumerable: true, get: function () { return Diagnostics_1.Diagnostics; } });
-var NativeItem_1 = __webpack_require__(85);
+var NativeItem_1 = __webpack_require__(84);
 Object.defineProperty(exports, "NativeShape", { enumerable: true, get: function () { return NativeItem_1.NativeShape; } });
 Object.defineProperty(exports, "NativeConnector", { enumerable: true, get: function () { return NativeItem_1.NativeConnector; } });
-var LocalizationService_1 = __webpack_require__(35);
+var LocalizationService_1 = __webpack_require__(36);
 Object.defineProperty(exports, "DiagramLocalizationService", { enumerable: true, get: function () { return LocalizationService_1.DiagramLocalizationService; } });
 var RenderHelper_1 = __webpack_require__(15);
 Object.defineProperty(exports, "RenderHelper", { enumerable: true, get: function () { return RenderHelper_1.RenderHelper; } });
-var Enums_1 = __webpack_require__(48);
+var Enums_1 = __webpack_require__(49);
 Object.defineProperty(exports, "DiagramUnit", { enumerable: true, get: function () { return Enums_1.DiagramUnit; } });
 Object.defineProperty(exports, "PageOrientation", { enumerable: true, get: function () { return Enums_1.PageOrientation; } });
-var ModelOperationSettings_1 = __webpack_require__(18);
+var ModelOperationSettings_1 = __webpack_require__(17);
 Object.defineProperty(exports, "DiagramModelOperation", { enumerable: true, get: function () { return ModelOperationSettings_1.DiagramModelOperation; } });
-var Connector_1 = __webpack_require__(7);
+var Connector_1 = __webpack_require__(6);
 Object.defineProperty(exports, "ConnectorPosition", { enumerable: true, get: function () { return Connector_1.ConnectorPosition; } });
 
 
@@ -14054,7 +14241,7 @@ Object.defineProperty(exports, "ConnectorPosition", { enumerable: true, get: fun
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(56);
+var tslib_1 = __webpack_require__(57);
 var mutable_1 = __webpack_require__(167);
 var FixedInterval = (function (_super) {
     tslib_1.__extends(FixedInterval, _super);
@@ -14316,160 +14503,6 @@ exports.ConnectorPointsCalculatorBase = ConnectorPointsCalculatorBase;
 
 "use strict";
 
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.IntersectedShapeZone = exports.AStarMetrics = exports.IntersectedShapesMetrics = exports.TurnDirectionMetrics = exports.IntersectedShapeMetrics = exports.RightAngleTurnDirection = void 0;
-var point_1 = __webpack_require__(0);
-var metrics_1 = __webpack_require__(83);
-var RightAngleTurnDirection;
-(function (RightAngleTurnDirection) {
-    RightAngleTurnDirection[RightAngleTurnDirection["Straight"] = 0] = "Straight";
-    RightAngleTurnDirection[RightAngleTurnDirection["Left"] = 1] = "Left";
-    RightAngleTurnDirection[RightAngleTurnDirection["Right"] = 2] = "Right";
-    RightAngleTurnDirection[RightAngleTurnDirection["Backwards"] = 3] = "Backwards";
-})(RightAngleTurnDirection = exports.RightAngleTurnDirection || (exports.RightAngleTurnDirection = {}));
-var IntersectedShapeMetrics = /** @class */ (function () {
-    function IntersectedShapeMetrics(description, shapeMargin) {
-        this.description = description;
-        this.shapeMargin = shapeMargin;
-    }
-    IntersectedShapeMetrics.prototype.penalty = function (oldValue, distance, position, item) {
-        var rectangle = item.rectangle;
-        if (rectangle.containsPoint(position))
-            return oldValue + this.description.shape * distance;
-        var relativePenalty = this.createRelativeMarginPenalty(position, rectangle, this.shapeMargin);
-        if (relativePenalty > 0)
-            return oldValue + this.description.margin * relativePenalty * distance;
-        return oldValue;
-    };
-    IntersectedShapeMetrics.prototype.createRelativeMarginPenalty = function (point, rectangle, margin) {
-        var isTopPosition = this.isTopPosition(point, rectangle, margin);
-        var isLeftPosition = this.isLeftPosition(point, rectangle, margin);
-        var isBottomPosition = this.isBottomPosition(point, rectangle, margin);
-        var isRightPosition = this.isRightPosition(point, rectangle, margin);
-        if (isTopPosition) {
-            if (isLeftPosition) {
-                var extendedRectangle = rectangle.clone().inflate(margin);
-                var extendedTopLeft = extendedRectangle.createPosition();
-                var rectangleTopLeft = rectangle.createPosition();
-                var topLeftDistance = metrics_1.Metrics.euclideanDistance(rectangleTopLeft, extendedTopLeft);
-                var currentDistance = metrics_1.Metrics.euclideanDistance(rectangleTopLeft, point);
-                return 1 - currentDistance / topLeftDistance;
-            }
-            if (isRightPosition) {
-                var extendedRectangle = rectangle.clone().inflate(margin);
-                var extendedTopRight = new point_1.Point(extendedRectangle.right, extendedRectangle.y);
-                var rectangleTopRight = new point_1.Point(rectangle.right, rectangle.y);
-                var topRightDistance = metrics_1.Metrics.euclideanDistance(rectangleTopRight, extendedTopRight);
-                var currentDistance = metrics_1.Metrics.euclideanDistance(rectangleTopRight, point);
-                return 1 - currentDistance / topRightDistance;
-            }
-            return 1 - (rectangle.y - point.y) / margin;
-        }
-        if (isBottomPosition) {
-            if (isLeftPosition) {
-                var extendedRectangle = rectangle.clone().inflate(margin);
-                var extendedBottomLeft = new point_1.Point(extendedRectangle.x, extendedRectangle.bottom);
-                var rectangleBottomLeft = new point_1.Point(rectangle.x, rectangle.bottom);
-                var bottomLeftDistance = metrics_1.Metrics.euclideanDistance(rectangleBottomLeft, extendedBottomLeft);
-                var currentDistance = metrics_1.Metrics.euclideanDistance(rectangleBottomLeft, point);
-                return 1 - currentDistance / bottomLeftDistance;
-            }
-            if (isRightPosition) {
-                var extendedRectangle = rectangle.clone().inflate(margin);
-                var extendedBottomRight = new point_1.Point(extendedRectangle.right, extendedRectangle.bottom);
-                var rectangleBottomRight = new point_1.Point(rectangle.right, rectangle.bottom);
-                var bottomRightDistance = metrics_1.Metrics.euclideanDistance(rectangleBottomRight, extendedBottomRight);
-                var currentDistance = metrics_1.Metrics.euclideanDistance(rectangleBottomRight, point);
-                return 1 - currentDistance / bottomRightDistance;
-            }
-            return 1 - (point.y - rectangle.bottom) / margin;
-        }
-        if (isLeftPosition)
-            return 1 - (rectangle.x - point.x) / margin;
-        if (isRightPosition)
-            return 1 - (point.x - rectangle.right) / margin;
-        return 0;
-    };
-    IntersectedShapeMetrics.prototype.isTopPosition = function (point, rectangle, margin) {
-        return point.x > rectangle.x - margin && point.x < rectangle.right + margin &&
-            point.y > rectangle.y - margin && point.y < rectangle.y;
-    };
-    IntersectedShapeMetrics.prototype.isBottomPosition = function (point, rectangle, margin) {
-        return point.x > rectangle.x - margin && point.x < rectangle.right + margin &&
-            point.y > rectangle.bottom && point.y < rectangle.bottom + margin;
-    };
-    IntersectedShapeMetrics.prototype.isLeftPosition = function (point, rectangle, margin) {
-        return point.x > rectangle.x - margin && point.x < rectangle.x &&
-            point.y > rectangle.y - margin && point.y < rectangle.bottom + margin;
-    };
-    IntersectedShapeMetrics.prototype.isRightPosition = function (point, rectangle, margin) {
-        return point.x > rectangle.right && point.x < rectangle.right + margin &&
-            point.y > rectangle.y - margin && point.y < rectangle.bottom + margin;
-    };
-    return IntersectedShapeMetrics;
-}());
-exports.IntersectedShapeMetrics = IntersectedShapeMetrics;
-var TurnDirectionMetrics = /** @class */ (function () {
-    function TurnDirectionMetrics(description) {
-        this.description = description;
-    }
-    TurnDirectionMetrics.prototype.penalty = function (oldValue, turnDirection) {
-        switch (turnDirection) {
-            case RightAngleTurnDirection.Backwards: return oldValue * this.description.turnBack;
-            case RightAngleTurnDirection.Left: return oldValue * this.description.turnLeft;
-            case RightAngleTurnDirection.Right: return oldValue * this.description.turnRight;
-        }
-        return oldValue;
-    };
-    return TurnDirectionMetrics;
-}());
-exports.TurnDirectionMetrics = TurnDirectionMetrics;
-var IntersectedShapesMetrics = /** @class */ (function () {
-    function IntersectedShapesMetrics(shapeMetrics) {
-        this.shapeMetrics = shapeMetrics;
-    }
-    IntersectedShapesMetrics.prototype.penalty = function (oldValue, distance, position, intersectedItems) {
-        var _this = this;
-        if (!intersectedItems || !intersectedItems.length)
-            return oldValue;
-        var result = oldValue;
-        intersectedItems.forEach(function (item) { return result = _this.shapeMetrics.penalty(result, distance, position, item); });
-        return result;
-    };
-    return IntersectedShapesMetrics;
-}());
-exports.IntersectedShapesMetrics = IntersectedShapesMetrics;
-var AStarMetrics = /** @class */ (function () {
-    function AStarMetrics(turnDirectionMetrics, shapesMetrics) {
-        this.turnDirectionMetrics = turnDirectionMetrics;
-        this.shapesMetrics = shapesMetrics;
-    }
-    AStarMetrics.prototype.distance = function (point1, point2) {
-        return metrics_1.Metrics.manhattanDistance(point1, point2);
-    };
-    AStarMetrics.prototype.penalty = function (distance, position, turnDirection, intersectedItems) {
-        var result = distance;
-        result = this.shapesMetrics.penalty(result, distance, position, intersectedItems);
-        result = this.turnDirectionMetrics.penalty(result, turnDirection);
-        return result;
-    };
-    return AStarMetrics;
-}());
-exports.AStarMetrics = AStarMetrics;
-var IntersectedShapeZone;
-(function (IntersectedShapeZone) {
-    IntersectedShapeZone[IntersectedShapeZone["None"] = 0] = "None";
-    IntersectedShapeZone[IntersectedShapeZone["Shape"] = 1] = "Shape";
-    IntersectedShapeZone[IntersectedShapeZone["Margin"] = 2] = "Margin";
-})(IntersectedShapeZone = exports.IntersectedShapeZone || (exports.IntersectedShapeZone = {}));
-
-
-/***/ }),
-/* 116 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -14485,7 +14518,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ChangeShapeParametersHistoryItem = void 0;
-var HistoryItem_1 = __webpack_require__(6);
+var HistoryItem_1 = __webpack_require__(8);
 var ChangeShapeParametersHistoryItem = /** @class */ (function (_super) {
     __extends(ChangeShapeParametersHistoryItem, _super);
     function ChangeShapeParametersHistoryItem(shapeKey, parameters) {
@@ -14509,7 +14542,7 @@ exports.ChangeShapeParametersHistoryItem = ChangeShapeParametersHistoryItem;
 
 
 /***/ }),
-/* 117 */
+/* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14529,7 +14562,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DeleteConnectorHistoryItem = void 0;
-var HistoryItem_1 = __webpack_require__(6);
+var HistoryItem_1 = __webpack_require__(8);
 var DeleteConnectorHistoryItem = /** @class */ (function (_super) {
     __extends(DeleteConnectorHistoryItem, _super);
     function DeleteConnectorHistoryItem(connectorKey) {
@@ -14551,7 +14584,7 @@ exports.DeleteConnectorHistoryItem = DeleteConnectorHistoryItem;
 
 
 /***/ }),
-/* 118 */
+/* 117 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14571,7 +14604,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DeleteShapeHistoryItem = void 0;
-var HistoryItem_1 = __webpack_require__(6);
+var HistoryItem_1 = __webpack_require__(8);
 var DeleteShapeHistoryItem = /** @class */ (function (_super) {
     __extends(DeleteShapeHistoryItem, _super);
     function DeleteShapeHistoryItem(shapeKey, allowed) {
@@ -14595,7 +14628,7 @@ exports.DeleteShapeHistoryItem = DeleteShapeHistoryItem;
 
 
 /***/ }),
-/* 119 */
+/* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14615,7 +14648,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ResizeShapeHistoryItem = void 0;
-var HistoryItem_1 = __webpack_require__(6);
+var HistoryItem_1 = __webpack_require__(8);
 var ResizeShapeHistoryItem = /** @class */ (function (_super) {
     __extends(ResizeShapeHistoryItem, _super);
     function ResizeShapeHistoryItem(shapeKey, position, size) {
@@ -14641,7 +14674,7 @@ exports.ResizeShapeHistoryItem = ResizeShapeHistoryItem;
 
 
 /***/ }),
-/* 120 */
+/* 119 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14661,7 +14694,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ChangeLockedHistoryItem = void 0;
-var HistoryItem_1 = __webpack_require__(6);
+var HistoryItem_1 = __webpack_require__(8);
 var ChangeLockedHistoryItem = /** @class */ (function (_super) {
     __extends(ChangeLockedHistoryItem, _super);
     function ChangeLockedHistoryItem(item, locked) {
@@ -14685,7 +14718,7 @@ exports.ChangeLockedHistoryItem = ChangeLockedHistoryItem;
 
 
 /***/ }),
-/* 121 */
+/* 120 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14705,7 +14738,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ChangeStyleHistoryItemBase = void 0;
-var HistoryItem_1 = __webpack_require__(6);
+var HistoryItem_1 = __webpack_require__(8);
 var ChangeStyleHistoryItemBase = /** @class */ (function (_super) {
     __extends(ChangeStyleHistoryItemBase, _super);
     function ChangeStyleHistoryItemBase(itemKey, styleProperty, styleValue) {
@@ -14730,7 +14763,7 @@ exports.ChangeStyleHistoryItemBase = ChangeStyleHistoryItemBase;
 
 
 /***/ }),
-/* 122 */
+/* 121 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14753,11 +14786,11 @@ exports.Importer = void 0;
 var Shape_1 = __webpack_require__(14);
 var Utils_1 = __webpack_require__(3);
 var size_1 = __webpack_require__(2);
-var point_1 = __webpack_require__(0);
+var point_1 = __webpack_require__(1);
 var ShapeDescriptionManager_1 = __webpack_require__(91);
-var Connector_1 = __webpack_require__(7);
-var ImageInfo_1 = __webpack_require__(50);
-var ImporterBase_1 = __webpack_require__(136);
+var Connector_1 = __webpack_require__(6);
+var ImageInfo_1 = __webpack_require__(51);
+var ImporterBase_1 = __webpack_require__(135);
 var ImportUtils_1 = __webpack_require__(95);
 var color_1 = __webpack_require__(22);
 var Importer = /** @class */ (function (_super) {
@@ -14888,7 +14921,7 @@ exports.Importer = Importer;
 
 
 /***/ }),
-/* 123 */
+/* 122 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14908,9 +14941,9 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DiamondShapeDescription = void 0;
-var ShapeDescription_1 = __webpack_require__(8);
-var PathPrimitive_1 = __webpack_require__(4);
-var ShapeTypes_1 = __webpack_require__(1);
+var ShapeDescription_1 = __webpack_require__(7);
+var PathPrimitive_1 = __webpack_require__(5);
+var ShapeTypes_1 = __webpack_require__(0);
 var DiamondShapeDescription = /** @class */ (function (_super) {
     __extends(DiamondShapeDescription, _super);
     function DiamondShapeDescription(defaultSize, hasDefaultText) {
@@ -14953,7 +14986,7 @@ exports.DiamondShapeDescription = DiamondShapeDescription;
 
 
 /***/ }),
-/* 124 */
+/* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14973,10 +15006,10 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TextShapeDescription = void 0;
-var ShapeDescription_1 = __webpack_require__(8);
+var ShapeDescription_1 = __webpack_require__(7);
 var size_1 = __webpack_require__(2);
-var ShapeTypes_1 = __webpack_require__(1);
-var ClipPathPrimitive_1 = __webpack_require__(54);
+var ShapeTypes_1 = __webpack_require__(0);
+var ClipPathPrimitive_1 = __webpack_require__(55);
 var RectaglePrimitive_1 = __webpack_require__(21);
 var Utils_1 = __webpack_require__(16);
 var TextShapeDescription = /** @class */ (function (_super) {
@@ -15025,7 +15058,7 @@ exports.TextShapeDescription = TextShapeDescription;
 
 
 /***/ }),
-/* 125 */
+/* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15045,8 +15078,8 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PentagonShapeDescription = void 0;
-var PathPrimitive_1 = __webpack_require__(4);
-var ShapeTypes_1 = __webpack_require__(1);
+var PathPrimitive_1 = __webpack_require__(5);
+var ShapeTypes_1 = __webpack_require__(0);
 var PolygonShapeDescription_1 = __webpack_require__(94);
 var DiagramItem_1 = __webpack_require__(9);
 var Utils_1 = __webpack_require__(3);
@@ -15125,7 +15158,7 @@ exports.PentagonShapeDescription = PentagonShapeDescription;
 
 
 /***/ }),
-/* 126 */
+/* 125 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15145,8 +15178,8 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.HexagonShapeDescription = void 0;
-var PathPrimitive_1 = __webpack_require__(4);
-var ShapeTypes_1 = __webpack_require__(1);
+var PathPrimitive_1 = __webpack_require__(5);
+var ShapeTypes_1 = __webpack_require__(0);
 var PolygonShapeDescription_1 = __webpack_require__(94);
 var Utils_1 = __webpack_require__(3);
 var rectangle_1 = __webpack_require__(12);
@@ -15203,7 +15236,7 @@ exports.HexagonShapeDescription = HexagonShapeDescription;
 
 
 /***/ }),
-/* 127 */
+/* 126 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15223,10 +15256,10 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TriangleShapeDescription = void 0;
-var ShapeDescription_1 = __webpack_require__(8);
-var PathPrimitive_1 = __webpack_require__(4);
-var ShapeTypes_1 = __webpack_require__(1);
-var ConnectionPoint_1 = __webpack_require__(46);
+var ShapeDescription_1 = __webpack_require__(7);
+var PathPrimitive_1 = __webpack_require__(5);
+var ShapeTypes_1 = __webpack_require__(0);
+var ConnectionPoint_1 = __webpack_require__(47);
 var DiagramItem_1 = __webpack_require__(9);
 var rectangle_1 = __webpack_require__(12);
 var size_1 = __webpack_require__(2);
@@ -15283,7 +15316,7 @@ exports.TriangleShapeDescription = TriangleShapeDescription;
 
 
 /***/ }),
-/* 128 */
+/* 127 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15303,9 +15336,9 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DocumentShapeDescription = void 0;
-var RectangleShapeDescription_1 = __webpack_require__(19);
-var ShapeTypes_1 = __webpack_require__(1);
-var PathPrimitive_1 = __webpack_require__(4);
+var RectangleShapeDescription_1 = __webpack_require__(18);
+var ShapeTypes_1 = __webpack_require__(0);
+var PathPrimitive_1 = __webpack_require__(5);
 var DiagramItem_1 = __webpack_require__(9);
 var DocumentShapeDescription = /** @class */ (function (_super) {
     __extends(DocumentShapeDescription, _super);
@@ -15357,7 +15390,7 @@ exports.DocumentShapeDescription = DocumentShapeDescription;
 
 
 /***/ }),
-/* 129 */
+/* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15377,18 +15410,18 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CustomShapeDescription = void 0;
-var ImagePrimitive_1 = __webpack_require__(130);
+var ImagePrimitive_1 = __webpack_require__(129);
 var rectangle_1 = __webpack_require__(12);
 var size_1 = __webpack_require__(2);
-var point_1 = __webpack_require__(0);
-var ConnectionPoint_1 = __webpack_require__(46);
+var point_1 = __webpack_require__(1);
+var ConnectionPoint_1 = __webpack_require__(47);
 var DiagramItem_1 = __webpack_require__(9);
-var ShapeWithImageDescription_1 = __webpack_require__(131);
-var ShapeDescription_1 = __webpack_require__(8);
-var ImageInfo_1 = __webpack_require__(50);
-var ImageCache_1 = __webpack_require__(47);
-var ImageLoader_1 = __webpack_require__(133);
-var SvgElementPrimitive_1 = __webpack_require__(233);
+var ShapeWithImageDescription_1 = __webpack_require__(130);
+var ShapeDescription_1 = __webpack_require__(7);
+var ImageInfo_1 = __webpack_require__(51);
+var ImageCache_1 = __webpack_require__(48);
+var ImageLoader_1 = __webpack_require__(132);
+var SvgElementPrimitive_1 = __webpack_require__(231);
 var CustomShapeDescription = /** @class */ (function (_super) {
     __extends(CustomShapeDescription, _super);
     function CustomShapeDescription(properties, baseDescription) {
@@ -15614,7 +15647,7 @@ exports.CustomShapeDescription = CustomShapeDescription;
 
 
 /***/ }),
-/* 130 */
+/* 129 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15668,7 +15701,7 @@ exports.ImagePrimitive = ImagePrimitive;
 
 
 /***/ }),
-/* 131 */
+/* 130 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15688,17 +15721,17 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ShapeWithImageDescription = exports.SHAPE_IMAGE_CLASSNAMES = exports.ShapeDefaultSize = exports.ShapeDefaultDimension = void 0;
-var ShapeDescription_1 = __webpack_require__(8);
+var ShapeDescription_1 = __webpack_require__(7);
 var rectangle_1 = __webpack_require__(12);
 var size_1 = __webpack_require__(2);
-var point_1 = __webpack_require__(0);
+var point_1 = __webpack_require__(1);
 var unit_converter_1 = __webpack_require__(11);
-var ImagePrimitive_1 = __webpack_require__(130);
+var ImagePrimitive_1 = __webpack_require__(129);
 var RectaglePrimitive_1 = __webpack_require__(21);
-var GroupPrimitive_1 = __webpack_require__(38);
+var GroupPrimitive_1 = __webpack_require__(39);
 var Utils_1 = __webpack_require__(16);
-var ClipPathPrimitive_1 = __webpack_require__(54);
-var ShapeImageIndicator_1 = __webpack_require__(132);
+var ClipPathPrimitive_1 = __webpack_require__(55);
+var ShapeImageIndicator_1 = __webpack_require__(131);
 exports.ShapeDefaultDimension = 1440;
 exports.ShapeDefaultSize = new size_1.Size(exports.ShapeDefaultDimension, exports.ShapeDefaultDimension);
 exports.SHAPE_IMAGE_CLASSNAMES = {
@@ -15791,17 +15824,17 @@ exports.ShapeWithImageDescription = ShapeWithImageDescription;
 
 
 /***/ }),
-/* 132 */
+/* 131 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ShapeImageIndicator = void 0;
-var EllipsePrimitive_1 = __webpack_require__(53);
-var PathPrimitive_1 = __webpack_require__(4);
-var GroupPrimitive_1 = __webpack_require__(38);
-var browser_1 = __webpack_require__(17);
+var EllipsePrimitive_1 = __webpack_require__(54);
+var PathPrimitive_1 = __webpack_require__(5);
+var GroupPrimitive_1 = __webpack_require__(39);
+var browser_1 = __webpack_require__(20);
 var RectaglePrimitive_1 = __webpack_require__(21);
 var unit_converter_1 = __webpack_require__(11);
 var ShapeImageIndicator = /** @class */ (function () {
@@ -15901,14 +15934,14 @@ exports.ShapeImageIndicator = ShapeImageIndicator;
 
 
 /***/ }),
-/* 133 */
+/* 132 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ImageLoader = void 0;
-var ImageCache_1 = __webpack_require__(47);
+var ImageCache_1 = __webpack_require__(48);
 var ImageLoader = /** @class */ (function () {
     function ImageLoader(loadedCallback) {
         this.loadedCallback = loadedCallback;
@@ -15973,7 +16006,7 @@ exports.ImageLoader = ImageLoader;
 
 
 /***/ }),
-/* 134 */
+/* 133 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15993,17 +16026,17 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ContainerDescription = exports.CONTAINER_EXPAND_BUTTON_SIGN_RATIO = exports.CONTAINER_EXPAND_BUTTON_RECT_RATIO = exports.CONTAINER_HEADER_TOOLBOX_SIZE_RATIO = exports.CONTAINER_HEADER_SIZE = void 0;
-var ShapeDescription_1 = __webpack_require__(8);
+var ShapeDescription_1 = __webpack_require__(7);
 var size_1 = __webpack_require__(2);
-var ShapeTypes_1 = __webpack_require__(1);
+var ShapeTypes_1 = __webpack_require__(0);
 var RectaglePrimitive_1 = __webpack_require__(21);
-var PathPrimitive_1 = __webpack_require__(4);
+var PathPrimitive_1 = __webpack_require__(5);
 var Utils_1 = __webpack_require__(16);
 var Event_1 = __webpack_require__(13);
-var GroupPrimitive_1 = __webpack_require__(38);
-var ConnectionPoint_1 = __webpack_require__(46);
+var GroupPrimitive_1 = __webpack_require__(39);
+var ConnectionPoint_1 = __webpack_require__(47);
 var DiagramItem_1 = __webpack_require__(9);
-var LocalizationService_1 = __webpack_require__(35);
+var LocalizationService_1 = __webpack_require__(36);
 exports.CONTAINER_HEADER_SIZE = 360;
 exports.CONTAINER_HEADER_TOOLBOX_SIZE_RATIO = 0.2;
 exports.CONTAINER_EXPAND_BUTTON_RECT_RATIO = 0.5;
@@ -16087,7 +16120,7 @@ exports.ContainerDescription = ContainerDescription;
 
 
 /***/ }),
-/* 135 */
+/* 134 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16107,18 +16140,18 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CardBaseDescription = void 0;
-var ShapeDescription_1 = __webpack_require__(8);
+var ShapeDescription_1 = __webpack_require__(7);
 var rectangle_1 = __webpack_require__(12);
 var size_1 = __webpack_require__(2);
-var ShapeWithImageDescription_1 = __webpack_require__(131);
-var RoundedRectanglePrimitive_1 = __webpack_require__(237);
-var PathPrimitive_1 = __webpack_require__(4);
-var GroupPrimitive_1 = __webpack_require__(38);
-var ShapeImageIndicator_1 = __webpack_require__(132);
-var ShapeTypes_1 = __webpack_require__(1);
-var LocalizationService_1 = __webpack_require__(35);
+var ShapeWithImageDescription_1 = __webpack_require__(130);
+var RoundedRectanglePrimitive_1 = __webpack_require__(235);
+var PathPrimitive_1 = __webpack_require__(5);
+var GroupPrimitive_1 = __webpack_require__(39);
+var ShapeImageIndicator_1 = __webpack_require__(131);
+var ShapeTypes_1 = __webpack_require__(0);
+var LocalizationService_1 = __webpack_require__(36);
 var unit_converter_1 = __webpack_require__(11);
-var point_1 = __webpack_require__(0);
+var point_1 = __webpack_require__(1);
 var CardBaseDescription = /** @class */ (function (_super) {
     __extends(CardBaseDescription, _super);
     function CardBaseDescription(defaultSize) {
@@ -16234,14 +16267,14 @@ exports.CardBaseDescription = CardBaseDescription;
 
 
 /***/ }),
-/* 136 */
+/* 135 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ImporterBase = void 0;
-var Model_1 = __webpack_require__(60);
+var Model_1 = __webpack_require__(61);
 var Shape_1 = __webpack_require__(14);
 var ImporterBase = /** @class */ (function () {
     function ImporterBase(shapeDescriptionManager) {
@@ -16432,7 +16465,7 @@ exports.ImporterBase = ImporterBase;
 
 
 /***/ }),
-/* 137 */
+/* 136 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16467,7 +16500,7 @@ exports.StylePropertyCommandBase = StylePropertyCommandBase;
 
 
 /***/ }),
-/* 138 */
+/* 137 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16487,7 +16520,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ChangeStylePropertyCommandBase = void 0;
-var StylePropertyCommandBase_1 = __webpack_require__(137);
+var StylePropertyCommandBase_1 = __webpack_require__(136);
 var ChangeStylePropertyCommandBase = /** @class */ (function (_super) {
     __extends(ChangeStylePropertyCommandBase, _super);
     function ChangeStylePropertyCommandBase() {
@@ -16518,7 +16551,7 @@ exports.ChangeStylePropertyCommandBase = ChangeStylePropertyCommandBase;
 
 
 /***/ }),
-/* 139 */
+/* 138 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16572,7 +16605,7 @@ exports.ChangeConnectorPropertyCommand = ChangeConnectorPropertyCommand;
 
 
 /***/ }),
-/* 140 */
+/* 139 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16594,7 +16627,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AutoLayoutTreeVerticalCommand = void 0;
 var AutoLayoutCommandBase_1 = __webpack_require__(75);
 var WideTree_1 = __webpack_require__(97);
-var LayoutSettings_1 = __webpack_require__(20);
+var LayoutSettings_1 = __webpack_require__(19);
 var AutoLayoutTreeVerticalCommand = /** @class */ (function (_super) {
     __extends(AutoLayoutTreeVerticalCommand, _super);
     function AutoLayoutTreeVerticalCommand() {
@@ -16615,7 +16648,7 @@ exports.AutoLayoutTreeVerticalCommand = AutoLayoutTreeVerticalCommand;
 
 
 /***/ }),
-/* 141 */
+/* 140 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16687,14 +16720,14 @@ exports.GraphLayout = GraphLayout;
 
 
 /***/ }),
-/* 142 */
+/* 141 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LayoutBuilder = void 0;
-var LayoutSettings_1 = __webpack_require__(20);
+var LayoutSettings_1 = __webpack_require__(19);
 var LayoutBuilder = /** @class */ (function () {
     function LayoutBuilder(settings, graph) {
         this.settings = settings;
@@ -16733,7 +16766,7 @@ exports.LayoutBuilder = LayoutBuilder;
 
 
 /***/ }),
-/* 143 */
+/* 142 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16754,7 +16787,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CanvasManager = void 0;
 var ModelChange_1 = __webpack_require__(99);
-var CanvasManagerBase_1 = __webpack_require__(41);
+var CanvasManagerBase_1 = __webpack_require__(42);
 var CanvasManager = /** @class */ (function (_super) {
     __extends(CanvasManager, _super);
     function CanvasManager() {
@@ -16840,7 +16873,7 @@ exports.CanvasManager = CanvasManager;
 
 
 /***/ }),
-/* 144 */
+/* 143 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16861,12 +16894,12 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PasteSelectionCommandBase = void 0;
 var ClipboardCommand_1 = __webpack_require__(101);
-var Importer_1 = __webpack_require__(122);
+var Importer_1 = __webpack_require__(121);
 var Shape_1 = __webpack_require__(14);
-var ImportShapeHistoryItem_1 = __webpack_require__(268);
-var Connector_1 = __webpack_require__(7);
-var ImportConnectorHistoryItem_1 = __webpack_require__(269);
-var ModelUtils_1 = __webpack_require__(5);
+var ImportShapeHistoryItem_1 = __webpack_require__(266);
+var Connector_1 = __webpack_require__(6);
+var ImportConnectorHistoryItem_1 = __webpack_require__(267);
+var ModelUtils_1 = __webpack_require__(4);
 var SetSelectionHistoryItem_1 = __webpack_require__(66);
 var unit_converter_1 = __webpack_require__(11);
 var PasteSelectionCommandBase = /** @class */ (function (_super) {
@@ -16992,7 +17025,7 @@ exports.PasteSelectionCommandBase = PasteSelectionCommandBase;
 
 
 /***/ }),
-/* 145 */
+/* 144 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17014,7 +17047,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AutoLayoutLayeredHorizontalCommand = void 0;
 var AutoLayoutCommandBase_1 = __webpack_require__(75);
 var Sugiyama_1 = __webpack_require__(79);
-var LayoutSettings_1 = __webpack_require__(20);
+var LayoutSettings_1 = __webpack_require__(19);
 var AutoLayoutLayeredHorizontalCommand = /** @class */ (function (_super) {
     __extends(AutoLayoutLayeredHorizontalCommand, _super);
     function AutoLayoutLayeredHorizontalCommand() {
@@ -17031,6 +17064,49 @@ var AutoLayoutLayeredHorizontalCommand = /** @class */ (function (_super) {
     return AutoLayoutLayeredHorizontalCommand;
 }(AutoLayoutCommandBase_1.AutoLayoutCommandBase));
 exports.AutoLayoutLayeredHorizontalCommand = AutoLayoutLayeredHorizontalCommand;
+
+
+/***/ }),
+/* 145 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.AutoLayoutTreeHorizontalCommand = void 0;
+var AutoLayoutCommandBase_1 = __webpack_require__(75);
+var WideTree_1 = __webpack_require__(97);
+var LayoutSettings_1 = __webpack_require__(19);
+var AutoLayoutTreeHorizontalCommand = /** @class */ (function (_super) {
+    __extends(AutoLayoutTreeHorizontalCommand, _super);
+    function AutoLayoutTreeHorizontalCommand() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    AutoLayoutTreeHorizontalCommand.prototype.createLayoutSettings = function () {
+        var gridSize = this.control.settings.snapToGrid ? this.control.settings.gridSize : undefined;
+        var settings = new LayoutSettings_1.TreeLayoutSettings(gridSize);
+        settings.orientation = LayoutSettings_1.DataLayoutOrientation.Horizontal;
+        return settings;
+    };
+    AutoLayoutTreeHorizontalCommand.prototype.createLayout = function (settings, graph) {
+        return new WideTree_1.TreeLayoutBuilder(settings, graph).build();
+    };
+    return AutoLayoutTreeHorizontalCommand;
+}(AutoLayoutCommandBase_1.AutoLayoutCommandBase));
+exports.AutoLayoutTreeHorizontalCommand = AutoLayoutTreeHorizontalCommand;
 
 
 /***/ }),
@@ -17053,27 +17129,26 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AutoLayoutTreeHorizontalCommand = void 0;
+exports.AutoLayoutLayeredVerticalCommand = void 0;
 var AutoLayoutCommandBase_1 = __webpack_require__(75);
-var WideTree_1 = __webpack_require__(97);
-var LayoutSettings_1 = __webpack_require__(20);
-var AutoLayoutTreeHorizontalCommand = /** @class */ (function (_super) {
-    __extends(AutoLayoutTreeHorizontalCommand, _super);
-    function AutoLayoutTreeHorizontalCommand() {
+var Sugiyama_1 = __webpack_require__(79);
+var LayoutSettings_1 = __webpack_require__(19);
+var AutoLayoutLayeredVerticalCommand = /** @class */ (function (_super) {
+    __extends(AutoLayoutLayeredVerticalCommand, _super);
+    function AutoLayoutLayeredVerticalCommand() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    AutoLayoutTreeHorizontalCommand.prototype.createLayoutSettings = function () {
-        var gridSize = this.control.settings.snapToGrid ? this.control.settings.gridSize : undefined;
-        var settings = new LayoutSettings_1.TreeLayoutSettings(gridSize);
-        settings.orientation = LayoutSettings_1.DataLayoutOrientation.Horizontal;
+    AutoLayoutLayeredVerticalCommand.prototype.createLayoutSettings = function () {
+        var settings = new LayoutSettings_1.LayoutSettings();
+        settings.orientation = LayoutSettings_1.DataLayoutOrientation.Vertical;
         return settings;
     };
-    AutoLayoutTreeHorizontalCommand.prototype.createLayout = function (settings, graph) {
-        return new WideTree_1.TreeLayoutBuilder(settings, graph).build();
+    AutoLayoutLayeredVerticalCommand.prototype.createLayout = function (settings, graph) {
+        return new Sugiyama_1.SugiyamaLayoutBuilder(settings, graph).build();
     };
-    return AutoLayoutTreeHorizontalCommand;
+    return AutoLayoutLayeredVerticalCommand;
 }(AutoLayoutCommandBase_1.AutoLayoutCommandBase));
-exports.AutoLayoutTreeHorizontalCommand = AutoLayoutTreeHorizontalCommand;
+exports.AutoLayoutLayeredVerticalCommand = AutoLayoutLayeredVerticalCommand;
 
 
 /***/ }),
@@ -17096,50 +17171,8 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AutoLayoutLayeredVerticalCommand = void 0;
-var AutoLayoutCommandBase_1 = __webpack_require__(75);
-var Sugiyama_1 = __webpack_require__(79);
-var LayoutSettings_1 = __webpack_require__(20);
-var AutoLayoutLayeredVerticalCommand = /** @class */ (function (_super) {
-    __extends(AutoLayoutLayeredVerticalCommand, _super);
-    function AutoLayoutLayeredVerticalCommand() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    AutoLayoutLayeredVerticalCommand.prototype.createLayoutSettings = function () {
-        var settings = new LayoutSettings_1.LayoutSettings();
-        settings.orientation = LayoutSettings_1.DataLayoutOrientation.Vertical;
-        return settings;
-    };
-    AutoLayoutLayeredVerticalCommand.prototype.createLayout = function (settings, graph) {
-        return new Sugiyama_1.SugiyamaLayoutBuilder(settings, graph).build();
-    };
-    return AutoLayoutLayeredVerticalCommand;
-}(AutoLayoutCommandBase_1.AutoLayoutCommandBase));
-exports.AutoLayoutLayeredVerticalCommand = AutoLayoutLayeredVerticalCommand;
-
-
-/***/ }),
-/* 148 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.ChangeLockedCommand = void 0;
-var ModelUtils_1 = __webpack_require__(5);
+var ModelUtils_1 = __webpack_require__(4);
 var SimpleCommandBase_1 = __webpack_require__(10);
 var ChangeLockedCommand = /** @class */ (function (_super) {
     __extends(ChangeLockedCommand, _super);
@@ -17164,7 +17197,7 @@ exports.ChangeLockedCommand = ChangeLockedCommand;
 
 
 /***/ }),
-/* 149 */
+/* 148 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17184,8 +17217,8 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ChangeShapeImageHistoryItem = void 0;
-var HistoryItem_1 = __webpack_require__(6);
-var ImageInfo_1 = __webpack_require__(50);
+var HistoryItem_1 = __webpack_require__(8);
+var ImageInfo_1 = __webpack_require__(51);
 var ChangeShapeImageHistoryItem = /** @class */ (function (_super) {
     __extends(ChangeShapeImageHistoryItem, _super);
     function ChangeShapeImageHistoryItem(item, imageUrl) {
@@ -17209,7 +17242,7 @@ exports.ChangeShapeImageHistoryItem = ChangeShapeImageHistoryItem;
 
 
 /***/ }),
-/* 150 */
+/* 149 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17230,18 +17263,18 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MouseHandlerDefaultState = void 0;
 var Event_1 = __webpack_require__(13);
-var MouseHandlerMoveConnectorPointState_1 = __webpack_require__(307);
-var MouseHandlerResizeShapeState_1 = __webpack_require__(308);
-var MouseHandlerMoveConnectorSideState_1 = __webpack_require__(309);
-var MouseHandlerDragParameterPointState_1 = __webpack_require__(310);
-var MouseHandlerCreateConnectorState_1 = __webpack_require__(311);
-var MouseHandlerMoveConnectorOrthogonalSideState_1 = __webpack_require__(312);
-var MouseHandlerToolboxDraggingState_1 = __webpack_require__(313);
-var MouseHandlerMoveConnectorTextState_1 = __webpack_require__(314);
-var MouseHandlerDefaultStateBase_1 = __webpack_require__(152);
-var MouseHandlerMoveShapeState_1 = __webpack_require__(320);
-var Connector_1 = __webpack_require__(7);
-var MouseHandlerMoveConnectorState_1 = __webpack_require__(321);
+var MouseHandlerMoveConnectorPointState_1 = __webpack_require__(305);
+var MouseHandlerResizeShapeState_1 = __webpack_require__(306);
+var MouseHandlerMoveConnectorSideState_1 = __webpack_require__(307);
+var MouseHandlerDragParameterPointState_1 = __webpack_require__(308);
+var MouseHandlerCreateConnectorState_1 = __webpack_require__(309);
+var MouseHandlerMoveConnectorOrthogonalSideState_1 = __webpack_require__(310);
+var MouseHandlerToolboxDraggingState_1 = __webpack_require__(311);
+var MouseHandlerMoveConnectorTextState_1 = __webpack_require__(312);
+var MouseHandlerDefaultStateBase_1 = __webpack_require__(151);
+var MouseHandlerMoveShapeState_1 = __webpack_require__(318);
+var Connector_1 = __webpack_require__(6);
+var MouseHandlerMoveConnectorState_1 = __webpack_require__(319);
 var MouseHandlerDefaultState = /** @class */ (function (_super) {
     __extends(MouseHandlerDefaultState, _super);
     function MouseHandlerDefaultState() {
@@ -17334,7 +17367,7 @@ exports.MouseHandlerDefaultState = MouseHandlerDefaultState;
 
 
 /***/ }),
-/* 151 */
+/* 150 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17354,12 +17387,13 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MouseHandlerMoveConnectorPointStateBase = void 0;
-var Connector_1 = __webpack_require__(7);
+var Connector_1 = __webpack_require__(6);
 var Event_1 = __webpack_require__(13);
-var MouseHandlerDraggingState_1 = __webpack_require__(32);
+var MouseHandlerDraggingState_1 = __webpack_require__(34);
 var DeleteConnectionHistoryItem_1 = __webpack_require__(65);
-var AddConnectionHistoryItem_1 = __webpack_require__(49);
-var ModelUtils_1 = __webpack_require__(5);
+var AddConnectionHistoryItem_1 = __webpack_require__(50);
+var ModelUtils_1 = __webpack_require__(4);
+var ConnectorProperties_1 = __webpack_require__(30);
 var MouseHandlerMoveConnectorPointStateBase = /** @class */ (function (_super) {
     __extends(MouseHandlerMoveConnectorPointStateBase, _super);
     function MouseHandlerMoveConnectorPointStateBase(handler, history, model, visualizerManager) {
@@ -17429,6 +17463,10 @@ var MouseHandlerMoveConnectorPointStateBase = /** @class */ (function (_super) {
         }
         ModelUtils_1.ModelUtils.moveConnectorPoint(this.history, this.connector, this.pointIndex, point);
         ModelUtils_1.ModelUtils.updateConnectorAttachedPoints(this.history, this.model, this.connector);
+        if (this.connector.properties.lineOption === ConnectorProperties_1.ConnectorLineOption.Orthogonal) {
+            var renderPoints = this.connector.getRenderPoints(true);
+            ModelUtils_1.ModelUtils.skipUnnecessaryRightAngleRenderPoints(renderPoints);
+        }
         this.handler.tryUpdateModelSize();
     };
     MouseHandlerMoveConnectorPointStateBase.prototype.updateOppositeItemConnectionPointIndex = function (connectionPointIndex) {
@@ -17441,6 +17479,7 @@ var MouseHandlerMoveConnectorPointStateBase = /** @class */ (function (_super) {
     MouseHandlerMoveConnectorPointStateBase.prototype.onFinishWithChanges = function () {
         ModelUtils_1.ModelUtils.updateConnectorContainer(this.history, this.model, this.connector);
         ModelUtils_1.ModelUtils.deleteConnectorUnnecessaryPoints(this.history, this.connector);
+        this.handler.tryUpdateModelSize();
     };
     MouseHandlerMoveConnectorPointStateBase.prototype.getDraggingElementKeys = function () {
         return this.connector ? [this.connector.key] : [];
@@ -17484,7 +17523,7 @@ exports.MouseHandlerMoveConnectorPointStateBase = MouseHandlerMoveConnectorPoint
 
 
 /***/ }),
-/* 152 */
+/* 151 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17504,12 +17543,12 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MouseHandlerDefaultStateBase = void 0;
-var MouseHandlerStateBase_1 = __webpack_require__(39);
+var MouseHandlerStateBase_1 = __webpack_require__(40);
 var Event_1 = __webpack_require__(13);
-var MouseHandlerToggleShapeExpandedState_1 = __webpack_require__(316);
-var MouseHandlerSelectionState_1 = __webpack_require__(318);
-var MouseHandlerZoomOnWheelState_1 = __webpack_require__(319);
-var MouseHandlerScrollingState_1 = __webpack_require__(153);
+var MouseHandlerToggleShapeExpandedState_1 = __webpack_require__(314);
+var MouseHandlerSelectionState_1 = __webpack_require__(316);
+var MouseHandlerZoomOnWheelState_1 = __webpack_require__(317);
+var MouseHandlerScrollingState_1 = __webpack_require__(152);
 var unit_converter_1 = __webpack_require__(11);
 var MouseHandlerDefaultStateBase = /** @class */ (function (_super) {
     __extends(MouseHandlerDefaultStateBase, _super);
@@ -17604,7 +17643,7 @@ var MouseHandlerDefaultStateBase = /** @class */ (function (_super) {
     };
     MouseHandlerDefaultStateBase.prototype.startScrolling = function (evt) {
         if (evt.button === Event_1.MouseButton.Left) {
-            this.handler.raiseDragScrollStart();
+            this.handler.onDocumentDragScrollStart();
             this.handler.switchState(new MouseHandlerScrollingState_1.MouseHandlerScrollingState(this.handler, this.view, this.selection));
         }
     };
@@ -17641,7 +17680,7 @@ exports.MouseHandlerDefaultStateBase = MouseHandlerDefaultStateBase;
 
 
 /***/ }),
-/* 153 */
+/* 152 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17661,9 +17700,9 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MouseHandlerScrollingState = void 0;
-var MouseHandlerStateBase_1 = __webpack_require__(39);
+var MouseHandlerStateBase_1 = __webpack_require__(40);
 var Event_1 = __webpack_require__(13);
-var point_1 = __webpack_require__(0);
+var point_1 = __webpack_require__(1);
 var MouseHandlerScrollingState = /** @class */ (function (_super) {
     __extends(MouseHandlerScrollingState, _super);
     function MouseHandlerScrollingState(handler, view, selection) {
@@ -17715,7 +17754,7 @@ exports.MouseHandlerScrollingState = MouseHandlerScrollingState;
 
 
 /***/ }),
-/* 154 */
+/* 153 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17735,14 +17774,14 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MouseHandlerDragDiagramItemStateBase = exports.DraggingConnector = void 0;
-var vector_1 = __webpack_require__(57);
-var ChangeConnectorPointsHistoryItem_1 = __webpack_require__(155);
-var ConnectorRenderPoint_1 = __webpack_require__(28);
-var ConnectorRenderPointsContext_1 = __webpack_require__(86);
-var ModelUtils_1 = __webpack_require__(5);
-var ModelOperationSettings_1 = __webpack_require__(18);
+var vector_1 = __webpack_require__(58);
+var ChangeConnectorPointsHistoryItem_1 = __webpack_require__(86);
+var ConnectorRenderPoint_1 = __webpack_require__(29);
+var ConnectorRenderPointsContext_1 = __webpack_require__(85);
+var ModelUtils_1 = __webpack_require__(4);
+var ModelOperationSettings_1 = __webpack_require__(17);
 var Event_1 = __webpack_require__(13);
-var MouseHandlerDraggingState_1 = __webpack_require__(32);
+var MouseHandlerDraggingState_1 = __webpack_require__(34);
 var DraggingConnector = /** @class */ (function () {
     function DraggingConnector(connector) {
         this.connector = connector;
@@ -17997,89 +18036,7 @@ exports.MouseHandlerDragDiagramItemStateBase = MouseHandlerDragDiagramItemStateB
 
 
 /***/ }),
-/* 155 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.ReplaceConnectorPointsHistoryItem = exports.ChangeConnectorPointsHistoryItem = exports.UpdateConnectorPointsHistoryItem = void 0;
-var HistoryItem_1 = __webpack_require__(6);
-var UpdateConnectorPointsHistoryItem = /** @class */ (function (_super) {
-    __extends(UpdateConnectorPointsHistoryItem, _super);
-    function UpdateConnectorPointsHistoryItem(connectorKey, newPoints) {
-        var _this = _super.call(this) || this;
-        _this.connectorKey = connectorKey;
-        _this.newPoints = newPoints;
-        return _this;
-    }
-    UpdateConnectorPointsHistoryItem.prototype.redo = function (manipulator) {
-        var _this = this;
-        var connector = manipulator.model.findConnector(this.connectorKey);
-        this.oldRenderContext = connector.createRenderPointsContext();
-        this.oldPoints = connector.points.map(function (p) { return p.clone(); });
-        manipulator.changeConnectorPoints(connector, function (connector) {
-            connector.points = _this.newPoints;
-            _this.updateRenderPoints(connector);
-        });
-    };
-    UpdateConnectorPointsHistoryItem.prototype.undo = function (manipulator) {
-        var _this = this;
-        var connector = manipulator.model.findConnector(this.connectorKey);
-        manipulator.changeConnectorPoints(connector, function (connector) {
-            connector.points = _this.oldPoints;
-            connector.replaceRenderPoints(_this.oldRenderContext);
-        });
-    };
-    return UpdateConnectorPointsHistoryItem;
-}(HistoryItem_1.HistoryItem));
-exports.UpdateConnectorPointsHistoryItem = UpdateConnectorPointsHistoryItem;
-var ChangeConnectorPointsHistoryItem = /** @class */ (function (_super) {
-    __extends(ChangeConnectorPointsHistoryItem, _super);
-    function ChangeConnectorPointsHistoryItem(connectorKey, newPoints, newRenderContext) {
-        var _this = _super.call(this, connectorKey, newPoints) || this;
-        _this.connectorKey = connectorKey;
-        _this.newPoints = newPoints;
-        _this.newRenderContext = newRenderContext;
-        return _this;
-    }
-    ChangeConnectorPointsHistoryItem.prototype.updateRenderPoints = function (connector) {
-        connector.replaceRenderPoints(this.newRenderContext);
-    };
-    return ChangeConnectorPointsHistoryItem;
-}(UpdateConnectorPointsHistoryItem));
-exports.ChangeConnectorPointsHistoryItem = ChangeConnectorPointsHistoryItem;
-var ReplaceConnectorPointsHistoryItem = /** @class */ (function (_super) {
-    __extends(ReplaceConnectorPointsHistoryItem, _super);
-    function ReplaceConnectorPointsHistoryItem(connectorKey, newPoints) {
-        var _this = _super.call(this, connectorKey, newPoints) || this;
-        _this.connectorKey = connectorKey;
-        _this.newPoints = newPoints;
-        return _this;
-    }
-    ReplaceConnectorPointsHistoryItem.prototype.updateRenderPoints = function (connector) {
-        connector.clearRenderPoints();
-    };
-    return ReplaceConnectorPointsHistoryItem;
-}(UpdateConnectorPointsHistoryItem));
-exports.ReplaceConnectorPointsHistoryItem = ReplaceConnectorPointsHistoryItem;
-
-
-/***/ }),
-/* 156 */
+/* 154 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18099,7 +18056,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MouseHandlerDefaultReadOnlyState = void 0;
-var MouseHandlerDefaultStateBase_1 = __webpack_require__(152);
+var MouseHandlerDefaultStateBase_1 = __webpack_require__(151);
 var MouseHandlerDefaultReadOnlyState = /** @class */ (function (_super) {
     __extends(MouseHandlerDefaultReadOnlyState, _super);
     function MouseHandlerDefaultReadOnlyState() {
@@ -18131,7 +18088,7 @@ exports.MouseHandlerDefaultReadOnlyState = MouseHandlerDefaultReadOnlyState;
 
 
 /***/ }),
-/* 157 */
+/* 155 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18151,7 +18108,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ChangeShapeTextHistoryItem = void 0;
-var HistoryItem_1 = __webpack_require__(6);
+var HistoryItem_1 = __webpack_require__(8);
 var ChangeShapeTextHistoryItem = /** @class */ (function (_super) {
     __extends(ChangeShapeTextHistoryItem, _super);
     function ChangeShapeTextHistoryItem(item, text) {
@@ -18175,7 +18132,7 @@ exports.ChangeShapeTextHistoryItem = ChangeShapeTextHistoryItem;
 
 
 /***/ }),
-/* 158 */
+/* 156 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18211,7 +18168,7 @@ exports.TargetVisualizerBase = TargetVisualizerBase;
 
 
 /***/ }),
-/* 159 */
+/* 157 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18299,7 +18256,7 @@ exports.ExtensionLinesVisualizer = ExtensionLinesVisualizer;
 
 
 /***/ }),
-/* 160 */
+/* 158 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18319,29 +18276,30 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CanvasSelectionManager = exports.ACTIVE_SELECTION_CSSCLASS = exports.SELECTION_ELEMENT_CLASSNAMES = void 0;
-var CanvasManagerBase_1 = __webpack_require__(41);
-var GroupPrimitive_1 = __webpack_require__(38);
+var CanvasManagerBase_1 = __webpack_require__(42);
+var GroupPrimitive_1 = __webpack_require__(39);
 var Utils_1 = __webpack_require__(16);
 var Event_1 = __webpack_require__(13);
 var DiagramItem_1 = __webpack_require__(9);
 var Utils_2 = __webpack_require__(3);
-var point_1 = __webpack_require__(0);
-var ExtensionLinesVisualizer_1 = __webpack_require__(159);
+var point_1 = __webpack_require__(1);
+var ExtensionLinesVisualizer_1 = __webpack_require__(157);
 var Shape_1 = __webpack_require__(14);
-var Connector_1 = __webpack_require__(7);
-var ConnectorProperties_1 = __webpack_require__(31);
+var Connector_1 = __webpack_require__(6);
+var ConnectorProperties_1 = __webpack_require__(30);
 var RectaglePrimitive_1 = __webpack_require__(21);
-var PathPrimitive_1 = __webpack_require__(4);
-var TextPrimitive_1 = __webpack_require__(61);
-var EllipsePrimitive_1 = __webpack_require__(53);
-var Style_1 = __webpack_require__(30);
+var PathPrimitive_1 = __webpack_require__(5);
+var TextPrimitive_1 = __webpack_require__(62);
+var EllipsePrimitive_1 = __webpack_require__(54);
+var Style_1 = __webpack_require__(27);
 var unit_converter_1 = __webpack_require__(11);
-var ITextMeasurer_1 = __webpack_require__(44);
+var ITextMeasurer_1 = __webpack_require__(45);
 var dom_1 = __webpack_require__(23);
 var CanvasItemsManager_1 = __webpack_require__(77);
-var CanvasManager_1 = __webpack_require__(143);
-var metrics_1 = __webpack_require__(83);
-var browser_1 = __webpack_require__(17);
+var CanvasManager_1 = __webpack_require__(142);
+var metrics_1 = __webpack_require__(35);
+var math_1 = __webpack_require__(32);
+var ModelUtils_1 = __webpack_require__(4);
 var MULTIPLE_SELECTION_KEY = "-1";
 exports.SELECTION_ELEMENT_CLASSNAMES = {
     SELECTION_RECTANGLE: "selection-rect",
@@ -18365,9 +18323,10 @@ exports.SELECTION_ELEMENT_CLASSNAMES = {
 exports.ACTIVE_SELECTION_CSSCLASS = "dxdi-active-selection";
 var CanvasSelectionManager = /** @class */ (function (_super) {
     __extends(CanvasSelectionManager, _super);
-    function CanvasSelectionManager(parent, zoomLevel, readOnly, dom) {
+    function CanvasSelectionManager(parent, zoomLevel, readOnly, dom, isTouchUIEnabled) {
         var _this = _super.call(this, zoomLevel, dom) || this;
         _this.readOnly = readOnly;
+        _this.isTouchUIEnabled = isTouchUIEnabled;
         _this.connectionPointElements = [];
         _this.extensionLineElements = [];
         _this.selectionMap = {};
@@ -18577,7 +18536,7 @@ var CanvasSelectionManager = /** @class */ (function (_super) {
     CanvasSelectionManager.prototype.getOrCreateShapeSelection = function (shape, usedItems) {
         var element = this.selectionMap[shape.key];
         if (!element) {
-            element = new ShapeSelectionElement(this.itemSelectionContainer, this.selectionMarksContainer, this.actualZoom, this.readOnly, this.dom, shape.key, shape.isLocked, shape.rectangle, shape.style, shape.allowResizeHorizontally, shape.allowResizeVertically, shape.description.getParameterPoints(shape));
+            element = new ShapeSelectionElement(this.itemSelectionContainer, this.selectionMarksContainer, this.actualZoom, this.readOnly, this.dom, this.isTouchUIEnabled, shape.key, shape.isLocked, shape.rectangle, shape.style, shape.allowResizeHorizontally, shape.allowResizeVertically, shape.description.getParameterPoints(shape));
             this.selectionMap[shape.key] = element;
         }
         usedItems && (usedItems[shape.key] = true);
@@ -18587,7 +18546,7 @@ var CanvasSelectionManager = /** @class */ (function (_super) {
         var element = this.selectionMap[connector.key];
         var points = connector.getRenderPoints();
         if (!element) {
-            element = new ConnectorSelectionElement(this.itemSelectionContainer, this.selectionMarksContainer, this.actualZoom, this.readOnly, this.dom, connector.key, connector.isLocked, connector.rectangle, points, connector.style, connector.styleText, connector.enableText, connector.texts.map(function (t) {
+            element = new ConnectorSelectionElement(this.itemSelectionContainer, this.selectionMarksContainer, this.actualZoom, this.readOnly, this.dom, this.isTouchUIEnabled, connector.key, connector.isLocked, connector.rectangle, points, connector.style, connector.styleText, connector.enableText, connector.texts.map(function (t) {
                 var textInfo = Utils_2.GeometryUtils.getPathPointByPosition(points, t.position);
                 return {
                     text: connector.getText(t.position),
@@ -18604,7 +18563,7 @@ var CanvasSelectionManager = /** @class */ (function (_super) {
     CanvasSelectionManager.prototype.getOrCreateMultipleSelection = function (usedItems) {
         var element = this.selectionMap[MULTIPLE_SELECTION_KEY];
         if (!element) {
-            element = new MultipleSelectionElement(this.itemSelectionContainer, this.selectionMarksContainer, this.actualZoom, this.readOnly, this.dom);
+            element = new MultipleSelectionElement(this.itemSelectionContainer, this.selectionMarksContainer, this.actualZoom, this.readOnly, this.dom, this.isTouchUIEnabled);
             this.selectionMap[MULTIPLE_SELECTION_KEY] = element;
         }
         usedItems[MULTIPLE_SELECTION_KEY] = true;
@@ -18807,13 +18766,14 @@ var CanvasSelectionManager = /** @class */ (function (_super) {
 }(CanvasManager_1.CanvasManager));
 exports.CanvasSelectionManager = CanvasSelectionManager;
 var CanvasElement = /** @class */ (function () {
-    function CanvasElement(rectsContainer, marksContainer, key, zoomLevel, readOnly, dom) {
+    function CanvasElement(rectsContainer, marksContainer, key, zoomLevel, readOnly, dom, isTouchUIEnabled) {
         this.rectsContainer = rectsContainer;
         this.marksContainer = marksContainer;
         this.key = key;
         this.zoomLevel = zoomLevel;
         this.readOnly = readOnly;
         this.dom = dom;
+        this.isTouchUIEnabled = isTouchUIEnabled;
         this.elements = {};
         this.updatedElements = {};
     }
@@ -18855,19 +18815,19 @@ var CanvasElement = /** @class */ (function () {
         var hasCornerMarks = allowResizeHorizontally || allowResizeVertically;
         if (hasCornerMarks)
             this.drawSelectionMark(0, new point_1.Point(rect.x, rect.y), CanvasSelectionManager.selectionMarkSize, Event_1.MouseEventElementType.ShapeResizeBox, Event_1.ResizeEventSource.ResizeBox_NW, exports.SELECTION_ELEMENT_CLASSNAMES.SELECTION_MARK);
-        if (hasNSMarks && !browser_1.Browser.TouchUI)
+        if (hasNSMarks && !this.isTouchUIEnabled)
             this.drawSelectionMark(1, new point_1.Point(rect.x + rect.width / 2, rect.y), CanvasSelectionManager.selectionMarkSize, Event_1.MouseEventElementType.ShapeResizeBox, Event_1.ResizeEventSource.ResizeBox_N, exports.SELECTION_ELEMENT_CLASSNAMES.SELECTION_MARK);
         if (hasCornerMarks)
             this.drawSelectionMark(2, new point_1.Point(rect.right, rect.y), CanvasSelectionManager.selectionMarkSize, Event_1.MouseEventElementType.ShapeResizeBox, Event_1.ResizeEventSource.ResizeBox_NE, exports.SELECTION_ELEMENT_CLASSNAMES.SELECTION_MARK);
-        if (hasEWMarks && !browser_1.Browser.TouchUI)
+        if (hasEWMarks && !this.isTouchUIEnabled)
             this.drawSelectionMark(3, new point_1.Point(rect.right, rect.y + rect.height / 2), CanvasSelectionManager.selectionMarkSize, Event_1.MouseEventElementType.ShapeResizeBox, Event_1.ResizeEventSource.ResizeBox_E, exports.SELECTION_ELEMENT_CLASSNAMES.SELECTION_MARK);
         if (hasCornerMarks)
             this.drawSelectionMark(4, new point_1.Point(rect.right, rect.bottom), CanvasSelectionManager.selectionMarkSize, Event_1.MouseEventElementType.ShapeResizeBox, Event_1.ResizeEventSource.ResizeBox_SE, exports.SELECTION_ELEMENT_CLASSNAMES.SELECTION_MARK);
-        if (hasNSMarks && !browser_1.Browser.TouchUI)
+        if (hasNSMarks && !this.isTouchUIEnabled)
             this.drawSelectionMark(5, new point_1.Point(rect.x + rect.width / 2, rect.bottom), CanvasSelectionManager.selectionMarkSize, Event_1.MouseEventElementType.ShapeResizeBox, Event_1.ResizeEventSource.ResizeBox_S, exports.SELECTION_ELEMENT_CLASSNAMES.SELECTION_MARK);
         if (hasCornerMarks)
             this.drawSelectionMark(6, new point_1.Point(rect.x, rect.bottom), CanvasSelectionManager.selectionMarkSize, Event_1.MouseEventElementType.ShapeResizeBox, Event_1.ResizeEventSource.ResizeBox_SW, exports.SELECTION_ELEMENT_CLASSNAMES.SELECTION_MARK);
-        if (hasEWMarks && !browser_1.Browser.TouchUI)
+        if (hasEWMarks && !this.isTouchUIEnabled)
             this.drawSelectionMark(7, new point_1.Point(rect.x, rect.y + rect.height / 2), CanvasSelectionManager.selectionMarkSize, Event_1.MouseEventElementType.ShapeResizeBox, Event_1.ResizeEventSource.ResizeBox_W, exports.SELECTION_ELEMENT_CLASSNAMES.SELECTION_MARK);
     };
     CanvasElement.prototype.drawSelectionMark = function (index, point, size, type, value, className) {
@@ -18896,8 +18856,8 @@ var CanvasElement = /** @class */ (function () {
 }());
 var ItemSelectionElement = /** @class */ (function (_super) {
     __extends(ItemSelectionElement, _super);
-    function ItemSelectionElement(rectsContainer, marksContainer, key, zoomLevel, readOnly, dom, isLocked, rectangle) {
-        var _this = _super.call(this, rectsContainer, marksContainer, key, zoomLevel, readOnly, dom) || this;
+    function ItemSelectionElement(rectsContainer, marksContainer, key, zoomLevel, readOnly, dom, isTouchUIEnabled, isLocked, rectangle) {
+        var _this = _super.call(this, rectsContainer, marksContainer, key, zoomLevel, readOnly, dom, isTouchUIEnabled) || this;
         _this.isLocked = isLocked;
         _this.rectangle = rectangle;
         return _this;
@@ -18924,8 +18884,8 @@ var ItemSelectionElement = /** @class */ (function (_super) {
 }(CanvasElement));
 var MultipleSelectionElement = /** @class */ (function (_super) {
     __extends(MultipleSelectionElement, _super);
-    function MultipleSelectionElement(rectsContainer, marksContainer, zoomLevel, readOnly, dom) {
-        var _this = _super.call(this, rectsContainer, marksContainer, "-1", zoomLevel, readOnly, dom) || this;
+    function MultipleSelectionElement(rectsContainer, marksContainer, zoomLevel, readOnly, dom, isTouchUIEnabled) {
+        var _this = _super.call(this, rectsContainer, marksContainer, "-1", zoomLevel, readOnly, dom, isTouchUIEnabled) || this;
         _this.rectangles = {};
         return _this;
     }
@@ -18957,8 +18917,8 @@ var MultipleSelectionElement = /** @class */ (function (_super) {
 }(CanvasElement));
 var ShapeSelectionElement = /** @class */ (function (_super) {
     __extends(ShapeSelectionElement, _super);
-    function ShapeSelectionElement(rectsContainer, marksContainer, zoomLevel, readOnly, dom, key, isLocked, rectangle, style, allowResizeHorizontally, allowResizeVertically, shapeParameterPoints) {
-        var _this = _super.call(this, rectsContainer, marksContainer, key, zoomLevel, readOnly, dom, isLocked, rectangle) || this;
+    function ShapeSelectionElement(rectsContainer, marksContainer, zoomLevel, readOnly, dom, isTouchUIEnabled, key, isLocked, rectangle, style, allowResizeHorizontally, allowResizeVertically, shapeParameterPoints) {
+        var _this = _super.call(this, rectsContainer, marksContainer, key, zoomLevel, readOnly, dom, isTouchUIEnabled, isLocked, rectangle) || this;
         _this.style = style;
         _this.allowResizeHorizontally = allowResizeHorizontally;
         _this.allowResizeVertically = allowResizeVertically;
@@ -19015,8 +18975,8 @@ var ShapeSelectionElement = /** @class */ (function (_super) {
 }(ItemSelectionElement));
 var ConnectorSelectionElement = /** @class */ (function (_super) {
     __extends(ConnectorSelectionElement, _super);
-    function ConnectorSelectionElement(rectsContainer, marksContainer, zoomLevel, readOnly, dom, key, isLocked, rectangle, renderPoints, style, styleText, enableText, texts, points, lineType) {
-        var _this = _super.call(this, rectsContainer, marksContainer, key, zoomLevel, readOnly, dom, isLocked, rectangle) || this;
+    function ConnectorSelectionElement(rectsContainer, marksContainer, zoomLevel, readOnly, dom, isTouchUIEnabled, key, isLocked, rectangle, renderPoints, style, styleText, enableText, texts, points, lineType) {
+        var _this = _super.call(this, rectsContainer, marksContainer, key, zoomLevel, readOnly, dom, isTouchUIEnabled, isLocked, rectangle) || this;
         _this.renderPoints = renderPoints;
         _this.style = style;
         _this.styleText = styleText;
@@ -19051,47 +19011,55 @@ var ConnectorSelectionElement = /** @class */ (function (_super) {
         });
     };
     ConnectorSelectionElement.prototype.drawUnlockedSelection = function () {
-        this.drawConnectorSelection(this.isMultipleSelection ? exports.SELECTION_ELEMENT_CLASSNAMES.CONNECTOR_MULTI_SELECTION : exports.SELECTION_ELEMENT_CLASSNAMES.CONNECTOR_SELECTION);
+        this.drawConnectorSelection();
         if (!this.isMultipleSelection && !this.readOnly)
             this.drawConnectorSelectionMarks();
     };
-    ConnectorSelectionElement.prototype.drawConnectorSelection = function (className) {
-        var _a;
-        var texts = this.texts;
-        var textIndex = 0;
-        var txtAlign = this.styleText.getAlignment();
+    ConnectorSelectionElement.prototype.drawConnectorSelection = function () {
         var commands = [];
         var commandsWB = [];
-        var points = this.renderPoints;
+        var className = this.isMultipleSelection ? exports.SELECTION_ELEMENT_CLASSNAMES.CONNECTOR_MULTI_SELECTION : exports.SELECTION_ELEMENT_CLASSNAMES.CONNECTOR_SELECTION;
+        this.populateSelectionPrimitiveCommands(commands, commandsWB);
+        var primitive = new PathPrimitive_1.PathPrimitive(commands.concat(commandsWB.reverse()), Style_1.StrokeStyle.default1pxInstance, className);
+        this.getOrCreateElement("CS", primitive, this.rectsContainer);
+    };
+    ConnectorSelectionElement.prototype.populateSelectionPrimitiveCommands = function (commands, commandsWB) {
+        var texts = this.texts;
+        var txtAlign = this.styleText.getAlignment();
+        var points = this.createNotSkippedRenderPoints();
         var zoomLevel = this.zoomLevel;
+        var strokeWidthPx = this.style.strokeWidthPx;
+        var selectionOffset = this.getSelectionOffset(strokeWidthPx);
+        var strokeWidthPxIsEvenOdd = strokeWidthPx % 2 === 0;
         var prevPt = points[0];
+        var textIndex = 0;
         var offset;
-        var r;
+        var distance;
         var nextOffset;
-        var nextR;
+        var nextDistance;
         for (var i = 1, pt = void 0; pt = points[i]; i++) {
             var nextPt = points[i + 1];
             if (offset === undefined) {
-                r = metrics_1.Metrics.euclideanDistance(prevPt, pt);
-                if (r === 0)
+                distance = metrics_1.Metrics.euclideanDistance(prevPt, pt);
+                if (math_1.MathUtils.numberCloseTo(distance, 0))
                     continue;
-                offset = this.getSelectionOffsetPoints(prevPt, pt, r);
+                offset = Utils_2.GeometryUtils.getSelectionOffsetPoint(prevPt, pt, distance).multiply(selectionOffset, selectionOffset);
             }
             if (nextPt) {
-                nextR = metrics_1.Metrics.euclideanDistance(pt, nextPt);
-                if (nextR === 0)
+                nextDistance = metrics_1.Metrics.euclideanDistance(pt, nextPt);
+                if (math_1.MathUtils.numberCloseTo(nextDistance, 0))
                     continue;
-                nextOffset = this.getSelectionOffsetPoints(pt, nextPt, nextR);
+                nextOffset = Utils_2.GeometryUtils.getSelectionOffsetPoint(pt, nextPt, nextDistance).multiply(selectionOffset, selectionOffset);
             }
             var offsetX = offset.x;
             var offsetY = offset.y;
-            var offsetXNegative = -offset.x;
-            var offsetYNegative = -offset.y;
+            var offsetXNegative = -offsetX;
+            var offsetYNegative = -offsetY;
             var nextOffsetX = nextOffset && nextOffset.x;
             var nextOffsetY = nextOffset && nextOffset.y;
             var nextOffsetXNegative = nextOffset && -nextOffset.x;
             var nextOffsetYNegative = nextOffset && -nextOffset.y;
-            if (this.style.strokeWidthPx % 2 === 0) {
+            if (strokeWidthPxIsEvenOdd) {
                 if (offsetXNegative > 0)
                     offsetXNegative -= CanvasSelectionManager.evenOddSelectionCorrection;
                 else if (offsetX > 0)
@@ -19111,9 +19079,8 @@ var ConnectorSelectionElement = /** @class */ (function (_super) {
             }
             while (texts[textIndex] && texts[textIndex].pointIndex <= i) {
                 var text = texts[textIndex];
-                var cos = (pt.x - prevPt.x) / r;
-                var sin = (pt.y - prevPt.y) / r;
-                var textPts = this.getTextStartEndPoints(sin, cos, text.point, text.text, txtAlign);
+                var size = this.getConnectorSelectionTextSize(text.text, selectionOffset);
+                var textPts = Utils_2.GeometryUtils.getSelectionTextStartEndPoints(prevPt, pt, distance, text.point, size, txtAlign);
                 if (texts[textIndex].pointIndex < i) {
                     prevPt = textPts[1];
                     commands.push(PathPrimitive_1.PathPrimitiveMoveToCommand.fromPoint(prevPt.clone().offset(offsetX, offsetY).multiply(zoomLevel, zoomLevel)));
@@ -19137,20 +19104,9 @@ var ConnectorSelectionElement = /** @class */ (function (_super) {
                 commandsWB.push(PathPrimitive_1.PathPrimitiveLineToCommand.fromPoint(prevPt.clone().offset(offsetXNegative, offsetYNegative).multiply(zoomLevel, zoomLevel)));
             }
             if (nextPt) {
-                var a1 = pt.y - prevPt.y;
-                var b1 = prevPt.x - pt.x;
-                var c1 = a1 * (prevPt.x + offsetX) + b1 * (prevPt.y + offsetY);
-                var c1wb = a1 * (prevPt.x + offsetXNegative) + b1 * (prevPt.y + offsetYNegative);
-                var a2 = nextPt.y - pt.y;
-                var b2 = pt.x - nextPt.x;
-                var c2 = a2 * (pt.x + nextOffsetX) + b2 * (pt.y + nextOffsetY);
-                var c2wb = a2 * (pt.x + nextOffsetXNegative) + b2 * (pt.y + nextOffsetYNegative);
-                var det = a1 * b2 - a2 * b1;
-                if (det !== 0) {
-                    commands.push(new PathPrimitive_1.PathPrimitiveLineToCommand(zoomLevel * (b2 * c1 - b1 * c2) / det, zoomLevel * (a1 * c2 - a2 * c1) / det));
-                    commandsWB.push(new PathPrimitive_1.PathPrimitiveLineToCommand(zoomLevel * (b2 * c1wb - b1 * c2wb) / det, zoomLevel * (a1 * c2wb - a2 * c1wb) / det));
-                }
-                _a = [nextOffset, nextR], offset = _a[0], r = _a[1];
+                Utils_2.GeometryUtils.addSelectedLinesTo(prevPt, pt, nextPt, offsetX, offsetY, offsetXNegative, offsetYNegative, nextOffsetX, nextOffsetY, nextOffsetXNegative, nextOffsetYNegative, function (x, y) { return commands.push(new PathPrimitive_1.PathPrimitiveLineToCommand(x * zoomLevel, y * zoomLevel)); }, function (x, y) { return commandsWB.push(new PathPrimitive_1.PathPrimitiveLineToCommand(x * zoomLevel, y * zoomLevel)); });
+                offset = nextOffset;
+                distance = nextDistance;
             }
             else {
                 commands.push(PathPrimitive_1.PathPrimitiveLineToCommand.fromPoint(pt.clone().offset(offsetX, offsetY).multiply(zoomLevel, zoomLevel)));
@@ -19158,28 +19114,23 @@ var ConnectorSelectionElement = /** @class */ (function (_super) {
             }
             prevPt = pt;
         }
-        var primitive = new PathPrimitive_1.PathPrimitive(commands.concat(commandsWB.reverse()), Style_1.StrokeStyle.default1pxInstance, className);
-        this.getOrCreateElement("CS", primitive, this.rectsContainer);
     };
-    ConnectorSelectionElement.prototype.getSelectionOffset = function () {
-        return CanvasSelectionManager.selectionOffset + unit_converter_1.UnitConverter.pixelsToTwips(Math.round(this.style.strokeWidthPx / 2) + (this.style.strokeWidthPx + 1) % 2);
-    };
-    ConnectorSelectionElement.prototype.getSelectionOffsetPoints = function (pt1, pt2, r) {
-        return new point_1.Point(this.getSelectionOffset() / r * (pt1.y - pt2.y), this.getSelectionOffset() / r * (pt2.x - pt1.x));
-    };
-    ConnectorSelectionElement.prototype.getTextStartEndPoints = function (sin, cos, center, text, align) {
-        var size = this.dom.measurer.measureTextLine(text, this.styleText, ITextMeasurer_1.TextOwner.Connector)
-            .applyConverter(unit_converter_1.UnitConverter.pixelsToTwips)
-            .clone().offset(this.getSelectionOffset(), this.getSelectionOffset()).nonNegativeSize();
-        var width = size.width * cos + size.height * sin;
-        switch (align) {
-            case Style_1.TextAlignment.Left:
-                return [center, new point_1.Point(center.x + cos * width, center.y + sin * width)];
-            case Style_1.TextAlignment.Right:
-                return [new point_1.Point(center.x - cos * width, center.y - sin * width), center];
-            default:
-                return [new point_1.Point(center.x - 0.5 * cos * width, center.y - 0.5 * sin * width), new point_1.Point(center.x + 0.5 * cos * width, center.y + 0.5 * sin * width)];
+    ConnectorSelectionElement.prototype.createNotSkippedRenderPoints = function () {
+        var clonedRenderPoints = this.renderPoints.map(function (p) { return p.clone(); });
+        if (this.lineType === ConnectorProperties_1.ConnectorLineOption.Straight) {
+            ModelUtils_1.ModelUtils.removeUnnecessaryRenderPoints(clonedRenderPoints);
+            return clonedRenderPoints.filter(function (p) { return !p.skipped; });
         }
+        ModelUtils_1.ModelUtils.removeUnnecessaryRightAngleRenderPoints(clonedRenderPoints);
+        return clonedRenderPoints.filter(function (p) { return !p.skipped; });
+    };
+    ConnectorSelectionElement.prototype.getSelectionOffset = function (strokeWidthPx) {
+        return CanvasSelectionManager.selectionOffset + unit_converter_1.UnitConverter.pixelsToTwips(Math.round(strokeWidthPx / 2) + (strokeWidthPx + 1) % 2);
+    };
+    ConnectorSelectionElement.prototype.getConnectorSelectionTextSize = function (text, selectionOffset) {
+        return this.dom.measurer.measureTextLine(text, this.styleText, ITextMeasurer_1.TextOwner.Connector)
+            .applyConverter(unit_converter_1.UnitConverter.pixelsToTwips)
+            .clone().offset(selectionOffset, selectionOffset).nonNegativeSize();
     };
     ConnectorSelectionElement.prototype.drawConnectorSelectionMarks = function () {
         var _this = this;
@@ -19214,14 +19165,23 @@ var ConnectorSelectionElement = /** @class */ (function (_super) {
             prevPtIndex = index;
         });
     };
-    ConnectorSelectionElement.prototype.canDrawConnectorSideMark = function (point1, point2) {
+    ConnectorSelectionElement.prototype.canDrawConnectorSideMark = function (current, prev) {
         if (this.lineType === ConnectorProperties_1.ConnectorLineOption.Straight) {
             var minSize = CanvasSelectionManager.selectionMarkSize + CanvasSelectionManager.connectorSideMarkSize;
-            return Utils_2.GeometryUtils.getDistance(point1, point2) > minSize;
+            return metrics_1.Metrics.euclideanDistance(current, prev) > minSize;
         }
-        if (this.lineType === ConnectorProperties_1.ConnectorLineOption.Orthogonal)
-            return ((point1.x - point2.x === 0 || Math.abs(point1.x - point2.x) > Connector_1.Connector.minOffset) &&
-                (point1.y - point2.y === 0 || Math.abs(point1.y - point2.y) > Connector_1.Connector.minOffset));
+        if (this.lineType === ConnectorProperties_1.ConnectorLineOption.Orthogonal) {
+            var hasBeginPoint = prev.pointIndex === 0;
+            var hasEndPoint = Utils_2.GeometryUtils.areDuplicatedPoints(this.points[this.points.length - 1], current);
+            if (hasBeginPoint && hasEndPoint)
+                return metrics_1.Metrics.euclideanDistance(current, prev) > 2 * Connector_1.Connector.minOffset;
+            if (!hasBeginPoint && hasEndPoint || hasBeginPoint && !hasEndPoint)
+                return metrics_1.Metrics.euclideanDistance(current, prev) > Connector_1.Connector.minOffset;
+            var minSize = CanvasSelectionManager.selectionMarkSize + CanvasSelectionManager.connectorSideMarkSize;
+            return metrics_1.Metrics.euclideanDistance(current, prev) > minSize;
+            // return ((MathUtils.numberCloseTo(point1.x, point2.x) || Math.abs(point1.x - point2.x) > Connector.minOffset) &&
+            //     (point1.y - point2.y === 0 || Math.abs(point1.y - point2.y) > Connector.minOffset));
+        }
         return false;
     };
     return ConnectorSelectionElement;
@@ -19229,7 +19189,7 @@ var ConnectorSelectionElement = /** @class */ (function (_super) {
 
 
 /***/ }),
-/* 161 */
+/* 159 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19237,20 +19197,20 @@ var ConnectorSelectionElement = /** @class */ (function (_super) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DiagramDraggingEvent = exports.ToolboxDraggingObject = exports.DragState = exports.Toolbox = exports.TOUCH_DRAGTIMEOUT_MS = void 0;
 var Utils_1 = __webpack_require__(3);
-var Data_1 = __webpack_require__(45);
+var Data_1 = __webpack_require__(46);
 var dom_1 = __webpack_require__(23);
 var CanvasItemsManager_1 = __webpack_require__(77);
-var browser_1 = __webpack_require__(17);
 var TOOLBOX_CSSCLASS = "dxdi-toolbox";
 var DRAG_CAPTURED_CSSCLASS = "dxdi-tb-drag-captured";
 exports.TOUCH_DRAGTIMEOUT_MS = 800;
 var Toolbox = /** @class */ (function () {
-    function Toolbox(parent, readOnly, allowDragging, shapeDescriptionManager, shapeTypes, getAllowedShapeTypes) {
+    function Toolbox(parent, readOnly, allowDragging, shapeDescriptionManager, shapeTypes, getAllowedShapeTypes, isTouchUIEnabled) {
         this.readOnly = readOnly;
         this.allowDragging = allowDragging;
         this.shapeDescriptionManager = shapeDescriptionManager;
         this.shapeTypes = shapeTypes;
         this.getAllowedShapeTypes = getAllowedShapeTypes;
+        this.isTouchUIEnabled = isTouchUIEnabled;
         this.dragPrepareTimeout = -1;
         this.onDragOperation = new Utils_1.EventDispatcher();
         this.onClickOperation = new Utils_1.EventDispatcher();
@@ -19270,7 +19230,7 @@ var Toolbox = /** @class */ (function () {
         var element = document.createElement("div");
         element.setAttribute("class", TOOLBOX_CSSCLASS);
         element.draggable = true;
-        if (browser_1.Browser.TouchUI)
+        if (this.isTouchUIEnabled)
             element.tabIndex = 0;
         parent.appendChild(element);
         return element;
@@ -19419,6 +19379,258 @@ exports.DiagramDraggingEvent = DiagramDraggingEvent;
 
 
 /***/ }),
+/* 160 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.RightAngleConnectorRoutingMathOperations = void 0;
+var segment_1 = __webpack_require__(33);
+var math_1 = __webpack_require__(32);
+var AStarMetrics_1 = __webpack_require__(161);
+var Utils_1 = __webpack_require__(3);
+var DiagramItem_1 = __webpack_require__(9);
+var RightAngleConnectorRoutingMathOperations = /** @class */ (function () {
+    function RightAngleConnectorRoutingMathOperations() {
+    }
+    RightAngleConnectorRoutingMathOperations.createUnionSegments = function (segments, shouldCreateSegment) {
+        var result = [];
+        var startRenderPoint = segments[0].startPoint;
+        var endRenderPoint = segments[0].endPoint;
+        for (var i = 1; i < segments.length; i++) {
+            var currentSegment = segments[i];
+            if (shouldCreateSegment(endRenderPoint, currentSegment.startPoint)) {
+                result.push(new segment_1.Segment(startRenderPoint.clone(), endRenderPoint.clone()));
+                startRenderPoint = currentSegment.startPoint;
+            }
+            endRenderPoint = currentSegment.endPoint;
+        }
+        result.push(new segment_1.Segment(startRenderPoint, endRenderPoint));
+        return result;
+    };
+    RightAngleConnectorRoutingMathOperations.unionPoints = function (points) {
+        var index = 0;
+        while (index < points.length - 2)
+            if (Utils_1.GeometryUtils.isCorner(points[index], points[index + 1], points[index + 2]))
+                index++;
+            else {
+                points.splice(index + 1, 1);
+                index = Math.max(0, index - 1);
+            }
+    };
+    RightAngleConnectorRoutingMathOperations.getTurnDirection = function (angle) {
+        if (math_1.MathUtils.numberCloseTo(angle, 0))
+            return AStarMetrics_1.RightAngleTurnDirection.Straight;
+        if (math_1.MathUtils.numberCloseTo(angle, Math.PI))
+            return AStarMetrics_1.RightAngleTurnDirection.Backwards;
+        return angle < Math.PI ? AStarMetrics_1.RightAngleTurnDirection.Left : AStarMetrics_1.RightAngleTurnDirection.Right;
+    };
+    RightAngleConnectorRoutingMathOperations.isSegmentNormal = function (segment, isHorizontal) {
+        return isHorizontal ? math_1.MathUtils.numberCloseTo(segment.startPoint.y, segment.endPoint.y) : math_1.MathUtils.numberCloseTo(segment.startPoint.x, segment.endPoint.x);
+    };
+    RightAngleConnectorRoutingMathOperations.isConnectionRectanleLineIntersected = function (rect, segment, side, excludeBeginPoint, excludeEndPoint, createPoint) {
+        switch (side) {
+            case DiagramItem_1.ConnectionPointSide.North:
+                return Utils_1.GeometryUtils.isLineIntersected(createPoint(rect.x, rect.y), createPoint(rect.right, rect.y), segment, excludeBeginPoint, excludeEndPoint);
+            case DiagramItem_1.ConnectionPointSide.South:
+                return Utils_1.GeometryUtils.isLineIntersected(createPoint(rect.right, rect.bottom), createPoint(rect.x, rect.bottom), segment, excludeBeginPoint, excludeEndPoint);
+            case DiagramItem_1.ConnectionPointSide.West:
+                return Utils_1.GeometryUtils.isLineIntersected(createPoint(rect.x, rect.y), createPoint(rect.x, rect.bottom), segment, excludeBeginPoint, excludeEndPoint);
+            case DiagramItem_1.ConnectionPointSide.East:
+                return Utils_1.GeometryUtils.isLineIntersected(createPoint(rect.right, rect.y), createPoint(rect.right, rect.bottom), segment, excludeBeginPoint, excludeEndPoint);
+            default:
+                return false;
+        }
+    };
+    RightAngleConnectorRoutingMathOperations.createBeginConnectionSegment = function (beginConnectionSide, beginPoint, offset, createPoint) {
+        switch (beginConnectionSide) {
+            case DiagramItem_1.ConnectionPointSide.North:
+                return new segment_1.Segment(beginPoint, createPoint(beginPoint.x, beginPoint.y - offset));
+            case DiagramItem_1.ConnectionPointSide.South:
+                return new segment_1.Segment(beginPoint, createPoint(beginPoint.x, beginPoint.y + offset));
+            case DiagramItem_1.ConnectionPointSide.West:
+                return new segment_1.Segment(beginPoint, createPoint(beginPoint.x - offset, beginPoint.y));
+            case DiagramItem_1.ConnectionPointSide.East:
+                return new segment_1.Segment(beginPoint, createPoint(beginPoint.x + offset, beginPoint.y));
+            default:
+                return beginPoint;
+        }
+    };
+    RightAngleConnectorRoutingMathOperations.createEndConnectionSegment = function (endConnectionSide, endPoint, offset, createPoint) {
+        switch (endConnectionSide) {
+            case DiagramItem_1.ConnectionPointSide.North:
+                return new segment_1.Segment(createPoint(endPoint.x, endPoint.y - offset), endPoint);
+            case DiagramItem_1.ConnectionPointSide.South:
+                return new segment_1.Segment(createPoint(endPoint.x, endPoint.y + offset), endPoint);
+            case DiagramItem_1.ConnectionPointSide.West:
+                return new segment_1.Segment(createPoint(endPoint.x - offset, endPoint.y), endPoint);
+            case DiagramItem_1.ConnectionPointSide.East:
+                return new segment_1.Segment(createPoint(endPoint.x + offset, endPoint.y), endPoint);
+            default:
+                return endPoint;
+        }
+    };
+    return RightAngleConnectorRoutingMathOperations;
+}());
+exports.RightAngleConnectorRoutingMathOperations = RightAngleConnectorRoutingMathOperations;
+
+
+/***/ }),
+/* 161 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.IntersectedShapeZone = exports.AStarMetrics = exports.IntersectedShapesMetrics = exports.TurnDirectionMetrics = exports.IntersectedShapeMetrics = exports.RightAngleTurnDirection = void 0;
+var point_1 = __webpack_require__(1);
+var metrics_1 = __webpack_require__(35);
+var RightAngleTurnDirection;
+(function (RightAngleTurnDirection) {
+    RightAngleTurnDirection[RightAngleTurnDirection["Straight"] = 0] = "Straight";
+    RightAngleTurnDirection[RightAngleTurnDirection["Left"] = 1] = "Left";
+    RightAngleTurnDirection[RightAngleTurnDirection["Right"] = 2] = "Right";
+    RightAngleTurnDirection[RightAngleTurnDirection["Backwards"] = 3] = "Backwards";
+})(RightAngleTurnDirection = exports.RightAngleTurnDirection || (exports.RightAngleTurnDirection = {}));
+var IntersectedShapeMetrics = /** @class */ (function () {
+    function IntersectedShapeMetrics(description, shapeMargin) {
+        this.description = description;
+        this.shapeMargin = shapeMargin;
+    }
+    IntersectedShapeMetrics.prototype.penalty = function (oldValue, distance, position, item) {
+        var rectangle = item.rectangle;
+        if (rectangle.containsPoint(position))
+            return oldValue + this.description.shape * distance;
+        var relativePenalty = this.createRelativeMarginPenalty(position, rectangle, this.shapeMargin);
+        if (relativePenalty > 0)
+            return oldValue + this.description.margin * relativePenalty * distance;
+        return oldValue;
+    };
+    IntersectedShapeMetrics.prototype.createRelativeMarginPenalty = function (point, rectangle, margin) {
+        var isTopPosition = this.isTopPosition(point, rectangle, margin);
+        var isLeftPosition = this.isLeftPosition(point, rectangle, margin);
+        var isBottomPosition = this.isBottomPosition(point, rectangle, margin);
+        var isRightPosition = this.isRightPosition(point, rectangle, margin);
+        if (isTopPosition) {
+            if (isLeftPosition) {
+                var extendedRectangle = rectangle.clone().inflate(margin);
+                var extendedTopLeft = extendedRectangle.createPosition();
+                var rectangleTopLeft = rectangle.createPosition();
+                var topLeftDistance = metrics_1.Metrics.euclideanDistance(rectangleTopLeft, extendedTopLeft);
+                var currentDistance = metrics_1.Metrics.euclideanDistance(rectangleTopLeft, point);
+                return 1 - currentDistance / topLeftDistance;
+            }
+            if (isRightPosition) {
+                var extendedRectangle = rectangle.clone().inflate(margin);
+                var extendedTopRight = new point_1.Point(extendedRectangle.right, extendedRectangle.y);
+                var rectangleTopRight = new point_1.Point(rectangle.right, rectangle.y);
+                var topRightDistance = metrics_1.Metrics.euclideanDistance(rectangleTopRight, extendedTopRight);
+                var currentDistance = metrics_1.Metrics.euclideanDistance(rectangleTopRight, point);
+                return 1 - currentDistance / topRightDistance;
+            }
+            return 1 - (rectangle.y - point.y) / margin;
+        }
+        if (isBottomPosition) {
+            if (isLeftPosition) {
+                var extendedRectangle = rectangle.clone().inflate(margin);
+                var extendedBottomLeft = new point_1.Point(extendedRectangle.x, extendedRectangle.bottom);
+                var rectangleBottomLeft = new point_1.Point(rectangle.x, rectangle.bottom);
+                var bottomLeftDistance = metrics_1.Metrics.euclideanDistance(rectangleBottomLeft, extendedBottomLeft);
+                var currentDistance = metrics_1.Metrics.euclideanDistance(rectangleBottomLeft, point);
+                return 1 - currentDistance / bottomLeftDistance;
+            }
+            if (isRightPosition) {
+                var extendedRectangle = rectangle.clone().inflate(margin);
+                var extendedBottomRight = new point_1.Point(extendedRectangle.right, extendedRectangle.bottom);
+                var rectangleBottomRight = new point_1.Point(rectangle.right, rectangle.bottom);
+                var bottomRightDistance = metrics_1.Metrics.euclideanDistance(rectangleBottomRight, extendedBottomRight);
+                var currentDistance = metrics_1.Metrics.euclideanDistance(rectangleBottomRight, point);
+                return 1 - currentDistance / bottomRightDistance;
+            }
+            return 1 - (point.y - rectangle.bottom) / margin;
+        }
+        if (isLeftPosition)
+            return 1 - (rectangle.x - point.x) / margin;
+        if (isRightPosition)
+            return 1 - (point.x - rectangle.right) / margin;
+        return 0;
+    };
+    IntersectedShapeMetrics.prototype.isTopPosition = function (point, rectangle, margin) {
+        return point.x > rectangle.x - margin && point.x < rectangle.right + margin &&
+            point.y > rectangle.y - margin && point.y < rectangle.y;
+    };
+    IntersectedShapeMetrics.prototype.isBottomPosition = function (point, rectangle, margin) {
+        return point.x > rectangle.x - margin && point.x < rectangle.right + margin &&
+            point.y > rectangle.bottom && point.y < rectangle.bottom + margin;
+    };
+    IntersectedShapeMetrics.prototype.isLeftPosition = function (point, rectangle, margin) {
+        return point.x > rectangle.x - margin && point.x < rectangle.x &&
+            point.y > rectangle.y - margin && point.y < rectangle.bottom + margin;
+    };
+    IntersectedShapeMetrics.prototype.isRightPosition = function (point, rectangle, margin) {
+        return point.x > rectangle.right && point.x < rectangle.right + margin &&
+            point.y > rectangle.y - margin && point.y < rectangle.bottom + margin;
+    };
+    return IntersectedShapeMetrics;
+}());
+exports.IntersectedShapeMetrics = IntersectedShapeMetrics;
+var TurnDirectionMetrics = /** @class */ (function () {
+    function TurnDirectionMetrics(description) {
+        this.description = description;
+    }
+    TurnDirectionMetrics.prototype.penalty = function (oldValue, turnDirection) {
+        switch (turnDirection) {
+            case RightAngleTurnDirection.Backwards: return oldValue * this.description.turnBack;
+            case RightAngleTurnDirection.Left: return oldValue * this.description.turnLeft;
+            case RightAngleTurnDirection.Right: return oldValue * this.description.turnRight;
+        }
+        return oldValue;
+    };
+    return TurnDirectionMetrics;
+}());
+exports.TurnDirectionMetrics = TurnDirectionMetrics;
+var IntersectedShapesMetrics = /** @class */ (function () {
+    function IntersectedShapesMetrics(shapeMetrics) {
+        this.shapeMetrics = shapeMetrics;
+    }
+    IntersectedShapesMetrics.prototype.penalty = function (oldValue, distance, position, intersectedItems) {
+        var _this = this;
+        if (!intersectedItems || !intersectedItems.length)
+            return oldValue;
+        var result = oldValue;
+        intersectedItems.forEach(function (item) { return result = _this.shapeMetrics.penalty(result, distance, position, item); });
+        return result;
+    };
+    return IntersectedShapesMetrics;
+}());
+exports.IntersectedShapesMetrics = IntersectedShapesMetrics;
+var AStarMetrics = /** @class */ (function () {
+    function AStarMetrics(turnDirectionMetrics, shapesMetrics) {
+        this.turnDirectionMetrics = turnDirectionMetrics;
+        this.shapesMetrics = shapesMetrics;
+    }
+    AStarMetrics.prototype.distance = function (point1, point2) {
+        return metrics_1.Metrics.manhattanDistance(point1, point2);
+    };
+    AStarMetrics.prototype.penalty = function (distance, position, turnDirection, intersectedItems) {
+        var result = distance;
+        result = this.shapesMetrics.penalty(result, distance, position, intersectedItems);
+        result = this.turnDirectionMetrics.penalty(result, turnDirection);
+        return result;
+    };
+    return AStarMetrics;
+}());
+exports.AStarMetrics = AStarMetrics;
+var IntersectedShapeZone;
+(function (IntersectedShapeZone) {
+    IntersectedShapeZone[IntersectedShapeZone["None"] = 0] = "None";
+    IntersectedShapeZone[IntersectedShapeZone["Shape"] = 1] = "Shape";
+    IntersectedShapeZone[IntersectedShapeZone["Margin"] = 2] = "Margin";
+})(IntersectedShapeZone = exports.IntersectedShapeZone || (exports.IntersectedShapeZone = {}));
+
+
+/***/ }),
 /* 162 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -19439,7 +19651,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DeleteCommand = void 0;
-var ModelUtils_1 = __webpack_require__(5);
+var ModelUtils_1 = __webpack_require__(4);
 var SimpleCommandBase_1 = __webpack_require__(10);
 var DeleteCommand = /** @class */ (function (_super) {
     __extends(DeleteCommand, _super);
@@ -19526,7 +19738,7 @@ exports.Flag = Flag;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var list_1 = __webpack_require__(82);
-var search_1 = __webpack_require__(40);
+var search_1 = __webpack_require__(41);
 var fixed_1 = __webpack_require__(109);
 var collector_1 = __webpack_require__(169);
 var IntervalAlgorithms = (function () {
@@ -19693,7 +19905,7 @@ exports.IntervalAlgorithms = IntervalAlgorithms;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(56);
+var tslib_1 = __webpack_require__(57);
 var MinMax = (function () {
     function MinMax(minElement, maxElement) {
         this.minElement = minElement;
@@ -19791,7 +20003,7 @@ exports.Equals = Equals;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(56);
+var tslib_1 = __webpack_require__(57);
 var const_1 = __webpack_require__(168);
 var MutableInterval = (function (_super) {
     tslib_1.__extends(MutableInterval, _super);
@@ -19942,7 +20154,7 @@ exports.SparseIntervals = SparseIntervals;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(56);
+var tslib_1 = __webpack_require__(57);
 var iterator_1 = __webpack_require__(110);
 var SparseObjectsIterator = (function (_super) {
     tslib_1.__extends(SparseObjectsIterator, _super);
@@ -19982,7 +20194,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.TextFloodFilterPrimitive = exports.TextFilterPrimitive = void 0;
 var RenderHelper_1 = __webpack_require__(15);
 var FilterPrimitive_1 = __webpack_require__(111);
-var Model_1 = __webpack_require__(60);
+var Model_1 = __webpack_require__(61);
 var color_1 = __webpack_require__(22);
 var TextFilterPrimitive = /** @class */ (function (_super) {
     __extends(TextFilterPrimitive, _super);
@@ -20102,8 +20314,8 @@ exports.EncodeUtils = EncodeUtils;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var browser_1 = __webpack_require__(17);
-var common_1 = __webpack_require__(42);
+var browser_1 = __webpack_require__(20);
+var common_1 = __webpack_require__(43);
 var TouchUtils = (function () {
     function TouchUtils() {
     }
@@ -20117,23 +20329,16 @@ var TouchUtils = (function () {
         return true;
     };
     TouchUtils.isTouchEventName = function (eventName) {
-        return (browser_1.Browser.WebKitTouchUI || TouchUtils.hasTouchEventCore()) && (eventName.indexOf('touch') > -1 || eventName.indexOf('gesture') > -1);
+        return browser_1.Browser.WebKitTouchUI && (eventName.indexOf('touch') > -1 || eventName.indexOf('gesture') > -1);
     };
     TouchUtils.isTouchEvent = function (evt) {
-        return (browser_1.Browser.WebKitTouchUI || TouchUtils.hasTouchEventCore()) && common_1.isDefined(evt.changedTouches);
+        return browser_1.Browser.WebKitTouchUI && common_1.isDefined(evt.changedTouches);
     };
     TouchUtils.getEventX = function (evt) {
         return browser_1.Browser.IE ? evt.pageX : evt.changedTouches[0].pageX;
     };
     TouchUtils.getEventY = function (evt) {
         return browser_1.Browser.IE ? evt.pageY : evt.changedTouches[0].pageY;
-    };
-    TouchUtils.hasTouchEventCore = function () {
-        return !(window.PointerEvent && TouchUtils.hasMaxTouchPoints()) &&
-            (browser_1.Browser.WebKitTouchUI || browser_1.Browser.MSTouchUI) && (common_1.isDefined(window.TouchEvent) || ('ontouchstart' in window));
-    };
-    TouchUtils.hasMaxTouchPoints = function () {
-        return typeof navigator !== 'undefined' && ('maxTouchPoints' in navigator && navigator['maxTouchPoints'] > 0 || 'msMaxTouchPoints' in navigator && navigator['msMaxTouchPoints'] > 0);
     };
     TouchUtils.touchMouseDownEventName = browser_1.Browser.WebKitTouchUI ? 'touchstart' : (browser_1.Browser.Edge && browser_1.Browser.MSTouchUI && window.PointerEvent ? 'pointerdown' : 'mousedown');
     TouchUtils.touchMouseUpEventName = browser_1.Browser.WebKitTouchUI ? 'touchend' : (browser_1.Browser.Edge && browser_1.Browser.MSTouchUI && window.PointerEvent ? 'pointerup' : 'mouseup');
@@ -20216,9 +20421,9 @@ module.exports = {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var browser_1 = __webpack_require__(17);
-var base64_1 = __webpack_require__(84);
-var common_1 = __webpack_require__(42);
+var browser_1 = __webpack_require__(20);
+var base64_1 = __webpack_require__(83);
+var common_1 = __webpack_require__(43);
 var FileUtils = (function () {
     function FileUtils() {
     }
@@ -20431,7 +20636,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ConnectorPointsCalculator = void 0;
 var ConnectorPointsCalculatorBase_1 = __webpack_require__(114);
-var ConnectorRenderPoint_1 = __webpack_require__(28);
+var ConnectorRenderPoint_1 = __webpack_require__(29);
 var ConnectorPointsCalculator = /** @class */ (function (_super) {
     __extends(ConnectorPointsCalculator, _super);
     function ConnectorPointsCalculator() {
@@ -20474,8 +20679,8 @@ var ConnectorPointsOrthogonalSouthSideCalculator_1 = __webpack_require__(182);
 var ConnectorPointsOrthogonalNorthSideCalculator_1 = __webpack_require__(183);
 var ConnectorPointsOrthogonalEastSideCalculator_1 = __webpack_require__(184);
 var ConnectorPointsOrthogonalWestSideCalculator_1 = __webpack_require__(185);
-var ConnectorRenderPoint_1 = __webpack_require__(28);
-var RightAngleConnectorRoutingMathOperations_1 = __webpack_require__(63);
+var ConnectorRenderPoint_1 = __webpack_require__(29);
+var ModelUtils_1 = __webpack_require__(4);
 var ConnectorPointsOrthogonalCalculator = /** @class */ (function (_super) {
     __extends(ConnectorPointsOrthogonalCalculator, _super);
     function ConnectorPointsOrthogonalCalculator(connector) {
@@ -20500,7 +20705,7 @@ var ConnectorPointsOrthogonalCalculator = /** @class */ (function (_super) {
     });
     ConnectorPointsOrthogonalCalculator.prototype.getPoints = function () {
         var points = this.connector.points.map(function (pt, index) { return new ConnectorRenderPoint_1.ConnectorRenderPoint(pt.x, pt.y, index); });
-        RightAngleConnectorRoutingMathOperations_1.RightAngleConnectorRoutingMathOperations.removeOrSkipUnnecessaryPoints(points);
+        ModelUtils_1.ModelUtils.removeUnnecessaryRenderPoints(points);
         var beginIndex = 0;
         var endIndex = points.length - 1;
         var beginSide = this.getPointSide(points, 0);
@@ -20534,7 +20739,7 @@ var ConnectorPointsOrthogonalCalculator = /** @class */ (function (_super) {
             });
             this.addMiddlePoints(points, beginIndex, endIndex);
         }
-        RightAngleConnectorRoutingMathOperations_1.RightAngleConnectorRoutingMathOperations.removeOrSkipUnnecessaryPoints(points);
+        ModelUtils_1.ModelUtils.removeUnnecessaryRightAngleRenderPoints(points);
         return points;
     };
     ConnectorPointsOrthogonalCalculator.prototype.getSideCalculator = function (side) {
@@ -20654,8 +20859,8 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ConnectorPointsOrthogonalUndefinedSideCalculator = void 0;
-var ConnectorPointsOrthogonalSideCalculatorBase_1 = __webpack_require__(51);
-var ConnectorRenderPoint_1 = __webpack_require__(28);
+var ConnectorPointsOrthogonalSideCalculatorBase_1 = __webpack_require__(52);
+var ConnectorRenderPoint_1 = __webpack_require__(29);
 var ConnectorPointsOrthogonalUndefinedSideCalculator = /** @class */ (function (_super) {
     __extends(ConnectorPointsOrthogonalUndefinedSideCalculator, _super);
     function ConnectorPointsOrthogonalUndefinedSideCalculator(parent) {
@@ -20744,8 +20949,8 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ConnectorPointsOrthogonalSouthSideCalculator = void 0;
 var DiagramItem_1 = __webpack_require__(9);
-var ConnectorPointsOrthogonalSideCalculatorBase_1 = __webpack_require__(51);
-var ConnectorRenderPoint_1 = __webpack_require__(28);
+var ConnectorPointsOrthogonalSideCalculatorBase_1 = __webpack_require__(52);
+var ConnectorRenderPoint_1 = __webpack_require__(29);
 var ConnectorPointsOrthogonalSouthSideCalculator = /** @class */ (function (_super) {
     __extends(ConnectorPointsOrthogonalSouthSideCalculator, _super);
     function ConnectorPointsOrthogonalSouthSideCalculator(parent) {
@@ -20939,8 +21144,8 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ConnectorPointsOrthogonalNorthSideCalculator = void 0;
 var DiagramItem_1 = __webpack_require__(9);
-var ConnectorPointsOrthogonalSideCalculatorBase_1 = __webpack_require__(51);
-var ConnectorRenderPoint_1 = __webpack_require__(28);
+var ConnectorPointsOrthogonalSideCalculatorBase_1 = __webpack_require__(52);
+var ConnectorRenderPoint_1 = __webpack_require__(29);
 var ConnectorPointsOrthogonalNorthSideCalculator = /** @class */ (function (_super) {
     __extends(ConnectorPointsOrthogonalNorthSideCalculator, _super);
     function ConnectorPointsOrthogonalNorthSideCalculator(parent) {
@@ -21134,8 +21339,8 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ConnectorPointsOrthogonalEastSideCalculator = void 0;
 var DiagramItem_1 = __webpack_require__(9);
-var ConnectorPointsOrthogonalSideCalculatorBase_1 = __webpack_require__(51);
-var ConnectorRenderPoint_1 = __webpack_require__(28);
+var ConnectorPointsOrthogonalSideCalculatorBase_1 = __webpack_require__(52);
+var ConnectorRenderPoint_1 = __webpack_require__(29);
 var ConnectorPointsOrthogonalEastSideCalculator = /** @class */ (function (_super) {
     __extends(ConnectorPointsOrthogonalEastSideCalculator, _super);
     function ConnectorPointsOrthogonalEastSideCalculator(parent) {
@@ -21329,8 +21534,8 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ConnectorPointsOrthogonalWestSideCalculator = void 0;
 var DiagramItem_1 = __webpack_require__(9);
-var ConnectorPointsOrthogonalSideCalculatorBase_1 = __webpack_require__(51);
-var ConnectorRenderPoint_1 = __webpack_require__(28);
+var ConnectorPointsOrthogonalSideCalculatorBase_1 = __webpack_require__(52);
+var ConnectorRenderPoint_1 = __webpack_require__(29);
 var ConnectorPointsOrthogonalWestSideCalculator = /** @class */ (function (_super) {
     __extends(ConnectorPointsOrthogonalWestSideCalculator, _super);
     function ConnectorPointsOrthogonalWestSideCalculator(parent) {
@@ -21508,59 +21713,6 @@ exports.ConnectorPointsOrthogonalWestSideCalculator = ConnectorPointsOrthogonalW
 
 "use strict";
 
-Object.defineProperty(exports, "__esModule", { value: true });
-var math_1 = __webpack_require__(33);
-var point_1 = __webpack_require__(0);
-var LineEquation = (function () {
-    function LineEquation(aParam, bParam, cParam) {
-        this.aParam = aParam;
-        this.bParam = bParam;
-        this.cParam = cParam;
-    }
-    LineEquation.prototype.equals = function (obj) {
-        return this.aParam === obj.aParam &&
-            this.bParam === obj.bParam &&
-            this.cParam === obj.cParam;
-    };
-    LineEquation.prototype.getIntersection = function (equation) {
-        return LineEquation.getIntersection(this, equation);
-    };
-    LineEquation.fromPoints = function (pointA, pointB) {
-        return new LineEquation(pointB.y - pointA.y, pointA.x - pointB.x, pointB.x * pointA.y - pointA.x * pointB.y);
-    };
-    LineEquation.getIntersection = function (a, b) {
-        var A1 = a.aParam;
-        var B1 = a.bParam;
-        var C1 = a.cParam;
-        var A2 = b.aParam;
-        var B2 = b.bParam;
-        var C2 = b.cParam;
-        var v = A2 * B1 - A1 * B2;
-        if (math_1.MathUtils.numberCloseTo(v, 0))
-            return null;
-        if (A1 === 0) {
-            var x = (B2 * C1 - C2 * B1) / (B1 * A2);
-            return new point_1.Point(x, -C1 / B1);
-        }
-        var y = (C2 * A1 - C1 * A2) / v;
-        return new point_1.Point((-B1 * y - C1) / A1, y);
-    };
-    LineEquation.equals = function (a, b) {
-        return a.aParam === b.bParam &&
-            a.bParam === b.bParam &&
-            a.cParam === b.cParam;
-    };
-    return LineEquation;
-}());
-exports.LineEquation = LineEquation;
-
-
-/***/ }),
-/* 187 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -21577,7 +21729,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ConnectorLineEndingFilledTriangleStrategy = exports.ConnectorLineEndingOutlinedTriangleStrategy = exports.ConnectorLineEndingArrowStrategy = exports.ConnectorLineEndingNoneStrategy = exports.ConnectorLineEndingStrategy = void 0;
 var Utils_1 = __webpack_require__(3);
-var PathPrimitive_1 = __webpack_require__(4);
+var PathPrimitive_1 = __webpack_require__(5);
 var ConnectorLineEndingStrategy = /** @class */ (function () {
     function ConnectorLineEndingStrategy(style) {
         this.style = style;
@@ -21707,7 +21859,7 @@ exports.ConnectorLineEndingFilledTriangleStrategy = ConnectorLineEndingFilledTri
 
 
 /***/ }),
-/* 188 */
+/* 187 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21776,7 +21928,7 @@ exports.ConnectorTexts = ConnectorTexts;
 
 
 /***/ }),
-/* 189 */
+/* 188 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21796,7 +21948,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AddConnectorPointHistoryItem = void 0;
-var HistoryItem_1 = __webpack_require__(6);
+var HistoryItem_1 = __webpack_require__(8);
 var AddConnectorPointHistoryItem = /** @class */ (function (_super) {
     __extends(AddConnectorPointHistoryItem, _super);
     function AddConnectorPointHistoryItem(connectorKey, pointIndex, point) {
@@ -21829,97 +21981,7 @@ exports.AddConnectorPointHistoryItem = AddConnectorPointHistoryItem;
 
 
 /***/ }),
-/* 190 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.DeleteConnectorUnnecessaryPointsHistoryItem = exports.DeleteConnectorPointHistoryItem = void 0;
-var HistoryItem_1 = __webpack_require__(6);
-var ModelUtils_1 = __webpack_require__(5);
-var DeleteConnectorPointHistoryItem = /** @class */ (function (_super) {
-    __extends(DeleteConnectorPointHistoryItem, _super);
-    function DeleteConnectorPointHistoryItem(connectorKey, pointIndex) {
-        var _this = _super.call(this) || this;
-        _this.connectorKey = connectorKey;
-        _this.pointIndex = pointIndex;
-        return _this;
-    }
-    DeleteConnectorPointHistoryItem.prototype.redo = function (manipulator) {
-        var _this = this;
-        var connector = manipulator.model.findConnector(this.connectorKey);
-        this.oldRenderContext = connector.createRenderPointsContext();
-        this.oldPoint = connector.points[this.pointIndex].clone();
-        manipulator.addDeleteConnectorPoint(connector, function (connector) {
-            connector.deletePoint(_this.pointIndex);
-            connector.onDeletePoint(_this.pointIndex);
-        });
-    };
-    DeleteConnectorPointHistoryItem.prototype.undo = function (manipulator) {
-        var _this = this;
-        var connector = manipulator.model.findConnector(this.connectorKey);
-        manipulator.addDeleteConnectorPoint(connector, function (connector) {
-            connector.addPoint(_this.pointIndex, _this.oldPoint);
-            connector.replaceRenderPoints(_this.oldRenderContext);
-        });
-    };
-    return DeleteConnectorPointHistoryItem;
-}(HistoryItem_1.HistoryItem));
-exports.DeleteConnectorPointHistoryItem = DeleteConnectorPointHistoryItem;
-var DeleteConnectorUnnecessaryPointsHistoryItem = /** @class */ (function (_super) {
-    __extends(DeleteConnectorUnnecessaryPointsHistoryItem, _super);
-    function DeleteConnectorUnnecessaryPointsHistoryItem(connectorKey, unnecessaryPoints, validateRenderPoints) {
-        var _this = _super.call(this) || this;
-        _this.connectorKey = connectorKey;
-        _this.unnecessaryPoints = unnecessaryPoints;
-        _this.validateRenderPoints = validateRenderPoints;
-        return _this;
-    }
-    DeleteConnectorUnnecessaryPointsHistoryItem.prototype.redo = function (manipulator) {
-        var _this = this;
-        var connector = manipulator.model.findConnector(this.connectorKey);
-        this.oldRenderContext = connector.createRenderPointsContext();
-        this.oldPoints = connector.points.map(function (p) { return p.clone(); });
-        manipulator.changeConnectorPoints(connector, function (connector) {
-            connector.points = ModelUtils_1.ModelUtils.createNecessaryPoints(_this.oldPoints, _this.unnecessaryPoints);
-            if (_this.validateRenderPoints)
-                connector.onDeleteUnnecessaryPoints(_this.unnecessaryPoints);
-            else
-                connector.invalidateRenderPoints();
-        });
-    };
-    DeleteConnectorUnnecessaryPointsHistoryItem.prototype.undo = function (manipulator) {
-        var _this = this;
-        var connector = manipulator.model.findConnector(this.connectorKey);
-        manipulator.changeConnectorPoints(connector, function (connector) {
-            connector.points = _this.oldPoints;
-            if (_this.validateRenderPoints)
-                connector.replaceRenderPoints(_this.oldRenderContext);
-            else
-                connector.invalidateRenderPoints();
-        });
-    };
-    return DeleteConnectorUnnecessaryPointsHistoryItem;
-}(HistoryItem_1.HistoryItem));
-exports.DeleteConnectorUnnecessaryPointsHistoryItem = DeleteConnectorUnnecessaryPointsHistoryItem;
-
-
-/***/ }),
-/* 191 */
+/* 189 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21939,7 +22001,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.InsertToContainerHistoryItem = void 0;
-var HistoryItem_1 = __webpack_require__(6);
+var HistoryItem_1 = __webpack_require__(8);
 var InsertToContainerHistoryItem = /** @class */ (function (_super) {
     __extends(InsertToContainerHistoryItem, _super);
     function InsertToContainerHistoryItem(item, container) {
@@ -21963,7 +22025,7 @@ exports.InsertToContainerHistoryItem = InsertToContainerHistoryItem;
 
 
 /***/ }),
-/* 192 */
+/* 190 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21982,15 +22044,15 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MoveConnectorPointHistoryItem = void 0;
-var HistoryItem_1 = __webpack_require__(6);
+exports.MoveConnectorRightAnglePointsHistoryItem = exports.MoveConnectorPointHistoryItem = void 0;
+var HistoryItem_1 = __webpack_require__(8);
 var MoveConnectorPointHistoryItem = /** @class */ (function (_super) {
     __extends(MoveConnectorPointHistoryItem, _super);
     function MoveConnectorPointHistoryItem(connectorKey, pointIndex, newPoint) {
         var _this = _super.call(this) || this;
         _this.connectorKey = connectorKey;
         _this.pointIndex = pointIndex;
-        _this.newPoint = newPoint.clone();
+        _this.newPoint = newPoint;
         return _this;
     }
     MoveConnectorPointHistoryItem.prototype.redo = function (manipulator) {
@@ -22014,10 +22076,45 @@ var MoveConnectorPointHistoryItem = /** @class */ (function (_super) {
     return MoveConnectorPointHistoryItem;
 }(HistoryItem_1.HistoryItem));
 exports.MoveConnectorPointHistoryItem = MoveConnectorPointHistoryItem;
+var MoveConnectorRightAnglePointsHistoryItem = /** @class */ (function (_super) {
+    __extends(MoveConnectorRightAnglePointsHistoryItem, _super);
+    function MoveConnectorRightAnglePointsHistoryItem(connectorKey, beginPointIndex, newBeginPoint, lastPointIndex, newLastPoint) {
+        var _this = _super.call(this) || this;
+        _this.connectorKey = connectorKey;
+        _this.beginPointIndex = beginPointIndex;
+        _this.newBeginPoint = newBeginPoint;
+        _this.lastPointIndex = lastPointIndex;
+        _this.newLastPoint = newLastPoint;
+        return _this;
+    }
+    MoveConnectorRightAnglePointsHistoryItem.prototype.redo = function (manipulator) {
+        var _this = this;
+        var connector = manipulator.model.findConnector(this.connectorKey);
+        this.oldBeginPoint = connector.points[this.beginPointIndex].clone();
+        this.oldLastPoint = connector.points[this.lastPointIndex].clone();
+        this.renderContext = connector.createRenderPointsContext();
+        manipulator.changeConnectorPoints(connector, function (connector) {
+            connector.movePoint(_this.beginPointIndex, _this.newBeginPoint);
+            connector.movePoint(_this.lastPointIndex, _this.newLastPoint);
+            connector.onMovePoints(_this.beginPointIndex, _this.newBeginPoint, _this.lastPointIndex, _this.newLastPoint);
+        });
+    };
+    MoveConnectorRightAnglePointsHistoryItem.prototype.undo = function (manipulator) {
+        var _this = this;
+        var connector = manipulator.model.findConnector(this.connectorKey);
+        manipulator.changeConnectorPoints(connector, function (connector) {
+            connector.movePoint(_this.beginPointIndex, _this.oldBeginPoint);
+            connector.movePoint(_this.lastPointIndex, _this.oldLastPoint);
+            connector.replaceRenderPoints(_this.renderContext);
+        });
+    };
+    return MoveConnectorRightAnglePointsHistoryItem;
+}(HistoryItem_1.HistoryItem));
+exports.MoveConnectorRightAnglePointsHistoryItem = MoveConnectorRightAnglePointsHistoryItem;
 
 
 /***/ }),
-/* 193 */
+/* 191 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22037,7 +22134,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MoveShapeHistoryItem = void 0;
-var HistoryItem_1 = __webpack_require__(6);
+var HistoryItem_1 = __webpack_require__(8);
 var MoveShapeHistoryItem = /** @class */ (function (_super) {
     __extends(MoveShapeHistoryItem, _super);
     function MoveShapeHistoryItem(shapeKey, position) {
@@ -22061,7 +22158,7 @@ exports.MoveShapeHistoryItem = MoveShapeHistoryItem;
 
 
 /***/ }),
-/* 194 */
+/* 192 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22081,7 +22178,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RemoveFromContainerHistoryItem = void 0;
-var HistoryItem_1 = __webpack_require__(6);
+var HistoryItem_1 = __webpack_require__(8);
 var RemoveFromContainerHistoryItem = /** @class */ (function (_super) {
     __extends(RemoveFromContainerHistoryItem, _super);
     function RemoveFromContainerHistoryItem(item) {
@@ -22105,7 +22202,7 @@ exports.RemoveFromContainerHistoryItem = RemoveFromContainerHistoryItem;
 
 
 /***/ }),
-/* 195 */
+/* 193 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22125,7 +22222,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ModelResizeHistoryItem = void 0;
-var HistoryItem_1 = __webpack_require__(6);
+var HistoryItem_1 = __webpack_require__(8);
 var offsets_1 = __webpack_require__(87);
 var size_1 = __webpack_require__(2);
 var ModelResizeHistoryItem = /** @class */ (function (_super) {
@@ -22151,7 +22248,7 @@ exports.ModelResizeHistoryItem = ModelResizeHistoryItem;
 
 
 /***/ }),
-/* 196 */
+/* 194 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22171,9 +22268,9 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UpdatePositionsOnPageResizeHistoryItem = void 0;
-var Connector_1 = __webpack_require__(7);
+var Connector_1 = __webpack_require__(6);
 var Shape_1 = __webpack_require__(14);
-var HistoryItem_1 = __webpack_require__(6);
+var HistoryItem_1 = __webpack_require__(8);
 var UpdatePositionsOnPageResizeHistoryItem = /** @class */ (function (_super) {
     __extends(UpdatePositionsOnPageResizeHistoryItem, _super);
     function UpdatePositionsOnPageResizeHistoryItem(offset) {
@@ -22208,14 +22305,14 @@ exports.UpdatePositionsOnPageResizeHistoryItem = UpdatePositionsOnPageResizeHist
 
 
 /***/ }),
-/* 197 */
+/* 195 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GraphInfo = void 0;
-var LayoutUtils_1 = __webpack_require__(198);
+var LayoutUtils_1 = __webpack_require__(196);
 var GraphInfo = /** @class */ (function () {
     function GraphInfo(container, sourceGraph) {
         this.container = container;
@@ -22257,7 +22354,7 @@ exports.GraphInfo = GraphInfo;
 
 
 /***/ }),
-/* 198 */
+/* 196 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22288,7 +22385,7 @@ exports.LayoutUtils = LayoutUtils;
 
 
 /***/ }),
-/* 199 */
+/* 197 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22361,7 +22458,7 @@ exports.CommandBase = CommandBase;
 
 
 /***/ }),
-/* 200 */
+/* 198 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22384,7 +22481,7 @@ exports.SimpleCommandState = SimpleCommandState;
 
 
 /***/ }),
-/* 201 */
+/* 199 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22427,7 +22524,7 @@ exports.UndoCommand = UndoCommand;
 
 
 /***/ }),
-/* 202 */
+/* 200 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22470,7 +22567,7 @@ exports.RedoCommand = RedoCommand;
 
 
 /***/ }),
-/* 203 */
+/* 201 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22490,8 +22587,8 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ImportCommand = void 0;
-var Importer_1 = __webpack_require__(122);
-var ExportImportCommandBase_1 = __webpack_require__(55);
+var Importer_1 = __webpack_require__(121);
+var ExportImportCommandBase_1 = __webpack_require__(56);
 var ImportCommand = /** @class */ (function (_super) {
     __extends(ImportCommand, _super);
     function ImportCommand() {
@@ -22518,7 +22615,7 @@ exports.ImportCommand = ImportCommand;
 
 
 /***/ }),
-/* 204 */
+/* 202 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22538,8 +22635,8 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProcessShapeDescription = void 0;
-var RectangleShapeDescription_1 = __webpack_require__(19);
-var ShapeTypes_1 = __webpack_require__(1);
+var RectangleShapeDescription_1 = __webpack_require__(18);
+var ShapeTypes_1 = __webpack_require__(0);
 var ProcessShapeDescription = /** @class */ (function (_super) {
     __extends(ProcessShapeDescription, _super);
     function ProcessShapeDescription() {
@@ -22561,7 +22658,7 @@ exports.ProcessShapeDescription = ProcessShapeDescription;
 
 
 /***/ }),
-/* 205 */
+/* 203 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22581,10 +22678,10 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DecisionShapeDescription = void 0;
-var DiamondShapeDescription_1 = __webpack_require__(123);
-var ShapeTypes_1 = __webpack_require__(1);
+var DiamondShapeDescription_1 = __webpack_require__(122);
+var ShapeTypes_1 = __webpack_require__(0);
 var size_1 = __webpack_require__(2);
-var ShapeDescription_1 = __webpack_require__(8);
+var ShapeDescription_1 = __webpack_require__(7);
 var DecisionShapeDescription = /** @class */ (function (_super) {
     __extends(DecisionShapeDescription, _super);
     function DecisionShapeDescription() {
@@ -22601,7 +22698,7 @@ exports.DecisionShapeDescription = DecisionShapeDescription;
 
 
 /***/ }),
-/* 206 */
+/* 204 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22621,11 +22718,11 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ManualInputShapeDescription = void 0;
-var RectangleShapeDescription_1 = __webpack_require__(19);
-var ShapeTypes_1 = __webpack_require__(1);
-var PathPrimitive_1 = __webpack_require__(4);
+var RectangleShapeDescription_1 = __webpack_require__(18);
+var ShapeTypes_1 = __webpack_require__(0);
+var PathPrimitive_1 = __webpack_require__(5);
 var DiagramItem_1 = __webpack_require__(9);
-var ShapeDescription_1 = __webpack_require__(8);
+var ShapeDescription_1 = __webpack_require__(7);
 var ManualInputShapeDescription = /** @class */ (function (_super) {
     __extends(ManualInputShapeDescription, _super);
     function ManualInputShapeDescription() {
@@ -22673,7 +22770,7 @@ exports.ManualInputShapeDescription = ManualInputShapeDescription;
 
 
 /***/ }),
-/* 207 */
+/* 205 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22693,11 +22790,11 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DataShapeDescription = void 0;
-var RectangleShapeDescription_1 = __webpack_require__(19);
-var ShapeTypes_1 = __webpack_require__(1);
-var PathPrimitive_1 = __webpack_require__(4);
+var RectangleShapeDescription_1 = __webpack_require__(18);
+var ShapeTypes_1 = __webpack_require__(0);
+var PathPrimitive_1 = __webpack_require__(5);
 var DiagramItem_1 = __webpack_require__(9);
-var ShapeDescription_1 = __webpack_require__(8);
+var ShapeDescription_1 = __webpack_require__(7);
 var DataShapeDescription = /** @class */ (function (_super) {
     __extends(DataShapeDescription, _super);
     function DataShapeDescription() {
@@ -22747,7 +22844,7 @@ exports.DataShapeDescription = DataShapeDescription;
 
 
 /***/ }),
-/* 208 */
+/* 206 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22767,11 +22864,11 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TerminatorShapeDescription = void 0;
-var RectangleShapeDescription_1 = __webpack_require__(19);
-var ShapeTypes_1 = __webpack_require__(1);
-var PathPrimitive_1 = __webpack_require__(4);
+var RectangleShapeDescription_1 = __webpack_require__(18);
+var ShapeTypes_1 = __webpack_require__(0);
+var PathPrimitive_1 = __webpack_require__(5);
 var size_1 = __webpack_require__(2);
-var ShapeDescription_1 = __webpack_require__(8);
+var ShapeDescription_1 = __webpack_require__(7);
 var rectangle_1 = __webpack_require__(12);
 var Utils_1 = __webpack_require__(3);
 var TerminatorShapeDescription = /** @class */ (function (_super) {
@@ -22822,7 +22919,7 @@ exports.TerminatorShapeDescription = TerminatorShapeDescription;
 
 
 /***/ }),
-/* 209 */
+/* 207 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22842,12 +22939,12 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PredefinedProcessShapeDescription = exports.PredefinedProcessEdgeParameterName = void 0;
-var RectangleShapeDescription_1 = __webpack_require__(19);
-var ShapeTypes_1 = __webpack_require__(1);
-var ShapeParameters_1 = __webpack_require__(36);
-var ShapeParameterPoint_1 = __webpack_require__(29);
-var point_1 = __webpack_require__(0);
-var PathPrimitive_1 = __webpack_require__(4);
+var RectangleShapeDescription_1 = __webpack_require__(18);
+var ShapeTypes_1 = __webpack_require__(0);
+var ShapeParameters_1 = __webpack_require__(37);
+var ShapeParameterPoint_1 = __webpack_require__(31);
+var point_1 = __webpack_require__(1);
+var PathPrimitive_1 = __webpack_require__(5);
 exports.PredefinedProcessEdgeParameterName = "e";
 var PredefinedProcessShapeDescription = /** @class */ (function (_super) {
     __extends(PredefinedProcessShapeDescription, _super);
@@ -22906,7 +23003,7 @@ exports.PredefinedProcessShapeDescription = PredefinedProcessShapeDescription;
 
 
 /***/ }),
-/* 210 */
+/* 208 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22926,11 +23023,11 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ArrowUpDownShapeDescription = void 0;
-var PathPrimitive_1 = __webpack_require__(4);
-var ShapeParameterPoint_1 = __webpack_require__(29);
-var point_1 = __webpack_require__(0);
+var PathPrimitive_1 = __webpack_require__(5);
+var ShapeParameterPoint_1 = __webpack_require__(31);
+var point_1 = __webpack_require__(1);
 var ArrowVerticalShapeDescription_1 = __webpack_require__(92);
-var ShapeTypes_1 = __webpack_require__(1);
+var ShapeTypes_1 = __webpack_require__(0);
 var ArrowUpDownShapeDescription = /** @class */ (function (_super) {
     __extends(ArrowUpDownShapeDescription, _super);
     function ArrowUpDownShapeDescription() {
@@ -22987,7 +23084,7 @@ exports.ArrowUpDownShapeDescription = ArrowUpDownShapeDescription;
 
 
 /***/ }),
-/* 211 */
+/* 209 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23007,11 +23104,11 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ArrowRightShapeDescription = void 0;
-var PathPrimitive_1 = __webpack_require__(4);
+var PathPrimitive_1 = __webpack_require__(5);
 var ArrowHorizontalShapeDescription_1 = __webpack_require__(93);
-var ShapeParameterPoint_1 = __webpack_require__(29);
-var point_1 = __webpack_require__(0);
-var ShapeTypes_1 = __webpack_require__(1);
+var ShapeParameterPoint_1 = __webpack_require__(31);
+var point_1 = __webpack_require__(1);
+var ShapeTypes_1 = __webpack_require__(0);
 var DiagramItem_1 = __webpack_require__(9);
 var ArrowRightShapeDescription = /** @class */ (function (_super) {
     __extends(ArrowRightShapeDescription, _super);
@@ -23075,7 +23172,7 @@ exports.ArrowRightShapeDescription = ArrowRightShapeDescription;
 
 
 /***/ }),
-/* 212 */
+/* 210 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23095,11 +23192,11 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ArrowUpShapeDescription = void 0;
-var PathPrimitive_1 = __webpack_require__(4);
-var ShapeParameterPoint_1 = __webpack_require__(29);
-var point_1 = __webpack_require__(0);
+var PathPrimitive_1 = __webpack_require__(5);
+var ShapeParameterPoint_1 = __webpack_require__(31);
+var point_1 = __webpack_require__(1);
 var ArrowVerticalShapeDescription_1 = __webpack_require__(92);
-var ShapeTypes_1 = __webpack_require__(1);
+var ShapeTypes_1 = __webpack_require__(0);
 var DiagramItem_1 = __webpack_require__(9);
 var ArrowUpShapeDescription = /** @class */ (function (_super) {
     __extends(ArrowUpShapeDescription, _super);
@@ -23163,7 +23260,7 @@ exports.ArrowUpShapeDescription = ArrowUpShapeDescription;
 
 
 /***/ }),
-/* 213 */
+/* 211 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23183,12 +23280,12 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CrossShapeDescription = exports.CrossVerticalWidthParameterName = exports.CrossHorizontalWidthParameterName = void 0;
-var ShapeDescription_1 = __webpack_require__(8);
-var point_1 = __webpack_require__(0);
-var ShapeParameters_1 = __webpack_require__(36);
-var ShapeParameterPoint_1 = __webpack_require__(29);
-var PathPrimitive_1 = __webpack_require__(4);
-var ShapeTypes_1 = __webpack_require__(1);
+var ShapeDescription_1 = __webpack_require__(7);
+var point_1 = __webpack_require__(1);
+var ShapeParameters_1 = __webpack_require__(37);
+var ShapeParameterPoint_1 = __webpack_require__(31);
+var PathPrimitive_1 = __webpack_require__(5);
+var ShapeTypes_1 = __webpack_require__(0);
 exports.CrossHorizontalWidthParameterName = "chw";
 exports.CrossVerticalWidthParameterName = "cvw";
 var CrossShapeDescription = /** @class */ (function (_super) {
@@ -23265,7 +23362,7 @@ exports.CrossShapeDescription = CrossShapeDescription;
 
 
 /***/ }),
-/* 214 */
+/* 212 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23285,10 +23382,10 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.HeartShapeDescription = void 0;
-var ShapeDescription_1 = __webpack_require__(8);
-var PathPrimitive_1 = __webpack_require__(4);
-var ShapeTypes_1 = __webpack_require__(1);
-var ConnectionPoint_1 = __webpack_require__(46);
+var ShapeDescription_1 = __webpack_require__(7);
+var PathPrimitive_1 = __webpack_require__(5);
+var ShapeTypes_1 = __webpack_require__(0);
+var ConnectionPoint_1 = __webpack_require__(47);
 var DiagramItem_1 = __webpack_require__(9);
 var HeartShapeDescription = /** @class */ (function (_super) {
     __extends(HeartShapeDescription, _super);
@@ -23343,7 +23440,7 @@ exports.HeartShapeDescription = HeartShapeDescription;
 
 
 /***/ }),
-/* 215 */
+/* 213 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23363,8 +23460,8 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.OctagonShapeDescription = void 0;
-var PathPrimitive_1 = __webpack_require__(4);
-var ShapeTypes_1 = __webpack_require__(1);
+var PathPrimitive_1 = __webpack_require__(5);
+var ShapeTypes_1 = __webpack_require__(0);
 var PolygonShapeDescription_1 = __webpack_require__(94);
 var Utils_1 = __webpack_require__(3);
 var rectangle_1 = __webpack_require__(12);
@@ -23423,7 +23520,7 @@ exports.OctagonShapeDescription = OctagonShapeDescription;
 
 
 /***/ }),
-/* 216 */
+/* 214 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23443,12 +23540,12 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.StarShapeDescription = exports.StarConvexParameterName = void 0;
-var PathPrimitive_1 = __webpack_require__(4);
-var ShapeTypes_1 = __webpack_require__(1);
-var PentagonShapeDescription_1 = __webpack_require__(125);
-var ShapeParameters_1 = __webpack_require__(36);
-var ShapeParameterPoint_1 = __webpack_require__(29);
-var point_1 = __webpack_require__(0);
+var PathPrimitive_1 = __webpack_require__(5);
+var ShapeTypes_1 = __webpack_require__(0);
+var PentagonShapeDescription_1 = __webpack_require__(124);
+var ShapeParameters_1 = __webpack_require__(37);
+var ShapeParameterPoint_1 = __webpack_require__(31);
+var point_1 = __webpack_require__(1);
 var DiagramItem_1 = __webpack_require__(9);
 exports.StarConvexParameterName = "sc";
 var StarShapeDescription = /** @class */ (function (_super) {
@@ -23579,7 +23676,7 @@ exports.StarShapeDescription = StarShapeDescription;
 
 
 /***/ }),
-/* 217 */
+/* 215 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23599,11 +23696,11 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ArrowDownShapeDescription = void 0;
-var PathPrimitive_1 = __webpack_require__(4);
-var ShapeParameterPoint_1 = __webpack_require__(29);
-var point_1 = __webpack_require__(0);
+var PathPrimitive_1 = __webpack_require__(5);
+var ShapeParameterPoint_1 = __webpack_require__(31);
+var point_1 = __webpack_require__(1);
 var ArrowVerticalShapeDescription_1 = __webpack_require__(92);
-var ShapeTypes_1 = __webpack_require__(1);
+var ShapeTypes_1 = __webpack_require__(0);
 var DiagramItem_1 = __webpack_require__(9);
 var ArrowDownShapeDescription = /** @class */ (function (_super) {
     __extends(ArrowDownShapeDescription, _super);
@@ -23667,7 +23764,7 @@ exports.ArrowDownShapeDescription = ArrowDownShapeDescription;
 
 
 /***/ }),
-/* 218 */
+/* 216 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23687,11 +23784,11 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ArrowLeftRightShapeDescription = void 0;
-var PathPrimitive_1 = __webpack_require__(4);
+var PathPrimitive_1 = __webpack_require__(5);
 var ArrowHorizontalShapeDescription_1 = __webpack_require__(93);
-var ShapeParameterPoint_1 = __webpack_require__(29);
-var point_1 = __webpack_require__(0);
-var ShapeTypes_1 = __webpack_require__(1);
+var ShapeParameterPoint_1 = __webpack_require__(31);
+var point_1 = __webpack_require__(1);
+var ShapeTypes_1 = __webpack_require__(0);
 var ArrowLeftRightShapeDescription = /** @class */ (function (_super) {
     __extends(ArrowLeftRightShapeDescription, _super);
     function ArrowLeftRightShapeDescription() {
@@ -23748,7 +23845,7 @@ exports.ArrowLeftRightShapeDescription = ArrowLeftRightShapeDescription;
 
 
 /***/ }),
-/* 219 */
+/* 217 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23768,11 +23865,11 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ArrowLeftShapeDescription = void 0;
-var PathPrimitive_1 = __webpack_require__(4);
+var PathPrimitive_1 = __webpack_require__(5);
 var ArrowHorizontalShapeDescription_1 = __webpack_require__(93);
-var ShapeParameterPoint_1 = __webpack_require__(29);
-var point_1 = __webpack_require__(0);
-var ShapeTypes_1 = __webpack_require__(1);
+var ShapeParameterPoint_1 = __webpack_require__(31);
+var point_1 = __webpack_require__(1);
+var ShapeTypes_1 = __webpack_require__(0);
 var DiagramItem_1 = __webpack_require__(9);
 var ArrowLeftShapeDescription = /** @class */ (function (_super) {
     __extends(ArrowLeftShapeDescription, _super);
@@ -23836,7 +23933,7 @@ exports.ArrowLeftShapeDescription = ArrowLeftShapeDescription;
 
 
 /***/ }),
-/* 220 */
+/* 218 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23856,12 +23953,12 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MultipleDocumentsShapeDescription = void 0;
-var ShapeTypes_1 = __webpack_require__(1);
-var PathPrimitive_1 = __webpack_require__(4);
-var DocumentShapeDescription_1 = __webpack_require__(128);
-var ClipPathPrimitive_1 = __webpack_require__(54);
+var ShapeTypes_1 = __webpack_require__(0);
+var PathPrimitive_1 = __webpack_require__(5);
+var DocumentShapeDescription_1 = __webpack_require__(127);
+var ClipPathPrimitive_1 = __webpack_require__(55);
 var Utils_1 = __webpack_require__(16);
-var ShapeDescription_1 = __webpack_require__(8);
+var ShapeDescription_1 = __webpack_require__(7);
 var size_1 = __webpack_require__(2);
 var MultipleDocumentsShapeDescription = /** @class */ (function (_super) {
     __extends(MultipleDocumentsShapeDescription, _super);
@@ -23945,7 +24042,7 @@ exports.MultipleDocumentsShapeDescription = MultipleDocumentsShapeDescription;
 
 
 /***/ }),
-/* 221 */
+/* 219 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23965,10 +24062,10 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PreparationShapeDescription = void 0;
-var ShapeTypes_1 = __webpack_require__(1);
+var ShapeTypes_1 = __webpack_require__(0);
 var size_1 = __webpack_require__(2);
-var ShapeDescription_1 = __webpack_require__(8);
-var HexagonShapeDescription_1 = __webpack_require__(126);
+var ShapeDescription_1 = __webpack_require__(7);
+var HexagonShapeDescription_1 = __webpack_require__(125);
 var PreparationShapeDescription = /** @class */ (function (_super) {
     __extends(PreparationShapeDescription, _super);
     function PreparationShapeDescription() {
@@ -23987,7 +24084,7 @@ exports.PreparationShapeDescription = PreparationShapeDescription;
 
 
 /***/ }),
-/* 222 */
+/* 220 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24007,11 +24104,11 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.HardDiskShapeDescription = void 0;
-var RectangleShapeDescription_1 = __webpack_require__(19);
-var ShapeTypes_1 = __webpack_require__(1);
-var PathPrimitive_1 = __webpack_require__(4);
-var EllipsePrimitive_1 = __webpack_require__(53);
-var ShapeDescription_1 = __webpack_require__(8);
+var RectangleShapeDescription_1 = __webpack_require__(18);
+var ShapeTypes_1 = __webpack_require__(0);
+var PathPrimitive_1 = __webpack_require__(5);
+var EllipsePrimitive_1 = __webpack_require__(54);
+var ShapeDescription_1 = __webpack_require__(7);
 var size_1 = __webpack_require__(2);
 var HardDiskShapeDescription = /** @class */ (function (_super) {
     __extends(HardDiskShapeDescription, _super);
@@ -24061,7 +24158,7 @@ exports.HardDiskShapeDescription = HardDiskShapeDescription;
 
 
 /***/ }),
-/* 223 */
+/* 221 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24081,10 +24178,10 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DatabaseShapeDescription = void 0;
-var RectangleShapeDescription_1 = __webpack_require__(19);
-var ShapeTypes_1 = __webpack_require__(1);
-var PathPrimitive_1 = __webpack_require__(4);
-var EllipsePrimitive_1 = __webpack_require__(53);
+var RectangleShapeDescription_1 = __webpack_require__(18);
+var ShapeTypes_1 = __webpack_require__(0);
+var PathPrimitive_1 = __webpack_require__(5);
+var EllipsePrimitive_1 = __webpack_require__(54);
 var DatabaseShapeDescription = /** @class */ (function (_super) {
     __extends(DatabaseShapeDescription, _super);
     function DatabaseShapeDescription() {
@@ -24129,7 +24226,7 @@ exports.DatabaseShapeDescription = DatabaseShapeDescription;
 
 
 /***/ }),
-/* 224 */
+/* 222 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24149,12 +24246,12 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.InternalStorageShapeDescription = exports.InternalStorageVerticalEdgeParameterName = exports.InternalStorageHorizontalEdgeParameterName = void 0;
-var RectangleShapeDescription_1 = __webpack_require__(19);
-var ShapeTypes_1 = __webpack_require__(1);
-var ShapeParameters_1 = __webpack_require__(36);
-var ShapeParameterPoint_1 = __webpack_require__(29);
-var point_1 = __webpack_require__(0);
-var PathPrimitive_1 = __webpack_require__(4);
+var RectangleShapeDescription_1 = __webpack_require__(18);
+var ShapeTypes_1 = __webpack_require__(0);
+var ShapeParameters_1 = __webpack_require__(37);
+var ShapeParameterPoint_1 = __webpack_require__(31);
+var point_1 = __webpack_require__(1);
+var PathPrimitive_1 = __webpack_require__(5);
 exports.InternalStorageHorizontalEdgeParameterName = "he";
 exports.InternalStorageVerticalEdgeParameterName = "ve";
 var InternalStorageShapeDescription = /** @class */ (function (_super) {
@@ -24219,7 +24316,7 @@ exports.InternalStorageShapeDescription = InternalStorageShapeDescription;
 
 
 /***/ }),
-/* 225 */
+/* 223 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24239,11 +24336,11 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PaperTapeShapeDescription = void 0;
-var RectangleShapeDescription_1 = __webpack_require__(19);
-var ShapeTypes_1 = __webpack_require__(1);
-var PathPrimitive_1 = __webpack_require__(4);
+var RectangleShapeDescription_1 = __webpack_require__(18);
+var ShapeTypes_1 = __webpack_require__(0);
+var PathPrimitive_1 = __webpack_require__(5);
 var DiagramItem_1 = __webpack_require__(9);
-var ShapeDescription_1 = __webpack_require__(8);
+var ShapeDescription_1 = __webpack_require__(7);
 var size_1 = __webpack_require__(2);
 var PaperTapeShapeDescription = /** @class */ (function (_super) {
     __extends(PaperTapeShapeDescription, _super);
@@ -24301,7 +24398,7 @@ exports.PaperTapeShapeDescription = PaperTapeShapeDescription;
 
 
 /***/ }),
-/* 226 */
+/* 224 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24321,11 +24418,11 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ManualOperationShapeDescription = void 0;
-var RectangleShapeDescription_1 = __webpack_require__(19);
-var ShapeTypes_1 = __webpack_require__(1);
-var PathPrimitive_1 = __webpack_require__(4);
+var RectangleShapeDescription_1 = __webpack_require__(18);
+var ShapeTypes_1 = __webpack_require__(0);
+var PathPrimitive_1 = __webpack_require__(5);
 var DiagramItem_1 = __webpack_require__(9);
-var ShapeDescription_1 = __webpack_require__(8);
+var ShapeDescription_1 = __webpack_require__(7);
 var ManualOperationShapeDescription = /** @class */ (function (_super) {
     __extends(ManualOperationShapeDescription, _super);
     function ManualOperationShapeDescription() {
@@ -24380,7 +24477,7 @@ exports.ManualOperationShapeDescription = ManualOperationShapeDescription;
 
 
 /***/ }),
-/* 227 */
+/* 225 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24400,11 +24497,11 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DelayShapeDescription = void 0;
-var RectangleShapeDescription_1 = __webpack_require__(19);
-var ShapeTypes_1 = __webpack_require__(1);
-var PathPrimitive_1 = __webpack_require__(4);
+var RectangleShapeDescription_1 = __webpack_require__(18);
+var ShapeTypes_1 = __webpack_require__(0);
+var PathPrimitive_1 = __webpack_require__(5);
 var Utils_1 = __webpack_require__(3);
-var ShapeDescription_1 = __webpack_require__(8);
+var ShapeDescription_1 = __webpack_require__(7);
 var size_1 = __webpack_require__(2);
 var DelayShapeDescription = /** @class */ (function (_super) {
     __extends(DelayShapeDescription, _super);
@@ -24456,7 +24553,7 @@ exports.DelayShapeDescription = DelayShapeDescription;
 
 
 /***/ }),
-/* 228 */
+/* 226 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24476,10 +24573,10 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.StoredDataShapeDescription = void 0;
-var RectangleShapeDescription_1 = __webpack_require__(19);
-var ShapeTypes_1 = __webpack_require__(1);
-var PathPrimitive_1 = __webpack_require__(4);
-var ShapeDescription_1 = __webpack_require__(8);
+var RectangleShapeDescription_1 = __webpack_require__(18);
+var ShapeTypes_1 = __webpack_require__(0);
+var PathPrimitive_1 = __webpack_require__(5);
+var ShapeDescription_1 = __webpack_require__(7);
 var size_1 = __webpack_require__(2);
 var StoredDataShapeDescription = /** @class */ (function (_super) {
     __extends(StoredDataShapeDescription, _super);
@@ -24528,7 +24625,7 @@ exports.StoredDataShapeDescription = StoredDataShapeDescription;
 
 
 /***/ }),
-/* 229 */
+/* 227 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24548,11 +24645,11 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MergeShapeDescription = void 0;
-var ShapeTypes_1 = __webpack_require__(1);
+var ShapeTypes_1 = __webpack_require__(0);
 var rectangle_1 = __webpack_require__(12);
-var TriangleShapeDescription_1 = __webpack_require__(127);
-var PathPrimitive_1 = __webpack_require__(4);
-var ShapeDescription_1 = __webpack_require__(8);
+var TriangleShapeDescription_1 = __webpack_require__(126);
+var PathPrimitive_1 = __webpack_require__(5);
+var ShapeDescription_1 = __webpack_require__(7);
 var size_1 = __webpack_require__(2);
 var MergeShapeDescription = /** @class */ (function (_super) {
     __extends(MergeShapeDescription, _super);
@@ -24591,7 +24688,7 @@ exports.MergeShapeDescription = MergeShapeDescription;
 
 
 /***/ }),
-/* 230 */
+/* 228 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24611,10 +24708,10 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DisplayShapeDescription = void 0;
-var RectangleShapeDescription_1 = __webpack_require__(19);
-var ShapeTypes_1 = __webpack_require__(1);
-var PathPrimitive_1 = __webpack_require__(4);
-var ShapeDescription_1 = __webpack_require__(8);
+var RectangleShapeDescription_1 = __webpack_require__(18);
+var ShapeTypes_1 = __webpack_require__(0);
+var PathPrimitive_1 = __webpack_require__(5);
+var ShapeDescription_1 = __webpack_require__(7);
 var DisplayShapeDescription = /** @class */ (function (_super) {
     __extends(DisplayShapeDescription, _super);
     function DisplayShapeDescription() {
@@ -24661,7 +24758,7 @@ exports.DisplayShapeDescription = DisplayShapeDescription;
 
 
 /***/ }),
-/* 231 */
+/* 229 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24681,11 +24778,11 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.OrShapeDescription = void 0;
-var ShapeTypes_1 = __webpack_require__(1);
+var ShapeTypes_1 = __webpack_require__(0);
 var size_1 = __webpack_require__(2);
-var ShapeDescription_1 = __webpack_require__(8);
+var ShapeDescription_1 = __webpack_require__(7);
 var EllipseShapeDescription_1 = __webpack_require__(71);
-var PathPrimitive_1 = __webpack_require__(4);
+var PathPrimitive_1 = __webpack_require__(5);
 var OrShapeDescription = /** @class */ (function (_super) {
     __extends(OrShapeDescription, _super);
     function OrShapeDescription() {
@@ -24730,7 +24827,7 @@ exports.OrShapeDescription = OrShapeDescription;
 
 
 /***/ }),
-/* 232 */
+/* 230 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24750,11 +24847,11 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SummingJunctionShapeDescription = void 0;
-var ShapeTypes_1 = __webpack_require__(1);
+var ShapeTypes_1 = __webpack_require__(0);
 var size_1 = __webpack_require__(2);
-var ShapeDescription_1 = __webpack_require__(8);
+var ShapeDescription_1 = __webpack_require__(7);
 var EllipseShapeDescription_1 = __webpack_require__(71);
-var PathPrimitive_1 = __webpack_require__(4);
+var PathPrimitive_1 = __webpack_require__(5);
 var SummingJunctionShapeDescription = /** @class */ (function (_super) {
     __extends(SummingJunctionShapeDescription, _super);
     function SummingJunctionShapeDescription() {
@@ -24804,7 +24901,7 @@ exports.SummingJunctionShapeDescription = SummingJunctionShapeDescription;
 
 
 /***/ }),
-/* 233 */
+/* 231 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24864,7 +24961,7 @@ exports.SvgElementPrimitive = SvgElementPrimitive;
 
 
 /***/ }),
-/* 234 */
+/* 232 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24884,13 +24981,13 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.VerticalContainerDescription = void 0;
-var point_1 = __webpack_require__(0);
+var point_1 = __webpack_require__(1);
 var size_1 = __webpack_require__(2);
 var RectaglePrimitive_1 = __webpack_require__(21);
 var rectangle_1 = __webpack_require__(12);
-var ShapeTypes_1 = __webpack_require__(1);
-var ShapeDescription_1 = __webpack_require__(8);
-var ContainerDescription_1 = __webpack_require__(134);
+var ShapeTypes_1 = __webpack_require__(0);
+var ShapeDescription_1 = __webpack_require__(7);
+var ContainerDescription_1 = __webpack_require__(133);
 var VerticalContainerDescription = /** @class */ (function (_super) {
     __extends(VerticalContainerDescription, _super);
     function VerticalContainerDescription() {
@@ -24946,7 +25043,7 @@ exports.VerticalContainerDescription = VerticalContainerDescription;
 
 
 /***/ }),
-/* 235 */
+/* 233 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24966,14 +25063,14 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.HorizontalContainerDescription = void 0;
-var ShapeDescription_1 = __webpack_require__(8);
+var ShapeDescription_1 = __webpack_require__(7);
 var rectangle_1 = __webpack_require__(12);
 var size_1 = __webpack_require__(2);
-var point_1 = __webpack_require__(0);
-var ShapeTypes_1 = __webpack_require__(1);
-var ContainerDescription_1 = __webpack_require__(134);
+var point_1 = __webpack_require__(1);
+var ShapeTypes_1 = __webpack_require__(0);
+var ContainerDescription_1 = __webpack_require__(133);
 var RectaglePrimitive_1 = __webpack_require__(21);
-var TextPrimitive_1 = __webpack_require__(61);
+var TextPrimitive_1 = __webpack_require__(62);
 var HorizontalContainerDescription = /** @class */ (function (_super) {
     __extends(HorizontalContainerDescription, _super);
     function HorizontalContainerDescription() {
@@ -25037,7 +25134,7 @@ exports.HorizontalContainerDescription = HorizontalContainerDescription;
 
 
 /***/ }),
-/* 236 */
+/* 234 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25057,10 +25154,10 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CardWithImageOnTopDescription = void 0;
-var ShapeDescription_1 = __webpack_require__(8);
+var ShapeDescription_1 = __webpack_require__(7);
 var size_1 = __webpack_require__(2);
-var ShapeTypes_1 = __webpack_require__(1);
-var CardBaseDescription_1 = __webpack_require__(135);
+var ShapeTypes_1 = __webpack_require__(0);
+var CardBaseDescription_1 = __webpack_require__(134);
 var unit_converter_1 = __webpack_require__(11);
 var CardWithImageOnTopDescription = /** @class */ (function (_super) {
     __extends(CardWithImageOnTopDescription, _super);
@@ -25092,7 +25189,7 @@ exports.CardWithImageOnTopDescription = CardWithImageOnTopDescription;
 
 
 /***/ }),
-/* 237 */
+/* 235 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25142,7 +25239,7 @@ exports.RoundedRectanglePrimitive = RoundedRectanglePrimitive;
 
 
 /***/ }),
-/* 238 */
+/* 236 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25162,9 +25259,9 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ConnectorShapeDescription = void 0;
-var ShapeTypes_1 = __webpack_require__(1);
+var ShapeTypes_1 = __webpack_require__(0);
 var size_1 = __webpack_require__(2);
-var ShapeDescription_1 = __webpack_require__(8);
+var ShapeDescription_1 = __webpack_require__(7);
 var EllipseShapeDescription_1 = __webpack_require__(71);
 var ConnectorShapeDescription = /** @class */ (function (_super) {
     __extends(ConnectorShapeDescription, _super);
@@ -25189,7 +25286,7 @@ exports.ConnectorShapeDescription = ConnectorShapeDescription;
 
 
 /***/ }),
-/* 239 */
+/* 237 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25209,9 +25306,9 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CardWithImageOnRightDescription = exports.CardWithImageOnLeftDescription = void 0;
-var ShapeDescription_1 = __webpack_require__(8);
-var ShapeTypes_1 = __webpack_require__(1);
-var CardBaseDescription_1 = __webpack_require__(135);
+var ShapeDescription_1 = __webpack_require__(7);
+var ShapeTypes_1 = __webpack_require__(0);
+var CardBaseDescription_1 = __webpack_require__(134);
 var size_1 = __webpack_require__(2);
 var CardWithHorizontalImageDescription = /** @class */ (function (_super) {
     __extends(CardWithHorizontalImageDescription, _super);
@@ -25267,7 +25364,7 @@ exports.CardWithImageOnRightDescription = CardWithImageOnRightDescription;
 
 
 /***/ }),
-/* 240 */
+/* 238 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25288,7 +25385,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ExportCommand = void 0;
 var Exporter_1 = __webpack_require__(72);
-var ExportImportCommandBase_1 = __webpack_require__(55);
+var ExportImportCommandBase_1 = __webpack_require__(56);
 var ExportCommand = /** @class */ (function (_super) {
     __extends(ExportCommand, _super);
     function ExportCommand() {
@@ -25306,7 +25403,7 @@ exports.ExportCommand = ExportCommand;
 
 
 /***/ }),
-/* 241 */
+/* 239 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25344,7 +25441,7 @@ exports.ToggleFontBoldCommand = ToggleFontBoldCommand;
 
 
 /***/ }),
-/* 242 */
+/* 240 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25382,7 +25479,7 @@ exports.ToggleFontItalicCommand = ToggleFontItalicCommand;
 
 
 /***/ }),
-/* 243 */
+/* 241 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25420,7 +25517,7 @@ exports.ToggleFontUnderlineCommand = ToggleFontUnderlineCommand;
 
 
 /***/ }),
-/* 244 */
+/* 242 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25455,7 +25552,7 @@ exports.ChangeFontNameCommand = ChangeFontNameCommand;
 
 
 /***/ }),
-/* 245 */
+/* 243 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25490,7 +25587,7 @@ exports.ChangeFontSizeCommand = ChangeFontSizeCommand;
 
 
 /***/ }),
-/* 246 */
+/* 244 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25529,7 +25626,7 @@ exports.ChangeFontColorCommand = ChangeFontColorCommand;
 
 
 /***/ }),
-/* 247 */
+/* 245 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25568,7 +25665,7 @@ exports.ChangeFillColorCommand = ChangeFillColorCommand;
 
 
 /***/ }),
-/* 248 */
+/* 246 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25607,7 +25704,7 @@ exports.ChangeStrokeColorCommand = ChangeStrokeColorCommand;
 
 
 /***/ }),
-/* 249 */
+/* 247 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25675,7 +25772,7 @@ exports.TextRightAlignCommand = TextRightAlignCommand;
 
 
 /***/ }),
-/* 250 */
+/* 248 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25695,8 +25792,8 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ChangeConnectorEndLineEndingCommand = exports.ChangeConnectorStartLineEndingCommand = void 0;
-var ChangeConnectorPropertyCommand_1 = __webpack_require__(139);
-var ConnectorProperties_1 = __webpack_require__(31);
+var ChangeConnectorPropertyCommand_1 = __webpack_require__(138);
+var ConnectorProperties_1 = __webpack_require__(30);
 var ChangeConnectorStartLineEndingCommand = /** @class */ (function (_super) {
     __extends(ChangeConnectorStartLineEndingCommand, _super);
     function ChangeConnectorStartLineEndingCommand() {
@@ -25728,7 +25825,7 @@ exports.ChangeConnectorEndLineEndingCommand = ChangeConnectorEndLineEndingComman
 
 
 /***/ }),
-/* 251 */
+/* 249 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25748,8 +25845,8 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ChangeConnectorLineOptionCommand = void 0;
-var ChangeConnectorPropertyCommand_1 = __webpack_require__(139);
-var ConnectorProperties_1 = __webpack_require__(31);
+var ChangeConnectorPropertyCommand_1 = __webpack_require__(138);
+var ConnectorProperties_1 = __webpack_require__(30);
 var ChangeConnectorLineOptionCommand = /** @class */ (function (_super) {
     __extends(ChangeConnectorLineOptionCommand, _super);
     function ChangeConnectorLineOptionCommand() {
@@ -25767,7 +25864,7 @@ exports.ChangeConnectorLineOptionCommand = ChangeConnectorLineOptionCommand;
 
 
 /***/ }),
-/* 252 */
+/* 250 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25808,7 +25905,7 @@ exports.SelectAllCommand = SelectAllCommand;
 
 
 /***/ }),
-/* 253 */
+/* 251 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25828,7 +25925,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ScrollIntoViewOnUndoHistoryItem = exports.ScrollIntoViewOnRedoHistoryItem = void 0;
-var HistoryItem_1 = __webpack_require__(6);
+var HistoryItem_1 = __webpack_require__(8);
 var ScrollIntoViewOnRedoHistoryItem = /** @class */ (function (_super) {
     __extends(ScrollIntoViewOnRedoHistoryItem, _super);
     function ScrollIntoViewOnRedoHistoryItem(view, rectangle) {
@@ -25866,14 +25963,14 @@ exports.ScrollIntoViewOnUndoHistoryItem = ScrollIntoViewOnUndoHistoryItem;
 
 
 /***/ }),
-/* 254 */
+/* 252 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Tree = void 0;
-var Structures_1 = __webpack_require__(37);
+var Structures_1 = __webpack_require__(38);
 var Tree = /** @class */ (function () {
     function Tree(root, parentToChildren) {
         var _this = this;
@@ -25935,7 +26032,7 @@ exports.Tree = Tree;
 
 
 /***/ }),
-/* 255 */
+/* 253 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25978,7 +26075,7 @@ exports.ChangeSnapToGridCommand = ChangeSnapToGridCommand;
 
 
 /***/ }),
-/* 256 */
+/* 254 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26046,7 +26143,7 @@ exports.ChangeGridSizeItemsCommand = ChangeGridSizeItemsCommand;
 
 
 /***/ }),
-/* 257 */
+/* 255 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26067,7 +26164,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ChangePageLandscapeCommand = void 0;
 var ChangePagePropertyCommand_1 = __webpack_require__(76);
-var ChangePageLandscapeHistoryItem_1 = __webpack_require__(258);
+var ChangePageLandscapeHistoryItem_1 = __webpack_require__(256);
 var ChangePageLandscapeCommand = /** @class */ (function (_super) {
     __extends(ChangePageLandscapeCommand, _super);
     function ChangePageLandscapeCommand() {
@@ -26085,7 +26182,7 @@ exports.ChangePageLandscapeCommand = ChangePageLandscapeCommand;
 
 
 /***/ }),
-/* 258 */
+/* 256 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26105,7 +26202,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ChangePageLandscapeHistoryItem = void 0;
-var HistoryItem_1 = __webpack_require__(6);
+var HistoryItem_1 = __webpack_require__(8);
 var ChangePageLandscapeHistoryItem = /** @class */ (function (_super) {
     __extends(ChangePageLandscapeHistoryItem, _super);
     function ChangePageLandscapeHistoryItem(value) {
@@ -26126,7 +26223,7 @@ exports.ChangePageLandscapeHistoryItem = ChangePageLandscapeHistoryItem;
 
 
 /***/ }),
-/* 259 */
+/* 257 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26148,7 +26245,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ChangePageSizeItemsCommand = exports.ChangePageSizeCommand = void 0;
 var ChangePagePropertyCommand_1 = __webpack_require__(76);
 var size_1 = __webpack_require__(2);
-var ChangePageSizeHistoryItem_1 = __webpack_require__(260);
+var ChangePageSizeHistoryItem_1 = __webpack_require__(258);
 var SimpleCommandBase_1 = __webpack_require__(10);
 var ChangePageSizeCommand = /** @class */ (function (_super) {
     __extends(ChangePageSizeCommand, _super);
@@ -26209,7 +26306,7 @@ exports.ChangePageSizeItemsCommand = ChangePageSizeItemsCommand;
 
 
 /***/ }),
-/* 260 */
+/* 258 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26229,7 +26326,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ChangePageSizeHistoryItem = void 0;
-var HistoryItem_1 = __webpack_require__(6);
+var HistoryItem_1 = __webpack_require__(8);
 var ChangePageSizeHistoryItem = /** @class */ (function (_super) {
     __extends(ChangePageSizeHistoryItem, _super);
     function ChangePageSizeHistoryItem(size) {
@@ -26250,7 +26347,7 @@ exports.ChangePageSizeHistoryItem = ChangePageSizeHistoryItem;
 
 
 /***/ }),
-/* 261 */
+/* 259 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26286,7 +26383,7 @@ exports.ExportPngCommand = ExportPngCommand;
 
 
 /***/ }),
-/* 262 */
+/* 260 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26343,9 +26440,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CanvasExportManager = void 0;
 var unit_converter_1 = __webpack_require__(11);
-var browser_1 = __webpack_require__(17);
+var browser_1 = __webpack_require__(20);
 var Utils_1 = __webpack_require__(16);
-var CanvasManagerBase_1 = __webpack_require__(41);
+var CanvasManagerBase_1 = __webpack_require__(42);
 var RenderHelper_1 = __webpack_require__(15);
 var DOMManipulator_1 = __webpack_require__(100);
 var color_1 = __webpack_require__(22);
@@ -26528,7 +26625,7 @@ exports.CanvasExportManager = CanvasExportManager;
 
 
 /***/ }),
-/* 263 */
+/* 261 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26564,7 +26661,7 @@ exports.ExportSvgCommand = ExportSvgCommand;
 
 
 /***/ }),
-/* 264 */
+/* 262 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26600,7 +26697,7 @@ exports.ExportJpgCommand = ExportJpgCommand;
 
 
 /***/ }),
-/* 265 */
+/* 263 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26645,7 +26742,7 @@ exports.CopySelectionCommand = CopySelectionCommand;
 
 
 /***/ }),
-/* 266 */
+/* 264 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26666,7 +26763,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CutSelectionCommand = void 0;
 var Exporter_1 = __webpack_require__(72);
-var ModelUtils_1 = __webpack_require__(5);
+var ModelUtils_1 = __webpack_require__(4);
 var ClipboardCommand_1 = __webpack_require__(101);
 var CutSelectionCommand = /** @class */ (function (_super) {
     __extends(CutSelectionCommand, _super);
@@ -26698,7 +26795,7 @@ exports.CutSelectionCommand = CutSelectionCommand;
 
 
 /***/ }),
-/* 267 */
+/* 265 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26718,7 +26815,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PasteSelectionCommand = void 0;
-var PasteSelectoinCommandBase_1 = __webpack_require__(144);
+var PasteSelectoinCommandBase_1 = __webpack_require__(143);
 var PasteSelectionCommand = /** @class */ (function (_super) {
     __extends(PasteSelectionCommand, _super);
     function PasteSelectionCommand() {
@@ -26733,6 +26830,89 @@ var PasteSelectionCommand = /** @class */ (function (_super) {
     return PasteSelectionCommand;
 }(PasteSelectoinCommandBase_1.PasteSelectionCommandBase));
 exports.PasteSelectionCommand = PasteSelectionCommand;
+
+
+/***/ }),
+/* 266 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ImportShapeHistoryItem = void 0;
+var HistoryItem_1 = __webpack_require__(8);
+var ImportShapeHistoryItem = /** @class */ (function (_super) {
+    __extends(ImportShapeHistoryItem, _super);
+    function ImportShapeHistoryItem(shape) {
+        var _this = _super.call(this) || this;
+        _this.shape = shape;
+        return _this;
+    }
+    ImportShapeHistoryItem.prototype.redo = function (manipulator) {
+        this.shapeKey = this.shape.key;
+        manipulator.insertShape(this.shape);
+    };
+    ImportShapeHistoryItem.prototype.undo = function (manipulator) {
+        manipulator.removeShape(manipulator.model.findShape(this.shapeKey), true);
+    };
+    return ImportShapeHistoryItem;
+}(HistoryItem_1.HistoryItem));
+exports.ImportShapeHistoryItem = ImportShapeHistoryItem;
+
+
+/***/ }),
+/* 267 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ImportConnectorHistoryItem = void 0;
+var HistoryItem_1 = __webpack_require__(8);
+var ImportConnectorHistoryItem = /** @class */ (function (_super) {
+    __extends(ImportConnectorHistoryItem, _super);
+    function ImportConnectorHistoryItem(connector) {
+        var _this = _super.call(this) || this;
+        _this.connector = connector;
+        return _this;
+    }
+    ImportConnectorHistoryItem.prototype.redo = function (manipulator) {
+        this.connectorKey = this.connector.key;
+        manipulator.insertConnector(this.connector);
+    };
+    ImportConnectorHistoryItem.prototype.undo = function (manipulator) {
+        var connector = manipulator.model.findConnector(this.connectorKey);
+        manipulator.removeConnector(connector);
+    };
+    return ImportConnectorHistoryItem;
+}(HistoryItem_1.HistoryItem));
+exports.ImportConnectorHistoryItem = ImportConnectorHistoryItem;
 
 
 /***/ }),
@@ -26755,100 +26935,17 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ImportShapeHistoryItem = void 0;
-var HistoryItem_1 = __webpack_require__(6);
-var ImportShapeHistoryItem = /** @class */ (function (_super) {
-    __extends(ImportShapeHistoryItem, _super);
-    function ImportShapeHistoryItem(shape) {
-        var _this = _super.call(this) || this;
-        _this.shape = shape;
-        return _this;
-    }
-    ImportShapeHistoryItem.prototype.redo = function (manipulator) {
-        this.shapeKey = this.shape.key;
-        manipulator.insertShape(this.shape);
-    };
-    ImportShapeHistoryItem.prototype.undo = function (manipulator) {
-        manipulator.removeShape(manipulator.model.findShape(this.shapeKey), true);
-    };
-    return ImportShapeHistoryItem;
-}(HistoryItem_1.HistoryItem));
-exports.ImportShapeHistoryItem = ImportShapeHistoryItem;
-
-
-/***/ }),
-/* 269 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.ImportConnectorHistoryItem = void 0;
-var HistoryItem_1 = __webpack_require__(6);
-var ImportConnectorHistoryItem = /** @class */ (function (_super) {
-    __extends(ImportConnectorHistoryItem, _super);
-    function ImportConnectorHistoryItem(connector) {
-        var _this = _super.call(this) || this;
-        _this.connector = connector;
-        return _this;
-    }
-    ImportConnectorHistoryItem.prototype.redo = function (manipulator) {
-        this.connectorKey = this.connector.key;
-        manipulator.insertConnector(this.connector);
-    };
-    ImportConnectorHistoryItem.prototype.undo = function (manipulator) {
-        var connector = manipulator.model.findConnector(this.connectorKey);
-        manipulator.removeConnector(connector);
-    };
-    return ImportConnectorHistoryItem;
-}(HistoryItem_1.HistoryItem));
-exports.ImportConnectorHistoryItem = ImportConnectorHistoryItem;
-
-
-/***/ }),
-/* 270 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.ImportBPMNCommand = void 0;
-var BPMNImporter_1 = __webpack_require__(271);
-var ModelUtils_1 = __webpack_require__(5);
-var AddShapeHistoryItem_1 = __webpack_require__(52);
-var point_1 = __webpack_require__(0);
-var Connector_1 = __webpack_require__(7);
+var BPMNImporter_1 = __webpack_require__(269);
+var ModelUtils_1 = __webpack_require__(4);
+var AddShapeHistoryItem_1 = __webpack_require__(53);
+var point_1 = __webpack_require__(1);
+var Connector_1 = __webpack_require__(6);
 var AddConnectorHistoryItem_1 = __webpack_require__(64);
-var AddConnectionHistoryItem_1 = __webpack_require__(49);
+var AddConnectionHistoryItem_1 = __webpack_require__(50);
 var Sugiyama_1 = __webpack_require__(79);
-var LayoutSettings_1 = __webpack_require__(20);
-var ExportImportCommandBase_1 = __webpack_require__(55);
+var LayoutSettings_1 = __webpack_require__(19);
+var ExportImportCommandBase_1 = __webpack_require__(56);
 var ImportBPMNCommand = /** @class */ (function (_super) {
     __extends(ImportBPMNCommand, _super);
     function ImportBPMNCommand() {
@@ -26902,7 +26999,7 @@ exports.ImportBPMNCommand = ImportBPMNCommand;
 
 
 /***/ }),
-/* 271 */
+/* 269 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26923,8 +27020,8 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BPMNNode = exports.BPMNImporter = void 0;
 var Graph_1 = __webpack_require__(69);
-var ShapeTypes_1 = __webpack_require__(1);
-var Structures_1 = __webpack_require__(37);
+var ShapeTypes_1 = __webpack_require__(0);
+var Structures_1 = __webpack_require__(38);
 var ImportUtils_1 = __webpack_require__(95);
 var BPMNImporter = /** @class */ (function () {
     function BPMNImporter(xml) {
@@ -27058,7 +27155,7 @@ var BPMNEdge = /** @class */ (function (_super) {
 
 
 /***/ }),
-/* 272 */
+/* 270 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27066,7 +27163,7 @@ var BPMNEdge = /** @class */ (function (_super) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CycleRemover = void 0;
 var Graph_1 = __webpack_require__(69);
-var Structures_1 = __webpack_require__(37);
+var Structures_1 = __webpack_require__(38);
 var ListUtils_1 = __webpack_require__(90);
 var CycleRemover = /** @class */ (function () {
     function CycleRemover() {
@@ -27224,7 +27321,7 @@ exports.CycleRemover = CycleRemover;
 
 
 /***/ }),
-/* 273 */
+/* 271 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27298,7 +27395,7 @@ exports.SendToBackCommand = SendToBackCommand;
 
 
 /***/ }),
-/* 274 */
+/* 272 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27372,7 +27469,7 @@ exports.BringToFrontCommand = BringToFrontCommand;
 
 
 /***/ }),
-/* 275 */
+/* 273 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27392,8 +27489,8 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MoveStepDownCommand = exports.MoveDownCommand = exports.MoveStepUpCommand = exports.MoveUpCommand = exports.MoveStepRightCommand = exports.MoveRightCommand = exports.MoveStepLeftCommand = exports.MoveLeftCommand = exports.MoveCommand = void 0;
-var point_1 = __webpack_require__(0);
-var ModelUtils_1 = __webpack_require__(5);
+var point_1 = __webpack_require__(1);
+var ModelUtils_1 = __webpack_require__(4);
 var unit_converter_1 = __webpack_require__(11);
 var SimpleCommandBase_1 = __webpack_require__(10);
 var MoveCommand = /** @class */ (function (_super) {
@@ -27534,7 +27631,7 @@ exports.MoveStepDownCommand = MoveStepDownCommand;
 
 
 /***/ }),
-/* 276 */
+/* 274 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27555,7 +27652,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ToggleAutoZoomCommand = exports.ToggleAutoZoomToWidthCommand = exports.ToggleAutoZoomToContentCommand = exports.SwitchAutoZoomCommand = exports.FitToWidthCommand = exports.FitToScreenCommand = exports.ChangeZoomLevelItemsCommand = exports.ChangeZoomLevelTo200Command = exports.ChangeZoomLevelTo150Command = exports.ChangeZoomLevelTo125Command = exports.ChangeZoomLevelTo100Command = exports.ChangeZoomLevelTo75Command = exports.ChangeZoomLevelTo50Command = exports.ChangeZoomLevelTo25Command = exports.ChangeZoomLevelInPercentageCommand = exports.ChangeZoomLevelCommand = void 0;
 var SimpleCommandBase_1 = __webpack_require__(10);
-var Settings_1 = __webpack_require__(27);
+var Settings_1 = __webpack_require__(28);
 var ChangeZoomLevelCommand = /** @class */ (function (_super) {
     __extends(ChangeZoomLevelCommand, _super);
     function ChangeZoomLevelCommand() {
@@ -27828,7 +27925,7 @@ exports.ToggleAutoZoomCommand = ToggleAutoZoomCommand;
 
 
 /***/ }),
-/* 277 */
+/* 275 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27880,7 +27977,7 @@ exports.BindDocumentCommand = BindDocumentCommand;
 
 
 /***/ }),
-/* 278 */
+/* 276 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27900,7 +27997,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UnbindDocumentCommand = void 0;
-var ModelUtils_1 = __webpack_require__(5);
+var ModelUtils_1 = __webpack_require__(4);
 var SimpleCommandBase_1 = __webpack_require__(10);
 var UnbindDocumentCommand = /** @class */ (function (_super) {
     __extends(UnbindDocumentCommand, _super);
@@ -27924,7 +28021,7 @@ exports.UnbindDocumentCommand = UnbindDocumentCommand;
 
 
 /***/ }),
-/* 279 */
+/* 277 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27944,7 +28041,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LockCommand = void 0;
-var ChangeLockedCommand_1 = __webpack_require__(148);
+var ChangeLockedCommand_1 = __webpack_require__(147);
 var LockCommand = /** @class */ (function (_super) {
     __extends(LockCommand, _super);
     function LockCommand() {
@@ -27959,7 +28056,7 @@ exports.LockCommand = LockCommand;
 
 
 /***/ }),
-/* 280 */
+/* 278 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27979,7 +28076,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UnLockCommand = void 0;
-var ChangeLockedCommand_1 = __webpack_require__(148);
+var ChangeLockedCommand_1 = __webpack_require__(147);
 var UnLockCommand = /** @class */ (function (_super) {
     __extends(UnLockCommand, _super);
     function UnLockCommand() {
@@ -27994,7 +28091,7 @@ exports.UnLockCommand = UnLockCommand;
 
 
 /***/ }),
-/* 281 */
+/* 279 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28014,7 +28111,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CloneDownCommand = exports.CloneUpCommand = exports.CloneRightCommand = exports.CloneLeftCommand = exports.CloneCommand = void 0;
-var ModelUtils_1 = __webpack_require__(5);
+var ModelUtils_1 = __webpack_require__(4);
 var SimpleCommandBase_1 = __webpack_require__(10);
 var CloneCommand = /** @class */ (function (_super) {
     __extends(CloneCommand, _super);
@@ -28091,7 +28188,7 @@ exports.CloneDownCommand = CloneDownCommand;
 
 
 /***/ }),
-/* 282 */
+/* 280 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28112,9 +28209,9 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ChangeViewUnitsCommand = exports.ChangeUnitsCommand = void 0;
 var ChangePagePropertyCommand_1 = __webpack_require__(76);
-var ChangeUnitsHistoryItem_1 = __webpack_require__(283);
+var ChangeUnitsHistoryItem_1 = __webpack_require__(281);
 var SimpleCommandBase_1 = __webpack_require__(10);
-var LocalizationService_1 = __webpack_require__(35);
+var LocalizationService_1 = __webpack_require__(36);
 var ChangeUnitsCommand = /** @class */ (function (_super) {
     __extends(ChangeUnitsCommand, _super);
     function ChangeUnitsCommand() {
@@ -28163,7 +28260,7 @@ exports.ChangeViewUnitsCommand = ChangeViewUnitsCommand;
 
 
 /***/ }),
-/* 283 */
+/* 281 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28183,7 +28280,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ChangeUnitsHistoryItem = void 0;
-var HistoryItem_1 = __webpack_require__(6);
+var HistoryItem_1 = __webpack_require__(8);
 var ChangeUnitsHistoryItem = /** @class */ (function (_super) {
     __extends(ChangeUnitsHistoryItem, _super);
     function ChangeUnitsHistoryItem(units) {
@@ -28204,7 +28301,7 @@ exports.ChangeUnitsHistoryItem = ChangeUnitsHistoryItem;
 
 
 /***/ }),
-/* 284 */
+/* 282 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28225,8 +28322,8 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ChangePageColorCommand = void 0;
 var ChangePagePropertyCommand_1 = __webpack_require__(76);
-var ChangePageColorHistoryItem_1 = __webpack_require__(285);
-var Model_1 = __webpack_require__(60);
+var ChangePageColorHistoryItem_1 = __webpack_require__(283);
+var Model_1 = __webpack_require__(61);
 var color_1 = __webpack_require__(22);
 var ChangePageColorCommand = /** @class */ (function (_super) {
     __extends(ChangePageColorCommand, _super);
@@ -28248,7 +28345,7 @@ exports.ChangePageColorCommand = ChangePageColorCommand;
 
 
 /***/ }),
-/* 285 */
+/* 283 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28268,7 +28365,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ChangePageColorHistoryItem = void 0;
-var HistoryItem_1 = __webpack_require__(6);
+var HistoryItem_1 = __webpack_require__(8);
 var ChangePageColorHistoryItem = /** @class */ (function (_super) {
     __extends(ChangePageColorHistoryItem, _super);
     function ChangePageColorHistoryItem(value) {
@@ -28289,7 +28386,7 @@ exports.ChangePageColorHistoryItem = ChangePageColorHistoryItem;
 
 
 /***/ }),
-/* 286 */
+/* 284 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28335,7 +28432,7 @@ exports.ChangeShowGridCommand = ChangeShowGridCommand;
 
 
 /***/ }),
-/* 287 */
+/* 285 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28381,7 +28478,7 @@ exports.ToggleFullscreenCommand = ToggleFullscreenCommand;
 
 
 /***/ }),
-/* 288 */
+/* 286 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28427,7 +28524,7 @@ exports.ToggleSimpleViewCommand = ToggleSimpleViewCommand;
 
 
 /***/ }),
-/* 289 */
+/* 287 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28472,7 +28569,7 @@ exports.ToggleReadOnlyCommand = ToggleReadOnlyCommand;
 
 
 /***/ }),
-/* 290 */
+/* 288 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28508,7 +28605,7 @@ exports.EditShapeImageCommand = EditShapeImageCommand;
 
 
 /***/ }),
-/* 291 */
+/* 289 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28528,9 +28625,9 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PasteSelectionInPositionCommand = void 0;
-var PasteSelectoinCommandBase_1 = __webpack_require__(144);
+var PasteSelectoinCommandBase_1 = __webpack_require__(143);
 var Shape_1 = __webpack_require__(14);
-var Connector_1 = __webpack_require__(7);
+var Connector_1 = __webpack_require__(6);
 var PasteSelectionInPositionCommand = /** @class */ (function (_super) {
     __extends(PasteSelectionInPositionCommand, _super);
     function PasteSelectionInPositionCommand() {
@@ -28568,7 +28665,7 @@ exports.PasteSelectionInPositionCommand = PasteSelectionInPositionCommand;
 
 
 /***/ }),
-/* 292 */
+/* 290 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28588,8 +28685,8 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ImportXMLCommand = void 0;
-var XMLImporter_1 = __webpack_require__(293);
-var ExportImportCommandBase_1 = __webpack_require__(55);
+var XMLImporter_1 = __webpack_require__(291);
+var ExportImportCommandBase_1 = __webpack_require__(56);
 var ImportXMLCommand = /** @class */ (function (_super) {
     __extends(ImportXMLCommand, _super);
     function ImportXMLCommand() {
@@ -28607,7 +28704,7 @@ exports.ImportXMLCommand = ImportXMLCommand;
 
 
 /***/ }),
-/* 293 */
+/* 291 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28627,13 +28724,13 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.XmlImporter = void 0;
-var Connector_1 = __webpack_require__(7);
+var Connector_1 = __webpack_require__(6);
 var Shape_1 = __webpack_require__(14);
-var ImporterBase_1 = __webpack_require__(136);
-var ShapeTypes_1 = __webpack_require__(1);
+var ImporterBase_1 = __webpack_require__(135);
+var ShapeTypes_1 = __webpack_require__(0);
 var ShapeDescriptionManager_1 = __webpack_require__(91);
 var size_1 = __webpack_require__(2);
-var point_1 = __webpack_require__(0);
+var point_1 = __webpack_require__(1);
 var ImportUtils_1 = __webpack_require__(95);
 var color_1 = __webpack_require__(22);
 var unit_converter_1 = __webpack_require__(11);
@@ -28858,7 +28955,7 @@ exports.XmlImporter = XmlImporter;
 
 
 /***/ }),
-/* 294 */
+/* 292 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28894,7 +28991,7 @@ exports.InsertShapeImageCommand = InsertShapeImageCommand;
 
 
 /***/ }),
-/* 295 */
+/* 293 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28933,7 +29030,7 @@ exports.DeleteShapeImageCommand = DeleteShapeImageCommand;
 
 
 /***/ }),
-/* 296 */
+/* 294 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28968,7 +29065,7 @@ exports.ChangeStrokeStyleCommand = ChangeStrokeStyleCommand;
 
 
 /***/ }),
-/* 297 */
+/* 295 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29003,7 +29100,7 @@ exports.ChangeStrokeWidthCommand = ChangeStrokeWidthCommand;
 
 
 /***/ }),
-/* 298 */
+/* 296 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29023,8 +29120,8 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AutoLayoutTreeVerticalBottomToTopCommand = void 0;
-var LayoutSettings_1 = __webpack_require__(20);
-var AutoLayoutTreeVerticalCommand_1 = __webpack_require__(140);
+var LayoutSettings_1 = __webpack_require__(19);
+var AutoLayoutTreeVerticalCommand_1 = __webpack_require__(139);
 var AutoLayoutTreeVerticalBottomToTopCommand = /** @class */ (function (_super) {
     __extends(AutoLayoutTreeVerticalBottomToTopCommand, _super);
     function AutoLayoutTreeVerticalBottomToTopCommand() {
@@ -29038,6 +29135,82 @@ var AutoLayoutTreeVerticalBottomToTopCommand = /** @class */ (function (_super) 
     return AutoLayoutTreeVerticalBottomToTopCommand;
 }(AutoLayoutTreeVerticalCommand_1.AutoLayoutTreeVerticalCommand));
 exports.AutoLayoutTreeVerticalBottomToTopCommand = AutoLayoutTreeVerticalBottomToTopCommand;
+
+
+/***/ }),
+/* 297 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.AutoLayoutTreeHorizontalRightToLeftCommand = void 0;
+var LayoutSettings_1 = __webpack_require__(19);
+var AutoLayoutTreeHorizontalCommand_1 = __webpack_require__(145);
+var AutoLayoutTreeHorizontalRightToLeftCommand = /** @class */ (function (_super) {
+    __extends(AutoLayoutTreeHorizontalRightToLeftCommand, _super);
+    function AutoLayoutTreeHorizontalRightToLeftCommand() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    AutoLayoutTreeHorizontalRightToLeftCommand.prototype.createLayoutSettings = function () {
+        var settings = _super.prototype.createLayoutSettings.call(this);
+        settings.direction = LayoutSettings_1.LogicalDirectionKind.Backward;
+        return settings;
+    };
+    return AutoLayoutTreeHorizontalRightToLeftCommand;
+}(AutoLayoutTreeHorizontalCommand_1.AutoLayoutTreeHorizontalCommand));
+exports.AutoLayoutTreeHorizontalRightToLeftCommand = AutoLayoutTreeHorizontalRightToLeftCommand;
+
+
+/***/ }),
+/* 298 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.AutoLayoutLayeredVerticalBottomToTopCommand = void 0;
+var LayoutSettings_1 = __webpack_require__(19);
+var AutoLayoutLayeredVerticalCommand_1 = __webpack_require__(146);
+var AutoLayoutLayeredVerticalBottomToTopCommand = /** @class */ (function (_super) {
+    __extends(AutoLayoutLayeredVerticalBottomToTopCommand, _super);
+    function AutoLayoutLayeredVerticalBottomToTopCommand() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    AutoLayoutLayeredVerticalBottomToTopCommand.prototype.createLayoutSettings = function () {
+        var settings = _super.prototype.createLayoutSettings.call(this);
+        settings.direction = LayoutSettings_1.LogicalDirectionKind.Backward;
+        return settings;
+    };
+    return AutoLayoutLayeredVerticalBottomToTopCommand;
+}(AutoLayoutLayeredVerticalCommand_1.AutoLayoutLayeredVerticalCommand));
+exports.AutoLayoutLayeredVerticalBottomToTopCommand = AutoLayoutLayeredVerticalBottomToTopCommand;
 
 
 /***/ }),
@@ -29060,22 +29233,22 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AutoLayoutTreeHorizontalRightToLeftCommand = void 0;
-var LayoutSettings_1 = __webpack_require__(20);
-var AutoLayoutTreeHorizontalCommand_1 = __webpack_require__(146);
-var AutoLayoutTreeHorizontalRightToLeftCommand = /** @class */ (function (_super) {
-    __extends(AutoLayoutTreeHorizontalRightToLeftCommand, _super);
-    function AutoLayoutTreeHorizontalRightToLeftCommand() {
+exports.AutoLayoutLayeredHorizontalRightToLeftCommand = void 0;
+var LayoutSettings_1 = __webpack_require__(19);
+var AutoLayoutLayeredHorizontalCommand_1 = __webpack_require__(144);
+var AutoLayoutLayeredHorizontalRightToLeftCommand = /** @class */ (function (_super) {
+    __extends(AutoLayoutLayeredHorizontalRightToLeftCommand, _super);
+    function AutoLayoutLayeredHorizontalRightToLeftCommand() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    AutoLayoutTreeHorizontalRightToLeftCommand.prototype.createLayoutSettings = function () {
+    AutoLayoutLayeredHorizontalRightToLeftCommand.prototype.createLayoutSettings = function () {
         var settings = _super.prototype.createLayoutSettings.call(this);
         settings.direction = LayoutSettings_1.LogicalDirectionKind.Backward;
         return settings;
     };
-    return AutoLayoutTreeHorizontalRightToLeftCommand;
-}(AutoLayoutTreeHorizontalCommand_1.AutoLayoutTreeHorizontalCommand));
-exports.AutoLayoutTreeHorizontalRightToLeftCommand = AutoLayoutTreeHorizontalRightToLeftCommand;
+    return AutoLayoutLayeredHorizontalRightToLeftCommand;
+}(AutoLayoutLayeredHorizontalCommand_1.AutoLayoutLayeredHorizontalCommand));
+exports.AutoLayoutLayeredHorizontalRightToLeftCommand = AutoLayoutLayeredHorizontalRightToLeftCommand;
 
 
 /***/ }),
@@ -29098,85 +29271,9 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AutoLayoutLayeredVerticalBottomToTopCommand = void 0;
-var LayoutSettings_1 = __webpack_require__(20);
-var AutoLayoutLayeredVerticalCommand_1 = __webpack_require__(147);
-var AutoLayoutLayeredVerticalBottomToTopCommand = /** @class */ (function (_super) {
-    __extends(AutoLayoutLayeredVerticalBottomToTopCommand, _super);
-    function AutoLayoutLayeredVerticalBottomToTopCommand() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    AutoLayoutLayeredVerticalBottomToTopCommand.prototype.createLayoutSettings = function () {
-        var settings = _super.prototype.createLayoutSettings.call(this);
-        settings.direction = LayoutSettings_1.LogicalDirectionKind.Backward;
-        return settings;
-    };
-    return AutoLayoutLayeredVerticalBottomToTopCommand;
-}(AutoLayoutLayeredVerticalCommand_1.AutoLayoutLayeredVerticalCommand));
-exports.AutoLayoutLayeredVerticalBottomToTopCommand = AutoLayoutLayeredVerticalBottomToTopCommand;
-
-
-/***/ }),
-/* 301 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.AutoLayoutLayeredHorizontalRightToLeftCommand = void 0;
-var LayoutSettings_1 = __webpack_require__(20);
-var AutoLayoutLayeredHorizontalCommand_1 = __webpack_require__(145);
-var AutoLayoutLayeredHorizontalRightToLeftCommand = /** @class */ (function (_super) {
-    __extends(AutoLayoutLayeredHorizontalRightToLeftCommand, _super);
-    function AutoLayoutLayeredHorizontalRightToLeftCommand() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    AutoLayoutLayeredHorizontalRightToLeftCommand.prototype.createLayoutSettings = function () {
-        var settings = _super.prototype.createLayoutSettings.call(this);
-        settings.direction = LayoutSettings_1.LogicalDirectionKind.Backward;
-        return settings;
-    };
-    return AutoLayoutLayeredHorizontalRightToLeftCommand;
-}(AutoLayoutLayeredHorizontalCommand_1.AutoLayoutLayeredHorizontalCommand));
-exports.AutoLayoutLayeredHorizontalRightToLeftCommand = AutoLayoutLayeredHorizontalRightToLeftCommand;
-
-
-/***/ }),
-/* 302 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.ChangeConnectorRoutingModeCommand = void 0;
 var SimpleCommandBase_1 = __webpack_require__(10);
-var Settings_1 = __webpack_require__(27);
+var Settings_1 = __webpack_require__(28);
 var ChangeConnectorRoutingModeCommand = /** @class */ (function (_super) {
     __extends(ChangeConnectorRoutingModeCommand, _super);
     function ChangeConnectorRoutingModeCommand() {
@@ -29196,46 +29293,46 @@ exports.ChangeConnectorRoutingModeCommand = ChangeConnectorRoutingModeCommand;
 
 
 /***/ }),
-/* 303 */
+/* 301 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DiagramControl = void 0;
-var point_1 = __webpack_require__(0);
-var ModelManipulator_1 = __webpack_require__(304);
+var point_1 = __webpack_require__(1);
+var browser_1 = __webpack_require__(20);
+var ModelManipulator_1 = __webpack_require__(302);
 var CommandManager_1 = __webpack_require__(81);
-var EventManager_1 = __webpack_require__(305);
-var Model_1 = __webpack_require__(60);
-var Selection_1 = __webpack_require__(334);
-var History_1 = __webpack_require__(337);
-var BarManager_1 = __webpack_require__(338);
-var RenderManager_1 = __webpack_require__(339);
+var EventManager_1 = __webpack_require__(303);
+var Model_1 = __webpack_require__(61);
+var Selection_1 = __webpack_require__(332);
+var History_1 = __webpack_require__(335);
+var BarManager_1 = __webpack_require__(336);
+var RenderManager_1 = __webpack_require__(337);
 var ShapeDescriptionManager_1 = __webpack_require__(91);
-var DocumentDataSource_1 = __webpack_require__(347);
-var Settings_1 = __webpack_require__(27);
-var ModelOperationSettings_1 = __webpack_require__(18);
-var ViewController_1 = __webpack_require__(352);
-var ModelUtils_1 = __webpack_require__(5);
-var ToolboxManager_1 = __webpack_require__(353);
+var DocumentDataSource_1 = __webpack_require__(345);
+var Settings_1 = __webpack_require__(28);
+var ModelOperationSettings_1 = __webpack_require__(17);
+var ViewController_1 = __webpack_require__(350);
+var ModelUtils_1 = __webpack_require__(4);
+var ToolboxManager_1 = __webpack_require__(351);
 var Utils_1 = __webpack_require__(3);
-var ApiController_1 = __webpack_require__(356);
-var ImageCache_1 = __webpack_require__(47);
-var PermissionsProvider_1 = __webpack_require__(357);
-var ConnectorRoutingModel_1 = __webpack_require__(371);
+var ApiController_1 = __webpack_require__(354);
+var ImageCache_1 = __webpack_require__(48);
+var PermissionsProvider_1 = __webpack_require__(355);
+var ConnectorRoutingModel_1 = __webpack_require__(369);
 var TextMeasurer_1 = __webpack_require__(78);
-var Connector_1 = __webpack_require__(7);
+var Connector_1 = __webpack_require__(6);
 var DataLayoutParameters_1 = __webpack_require__(103);
-var ReloadContentParameters_1 = __webpack_require__(382);
+var ReloadContentParameters_1 = __webpack_require__(380);
 var Utils_2 = __webpack_require__(16);
-var ToolboxTouchDragEventsHandler_1 = __webpack_require__(383);
-var ToolboxPointerDragEventsHandler_1 = __webpack_require__(384);
-var ToolboxMouseDragEventsHandler_1 = __webpack_require__(385);
-var RenderManagerTouchDragEventsHandler_1 = __webpack_require__(386);
-var RenderManagerPointerDragEventsHandler_1 = __webpack_require__(387);
-var RenderManagerMouseDragEventsHandler_1 = __webpack_require__(388);
-var browser_1 = __webpack_require__(17);
+var ToolboxTouchDragEventsHandler_1 = __webpack_require__(381);
+var ToolboxPointerDragEventsHandler_1 = __webpack_require__(382);
+var ToolboxMouseDragEventsHandler_1 = __webpack_require__(383);
+var RenderManagerTouchDragEventsHandler_1 = __webpack_require__(384);
+var RenderManagerPointerDragEventsHandler_1 = __webpack_require__(385);
+var RenderManagerMouseDragEventsHandler_1 = __webpack_require__(386);
 var DiagramControl = /** @class */ (function () {
     function DiagramControl() {
         this.updateLockCount = 0;
@@ -29251,30 +29348,44 @@ var DiagramControl = /** @class */ (function () {
         this.selection = new Selection_1.Selection(this.model);
         this.onNativeAction = new Utils_1.EventDispatcher();
         this.apiController = new ApiController_1.ApiController(this.onNativeAction, this.selection, this.model);
+        this.selection.onChanged.add(this.apiController);
         this.permissionsProvider = new PermissionsProvider_1.PermissionsProvider(this.apiController);
         this.permissionsProvider.onRequestOperation.add(this);
+        this.selection.onChanged.add(this.permissionsProvider);
         this.routingModel = new ConnectorRoutingModel_1.ConnectorRoutingModel();
+        this.settings.onConnectorRoutingModeChanged.add(this.routingModel);
         this.modelManipulator = new ModelManipulator_1.ModelManipulator(this.model, this.routingModel, this.permissionsProvider);
         this.modelManipulator.onModelChanged.add(this.permissionsProvider);
         this.history = new History_1.History(this.modelManipulator);
+        this.history.onChanged.add(this);
         this.barManager = new BarManager_1.BarManager(this);
+        this.selection.onChanged.add(this.barManager);
         this.view = new ViewController_1.ViewController(this.settings, this.barManager);
         this.commandManager = new CommandManager_1.CommandManager(this);
         this.eventManager = new EventManager_1.EventManager(this);
-        this.settings.onReadOnlyChanged.add(this.eventManager.mouseHandler);
-        this.settings.onReadOnlyChanged.add(this.eventManager.visualizersManager);
-        this.selection.onChanged.add(this.barManager);
-        this.selection.onChanged.add(this.apiController);
-        this.selection.onChanged.add(this.permissionsProvider);
+        this.isTouchUIEnabled = this.hasTouchDragEvents || this.hasMaxTouchPoints;
+        this.eventManager.initialize(this.model, this.selection, this.isTouchUIEnabled);
         this.modelManipulator.commitItemsCreateChanges();
-        this.history.onChanged.add(this);
         this.toolboxManager = new ToolboxManager_1.ToolboxManager(this.shapeDescriptionManager);
-        this.settings.onConnectorRoutingModeChanged.add(this.routingModel);
         ImageCache_1.ImageCache.instance.onReadyStateChanged.add(this);
     }
     Object.defineProperty(DiagramControl.prototype, "operationSettings", {
         get: function () {
             return this.permissionsProvider.operationSettings;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(DiagramControl.prototype, "hasMaxTouchPoints", {
+        get: function () {
+            return typeof navigator !== "undefined" && navigator["maxTouchPoints"] > 0;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(DiagramControl.prototype, "hasTouchDragEvents", {
+        get: function () {
+            return browser_1.Browser.TouchUI;
         },
         enumerable: false,
         configurable: true
@@ -29326,7 +29437,8 @@ var DiagramControl = /** @class */ (function () {
                 gridVisible: this.settings.showGrid,
                 zoomLevel: this.settings.zoomLevel,
                 autoZoom: this.settings.autoZoom,
-                rectangle: this.model.getRectangle(true)
+                rectangle: this.model.getRectangle(true),
+                isTouchUIEnabled: this.isTouchUIEnabled
             }, scrollView);
             this.createRenderManagerDragEventsHandler().attach(this.render);
             this.settings.onZoomChanged.add(this.render.view);
@@ -29376,7 +29488,7 @@ var DiagramControl = /** @class */ (function () {
         this.contextToolboxOnClick = onClick;
     };
     DiagramControl.prototype.createToolboxCore = function (parent, allowDragging, renderAsText, shapes, options) {
-        var result = this.toolboxManager.create(parent, this.settings.readOnly, allowDragging, renderAsText, shapes, this.getToolboxAllowedShapeTypes.bind(this), options);
+        var result = this.toolboxManager.create(parent, this.settings.readOnly, allowDragging, renderAsText, shapes, this.getToolboxAllowedShapeTypes.bind(this), this.isTouchUIEnabled, options);
         this.createToolboxDragEventsHandler().attach(result);
         return result;
     };
@@ -29522,7 +29634,7 @@ var DiagramControl = /** @class */ (function () {
         this.selection.initialize(this.model);
         this.modelManipulator.initialize(this.model, this.routingModel);
         this.history.clear();
-        this.eventManager.initialize();
+        this.eventManager.initialize(this.model, this.selection, this.isTouchUIEnabled);
         this.modelManipulator.commitPageChanges();
         this.modelManipulator.commitItemsCreateChanges();
         this.notifyHistoryChanged();
@@ -29800,17 +29912,17 @@ var DiagramControl = /** @class */ (function () {
     };
     DiagramControl.prototype.createRenderManagerDragEventsHandler = function () {
         if (window.PointerEvent)
-            return new RenderManagerPointerDragEventsHandler_1.RenderManagerPointerDragEventsHandler();
-        else if (browser_1.Browser.TouchUI)
-            return new RenderManagerTouchDragEventsHandler_1.RenderManagerTouchDragEventsHandler();
-        return new RenderManagerMouseDragEventsHandler_1.RenderManagerMouseDragEventsHandler();
+            return new RenderManagerPointerDragEventsHandler_1.RenderManagerPointerDragEventsHandler(this.isTouchUIEnabled);
+        else if (this.hasTouchDragEvents)
+            return new RenderManagerTouchDragEventsHandler_1.RenderManagerTouchDragEventsHandler(this.isTouchUIEnabled);
+        return new RenderManagerMouseDragEventsHandler_1.RenderManagerMouseDragEventsHandler(this.isTouchUIEnabled);
     };
     DiagramControl.prototype.createToolboxDragEventsHandler = function () {
         if (window.PointerEvent)
-            return new ToolboxPointerDragEventsHandler_1.ToolboxPointerDragEventsHandler();
-        else if (browser_1.Browser.TouchUI)
-            return new ToolboxTouchDragEventsHandler_1.ToolboxTouchDragEventsHandler();
-        return new ToolboxMouseDragEventsHandler_1.ToolboxMouseDragEventsHandler();
+            return new ToolboxPointerDragEventsHandler_1.ToolboxPointerDragEventsHandler(this.isTouchUIEnabled);
+        else if (this.hasTouchDragEvents)
+            return new ToolboxTouchDragEventsHandler_1.ToolboxTouchDragEventsHandler(this.isTouchUIEnabled);
+        return new ToolboxMouseDragEventsHandler_1.ToolboxMouseDragEventsHandler(this.isTouchUIEnabled);
     };
     return DiagramControl;
 }());
@@ -29818,7 +29930,7 @@ exports.DiagramControl = DiagramControl;
 
 
 /***/ }),
-/* 304 */
+/* 302 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29827,14 +29939,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ModelManipulator = void 0;
 var offsets_1 = __webpack_require__(87);
 var size_1 = __webpack_require__(2);
-var Diagnostics_1 = __webpack_require__(58);
-var ImageCache_1 = __webpack_require__(47);
-var ImageLoader_1 = __webpack_require__(133);
-var ModelOperationSettings_1 = __webpack_require__(18);
+var Diagnostics_1 = __webpack_require__(59);
+var ImageCache_1 = __webpack_require__(48);
+var ImageLoader_1 = __webpack_require__(132);
+var ModelOperationSettings_1 = __webpack_require__(17);
 var Utils_1 = __webpack_require__(3);
-var Connector_1 = __webpack_require__(7);
+var Connector_1 = __webpack_require__(6);
 var ModelChange_1 = __webpack_require__(99);
-var ModelUtils_1 = __webpack_require__(5);
+var ModelUtils_1 = __webpack_require__(4);
 var ModelManipulator = /** @class */ (function () {
     function ModelManipulator(model, routingModel, permissionsProvider) {
         this.onModelChanged = new Utils_1.EventDispatcher();
@@ -30027,8 +30139,11 @@ var ModelManipulator = /** @class */ (function () {
     };
     ModelManipulator.prototype.insertConnector = function (connector) {
         this.model.pushItem(connector);
-        connector.routingStrategy = this.routingModel.createStrategy(connector.properties.lineOption);
-        connector.invalidateRenderPoints();
+        var routingStrategy = this.routingModel.createStrategy(connector.properties.lineOption);
+        if (routingStrategy)
+            connector.changeRoutingStrategy(routingStrategy);
+        else
+            connector.clearRoutingStrategy();
         var allowed = this.permissionsProvider.canAddItems([connector]);
         this.raiseModelChanged([new ModelChange_1.ItemChange(connector, ModelChange_1.ItemChangeType.Create, allowed)]);
         return connector;
@@ -30136,9 +30251,15 @@ var ModelManipulator = /** @class */ (function () {
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     ModelManipulator.prototype.changeConnectorProperty = function (connector, propertyName, value) {
         connector.properties[propertyName] = value;
-        if (this.routingModel && propertyName === "lineOption")
-            connector.routingStrategy = this.routingModel.createStrategy(connector.properties.lineOption);
-        connector.invalidateRenderPoints();
+        if (propertyName === "lineOption") {
+            var routingStrategy = this.routingModel ? this.routingModel.createStrategy(connector.properties.lineOption) : undefined;
+            if (routingStrategy)
+                connector.changeRoutingStrategy(routingStrategy);
+            else
+                connector.clearRoutingStrategy();
+        }
+        else
+            connector.invalidateRenderPoints();
         this.raiseModelChanged([new ModelChange_1.ItemChange(connector, ModelChange_1.ItemChangeType.UpdateProperties)]);
     };
     ModelManipulator.prototype.changeConnectorText = function (connector, text, position) {
@@ -30233,36 +30354,37 @@ exports.ModelManipulator = ModelManipulator;
 
 
 /***/ }),
-/* 305 */
+/* 303 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EventManager = void 0;
-var MouseHandler_1 = __webpack_require__(306);
+var MouseHandler_1 = __webpack_require__(304);
 var Utils_1 = __webpack_require__(3);
-var TextInputHandler_1 = __webpack_require__(325);
-var ContextMenuHandler_1 = __webpack_require__(326);
-var VisualizersManager_1 = __webpack_require__(327);
-var ContextToolboxHandler_1 = __webpack_require__(333);
+var TextInputHandler_1 = __webpack_require__(323);
+var ContextMenuHandler_1 = __webpack_require__(324);
+var VisualizersManager_1 = __webpack_require__(325);
+var ContextToolboxHandler_1 = __webpack_require__(331);
 var key_1 = __webpack_require__(26);
 var EventManager = /** @class */ (function () {
     function EventManager(control) {
+        this.control = control;
         this.onMouseOperation = new Utils_1.EventDispatcher();
         this.onTextInputOperation = new Utils_1.EventDispatcher();
         this.toolboxes = [];
-        this.control = control;
-        this.visualizersManager = new VisualizersManager_1.VisualizerManager(control.selection, control.model, this, control.settings);
+        var settings = control.settings;
+        this.visualizersManager = new VisualizersManager_1.VisualizerManager(settings);
         this.onMouseOperation.add(this.visualizersManager);
-        this.contextMenuHandler = new ContextMenuHandler_1.ContextMenuHandler(control.selection);
+        this.contextMenuHandler = new ContextMenuHandler_1.ContextMenuHandler();
         this.contextMenuHandler.onVisibilityChanged.add(control);
         this.onMouseOperation.add(this.contextMenuHandler);
         this.onTextInputOperation.add(this.contextMenuHandler);
         this.contextToolboxHandler = new ContextToolboxHandler_1.ContextToolboxHandler();
         this.contextToolboxHandler.onVisibilityChanged.add(control);
         this.contextToolboxHandler.onVisibilityChanged.add(this.contextMenuHandler);
-        this.mouseHandler = new MouseHandler_1.MouseHandler(control.history, control.selection, control.model, this, control.settings.readOnly, control.view, this.visualizersManager, this.contextToolboxHandler, control.shapeDescriptionManager, control.settings, control.permissionsProvider);
+        this.mouseHandler = new MouseHandler_1.MouseHandler(control.history, control.view, this.visualizersManager, this.contextToolboxHandler, control.shapeDescriptionManager, settings, control.permissionsProvider);
         this.textInputHandler = new TextInputHandler_1.TextInputHandler(control);
         this.visualizersManager.onVisualizersUpdate.add(this.mouseHandler);
     }
@@ -30276,9 +30398,11 @@ var EventManager = /** @class */ (function () {
     EventManager.prototype.registerToolbox = function (toolbox) {
         this.toolboxes.push(toolbox);
     };
-    EventManager.prototype.initialize = function () {
-        this.visualizersManager.initialize(this.control.model);
-        this.mouseHandler.initialize(this.control.model);
+    EventManager.prototype.initialize = function (model, selection, isTouchUIEnabled) {
+        this.visualizersManager.initialize(model, this, selection, isTouchUIEnabled);
+        this.mouseHandler.initialize(model, selection, isTouchUIEnabled);
+        this.contextMenuHandler.initialize(selection, isTouchUIEnabled);
+        this.contextToolboxHandler.initialize(isTouchUIEnabled);
     };
     EventManager.prototype.beginUpdate = function (lockUpdateCanvas) {
         this.contextMenuHandler.beginUpdate();
@@ -30366,10 +30490,8 @@ var EventManager = /** @class */ (function () {
         this.textInputHandler.onKeyDown(evt);
     };
     EventManager.prototype.onShortcut = function (code) {
-        if (this.control.commandManager.processShortcut(code))
-            return true;
-        if (this.mouseHandler.onShortcut(code))
-            return true;
+        return this.control.commandManager.processShortcut(code) ||
+            (this.mouseHandler.onShortcut(code));
     };
     EventManager.prototype.isShortcutForFocusInput = function (code) {
         return code === key_1.KeyCode.Delete || code === (key_1.KeyCode.Delete | key_1.ModifierKey.Ctrl) || code === (key_1.KeyCode.Delete | key_1.ModifierKey.Meta) ||
@@ -30394,7 +30516,7 @@ var EventManager = /** @class */ (function () {
         return this.control.isFocused();
     };
     EventManager.prototype.processDragging = function (evt) {
-        var draggingEvt = this.getDraggingEvent();
+        var draggingEvt = this.toolboxes.filter(function (t) { return t.draggingObject; }).map(function (t) { return t.draggingObject.evt; })[0];
         if (draggingEvt && !this.draggingEvent) {
             this.draggingEvent = draggingEvt;
             this.mouseHandler.onDragStart(this.draggingEvent);
@@ -30404,11 +30526,6 @@ var EventManager = /** @class */ (function () {
             delete this.draggingEvent;
             this.mouseHandler.onDragEnd(evt);
         }
-    };
-    EventManager.prototype.getDraggingEvent = function () {
-        return this.toolboxes
-            .filter(function (t) { return t.draggingObject; })
-            .map(function (t) { return t.draggingObject.evt; })[0];
     };
     EventManager.prototype.onDocumentDragStart = function (itemKeys) {
         this.control.beginUpdate();
@@ -30449,29 +30566,24 @@ exports.EventManager = EventManager;
 
 
 /***/ }),
-/* 306 */
+/* 304 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MouseHandler = void 0;
-var MouseHandlerDefaultState_1 = __webpack_require__(150);
+var MouseHandlerDefaultState_1 = __webpack_require__(149);
 var Event_1 = __webpack_require__(13);
-var point_1 = __webpack_require__(0);
-var ModelUtils_1 = __webpack_require__(5);
-var MouseHandlerDefaultReadOnlyTouchState_1 = __webpack_require__(322);
-var MouseHandlerDefaultReadOnlyState_1 = __webpack_require__(156);
-var MouseHandlerDefaultTouchState_1 = __webpack_require__(323);
+var point_1 = __webpack_require__(1);
+var ModelUtils_1 = __webpack_require__(4);
+var MouseHandlerDefaultReadOnlyTouchState_1 = __webpack_require__(320);
+var MouseHandlerDefaultReadOnlyState_1 = __webpack_require__(154);
+var MouseHandlerDefaultTouchState_1 = __webpack_require__(321);
 var key_1 = __webpack_require__(26);
-var browser_1 = __webpack_require__(17);
 var MouseHandler = /** @class */ (function () {
-    function MouseHandler(history, selection, model, eventManager, readOnly, view, visualizerManager, contextToolboxHandler, shapeDescriptionManager, settings, permissionsProvider) {
+    function MouseHandler(history, view, visualizerManager, contextToolboxHandler, shapeDescriptionManager, settings, permissionsProvider) {
         this.history = history;
-        this.selection = selection;
-        this.model = model;
-        this.eventManager = eventManager;
-        this.readOnly = readOnly;
         this.view = view;
         this.visualizerManager = visualizerManager;
         this.contextToolboxHandler = contextToolboxHandler;
@@ -30479,10 +30591,14 @@ var MouseHandler = /** @class */ (function () {
         this.settings = settings;
         this.permissionsProvider = permissionsProvider;
         this.finishStateLock = 0;
-        this.initialize(model);
+        this.isTouchUIEnabled = false;
+        this.readOnly = this.settings.readOnly;
+        this.settings.onReadOnlyChanged.add(this);
     }
-    MouseHandler.prototype.initialize = function (model) {
+    MouseHandler.prototype.initialize = function (model, selection, isTouchUIEnabled) {
         this.model = model;
+        this.selection = selection;
+        this.isTouchUIEnabled = isTouchUIEnabled;
         this.allowMultipleSelection = true;
         this.allowCopyDiagramItems = true;
         this.allowSnapToCellOnDragDiagramItem = true;
@@ -30498,10 +30614,10 @@ var MouseHandler = /** @class */ (function () {
     };
     MouseHandler.prototype.initializeDefaultState = function () {
         this.defaultState = this.readOnly ?
-            (browser_1.Browser.TouchUI ?
+            (this.isTouchUIEnabled ?
                 new MouseHandlerDefaultReadOnlyTouchState_1.MouseHandlerDefaultReadOnlyTouchState(this, this.history, this.selection, this.model, this.view, this.visualizerManager, this.shapeDescriptionManager, this.settings) :
                 new MouseHandlerDefaultReadOnlyState_1.MouseHandlerDefaultReadOnlyState(this, this.history, this.selection, this.model, this.view, this.visualizerManager, this.shapeDescriptionManager, this.settings)) :
-            (browser_1.Browser.TouchUI ?
+            (this.isTouchUIEnabled ?
                 new MouseHandlerDefaultTouchState_1.MouseHandlerDefaultTouchState(this, this.history, this.selection, this.model, this.view, this.visualizerManager, this.shapeDescriptionManager, this.settings) :
                 new MouseHandlerDefaultState_1.MouseHandlerDefaultState(this, this.history, this.selection, this.model, this.view, this.visualizerManager, this.shapeDescriptionManager, this.settings));
         this.switchToDefaultState();
@@ -30590,7 +30706,7 @@ var MouseHandler = /** @class */ (function () {
     };
     MouseHandler.prototype.onStartScrollPageByKeyboard = function (evt) {
         if (this.canStartScrollingPageByKeyboard(evt)) {
-            this.raiseDragScrollStart();
+            this.visualizerManager.onDocumentDragScrollStart();
             this.shouldScrollPage = true;
         }
     };
@@ -30602,9 +30718,24 @@ var MouseHandler = /** @class */ (function () {
         if (this.canEndScrollingPage(evt))
             this.finishScrollingPage();
     };
+    MouseHandler.prototype.onDocumentDragStart = function (keys) {
+        this.visualizerManager.onDocumentDragStart(keys);
+    };
+    MouseHandler.prototype.onDocumentDragEnd = function (keys) {
+        this.visualizerManager.onDocumentDragEnd(keys);
+    };
+    MouseHandler.prototype.onDocumentDragScrollStart = function () {
+        this.visualizerManager.onDocumentDragScrollStart();
+    };
+    MouseHandler.prototype.onDocumentDragScrollEnd = function () {
+        this.visualizerManager.onDocumentDragScrollEnd();
+    };
+    MouseHandler.prototype.onDocumentClick = function (keys) {
+        this.visualizerManager.onDocumentClick(keys);
+    };
     MouseHandler.prototype.finishScrollingPage = function () {
         this.shouldScrollPage = false;
-        this.raiseDragScrollEnd();
+        this.visualizerManager.onDocumentDragScrollEnd();
         this.switchToDefaultState();
     };
     // utils
@@ -30715,21 +30846,6 @@ var MouseHandler = /** @class */ (function () {
         if (!this.selection.hasKey(key))
             this.selection.set([key]);
     };
-    MouseHandler.prototype.raiseDragStart = function (keys) {
-        this.eventManager.onDocumentDragStart(keys);
-    };
-    MouseHandler.prototype.raiseDragEnd = function (keys) {
-        this.eventManager.onDocumentDragEnd(keys);
-    };
-    MouseHandler.prototype.raiseDragScrollStart = function () {
-        this.eventManager.onDocumentDragScrollStart();
-    };
-    MouseHandler.prototype.raiseDragScrollEnd = function () {
-        this.eventManager.onDocumentDragScrollEnd();
-    };
-    MouseHandler.prototype.raiseClick = function (keys) {
-        this.eventManager.onDocumentClick(keys);
-    };
     MouseHandler.prototype.beginStorePermissions = function () {
         this.permissionsProvider.beginStorePermissions();
     };
@@ -30760,7 +30876,7 @@ var MouseHandler = /** @class */ (function () {
         return allowed;
     };
     MouseHandler.prototype.canFinishTextEditing = function () {
-        return this.eventManager.canFinishTextEditing();
+        return this.visualizerManager.canFinishTextEditing();
     };
     MouseHandler.prototype.restartState = function () {
         if (this.state && !this.finishStateLock) {
@@ -30819,7 +30935,7 @@ exports.MouseHandler = MouseHandler;
 
 
 /***/ }),
-/* 307 */
+/* 305 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30839,11 +30955,11 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MouseHandlerMoveConnectorPointState = void 0;
-var MouseHandlerMoveConnectorPointStateBase_1 = __webpack_require__(151);
-var Connector_1 = __webpack_require__(7);
-var ModelUtils_1 = __webpack_require__(5);
-var point_1 = __webpack_require__(0);
-var ConnectorProperties_1 = __webpack_require__(31);
+var point_1 = __webpack_require__(1);
+var MouseHandlerMoveConnectorPointStateBase_1 = __webpack_require__(150);
+var Connector_1 = __webpack_require__(6);
+var ModelUtils_1 = __webpack_require__(4);
+var ConnectorProperties_1 = __webpack_require__(30);
 var MouseHandlerMoveConnectorPointState = /** @class */ (function (_super) {
     __extends(MouseHandlerMoveConnectorPointState, _super);
     function MouseHandlerMoveConnectorPointState() {
@@ -30860,13 +30976,14 @@ var MouseHandlerMoveConnectorPointState = /** @class */ (function (_super) {
         _super.prototype.onMouseDown.call(this, evt);
     };
     MouseHandlerMoveConnectorPointState.prototype.onApplyChanges = function (evt) {
-        if (this.connector.properties.lineOption !== ConnectorProperties_1.ConnectorLineOption.Orthogonal ||
+        if (this.connector.properties.lineOption === ConnectorProperties_1.ConnectorLineOption.Straight ||
             this.pointIndex === 0 || this.pointIndex === this.connector.points.length - 1)
             _super.prototype.onApplyChanges.call(this, evt);
     };
     MouseHandlerMoveConnectorPointState.prototype.onFinishWithChanges = function () {
         _super.prototype.onFinishWithChanges.call(this);
         ModelUtils_1.ModelUtils.deleteConnectorUnnecessaryPoints(this.history, this.connector);
+        this.handler.tryUpdateModelSize();
     };
     MouseHandlerMoveConnectorPointState.prototype.getSnappedPoint = function (evt, point) {
         var points = this.connector.points;
@@ -30885,7 +31002,7 @@ exports.MouseHandlerMoveConnectorPointState = MouseHandlerMoveConnectorPointStat
 
 
 /***/ }),
-/* 308 */
+/* 306 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30906,12 +31023,12 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MouseHandlerResizeShapeState = void 0;
 var size_1 = __webpack_require__(2);
-var point_1 = __webpack_require__(0);
+var point_1 = __webpack_require__(1);
 var Event_1 = __webpack_require__(13);
-var MouseHandlerDraggingState_1 = __webpack_require__(32);
-var ModelUtils_1 = __webpack_require__(5);
-var ShapeDescription_1 = __webpack_require__(8);
-var ModelOperationSettings_1 = __webpack_require__(18);
+var MouseHandlerDraggingState_1 = __webpack_require__(34);
+var ModelUtils_1 = __webpack_require__(4);
+var ShapeDescription_1 = __webpack_require__(7);
+var ModelOperationSettings_1 = __webpack_require__(17);
 var MouseHandlerResizeShapeState = /** @class */ (function (_super) {
     __extends(MouseHandlerResizeShapeState, _super);
     function MouseHandlerResizeShapeState(handler, history, model, selection, visualizerManager, settings) {
@@ -31084,7 +31201,7 @@ exports.MouseHandlerResizeShapeState = MouseHandlerResizeShapeState;
 
 
 /***/ }),
-/* 309 */
+/* 307 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31104,8 +31221,8 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MouseHandlerMoveConnectorSideState = void 0;
-var MouseHandlerDraggingState_1 = __webpack_require__(32);
-var ModelUtils_1 = __webpack_require__(5);
+var MouseHandlerDraggingState_1 = __webpack_require__(34);
+var ModelUtils_1 = __webpack_require__(4);
 var MouseHandlerMoveConnectorSideState = /** @class */ (function (_super) {
     __extends(MouseHandlerMoveConnectorSideState, _super);
     function MouseHandlerMoveConnectorSideState(handler, history, model) {
@@ -31133,6 +31250,7 @@ var MouseHandlerMoveConnectorSideState = /** @class */ (function (_super) {
     };
     MouseHandlerMoveConnectorSideState.prototype.onFinishWithChanges = function () {
         ModelUtils_1.ModelUtils.deleteConnectorUnnecessaryPoints(this.history, this.model.findConnector(this.connectorKey));
+        this.handler.tryUpdateModelSize();
     };
     MouseHandlerMoveConnectorSideState.prototype.getDraggingElementKeys = function () {
         return [this.connectorKey];
@@ -31143,7 +31261,7 @@ exports.MouseHandlerMoveConnectorSideState = MouseHandlerMoveConnectorSideState;
 
 
 /***/ }),
-/* 310 */
+/* 308 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31163,8 +31281,8 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MouseHandlerDragParameterPointState = void 0;
-var MouseHandlerDraggingState_1 = __webpack_require__(32);
-var ChangeShapeParametersHistoryItem_1 = __webpack_require__(116);
+var MouseHandlerDraggingState_1 = __webpack_require__(34);
+var ChangeShapeParametersHistoryItem_1 = __webpack_require__(115);
 var MouseHandlerDragParameterPointState = /** @class */ (function (_super) {
     __extends(MouseHandlerDragParameterPointState, _super);
     function MouseHandlerDragParameterPointState(handler, history, model) {
@@ -31196,7 +31314,7 @@ exports.MouseHandlerDragParameterPointState = MouseHandlerDragParameterPointStat
 
 
 /***/ }),
-/* 311 */
+/* 309 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31216,16 +31334,16 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MouseHandlerCreateConnectorState = void 0;
-var Connector_1 = __webpack_require__(7);
-var AddConnectionHistoryItem_1 = __webpack_require__(49);
+var Connector_1 = __webpack_require__(6);
+var AddConnectionHistoryItem_1 = __webpack_require__(50);
 var AddConnectorHistoryItem_1 = __webpack_require__(64);
 var DiagramItem_1 = __webpack_require__(9);
-var MouseHandlerMoveConnectorPointStateBase_1 = __webpack_require__(151);
+var MouseHandlerMoveConnectorPointStateBase_1 = __webpack_require__(150);
 var SetSelectionHistoryItem_1 = __webpack_require__(66);
-var AddShapeHistoryItem_1 = __webpack_require__(52);
-var ModelUtils_1 = __webpack_require__(5);
+var AddShapeHistoryItem_1 = __webpack_require__(53);
+var ModelUtils_1 = __webpack_require__(4);
 var DeleteConnectionHistoryItem_1 = __webpack_require__(65);
-var DeleteConnectorHistoryItem_1 = __webpack_require__(117);
+var DeleteConnectorHistoryItem_1 = __webpack_require__(116);
 var MouseHandlerCreateConnectorState = /** @class */ (function (_super) {
     __extends(MouseHandlerCreateConnectorState, _super);
     function MouseHandlerCreateConnectorState(handler, history, model, visualizerManager, shapeDescriptionManager, selection, connectionPointIndex) {
@@ -31387,7 +31505,7 @@ exports.MouseHandlerCreateConnectorState = MouseHandlerCreateConnectorState;
 
 
 /***/ }),
-/* 312 */
+/* 310 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31407,11 +31525,11 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MouseHandlerMoveConnectorOrthogonalSideState = void 0;
-var point_1 = __webpack_require__(0);
-var Connector_1 = __webpack_require__(7);
+var point_1 = __webpack_require__(1);
+var Connector_1 = __webpack_require__(6);
 var DiagramItem_1 = __webpack_require__(9);
-var ModelUtils_1 = __webpack_require__(5);
-var MouseHandlerDraggingState_1 = __webpack_require__(32);
+var ModelUtils_1 = __webpack_require__(4);
+var MouseHandlerDraggingState_1 = __webpack_require__(34);
 var MouseHandlerMoveConnectorOrthogonalSideState = /** @class */ (function (_super) {
     __extends(MouseHandlerMoveConnectorOrthogonalSideState, _super);
     function MouseHandlerMoveConnectorOrthogonalSideState(handler, history, model) {
@@ -31455,20 +31573,25 @@ var MouseHandlerMoveConnectorOrthogonalSideState = /** @class */ (function (_sup
     MouseHandlerMoveConnectorOrthogonalSideState.prototype.onApplyChanges = function (evt) {
         var _this = this;
         if (!this.pointCreated) {
-            var createdPoint1_1;
-            var createdPoint2_1;
+            var createdPoint1 = void 0;
+            var createdPoint2 = void 0;
             if (this.point1 === undefined) {
                 this.point1 = new point_1.Point(this.renderPoint1.x, this.renderPoint1.y);
                 ModelUtils_1.ModelUtils.addConnectorPoint(this.history, this.connector.key, this.pointIndex1, this.point1.clone());
-                createdPoint1_1 = this.point1.clone();
+                createdPoint1 = this.point1.clone();
                 this.pointIndex2++;
             }
             if (this.point2 === undefined) {
                 this.point2 = new point_1.Point(this.renderPoint2.x, this.renderPoint2.y);
                 ModelUtils_1.ModelUtils.addConnectorPoint(this.history, this.connector.key, this.pointIndex2, this.point2.clone());
-                createdPoint2_1 = this.point2.clone();
+                createdPoint2 = this.point2.clone();
             }
-            var unnecessaryPoints = ModelUtils_1.ModelUtils.createUnnecessaryPoints(this.connector.points, this.connector.skippedRenderPoints, function (p) { return (!createdPoint1_1 || !p.equals(createdPoint1_1)) && (!createdPoint2_1 || !p.equals(createdPoint2_1)); });
+            var excludePoints = [];
+            if (createdPoint1)
+                excludePoints.push(createdPoint1);
+            if (createdPoint2)
+                excludePoints.push(createdPoint2);
+            var unnecessaryPoints = this.createUnnecessaryPoints(this.connector, excludePoints);
             Object.keys(unnecessaryPoints).forEach(function (key) {
                 var pointIndex = parseInt(key);
                 if (pointIndex < _this.pointIndex1)
@@ -31487,12 +31610,26 @@ var MouseHandlerMoveConnectorOrthogonalSideState = /** @class */ (function (_sup
             this.point1.y = point.y;
             this.point2.y = point.y;
         }
-        ModelUtils_1.ModelUtils.moveConnectorPoint(this.history, this.connector, this.pointIndex1, this.point1.clone());
-        ModelUtils_1.ModelUtils.moveConnectorPoint(this.history, this.connector, this.pointIndex2, this.point2.clone());
+        ModelUtils_1.ModelUtils.moveConnectorRightAnglePoints(this.history, this.connector, this.point1.clone(), this.pointIndex1, this.point2.clone(), this.pointIndex2);
         this.handler.tryUpdateModelSize();
     };
+    MouseHandlerMoveConnectorOrthogonalSideState.prototype.createUnnecessaryPoints = function (connector, excludePoints) {
+        var oldRenderPoints = connector.getRenderPoints(true).map(function (p) { return p.clone(); });
+        var unnecessaryRenderPoints = ModelUtils_1.ModelUtils.createUnnecessaryRenderPoints(oldRenderPoints.filter(function (p) { return !p.skipped; }).map(function (p) { return p.clone(); }), connector.skippedRenderPoints, function (removedPoint) { return ModelUtils_1.ModelUtils.findFirstPointIndex(oldRenderPoints, function (p) { return p.equals(removedPoint); }); }, function (p) { return !excludePoints.some(function (ep) { return ep.equals(p); }); });
+        var result = {};
+        if (Object.keys(unnecessaryRenderPoints).length) {
+            var points = connector.points.map(function (p) { return p.clone(); });
+            var lastPointIndex_1 = points.length - 1;
+            points.forEach(function (p, index) {
+                if (index !== 0 && index !== lastPointIndex_1 && !ModelUtils_1.ModelUtils.isNecessaryPoint(p, index, unnecessaryRenderPoints))
+                    result[index] = p;
+            });
+        }
+        return result;
+    };
     MouseHandlerMoveConnectorOrthogonalSideState.prototype.onFinishWithChanges = function () {
-        ModelUtils_1.ModelUtils.deleteConnectorUnnecessaryPoints(this.history, this.connector, true);
+        ModelUtils_1.ModelUtils.deleteConnectorUnnecessaryPoints(this.history, this.connector);
+        this.handler.tryUpdateModelSize();
     };
     MouseHandlerMoveConnectorOrthogonalSideState.prototype.findPointIndex = function (points, index, direction) {
         var point;
@@ -31542,7 +31679,7 @@ exports.MouseHandlerMoveConnectorOrthogonalSideState = MouseHandlerMoveConnector
 
 
 /***/ }),
-/* 313 */
+/* 311 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31563,14 +31700,14 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MouseHandlerToolboxDraggingState = exports.MouseHandlerBeforeToolboxDraggingState = void 0;
 var Event_1 = __webpack_require__(13);
-var point_1 = __webpack_require__(0);
-var AddShapeHistoryItem_1 = __webpack_require__(52);
+var point_1 = __webpack_require__(1);
+var AddShapeHistoryItem_1 = __webpack_require__(53);
 var SetSelectionHistoryItem_1 = __webpack_require__(66);
-var MouseHandlerDraggingState_1 = __webpack_require__(32);
-var DeleteShapeHistoryItem_1 = __webpack_require__(118);
-var ModelUtils_1 = __webpack_require__(5);
-var MouseHandlerStateBase_1 = __webpack_require__(39);
-var ModelOperationSettings_1 = __webpack_require__(18);
+var MouseHandlerDraggingState_1 = __webpack_require__(34);
+var DeleteShapeHistoryItem_1 = __webpack_require__(117);
+var ModelUtils_1 = __webpack_require__(4);
+var MouseHandlerStateBase_1 = __webpack_require__(40);
+var ModelOperationSettings_1 = __webpack_require__(17);
 var NON_DOCUMENT_TIMER = 500;
 var LOCK_UPDATEPAGESIZE_TIMER = 300;
 var MouseHandlerBeforeToolboxDraggingState = /** @class */ (function (_super) {
@@ -31770,7 +31907,7 @@ exports.MouseHandlerToolboxDraggingState = MouseHandlerToolboxDraggingState;
 
 
 /***/ }),
-/* 314 */
+/* 312 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31790,8 +31927,8 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MouseHandlerMoveConnectorTextState = void 0;
-var MouseHandlerDraggingState_1 = __webpack_require__(32);
-var ChangeConnectorTextPositionHistoryItem_1 = __webpack_require__(315);
+var MouseHandlerDraggingState_1 = __webpack_require__(34);
+var ChangeConnectorTextPositionHistoryItem_1 = __webpack_require__(313);
 var ChangeConnectorTextHistoryItem_1 = __webpack_require__(67);
 var MouseHandlerMoveConnectorTextState = /** @class */ (function (_super) {
     __extends(MouseHandlerMoveConnectorTextState, _super);
@@ -31832,7 +31969,7 @@ exports.MouseHandlerMoveConnectorTextState = MouseHandlerMoveConnectorTextState;
 
 
 /***/ }),
-/* 315 */
+/* 313 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31852,7 +31989,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ChangeConnectorTextPositionHistoryItem = void 0;
-var HistoryItem_1 = __webpack_require__(6);
+var HistoryItem_1 = __webpack_require__(8);
 var ChangeConnectorTextPositionHistoryItem = /** @class */ (function (_super) {
     __extends(ChangeConnectorTextPositionHistoryItem, _super);
     function ChangeConnectorTextPositionHistoryItem(connector, position, newPosition) {
@@ -31876,7 +32013,7 @@ exports.ChangeConnectorTextPositionHistoryItem = ChangeConnectorTextPositionHist
 
 
 /***/ }),
-/* 316 */
+/* 314 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31896,9 +32033,9 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MouseHandlerToggleShapeExpandedState = void 0;
-var MouseHandlerStateBase_1 = __webpack_require__(39);
-var ToggleShapeExpandedHistoryItem_1 = __webpack_require__(317);
-var ModelUtils_1 = __webpack_require__(5);
+var MouseHandlerStateBase_1 = __webpack_require__(40);
+var ToggleShapeExpandedHistoryItem_1 = __webpack_require__(315);
+var ModelUtils_1 = __webpack_require__(4);
 var MouseHandlerToggleShapeExpandedState = /** @class */ (function (_super) {
     __extends(MouseHandlerToggleShapeExpandedState, _super);
     function MouseHandlerToggleShapeExpandedState(handler, history, model, selection) {
@@ -31918,7 +32055,7 @@ var MouseHandlerToggleShapeExpandedState = /** @class */ (function (_super) {
             ModelUtils_1.ModelUtils.updateSelection(this.history, this.selection);
             this.handler.tryUpdateModelSize();
             this.history.endTransaction();
-            this.handler.raiseClick([shape.key]);
+            this.handler.onDocumentClick([shape.key]);
         }
         this.handler.switchToDefaultState();
     };
@@ -31928,7 +32065,7 @@ exports.MouseHandlerToggleShapeExpandedState = MouseHandlerToggleShapeExpandedSt
 
 
 /***/ }),
-/* 317 */
+/* 315 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31948,7 +32085,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ToggleShapeExpandedHistoryItem = void 0;
-var HistoryItem_1 = __webpack_require__(6);
+var HistoryItem_1 = __webpack_require__(8);
 var ToggleShapeExpandedHistoryItem = /** @class */ (function (_super) {
     __extends(ToggleShapeExpandedHistoryItem, _super);
     function ToggleShapeExpandedHistoryItem(shape) {
@@ -31971,7 +32108,7 @@ exports.ToggleShapeExpandedHistoryItem = ToggleShapeExpandedHistoryItem;
 
 
 /***/ }),
-/* 318 */
+/* 316 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31993,7 +32130,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.MouseHandlerSelectionState = void 0;
 var Event_1 = __webpack_require__(13);
 var rectangle_1 = __webpack_require__(12);
-var MouseHandlerStateBase_1 = __webpack_require__(39);
+var MouseHandlerStateBase_1 = __webpack_require__(40);
 var MouseHandlerSelectionState = /** @class */ (function (_super) {
     __extends(MouseHandlerSelectionState, _super);
     function MouseHandlerSelectionState(handler, selection, visualizerManager) {
@@ -32003,7 +32140,7 @@ var MouseHandlerSelectionState = /** @class */ (function (_super) {
         return _this;
     }
     MouseHandlerSelectionState.prototype.finish = function () {
-        this.handler.raiseDragEnd([]);
+        this.handler.onDocumentDragEnd([]);
         this.visualizerManager.resetSelectionRectangle();
         _super.prototype.finish.call(this);
     };
@@ -32011,7 +32148,7 @@ var MouseHandlerSelectionState = /** @class */ (function (_super) {
     };
     MouseHandlerSelectionState.prototype.onMouseDown = function (evt) {
         this.startPoint = evt.modelPoint;
-        this.handler.raiseDragStart([]);
+        this.handler.onDocumentDragStart([]);
     };
     MouseHandlerSelectionState.prototype.onMouseMove = function (evt) {
         if (evt.button !== Event_1.MouseButton.Left)
@@ -32035,7 +32172,7 @@ exports.MouseHandlerSelectionState = MouseHandlerSelectionState;
 
 
 /***/ }),
-/* 319 */
+/* 317 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32055,9 +32192,9 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MouseHandlerZoomOnWheelState = void 0;
-var MouseHandlerStateBase_1 = __webpack_require__(39);
+var MouseHandlerStateBase_1 = __webpack_require__(40);
 var Event_1 = __webpack_require__(13);
-var Settings_1 = __webpack_require__(27);
+var Settings_1 = __webpack_require__(28);
 var MouseHandlerZoomOnWheelState = /** @class */ (function (_super) {
     __extends(MouseHandlerZoomOnWheelState, _super);
     function MouseHandlerZoomOnWheelState(handler, settings, view) {
@@ -32110,7 +32247,7 @@ exports.MouseHandlerZoomOnWheelState = MouseHandlerZoomOnWheelState;
 
 
 /***/ }),
-/* 320 */
+/* 318 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32130,7 +32267,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MouseHandlerMoveShapeState = void 0;
-var MouseHandlerDragDiagramItemStateBase_1 = __webpack_require__(154);
+var MouseHandlerDragDiagramItemStateBase_1 = __webpack_require__(153);
 var MouseHandlerMoveShapeState = /** @class */ (function (_super) {
     __extends(MouseHandlerMoveShapeState, _super);
     function MouseHandlerMoveShapeState(handler, history, model, selection, visualizerManager) {
@@ -32160,7 +32297,7 @@ exports.MouseHandlerMoveShapeState = MouseHandlerMoveShapeState;
 
 
 /***/ }),
-/* 321 */
+/* 319 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32180,8 +32317,8 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MouseHandlerMoveConnectorState = void 0;
-var ModelUtils_1 = __webpack_require__(5);
-var MouseHandlerDragDiagramItemStateBase_1 = __webpack_require__(154);
+var ModelUtils_1 = __webpack_require__(4);
+var MouseHandlerDragDiagramItemStateBase_1 = __webpack_require__(153);
 var MouseHandlerMoveConnectorState = /** @class */ (function (_super) {
     __extends(MouseHandlerMoveConnectorState, _super);
     function MouseHandlerMoveConnectorState(handler, history, model, selection, visualizerManager) {
@@ -32218,7 +32355,7 @@ exports.MouseHandlerMoveConnectorState = MouseHandlerMoveConnectorState;
 
 
 /***/ }),
-/* 322 */
+/* 320 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32238,7 +32375,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MouseHandlerDefaultReadOnlyTouchState = void 0;
-var MouseHandlerDefaultReadOnlyState_1 = __webpack_require__(156);
+var MouseHandlerDefaultReadOnlyState_1 = __webpack_require__(154);
 var MouseHandlerDefaultReadOnlyTouchState = /** @class */ (function (_super) {
     __extends(MouseHandlerDefaultReadOnlyTouchState, _super);
     function MouseHandlerDefaultReadOnlyTouchState() {
@@ -32268,7 +32405,7 @@ exports.MouseHandlerDefaultReadOnlyTouchState = MouseHandlerDefaultReadOnlyTouch
 
 
 /***/ }),
-/* 323 */
+/* 321 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32288,8 +32425,8 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MouseHandlerDefaultTouchState = void 0;
-var MouseHandlerDefaultState_1 = __webpack_require__(150);
-var MouseHandlerZoomOnPinchState_1 = __webpack_require__(324);
+var MouseHandlerDefaultState_1 = __webpack_require__(149);
+var MouseHandlerZoomOnPinchState_1 = __webpack_require__(322);
 var MouseHandlerDefaultTouchState = /** @class */ (function (_super) {
     __extends(MouseHandlerDefaultTouchState, _super);
     function MouseHandlerDefaultTouchState() {
@@ -32330,7 +32467,7 @@ exports.MouseHandlerDefaultTouchState = MouseHandlerDefaultTouchState;
 
 
 /***/ }),
-/* 324 */
+/* 322 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32350,10 +32487,10 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MouseHandlerZoomOnPinchState = void 0;
-var Settings_1 = __webpack_require__(27);
-var Utils_1 = __webpack_require__(3);
-var point_1 = __webpack_require__(0);
-var MouseHandlerScrollingState_1 = __webpack_require__(153);
+var Settings_1 = __webpack_require__(28);
+var point_1 = __webpack_require__(1);
+var MouseHandlerScrollingState_1 = __webpack_require__(152);
+var metrics_1 = __webpack_require__(35);
 var PINCH_CHANGE_DISTANCE = 1;
 var MouseHandlerZoomOnPinchState = /** @class */ (function (_super) {
     __extends(MouseHandlerZoomOnPinchState, _super);
@@ -32398,7 +32535,7 @@ var MouseHandlerZoomOnPinchState = /** @class */ (function (_super) {
     MouseHandlerZoomOnPinchState.prototype.getTouchDistance = function (evt) {
         var pt0 = new point_1.Point(evt.touches[0].offsetPoint.x, evt.touches[0].offsetPoint.y);
         var pt1 = new point_1.Point(evt.touches[1].offsetPoint.x, evt.touches[1].offsetPoint.y);
-        return Utils_1.GeometryUtils.getDistance(pt0, pt1);
+        return metrics_1.Metrics.euclideanDistance(pt0, pt1);
     };
     MouseHandlerZoomOnPinchState.prototype.getPointByEvent = function (evt) {
         return this.getMiddleAbsPoint(evt);
@@ -32423,18 +32560,18 @@ exports.MouseHandlerZoomOnPinchState = MouseHandlerZoomOnPinchState;
 
 
 /***/ }),
-/* 325 */
+/* 323 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TextInputHandler = void 0;
-var ChangeShapeTextHistoryItem_1 = __webpack_require__(157);
+var ChangeShapeTextHistoryItem_1 = __webpack_require__(155);
 var Event_1 = __webpack_require__(13);
 var key_1 = __webpack_require__(26);
 var Shape_1 = __webpack_require__(14);
-var Connector_1 = __webpack_require__(7);
+var Connector_1 = __webpack_require__(6);
 var ChangeConnectorTextHistoryItem_1 = __webpack_require__(67);
 var TextInputHandler = /** @class */ (function () {
     function TextInputHandler(control) {
@@ -32556,7 +32693,7 @@ exports.TextInputHandler = TextInputHandler;
 
 
 /***/ }),
-/* 326 */
+/* 324 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32580,47 +32717,50 @@ var Utils_1 = __webpack_require__(3);
 var Event_1 = __webpack_require__(13);
 var key_1 = __webpack_require__(26);
 var batch_updatable_1 = __webpack_require__(80);
-var ModelUtils_1 = __webpack_require__(5);
-var browser_1 = __webpack_require__(17);
+var ModelUtils_1 = __webpack_require__(4);
+var browser_1 = __webpack_require__(20);
 var SELECTION_CHANGED_EVENT = 1;
 var ContextMenuHandler = /** @class */ (function (_super) {
     __extends(ContextMenuHandler, _super);
-    function ContextMenuHandler(selection) {
-        var _this = _super.call(this) || this;
-        _this.selection = selection;
+    function ContextMenuHandler() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.contextMenuVisible = false;
         _this.textInputStarted = false;
         _this.canHideContextMenu = true;
         _this.onVisibilityChanged = new Utils_1.EventDispatcher();
         _this.contextToolboxVisible = false;
         _this.hasTouchDown = false;
-        _this.isTouchUI = browser_1.Browser.TouchUI;
-        if (_this.isTouchUI)
-            _this.selection.onChanged.add(_this);
+        _this.isTouchUIEnabled = false;
         return _this;
     }
     Object.defineProperty(ContextMenuHandler.prototype, "isTouchMode", {
-        get: function () { return this.isTouchUI || this.hasTouchDown; },
+        get: function () { return this.isTouchUIEnabled || this.hasTouchDown; },
         enumerable: false,
         configurable: true
     });
+    ContextMenuHandler.prototype.initialize = function (selection, isTouchUIEnabled) {
+        this.selection = selection;
+        this.isTouchUIEnabled = isTouchUIEnabled;
+        if (this.isTouchUIEnabled)
+            this.selection.onChanged.add(this);
+    };
     ContextMenuHandler.prototype.onMouseDown = function (evt) {
         this.hasTouchDown = evt.pointerType === "touch";
         if (this.isTouchMode) {
-            if (!this.isTouchUI)
+            if (!this.isTouchUIEnabled)
                 this.selection.onChanged.add(this);
             if (evt.source.key === undefined)
                 this.hideContextMenu();
             return;
         }
-        else if (!this.isTouchUI)
+        else if (!this.isTouchUIEnabled)
             this.selection.onChanged.remove(this);
         if (evt.button === Event_1.MouseButton.Left && evt.source.type !== Event_1.MouseEventElementType.Undefined)
             this.hideContextMenu();
     };
     ContextMenuHandler.prototype.onMouseUp = function (evt) {
         this.hasTouchDown = false;
-        if (evt.pointerType === "touch" || this.isTouchUI)
+        if (evt.pointerType === "touch" || this.isTouchUIEnabled)
             return;
         if (!browser_1.Browser.MacOSPlatform || browser_1.Browser.MacOSPlatform && this.canHideContextMenu)
             this.hideContextMenu();
@@ -32749,7 +32889,7 @@ exports.ContextMenuHandler = ContextMenuHandler;
 
 
 /***/ }),
-/* 327 */
+/* 325 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32769,35 +32909,32 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.VisualizerManager = void 0;
-var ConnectionTargetVisualizer_1 = __webpack_require__(328);
-var ContainerTargetVisualizer_1 = __webpack_require__(329);
-var ExtensionLinesVisualizer_1 = __webpack_require__(159);
+var ConnectionTargetVisualizer_1 = __webpack_require__(326);
+var ContainerTargetVisualizer_1 = __webpack_require__(327);
+var ExtensionLinesVisualizer_1 = __webpack_require__(157);
 var Event_1 = __webpack_require__(13);
-var ConnectionPointsVisualizer_1 = __webpack_require__(330);
+var ConnectionPointsVisualizer_1 = __webpack_require__(328);
 var Shape_1 = __webpack_require__(14);
 var Utils_1 = __webpack_require__(3);
-var segment_1 = __webpack_require__(34);
-var point_1 = __webpack_require__(0);
-var CanvasSelectionManager_1 = __webpack_require__(160);
-var ModelUtils_1 = __webpack_require__(5);
-var ResizeInfoVisualizer_1 = __webpack_require__(331);
-var SelectionRectVisualizer_1 = __webpack_require__(332);
+var segment_1 = __webpack_require__(33);
+var point_1 = __webpack_require__(1);
+var CanvasSelectionManager_1 = __webpack_require__(158);
+var ModelUtils_1 = __webpack_require__(4);
+var ResizeInfoVisualizer_1 = __webpack_require__(329);
+var SelectionRectVisualizer_1 = __webpack_require__(330);
 var batch_updatable_1 = __webpack_require__(80);
-var LocalizationService_1 = __webpack_require__(35);
-var browser_1 = __webpack_require__(17);
+var LocalizationService_1 = __webpack_require__(36);
 var SELECTION_CHANGED_EVENT = 1;
 var VisualizerManager = /** @class */ (function (_super) {
     __extends(VisualizerManager, _super);
-    function VisualizerManager(selection, model, eventManager, settings, readOnly) {
+    function VisualizerManager(settings, readOnly) {
         if (readOnly === void 0) { readOnly = settings.readOnly; }
         var _this = _super.call(this) || this;
-        _this.selection = selection;
-        _this.model = model;
-        _this.eventManager = eventManager;
         _this.settings = settings;
         _this.readOnly = readOnly;
-        _this.onVisualizersUpdate = new Utils_1.EventDispatcher();
         _this.hasTouchDown = false;
+        _this.isTouchUIEnabled = false;
+        _this.onVisualizersUpdate = new Utils_1.EventDispatcher();
         _this.connectionPointsVisualizer = new ConnectionPointsVisualizer_1.ConnectionPointsVisualizer(_this.onVisualizersUpdate);
         _this.connectionPointsVisualizer = new ConnectionPointsVisualizer_1.ConnectionPointsVisualizer(_this.onVisualizersUpdate);
         _this.connectionTargetVisualizer = new ConnectionTargetVisualizer_1.ConnectionTargetVisualizer(_this.onVisualizersUpdate);
@@ -32805,34 +32942,36 @@ var VisualizerManager = /** @class */ (function (_super) {
         _this.extensionLinesVisualizer = new ExtensionLinesVisualizer_1.ExtensionLinesVisualizer(_this.onVisualizersUpdate);
         _this.resizeInfoVisualizer = new ResizeInfoVisualizer_1.ResizeInfoVisualizer(_this.onVisualizersUpdate);
         _this.selectionRectangleVisualizer = new SelectionRectVisualizer_1.SelectionRectVisualizer(_this.onVisualizersUpdate);
-        _this.isTouchUI = browser_1.Browser.TouchUI;
-        if (_this.isTouchUI)
-            _this.selection.onChanged.add(_this);
+        _this.settings.onReadOnlyChanged.add(_this);
         return _this;
     }
     Object.defineProperty(VisualizerManager.prototype, "isTouchMode", {
-        get: function () { return this.isTouchUI || this.hasTouchDown; },
+        get: function () { return this.isTouchUIEnabled || this.hasTouchDown; },
         enumerable: false,
         configurable: true
     });
-    VisualizerManager.prototype.initialize = function (model) {
+    VisualizerManager.prototype.initialize = function (model, eventManager, selection, isTouchUIEnabled) {
         this.model = model;
+        this.eventManager = eventManager;
+        this.selection = selection;
+        this.isTouchUIEnabled = isTouchUIEnabled;
+        if (this.isTouchUIEnabled)
+            this.selection.onChanged.add(this);
     };
     VisualizerManager.prototype.onMouseDown = function (evt) {
         this.hasTouchDown = evt.pointerType === "touch";
-        if (this.isTouchMode) {
-            if (!this.isTouchUI)
+        if (!this.isTouchUIEnabled)
+            if (this.isTouchMode)
                 this.selection.onChanged.add(this);
-        }
-        else if (!this.isTouchUI)
-            this.selection.onChanged.remove(this);
+            else
+                this.selection.onChanged.remove(this);
     };
     VisualizerManager.prototype.onMouseUp = function (evt) {
     };
     VisualizerManager.prototype.onMouseEnter = function (evt) {
     };
     VisualizerManager.prototype.onMouseLeave = function (evt) {
-        if (evt.pointerType !== "touch" && !this.isTouchUI)
+        if (evt.pointerType !== "touch" && !this.isTouchUIEnabled)
             this.resetConnectionPoints();
         else
             this.hasTouchDown = false;
@@ -32841,6 +32980,24 @@ var VisualizerManager = /** @class */ (function (_super) {
         this.resetContainerTarget();
         this.resetResizeInfo();
         this.resetSelectionRectangle();
+    };
+    VisualizerManager.prototype.onDocumentDragStart = function (keys) {
+        this.eventManager.onDocumentDragStart(keys);
+    };
+    VisualizerManager.prototype.onDocumentDragEnd = function (keys) {
+        this.eventManager.onDocumentDragEnd(keys);
+    };
+    VisualizerManager.prototype.onDocumentDragScrollStart = function () {
+        this.eventManager.onDocumentDragScrollStart();
+    };
+    VisualizerManager.prototype.onDocumentDragScrollEnd = function () {
+        this.eventManager.onDocumentDragScrollEnd();
+    };
+    VisualizerManager.prototype.onDocumentClick = function (keys) {
+        this.eventManager.onDocumentClick(keys);
+    };
+    VisualizerManager.prototype.canFinishTextEditing = function () {
+        return this.eventManager.canFinishTextEditing();
     };
     VisualizerManager.prototype.onBlur = function (evt) {
         var _this = this;
@@ -33120,7 +33277,7 @@ exports.VisualizerManager = VisualizerManager;
 
 
 /***/ }),
-/* 328 */
+/* 326 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33140,7 +33297,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ConnectionTargetVisualizer = exports.ConnectionTargetInfo = void 0;
-var TargetVisualizerBase_1 = __webpack_require__(158);
+var TargetVisualizerBase_1 = __webpack_require__(156);
 var ConnectionTargetInfo = /** @class */ (function () {
     function ConnectionTargetInfo(rect, strokeWidth) {
         this.rect = rect;
@@ -33169,7 +33326,7 @@ exports.ConnectionTargetVisualizer = ConnectionTargetVisualizer;
 
 
 /***/ }),
-/* 329 */
+/* 327 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33189,7 +33346,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ContainerTargetVisualizer = exports.ContainerTargetInfo = void 0;
-var TargetVisualizerBase_1 = __webpack_require__(158);
+var TargetVisualizerBase_1 = __webpack_require__(156);
 var ContainerTargetInfo = /** @class */ (function () {
     function ContainerTargetInfo(rect, strokeWidth) {
         this.rect = rect;
@@ -33217,7 +33374,7 @@ exports.ContainerTargetVisualizer = ContainerTargetVisualizer;
 
 
 /***/ }),
-/* 330 */
+/* 328 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33280,7 +33437,7 @@ exports.ConnectionPointsVisualizer = ConnectionPointsVisualizer;
 
 
 /***/ }),
-/* 331 */
+/* 329 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33316,7 +33473,7 @@ exports.ResizeInfoVisualizer = ResizeInfoVisualizer;
 
 
 /***/ }),
-/* 332 */
+/* 330 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33348,7 +33505,7 @@ exports.SelectionRectVisualizer = SelectionRectVisualizer;
 
 
 /***/ }),
-/* 333 */
+/* 331 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33358,18 +33515,21 @@ exports.ContextToolboxHandler = void 0;
 var Event_1 = __webpack_require__(13);
 var Utils_1 = __webpack_require__(3);
 var key_1 = __webpack_require__(26);
-var browser_1 = __webpack_require__(17);
 var ContextToolboxHandler = /** @class */ (function () {
     function ContextToolboxHandler() {
+        this.isTouchUIEnabled = false;
         this.contextToolboxVisible = false;
         this.onVisibilityChanged = new Utils_1.EventDispatcher();
     }
+    ContextToolboxHandler.prototype.initialize = function (isTouchUIEnabled) {
+        this.isTouchUIEnabled = isTouchUIEnabled;
+    };
     ContextToolboxHandler.prototype.onMouseDown = function (evt) {
         if (evt.source.type !== Event_1.MouseEventElementType.Undefined)
             this.hideContextToolbox();
     };
     ContextToolboxHandler.prototype.onMouseUp = function (evt) {
-        if (evt.source.type !== Event_1.MouseEventElementType.Undefined || !browser_1.Browser.TouchUI)
+        if (evt.source.type !== Event_1.MouseEventElementType.Undefined && !this.isTouchUIEnabled)
             this.hideContextToolbox();
     };
     ContextToolboxHandler.prototype.onFocus = function (evt) { };
@@ -33403,7 +33563,7 @@ exports.ContextToolboxHandler = ContextToolboxHandler;
 
 
 /***/ }),
-/* 334 */
+/* 332 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33411,10 +33571,10 @@ exports.ContextToolboxHandler = ContextToolboxHandler;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Selection = void 0;
 var Utils_1 = __webpack_require__(3);
-var InputPosition_1 = __webpack_require__(335);
+var InputPosition_1 = __webpack_require__(333);
 var Shape_1 = __webpack_require__(14);
-var Connector_1 = __webpack_require__(7);
-var Data_1 = __webpack_require__(45);
+var Connector_1 = __webpack_require__(6);
+var Data_1 = __webpack_require__(46);
 var Selection = /** @class */ (function () {
     function Selection(model) {
         this.onChanged = new Utils_1.EventDispatcher();
@@ -33528,15 +33688,15 @@ exports.Selection = Selection;
 
 
 /***/ }),
-/* 335 */
+/* 333 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.InputPosition = void 0;
-var InputPositionProperties_1 = __webpack_require__(336);
-var Data_1 = __webpack_require__(45);
+var InputPositionProperties_1 = __webpack_require__(334);
+var Data_1 = __webpack_require__(46);
 var InputPosition = /** @class */ (function () {
     function InputPosition(selection) {
         this.selection = selection;
@@ -33627,15 +33787,15 @@ exports.InputPosition = InputPosition;
 
 
 /***/ }),
-/* 336 */
+/* 334 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.InputPositionProperties = void 0;
-var ConnectorProperties_1 = __webpack_require__(31);
-var Style_1 = __webpack_require__(30);
+var ConnectorProperties_1 = __webpack_require__(30);
+var Style_1 = __webpack_require__(27);
 var InputPositionProperties = /** @class */ (function () {
     function InputPositionProperties(selection, baseProperties) {
         this.selection = selection;
@@ -33724,14 +33884,14 @@ exports.InputPositionProperties = InputPositionProperties;
 
 
 /***/ }),
-/* 337 */
+/* 335 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.History = void 0;
-var HistoryItem_1 = __webpack_require__(6);
+var HistoryItem_1 = __webpack_require__(8);
 var Utils_1 = __webpack_require__(3);
 var History = /** @class */ (function () {
     function History(modelManipulator) {
@@ -33893,7 +34053,7 @@ exports.History = History;
 
 
 /***/ }),
-/* 338 */
+/* 336 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34004,7 +34164,7 @@ exports.BarManager = BarManager;
 
 
 /***/ }),
-/* 339 */
+/* 337 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34012,18 +34172,18 @@ exports.BarManager = BarManager;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RenderManager = void 0;
 var Event_1 = __webpack_require__(13);
-var evt_1 = __webpack_require__(43);
+var evt_1 = __webpack_require__(44);
 var dom_1 = __webpack_require__(23);
-var point_1 = __webpack_require__(0);
+var point_1 = __webpack_require__(1);
 var Utils_1 = __webpack_require__(16);
 var CanvasItemsManager_1 = __webpack_require__(77);
-var ScrollView_1 = __webpack_require__(340);
-var Settings_1 = __webpack_require__(27);
-var InputManager_1 = __webpack_require__(341);
-var CanvasPageManager_1 = __webpack_require__(342);
-var CanvasViewManager_1 = __webpack_require__(344);
-var CanvasSelectionManager_1 = __webpack_require__(160);
-var AutoScrollController_1 = __webpack_require__(346);
+var ScrollView_1 = __webpack_require__(338);
+var Settings_1 = __webpack_require__(28);
+var InputManager_1 = __webpack_require__(339);
+var CanvasPageManager_1 = __webpack_require__(340);
+var CanvasViewManager_1 = __webpack_require__(342);
+var CanvasSelectionManager_1 = __webpack_require__(158);
+var AutoScrollController_1 = __webpack_require__(344);
 var TextMeasurer_1 = __webpack_require__(78);
 var RenderHelper_1 = __webpack_require__(15);
 var DOMManipulator_1 = __webpack_require__(100);
@@ -34037,10 +34197,10 @@ var RenderManager = /** @class */ (function () {
         this.measurer = measurer;
         this.dom = new DOMManipulator_1.DOMManipulator(this.measurer);
         this.view = new CanvasViewManager_1.CanvasViewManager(this.scroll, this.svgElement, settings.modelSize, settings.zoomLevel, settings.autoZoom, settings.simpleView, settings.rectangle, this.dom);
-        this.input = new InputManager_1.InputManager(mainElement, this.view, events, this.measurer, settings.zoomLevel);
+        this.input = new InputManager_1.InputManager(mainElement, this.view, events, this.measurer, settings.zoomLevel, settings.isTouchUIEnabled);
         this.items = new CanvasItemsManager_1.CanvasItemsManager(this.view.canvasElement, settings.zoomLevel, this.dom);
         this.page = new CanvasPageManager_1.CanvasPageManager(this.view.pageElement, settings, this.dom);
-        this.selection = new CanvasSelectionManager_1.CanvasSelectionManager(this.view.canvasElement, settings.zoomLevel, settings.readOnly, this.dom);
+        this.selection = new CanvasSelectionManager_1.CanvasSelectionManager(this.view.canvasElement, settings.zoomLevel, settings.readOnly, this.dom, settings.isTouchUIEnabled);
         this.contextMenuEnabled = settings.contextMenuEnabled;
         this.view.onViewChanged.add(this.page);
         this.view.onViewChanged.add(this.items);
@@ -34259,7 +34419,7 @@ exports.RenderManager = RenderManager;
 
 
 /***/ }),
-/* 340 */
+/* 338 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34268,7 +34428,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.NativeScrollView = void 0;
 var Utils_1 = __webpack_require__(3);
 var size_1 = __webpack_require__(2);
-var point_1 = __webpack_require__(0);
+var point_1 = __webpack_require__(1);
 var dom_1 = __webpack_require__(23);
 var RenderHelper_1 = __webpack_require__(15);
 var NativeScrollView = /** @class */ (function () {
@@ -34321,7 +34481,7 @@ exports.NativeScrollView = NativeScrollView;
 
 
 /***/ }),
-/* 341 */
+/* 339 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34333,21 +34493,22 @@ var dom_1 = __webpack_require__(23);
 var Utils_1 = __webpack_require__(16);
 var Event_1 = __webpack_require__(13);
 var Shape_1 = __webpack_require__(14);
-var Connector_1 = __webpack_require__(7);
-var evt_1 = __webpack_require__(43);
-var ITextMeasurer_1 = __webpack_require__(44);
-var browser_1 = __webpack_require__(17);
+var Connector_1 = __webpack_require__(6);
+var evt_1 = __webpack_require__(44);
+var ITextMeasurer_1 = __webpack_require__(45);
+var browser_1 = __webpack_require__(20);
 var unit_converter_1 = __webpack_require__(11);
 var RenderHelper_1 = __webpack_require__(15);
-var TextUtils_1 = __webpack_require__(62);
+var TextUtils_1 = __webpack_require__(63);
 var TEXT_INPUT_CSSCLASS = "dxdi-text-input";
 var InputManager = /** @class */ (function () {
-    function InputManager(mainElement, layoutPointResolver, eventManager, textMeasurer, actualZoom) {
+    function InputManager(mainElement, layoutPointResolver, eventManager, textMeasurer, actualZoom, isTouchUIEnabled) {
         this.mainElement = mainElement;
         this.layoutPointResolver = layoutPointResolver;
         this.eventManager = eventManager;
         this.textMeasurer = textMeasurer;
         this.actualZoom = actualZoom;
+        this.isTouchUIEnabled = isTouchUIEnabled;
         this.focused = false;
         this.focusLocked = false;
         this.createInputElements(this.mainElement);
@@ -34443,7 +34604,7 @@ var InputManager = /** @class */ (function () {
     };
     InputManager.prototype.createFocusInputElement = function (parent) {
         this.inputElement = document.createElement("textarea");
-        this.inputElement.readOnly = browser_1.Browser.TouchUI; // prevent show keyboard on mobile devices, but the "paste" event isn't raised for some desktop browsers(IE)
+        this.inputElement.readOnly = this.isTouchUIEnabled; // prevent show keyboard on mobile devices, but the "paste" event isn't raised for some desktop browsers(IE)
         this.inputElement.setAttribute("class", "dxdi-focus-input");
         parent.appendChild(this.inputElement);
     };
@@ -34649,7 +34810,7 @@ exports.InputManager = InputManager;
 
 
 /***/ }),
-/* 342 */
+/* 340 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34669,14 +34830,14 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CanvasPageManager = void 0;
-var Style_1 = __webpack_require__(30);
+var Style_1 = __webpack_require__(27);
 var RectaglePrimitive_1 = __webpack_require__(21);
-var PathPrimitive_1 = __webpack_require__(4);
-var PatternPrimitive_1 = __webpack_require__(343);
-var ClipPathPrimitive_1 = __webpack_require__(54);
-var CanvasManagerBase_1 = __webpack_require__(41);
+var PathPrimitive_1 = __webpack_require__(5);
+var PatternPrimitive_1 = __webpack_require__(341);
+var ClipPathPrimitive_1 = __webpack_require__(55);
+var CanvasManagerBase_1 = __webpack_require__(42);
 var size_1 = __webpack_require__(2);
-var point_1 = __webpack_require__(0);
+var point_1 = __webpack_require__(1);
 var Utils_1 = __webpack_require__(16);
 var color_1 = __webpack_require__(22);
 var unit_converter_1 = __webpack_require__(11);
@@ -34850,7 +35011,7 @@ exports.CanvasPageManager = CanvasPageManager;
 
 
 /***/ }),
-/* 343 */
+/* 341 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34904,7 +35065,7 @@ exports.PatternPrimitive = PatternPrimitive;
 
 
 /***/ }),
-/* 344 */
+/* 342 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34924,18 +35085,18 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CanvasViewManager = exports.CROP_OFFSET = exports.CANVAS_SCROLL_PADDING = exports.CANVAS_MIN_PADDING = void 0;
-var CanvasManagerBase_1 = __webpack_require__(41);
-var Settings_1 = __webpack_require__(27);
+var CanvasManagerBase_1 = __webpack_require__(42);
+var Settings_1 = __webpack_require__(28);
 var Utils_1 = __webpack_require__(3);
 var offsets_1 = __webpack_require__(87);
 var size_1 = __webpack_require__(2);
-var point_1 = __webpack_require__(0);
-var GroupPrimitive_1 = __webpack_require__(38);
-var ClipPathPrimitive_1 = __webpack_require__(54);
+var point_1 = __webpack_require__(1);
+var GroupPrimitive_1 = __webpack_require__(39);
+var ClipPathPrimitive_1 = __webpack_require__(55);
 var RectaglePrimitive_1 = __webpack_require__(21);
 var Utils_2 = __webpack_require__(16);
-var ShadowFilterPrimitive_1 = __webpack_require__(345);
-var Style_1 = __webpack_require__(30);
+var ShadowFilterPrimitive_1 = __webpack_require__(343);
+var Style_1 = __webpack_require__(27);
 var dom_1 = __webpack_require__(23);
 var unit_converter_1 = __webpack_require__(11);
 exports.CANVAS_MIN_PADDING = 8;
@@ -35413,7 +35574,7 @@ exports.CanvasViewManager = CanvasViewManager;
 
 
 /***/ }),
-/* 345 */
+/* 343 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35463,7 +35624,7 @@ exports.ShadowFilterPrimitive = ShadowFilterPrimitive;
 
 
 /***/ }),
-/* 346 */
+/* 344 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35597,7 +35758,7 @@ exports.AutoScrollController = AutoScrollController;
 
 
 /***/ }),
-/* 347 */
+/* 345 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35617,14 +35778,15 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DocumentDataSource = exports.UpdateNodeKeyRelatedObjectsStackAction = exports.UpdateNodeKeyRelatedObjectsStackItem = void 0;
-var ShapeTypes_1 = __webpack_require__(1);
+var ShapeTypes_1 = __webpack_require__(0);
 var Shape_1 = __webpack_require__(14);
-var Connector_1 = __webpack_require__(7);
-var DataSource_1 = __webpack_require__(348);
-var ModelUtils_1 = __webpack_require__(5);
-var Data_1 = __webpack_require__(45);
+var Connector_1 = __webpack_require__(6);
+var DataSource_1 = __webpack_require__(346);
+var ModelUtils_1 = __webpack_require__(4);
+var Data_1 = __webpack_require__(46);
 var Utils_1 = __webpack_require__(3);
 var list_1 = __webpack_require__(82);
+var math_1 = __webpack_require__(32);
 var UpdateNodeKeyRelatedObjectsStackItem = /** @class */ (function () {
     function UpdateNodeKeyRelatedObjectsStackItem(shape, nodeObj) {
         this.shape = shape;
@@ -35770,10 +35932,10 @@ var DocumentDataSource = /** @class */ (function (_super) {
             (nodeObj.type !== shape.description.key && !(nodeObj.type === undefined && shape.description.key === ShapeTypes_1.ShapeTypes.Rectangle)) ||
             !this.compareStrings(nodeObj.text, shape.text) ||
             (this.nodeDataImporter.setImage && nodeObj.image !== shape.image.actualUrl) ||
-            (this.nodeDataImporter.setLeft && nodeObj.left !== ModelUtils_1.ModelUtils.getlUnitValue(units, shape.position.x)) ||
-            (this.nodeDataImporter.setTop && nodeObj.top !== ModelUtils_1.ModelUtils.getlUnitValue(units, shape.position.y)) ||
-            (this.nodeDataImporter.setWidth && nodeObj.width !== ModelUtils_1.ModelUtils.getlUnitValue(units, shape.size.width)) ||
-            (this.nodeDataImporter.setHeight && nodeObj.height !== ModelUtils_1.ModelUtils.getlUnitValue(units, shape.size.height));
+            (this.nodeDataImporter.setLeft && !math_1.MathUtils.numberCloseTo(nodeObj.left, ModelUtils_1.ModelUtils.getlUnitValue(units, shape.position.x))) ||
+            (this.nodeDataImporter.setTop && !math_1.MathUtils.numberCloseTo(nodeObj.top, ModelUtils_1.ModelUtils.getlUnitValue(units, shape.position.y))) ||
+            (this.nodeDataImporter.setWidth && !math_1.MathUtils.numberCloseTo(nodeObj.width, ModelUtils_1.ModelUtils.getlUnitValue(units, shape.size.width))) ||
+            (this.nodeDataImporter.setHeight && !math_1.MathUtils.numberCloseTo(nodeObj.height, ModelUtils_1.ModelUtils.getlUnitValue(units, shape.size.height)));
     };
     DocumentDataSource.prototype.updateNodeObjectProperties = function (shape, nodeObj, units) {
         this.updateItemObjectProperties(nodeObj, shape, this.nodeDataImporter);
@@ -36288,7 +36450,7 @@ exports.DocumentDataSource = DocumentDataSource;
 
 
 /***/ }),
-/* 348 */
+/* 346 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36296,34 +36458,34 @@ exports.DocumentDataSource = DocumentDataSource;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DataSource = void 0;
 var unit_converter_1 = __webpack_require__(11);
-var point_1 = __webpack_require__(0);
+var point_1 = __webpack_require__(1);
 var size_1 = __webpack_require__(2);
-var AddConnectionHistoryItem_1 = __webpack_require__(49);
+var AddConnectionHistoryItem_1 = __webpack_require__(50);
 var AddConnectorHistoryItem_1 = __webpack_require__(64);
-var AddShapeHistoryItem_1 = __webpack_require__(52);
+var AddShapeHistoryItem_1 = __webpack_require__(53);
 var DeleteConnectionHistoryItem_1 = __webpack_require__(65);
-var ResizeShapeHistoryItem_1 = __webpack_require__(119);
+var ResizeShapeHistoryItem_1 = __webpack_require__(118);
 var ChangeConnectorPropertyHistoryItem_1 = __webpack_require__(88);
 var ChangeConnectorTextHistoryItem_1 = __webpack_require__(67);
-var ChangeCustomDataHistoryItem_1 = __webpack_require__(349);
-var ChangeLockedHistoryItem_1 = __webpack_require__(120);
-var ChangeShapeImageHistoryItem_1 = __webpack_require__(149);
-var ChangeShapeTextHistoryItem_1 = __webpack_require__(157);
+var ChangeCustomDataHistoryItem_1 = __webpack_require__(347);
+var ChangeLockedHistoryItem_1 = __webpack_require__(119);
+var ChangeShapeImageHistoryItem_1 = __webpack_require__(148);
+var ChangeShapeTextHistoryItem_1 = __webpack_require__(155);
 var ChangeZindexHistoryItem_1 = __webpack_require__(102);
 var ChangeStyleHistoryItem_1 = __webpack_require__(89);
 var ChangeStyleTextHistoryItem_1 = __webpack_require__(68);
-var Connector_1 = __webpack_require__(7);
-var ModelUtils_1 = __webpack_require__(5);
-var ShapeTypes_1 = __webpack_require__(1);
-var ITextMeasurer_1 = __webpack_require__(44);
+var Connector_1 = __webpack_require__(6);
+var ModelUtils_1 = __webpack_require__(4);
+var ShapeTypes_1 = __webpack_require__(0);
+var ITextMeasurer_1 = __webpack_require__(45);
 var Utils_1 = __webpack_require__(3);
 var color_1 = __webpack_require__(22);
-var Data_1 = __webpack_require__(45);
+var Data_1 = __webpack_require__(46);
 var Svg_1 = __webpack_require__(113);
-var TextUtils_1 = __webpack_require__(62);
-var DataImporter_1 = __webpack_require__(350);
-var DataSourceItems_1 = __webpack_require__(351);
-var ChangeConnectorPointsHistoryItem_1 = __webpack_require__(155);
+var TextUtils_1 = __webpack_require__(63);
+var DataImporter_1 = __webpack_require__(348);
+var DataSourceItems_1 = __webpack_require__(349);
+var ChangeConnectorPointsHistoryItem_1 = __webpack_require__(86);
 var DataSource = /** @class */ (function () {
     function DataSource(key, nodeDataSource, edgeDataSource, parameters, nodeDataImporter, edgeDataImporter) {
         this.key = key;
@@ -36936,13 +37098,13 @@ var DataSource = /** @class */ (function () {
         if (node.top !== undefined)
             point.y = ModelUtils_1.ModelUtils.getTwipsValue(model.units, node.top);
         ModelUtils_1.ModelUtils.setShapePosition(history, model, shape, point);
-        ModelUtils_1.ModelUtils.updateShapeAttachedConnectors(history, model, shape);
         var size = shape.size.clone();
         if (node.width !== undefined)
             size.width = ModelUtils_1.ModelUtils.getTwipsValue(model.units, node.width);
         if (node.height !== undefined)
             size.height = ModelUtils_1.ModelUtils.getTwipsValue(model.units, node.height);
         ModelUtils_1.ModelUtils.setShapeSize(history, model, shape, point, size);
+        ModelUtils_1.ModelUtils.updateShapeAttachedConnectors(history, model, shape);
         if (node.text !== undefined && node.text !== shape.text)
             history.addAndRedo(new ChangeShapeTextHistoryItem_1.ChangeShapeTextHistoryItem(shape, node.text));
         if (node.image !== undefined && node.image !== shape.image.actualUrl)
@@ -37075,7 +37237,7 @@ exports.DataSource = DataSource;
 
 
 /***/ }),
-/* 349 */
+/* 347 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37095,7 +37257,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ChangeCustomDataHistoryItem = void 0;
-var HistoryItem_1 = __webpack_require__(6);
+var HistoryItem_1 = __webpack_require__(8);
 var Utils_1 = __webpack_require__(3);
 var ChangeCustomDataHistoryItem = /** @class */ (function (_super) {
     __extends(ChangeCustomDataHistoryItem, _super);
@@ -37120,7 +37282,7 @@ exports.ChangeCustomDataHistoryItem = ChangeCustomDataHistoryItem;
 
 
 /***/ }),
-/* 350 */
+/* 348 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37219,7 +37381,7 @@ exports.DataSourceEdgeDataImporter = DataSourceEdgeDataImporter;
 
 
 /***/ }),
-/* 351 */
+/* 349 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37239,7 +37401,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DataSourceEdgeItem = exports.DataSourceNodeItem = exports.DataSourceItem = void 0;
-var Connector_1 = __webpack_require__(7);
+var Connector_1 = __webpack_require__(6);
 var DataSourceItem = /** @class */ (function () {
     function DataSourceItem(sourceKey, key, dataObj) {
         this.sourceKey = sourceKey;
@@ -37285,7 +37447,7 @@ exports.DataSourceEdgeItem = DataSourceEdgeItem;
 
 
 /***/ }),
-/* 352 */
+/* 350 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37365,28 +37527,28 @@ function getStepByZoom(zoom) {
 
 
 /***/ }),
-/* 353 */
+/* 351 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ToolboxManager = void 0;
-var TextToolbox_1 = __webpack_require__(354);
-var IconToolbox_1 = __webpack_require__(355);
+var TextToolbox_1 = __webpack_require__(352);
+var IconToolbox_1 = __webpack_require__(353);
 var TextMeasurer_1 = __webpack_require__(78);
-var math_1 = __webpack_require__(33);
+var math_1 = __webpack_require__(32);
 var ToolboxManager = /** @class */ (function () {
     function ToolboxManager(shapeDescriptionManager) {
         this.shapeDescriptionManager = shapeDescriptionManager;
         this.toolboxes = [];
         this.measurers = {};
     }
-    ToolboxManager.prototype.create = function (parent, readOnly, allowDragging, renderAsText, shapes, getAllowedShapeTypes, options) {
+    ToolboxManager.prototype.create = function (parent, readOnly, allowDragging, renderAsText, shapes, getAllowedShapeTypes, isTouchUIEnabled, options) {
         var shapeTypes = Array.isArray(shapes) ? shapes : this.shapeDescriptionManager.getTypesByCategory(shapes);
         var toolbox = renderAsText ?
-            new TextToolbox_1.TextToolbox(parent, readOnly, allowDragging, this.shapeDescriptionManager, shapeTypes, getAllowedShapeTypes) :
-            new IconToolbox_1.IconToolbox(parent, readOnly, allowDragging, this.shapeDescriptionManager, shapeTypes, getAllowedShapeTypes, options, this.getOrCreateMeasurer(parent));
+            new TextToolbox_1.TextToolbox(parent, readOnly, allowDragging, this.shapeDescriptionManager, shapeTypes, getAllowedShapeTypes, isTouchUIEnabled) :
+            new IconToolbox_1.IconToolbox(parent, readOnly, allowDragging, this.shapeDescriptionManager, shapeTypes, getAllowedShapeTypes, options, this.getOrCreateMeasurer(parent), isTouchUIEnabled);
         toolbox.render();
         this.toolboxes.push(toolbox);
         return toolbox;
@@ -37439,7 +37601,7 @@ exports.ToolboxManager = ToolboxManager;
 
 
 /***/ }),
-/* 354 */
+/* 352 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37459,11 +37621,11 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TextToolbox = void 0;
-var Toolbox_1 = __webpack_require__(161);
+var Toolbox_1 = __webpack_require__(159);
 var TextToolbox = /** @class */ (function (_super) {
     __extends(TextToolbox, _super);
-    function TextToolbox(parent, readOnly, allowDragging, shapeDescriptionManager, shapeTypes, getAllowedShapeTypes) {
-        return _super.call(this, parent, readOnly, allowDragging, shapeDescriptionManager, shapeTypes, getAllowedShapeTypes) || this;
+    function TextToolbox(parent, readOnly, allowDragging, shapeDescriptionManager, shapeTypes, getAllowedShapeTypes, isTouchUIEnabled) {
+        return _super.call(this, parent, readOnly, allowDragging, shapeDescriptionManager, shapeTypes, getAllowedShapeTypes, isTouchUIEnabled) || this;
     }
     TextToolbox.prototype.createElements = function (element, shapeTypes) {
         var _this = this;
@@ -37490,7 +37652,7 @@ exports.TextToolbox = TextToolbox;
 
 
 /***/ }),
-/* 355 */
+/* 353 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37510,22 +37672,22 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.IconToolbox = void 0;
-var Toolbox_1 = __webpack_require__(161);
+var Toolbox_1 = __webpack_require__(159);
 var RenderHelper_1 = __webpack_require__(15);
 var Shape_1 = __webpack_require__(14);
 var unit_converter_1 = __webpack_require__(11);
-var point_1 = __webpack_require__(0);
-var TextShapeDescription_1 = __webpack_require__(124);
-var Style_1 = __webpack_require__(30);
-var CustomShapeDescription_1 = __webpack_require__(129);
+var point_1 = __webpack_require__(1);
+var TextShapeDescription_1 = __webpack_require__(123);
+var Style_1 = __webpack_require__(27);
+var CustomShapeDescription_1 = __webpack_require__(128);
 var RectaglePrimitive_1 = __webpack_require__(21);
 var DEFAULT_SHAPE_ICON_SIZE = 32;
 var SHRINK_TEXT_SHAPE_ICON_SIZE = 26;
 var SHRINKED_TEXT = "T";
 var IconToolbox = /** @class */ (function (_super) {
     __extends(IconToolbox, _super);
-    function IconToolbox(parent, readonly, allowDragging, shapeDescriptionManager, shapeTypes, getAllowedShapeTypes, options, measurer) {
-        var _this = _super.call(this, parent, readonly, allowDragging, shapeDescriptionManager, shapeTypes, getAllowedShapeTypes) || this;
+    function IconToolbox(parent, readonly, allowDragging, shapeDescriptionManager, shapeTypes, getAllowedShapeTypes, options, measurer, isTouchUIEnabled) {
+        var _this = _super.call(this, parent, readonly, allowDragging, shapeDescriptionManager, shapeTypes, getAllowedShapeTypes, isTouchUIEnabled) || this;
         _this.options = options;
         _this.measurer = measurer;
         return _this;
@@ -37661,7 +37823,7 @@ exports.IconToolbox = IconToolbox;
 
 
 /***/ }),
-/* 356 */
+/* 354 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37683,7 +37845,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ApiController = void 0;
 var batch_updatable_1 = __webpack_require__(80);
 var Event_1 = __webpack_require__(13);
-var ModelUtils_1 = __webpack_require__(5);
+var ModelUtils_1 = __webpack_require__(4);
 var __1 = __webpack_require__(108);
 var ApiController = /** @class */ (function (_super) {
     __extends(ApiController, _super);
@@ -37785,7 +37947,7 @@ var ApiControllerAction;
 
 
 /***/ }),
-/* 357 */
+/* 355 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37794,21 +37956,21 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.PermissionsProvider = void 0;
 var Shape_1 = __webpack_require__(14);
 var Utils_1 = __webpack_require__(3);
-var ModelOperationSettings_1 = __webpack_require__(18);
-var Connector_1 = __webpack_require__(7);
-var AddShape_1 = __webpack_require__(358);
-var DeleteShape_1 = __webpack_require__(359);
-var DeleteConnector_1 = __webpack_require__(360);
-var AddShapeFromToolbox_1 = __webpack_require__(361);
-var ChangeConnection_1 = __webpack_require__(362);
-var ChangeConnectorPoints_1 = __webpack_require__(363);
-var BeforeChangeShapeText_1 = __webpack_require__(364);
-var BeforeChangeConnectorText_1 = __webpack_require__(365);
-var ChangeShapeText_1 = __webpack_require__(366);
-var ChangeConnectorText_1 = __webpack_require__(367);
-var PermissionsProviderStorage_1 = __webpack_require__(368);
-var ResizeShape_1 = __webpack_require__(369);
-var MoveShape_1 = __webpack_require__(370);
+var ModelOperationSettings_1 = __webpack_require__(17);
+var Connector_1 = __webpack_require__(6);
+var AddShape_1 = __webpack_require__(356);
+var DeleteShape_1 = __webpack_require__(357);
+var DeleteConnector_1 = __webpack_require__(358);
+var AddShapeFromToolbox_1 = __webpack_require__(359);
+var ChangeConnection_1 = __webpack_require__(360);
+var ChangeConnectorPoints_1 = __webpack_require__(361);
+var BeforeChangeShapeText_1 = __webpack_require__(362);
+var BeforeChangeConnectorText_1 = __webpack_require__(363);
+var ChangeShapeText_1 = __webpack_require__(364);
+var ChangeConnectorText_1 = __webpack_require__(365);
+var PermissionsProviderStorage_1 = __webpack_require__(366);
+var ResizeShape_1 = __webpack_require__(367);
+var MoveShape_1 = __webpack_require__(368);
 var PermissionsProvider = /** @class */ (function () {
     function PermissionsProvider(apiController) {
         this.onRequestOperation = new Utils_1.EventDispatcher();
@@ -37981,7 +38143,7 @@ exports.PermissionsProvider = PermissionsProvider;
 
 
 /***/ }),
-/* 358 */
+/* 356 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38001,7 +38163,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AddShapeEventArgs = exports.AddShapeRequestedEntity = void 0;
-var ModelOperationSettings_1 = __webpack_require__(18);
+var ModelOperationSettings_1 = __webpack_require__(17);
 var RequestedEntity_1 = __webpack_require__(24);
 var AddShapeRequestedEntity = /** @class */ (function (_super) {
     __extends(AddShapeRequestedEntity, _super);
@@ -38056,7 +38218,7 @@ exports.AddShapeEventArgs = AddShapeEventArgs;
 
 
 /***/ }),
-/* 359 */
+/* 357 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38076,7 +38238,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DeleteShapeEventArgs = exports.DeleteShapeRequestedEntity = void 0;
-var ModelOperationSettings_1 = __webpack_require__(18);
+var ModelOperationSettings_1 = __webpack_require__(17);
 var RequestedEntity_1 = __webpack_require__(24);
 var DeleteShapeRequestedEntity = /** @class */ (function (_super) {
     __extends(DeleteShapeRequestedEntity, _super);
@@ -38130,7 +38292,7 @@ exports.DeleteShapeEventArgs = DeleteShapeEventArgs;
 
 
 /***/ }),
-/* 360 */
+/* 358 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38150,7 +38312,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DeleteConnectorEventArgs = exports.DeleteConnectorRequestedEntity = void 0;
-var ModelOperationSettings_1 = __webpack_require__(18);
+var ModelOperationSettings_1 = __webpack_require__(17);
 var RequestedEntity_1 = __webpack_require__(24);
 var DeleteConnectorRequestedEntity = /** @class */ (function (_super) {
     __extends(DeleteConnectorRequestedEntity, _super);
@@ -38204,7 +38366,7 @@ exports.DeleteConnectorEventArgs = DeleteConnectorEventArgs;
 
 
 /***/ }),
-/* 361 */
+/* 359 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38224,7 +38386,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AddShapeFromToolboxEventArgs = exports.AddShapeFromToolboxRequestedEntity = void 0;
-var ModelOperationSettings_1 = __webpack_require__(18);
+var ModelOperationSettings_1 = __webpack_require__(17);
 var RequestedEntity_1 = __webpack_require__(24);
 var AddShapeFromToolboxRequestedEntity = /** @class */ (function (_super) {
     __extends(AddShapeFromToolboxRequestedEntity, _super);
@@ -38278,7 +38440,7 @@ exports.AddShapeFromToolboxEventArgs = AddShapeFromToolboxEventArgs;
 
 
 /***/ }),
-/* 362 */
+/* 360 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38298,7 +38460,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ChangeConnectionEventArgs = exports.ChangeConnectionRequestedEntity = void 0;
-var ModelOperationSettings_1 = __webpack_require__(18);
+var ModelOperationSettings_1 = __webpack_require__(17);
 var RequestedEntity_1 = __webpack_require__(24);
 var ChangeConnectionRequestedEntity = /** @class */ (function (_super) {
     __extends(ChangeConnectionRequestedEntity, _super);
@@ -38364,7 +38526,7 @@ exports.ChangeConnectionEventArgs = ChangeConnectionEventArgs;
 
 
 /***/ }),
-/* 363 */
+/* 361 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38384,7 +38546,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ChangeConnectorPointsEventArgs = exports.ChangeConnectorPointsRequestedEntity = void 0;
-var ModelOperationSettings_1 = __webpack_require__(18);
+var ModelOperationSettings_1 = __webpack_require__(17);
 var RequestedEntity_1 = __webpack_require__(24);
 var Utils_1 = __webpack_require__(3);
 var ChangeConnectorPointsRequestedEntity = /** @class */ (function (_super) {
@@ -38446,7 +38608,7 @@ exports.ChangeConnectorPointsEventArgs = ChangeConnectorPointsEventArgs;
 
 
 /***/ }),
-/* 364 */
+/* 362 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38466,7 +38628,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BeforeChangeShapeTextEventArgs = exports.BeforeChangeShapeTextRequestedEntity = void 0;
-var ModelOperationSettings_1 = __webpack_require__(18);
+var ModelOperationSettings_1 = __webpack_require__(17);
 var RequestedEntity_1 = __webpack_require__(24);
 var BeforeChangeShapeTextRequestedEntity = /** @class */ (function (_super) {
     __extends(BeforeChangeShapeTextRequestedEntity, _super);
@@ -38520,7 +38682,7 @@ exports.BeforeChangeShapeTextEventArgs = BeforeChangeShapeTextEventArgs;
 
 
 /***/ }),
-/* 365 */
+/* 363 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38540,7 +38702,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BeforeChangeConnectorTextEventArgs = exports.BeforeChangeConnectorTextRequestedEntity = void 0;
-var ModelOperationSettings_1 = __webpack_require__(18);
+var ModelOperationSettings_1 = __webpack_require__(17);
 var RequestedEntity_1 = __webpack_require__(24);
 var BeforeChangeConnectorTextRequestedEntity = /** @class */ (function (_super) {
     __extends(BeforeChangeConnectorTextRequestedEntity, _super);
@@ -38597,7 +38759,7 @@ exports.BeforeChangeConnectorTextEventArgs = BeforeChangeConnectorTextEventArgs;
 
 
 /***/ }),
-/* 366 */
+/* 364 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38617,7 +38779,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ChangeShapeTextEventArgs = exports.ChangeShapeTextRequestedEntity = void 0;
-var ModelOperationSettings_1 = __webpack_require__(18);
+var ModelOperationSettings_1 = __webpack_require__(17);
 var RequestedEntity_1 = __webpack_require__(24);
 var ChangeShapeTextRequestedEntity = /** @class */ (function (_super) {
     __extends(ChangeShapeTextRequestedEntity, _super);
@@ -38673,7 +38835,7 @@ exports.ChangeShapeTextEventArgs = ChangeShapeTextEventArgs;
 
 
 /***/ }),
-/* 367 */
+/* 365 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38693,7 +38855,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ChangeConnectorTextEventArgs = exports.ChangeConnectorTextRequestedEntity = void 0;
-var ModelOperationSettings_1 = __webpack_require__(18);
+var ModelOperationSettings_1 = __webpack_require__(17);
 var RequestedEntity_1 = __webpack_require__(24);
 var ChangeConnectorTextRequestedEntity = /** @class */ (function (_super) {
     __extends(ChangeConnectorTextRequestedEntity, _super);
@@ -38752,7 +38914,7 @@ exports.ChangeConnectorTextEventArgs = ChangeConnectorTextEventArgs;
 
 
 /***/ }),
-/* 368 */
+/* 366 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38760,7 +38922,7 @@ exports.ChangeConnectorTextEventArgs = ChangeConnectorTextEventArgs;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PermissionsProviderStorage = void 0;
 var Shape_1 = __webpack_require__(14);
-var Connector_1 = __webpack_require__(7);
+var Connector_1 = __webpack_require__(6);
 var PermissionsProviderStorage = /** @class */ (function () {
     function PermissionsProviderStorage() {
         this.interactingItems = {};
@@ -38810,7 +38972,7 @@ exports.PermissionsProviderStorage = PermissionsProviderStorage;
 
 
 /***/ }),
-/* 369 */
+/* 367 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38830,7 +38992,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ResizeShapeEventArgs = exports.ResizeShapeRequestedEntity = void 0;
-var ModelOperationSettings_1 = __webpack_require__(18);
+var ModelOperationSettings_1 = __webpack_require__(17);
 var RequestedEntity_1 = __webpack_require__(24);
 var ResizeShapeRequestedEntity = /** @class */ (function (_super) {
     __extends(ResizeShapeRequestedEntity, _super);
@@ -38888,7 +39050,7 @@ exports.ResizeShapeEventArgs = ResizeShapeEventArgs;
 
 
 /***/ }),
-/* 370 */
+/* 368 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38908,7 +39070,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MoveShapeEventArgs = exports.MoveShapeRequestedEntity = void 0;
-var ModelOperationSettings_1 = __webpack_require__(18);
+var ModelOperationSettings_1 = __webpack_require__(17);
 var RequestedEntity_1 = __webpack_require__(24);
 var MoveShapeRequestedEntity = /** @class */ (function (_super) {
     __extends(MoveShapeRequestedEntity, _super);
@@ -38966,18 +39128,18 @@ exports.MoveShapeEventArgs = MoveShapeEventArgs;
 
 
 /***/ }),
-/* 371 */
+/* 369 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ConnectorRoutingModel = exports.ConnectorRoutingPenaltyDescription = void 0;
-var Settings_1 = __webpack_require__(27);
+var Settings_1 = __webpack_require__(28);
 var Shape_1 = __webpack_require__(14);
-var Connector_1 = __webpack_require__(7);
-var ConnectorProperties_1 = __webpack_require__(31);
-var RightAngleConnectorRoutingStrategy_1 = __webpack_require__(372);
+var Connector_1 = __webpack_require__(6);
+var ConnectorProperties_1 = __webpack_require__(30);
+var RightAngleConnectorRoutingStrategy_1 = __webpack_require__(370);
 var ConnectorRoutingPenaltyDescription = /** @class */ (function () {
     function ConnectorRoutingPenaltyDescription() {
         this.shape = 20.0;
@@ -39032,18 +39194,17 @@ exports.ConnectorRoutingModel = ConnectorRoutingModel;
 
 
 /***/ }),
-/* 372 */
+/* 370 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RightAngleConnectorRoutingStrategy = void 0;
-var segment_1 = __webpack_require__(34);
-var ConnectorRenderPoint_1 = __webpack_require__(28);
-var RightAngleConnectorRoutingMathOperations_1 = __webpack_require__(63);
-var RightAngleConnectorRoutingContext_1 = __webpack_require__(373);
-var ModelUtils_1 = __webpack_require__(5);
+var segment_1 = __webpack_require__(33);
+var ConnectorRenderPoint_1 = __webpack_require__(29);
+var RightAngleConnectorRoutingContext_1 = __webpack_require__(371);
+var ModelUtils_1 = __webpack_require__(4);
 var RightAngleConnectorRoutingStrategy = /** @class */ (function () {
     function RightAngleConnectorRoutingStrategy(model) {
         this.model = model;
@@ -39145,13 +39306,25 @@ var RightAngleConnectorRoutingStrategy = /** @class */ (function () {
         if (pointIndex === 0 || pointIndex === points.length - 1)
             return oldRenderPoints;
         var renderPoints = oldRenderPoints.map(function (p) { return new ConnectorRenderPoint_1.ConnectorRenderPoint(p.x, p.y, p.pointIndex); });
-        var renderPointIndex = this.getRenderPointIndexByPointIndex(renderPoints, pointIndex);
-        if (renderPointIndex >= 0) {
-            var oldRenderPoint = renderPoints[renderPointIndex];
-            renderPoints[renderPointIndex] = new ConnectorRenderPoint_1.ConnectorRenderPoint(point.x, point.y, pointIndex, oldRenderPoint.skipped);
-        }
-        RightAngleConnectorRoutingMathOperations_1.RightAngleConnectorRoutingMathOperations.skipUnnecessaryPoints(renderPoints);
+        this.onMovePointCore(renderPoints, pointIndex, point);
+        ModelUtils_1.ModelUtils.skipUnnecessaryRightAngleRenderPoints(renderPoints);
         return renderPoints;
+    };
+    RightAngleConnectorRoutingStrategy.prototype.onMovePoints = function (points, beginPointIndex, beginPoint, lastPointIndex, lastPoint, oldRenderPoints) {
+        if (beginPointIndex === 0 || lastPointIndex === points.length - 1)
+            return oldRenderPoints;
+        var renderPoints = oldRenderPoints.map(function (p) { return new ConnectorRenderPoint_1.ConnectorRenderPoint(p.x, p.y, p.pointIndex); });
+        this.onMovePointCore(renderPoints, beginPointIndex, beginPoint);
+        this.onMovePointCore(renderPoints, lastPointIndex, lastPoint);
+        ModelUtils_1.ModelUtils.skipUnnecessaryRightAngleRenderPoints(renderPoints);
+        return renderPoints;
+    };
+    RightAngleConnectorRoutingStrategy.prototype.onMovePointCore = function (newRenderPoints, pointIndex, newPoint) {
+        var renderPointIndex = this.getRenderPointIndexByPointIndex(newRenderPoints, pointIndex);
+        if (renderPointIndex >= 0) {
+            var oldRenderPoint = newRenderPoints[renderPointIndex];
+            newRenderPoints[renderPointIndex] = new ConnectorRenderPoint_1.ConnectorRenderPoint(newPoint.x, newPoint.y, pointIndex, oldRenderPoint.skipped);
+        }
     };
     RightAngleConnectorRoutingStrategy.prototype.createRenderPointsCore = function (context) {
         var result = [];
@@ -39195,24 +39368,25 @@ exports.RightAngleConnectorRoutingStrategy = RightAngleConnectorRoutingStrategy;
 
 
 /***/ }),
-/* 373 */
+/* 371 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RightAngleConnectorRoutingContext = exports.IntersectingItemsByPointsContext = exports.CuttingItemsContext = void 0;
-var point_1 = __webpack_require__(0);
-var segment_1 = __webpack_require__(34);
+var point_1 = __webpack_require__(1);
+var segment_1 = __webpack_require__(33);
+var vector_1 = __webpack_require__(58);
 var DiagramItem_1 = __webpack_require__(9);
-var RightAngleConnectorRoutingMathOperations_1 = __webpack_require__(63);
-var ConnectorRenderSegment_1 = __webpack_require__(374);
-var vector_1 = __webpack_require__(57);
-var RoutingGrid_1 = __webpack_require__(376);
-var ModelUtils_1 = __webpack_require__(5);
-var AStarMetrics_1 = __webpack_require__(115);
-var AStarContext_1 = __webpack_require__(377);
-var AStarCalculator_1 = __webpack_require__(381);
+var RightAngleConnectorRoutingMathOperations_1 = __webpack_require__(160);
+var ConnectorRenderSegment_1 = __webpack_require__(372);
+var RoutingGrid_1 = __webpack_require__(374);
+var ModelUtils_1 = __webpack_require__(4);
+var AStarMetrics_1 = __webpack_require__(161);
+var AStarContext_1 = __webpack_require__(375);
+var AStarCalculator_1 = __webpack_require__(379);
+var Utils_1 = __webpack_require__(3);
 var CuttingItemsContext = /** @class */ (function () {
     function CuttingItemsContext() {
         this.cuttingItemKeys = [];
@@ -39225,7 +39399,7 @@ var CuttingItemsContext = /** @class */ (function () {
         configurable: true
     });
     CuttingItemsContext.prototype.registerShape = function (key, rect, segments) {
-        if (RightAngleConnectorRoutingMathOperations_1.RightAngleConnectorRoutingMathOperations.isRectangleCut(segments, rect)) {
+        if (Utils_1.GeometryUtils.areSegmentsCutRectangle(segments, rect)) {
             this.cuttingItemKeys.push(key);
             return true;
         }
@@ -39386,7 +39560,7 @@ var RightAngleConnectorRoutingContext = /** @class */ (function () {
             RightAngleConnectorRoutingMathOperations_1.RightAngleConnectorRoutingMathOperations.unionPoints(result);
             ModelUtils_1.ModelUtils.validateRenderPointIndexes(this.points, result, 0);
         }
-        RightAngleConnectorRoutingMathOperations_1.RightAngleConnectorRoutingMathOperations.skipUnnecessaryPoints(result);
+        ModelUtils_1.ModelUtils.skipUnnecessaryRightAngleRenderPoints(result);
     };
     RightAngleConnectorRoutingContext.prototype.processContainers = function (container) {
         if (container)
@@ -39473,7 +39647,7 @@ var RightAngleConnectorRoutingContext = /** @class */ (function () {
     };
     RightAngleConnectorRoutingContext.prototype.createSupportSegments = function () {
         var _this = this;
-        return this.supportRenderPoints.length <= 1 ? [] : RightAngleConnectorRoutingMathOperations_1.RightAngleConnectorRoutingMathOperations.createSegments(this.supportRenderPoints).filter(function (s) { return !_this.isCustomSegment(s, _this.supportRenderPoints[0], _this.supportRenderPoints[_this.supportRenderPoints.length - 1]); });
+        return this.supportRenderPoints.length <= 1 ? [] : Utils_1.GeometryUtils.createSegments(this.supportRenderPoints).filter(function (s) { return !_this.isCustomSegment(s, _this.supportRenderPoints[0], _this.supportRenderPoints[_this.supportRenderPoints.length - 1]); });
     };
     RightAngleConnectorRoutingContext.prototype.isCustomSegment = function (segment, startSegmentsPoint, endSegmentsPoint) {
         var startRenderPoint = segment.startPoint;
@@ -39607,15 +39781,15 @@ exports.RightAngleConnectorRoutingContext = RightAngleConnectorRoutingContext;
 
 
 /***/ }),
-/* 374 */
+/* 372 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ConnectorRenderSegment = void 0;
-var segment_1 = __webpack_require__(34);
-var ConnectorProhibitedSegments_1 = __webpack_require__(375);
+var segment_1 = __webpack_require__(33);
+var ConnectorProhibitedSegments_1 = __webpack_require__(373);
 var ConnectorRenderSegment = /** @class */ (function () {
     function ConnectorRenderSegment(startInfo, endInfo, startPointIndex, previousCustomSegment) {
         this.startInfo = startInfo;
@@ -39692,7 +39866,7 @@ exports.ConnectorRenderSegment = ConnectorRenderSegment;
 
 
 /***/ }),
-/* 375 */
+/* 373 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -39723,14 +39897,14 @@ exports.ConnectorProhibitedSegments = ConnectorProhibitedSegments;
 
 
 /***/ }),
-/* 376 */
+/* 374 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RoutingGrid = void 0;
-var search_1 = __webpack_require__(40);
+var search_1 = __webpack_require__(41);
 var RoutingGrid = /** @class */ (function () {
     function RoutingGrid(verticalGridLines, horizontalGridLines, createPoint) {
         this.verticalGridLines = verticalGridLines;
@@ -39799,7 +39973,7 @@ exports.RoutingGrid = RoutingGrid;
 
 
 /***/ }),
-/* 377 */
+/* 375 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -39819,11 +39993,12 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AStarContext = exports.AStarContextBase = void 0;
-var SortedQueues_1 = __webpack_require__(378);
-var UniqueAStarNodePositions_1 = __webpack_require__(379);
-var AStarNode_1 = __webpack_require__(380);
-var segment_1 = __webpack_require__(34);
-var RightAngleConnectorRoutingMathOperations_1 = __webpack_require__(63);
+var SortedQueues_1 = __webpack_require__(376);
+var UniqueAStarNodePositions_1 = __webpack_require__(377);
+var AStarNode_1 = __webpack_require__(378);
+var segment_1 = __webpack_require__(33);
+var RightAngleConnectorRoutingMathOperations_1 = __webpack_require__(160);
+var Utils_1 = __webpack_require__(3);
 var AStarContextBase = /** @class */ (function () {
     function AStarContextBase(startPosition, targetPosition, maxStepsCount) {
         this.startPosition = startPosition;
@@ -39918,7 +40093,7 @@ var AStarContext = /** @class */ (function (_super) {
     AStarContext.prototype.getPenalty = function (node, nextPoint) {
         var parent = node.parent;
         var currentPosition = node.position;
-        var turnDirection = this.getTurnDirection(parent ? this.createAngle(parent.position, currentPosition, nextPoint) : 0);
+        var turnDirection = this.getTurnDirection(parent ? Utils_1.GeometryUtils.createAngle(parent.position, currentPosition, nextPoint) : 0);
         var distance = this.getDistance(currentPosition, nextPoint);
         var middlePosition = new segment_1.Segment(currentPosition, nextPoint).center;
         return node.penalty + this.metrics.penalty(distance, middlePosition, turnDirection, this.getIntersectedItems(middlePosition));
@@ -39928,9 +40103,6 @@ var AStarContext = /** @class */ (function (_super) {
     };
     AStarContext.prototype.getTurnDirection = function (angle) {
         return RightAngleConnectorRoutingMathOperations_1.RightAngleConnectorRoutingMathOperations.getTurnDirection(angle);
-    };
-    AStarContext.prototype.createAngle = function (p1, p2, p3) {
-        return RightAngleConnectorRoutingMathOperations_1.RightAngleConnectorRoutingMathOperations.createAngle(p1, p2, p3);
     };
     AStarContext.prototype.getIntersectedItems = function (position) {
         var _this = this;
@@ -39965,14 +40137,14 @@ exports.AStarContext = AStarContext;
 
 
 /***/ }),
-/* 378 */
+/* 376 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SortedQueues = void 0;
-var search_1 = __webpack_require__(40);
+var search_1 = __webpack_require__(41);
 var SortedQueues = /** @class */ (function () {
     function SortedQueues(getKey) {
         this.getKey = getKey;
@@ -40040,7 +40212,7 @@ exports.SortedQueues = SortedQueues;
 
 
 /***/ }),
-/* 379 */
+/* 377 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -40078,7 +40250,7 @@ exports.UniqueAStarNodePositions = UniqueAStarNodePositions;
 
 
 /***/ }),
-/* 380 */
+/* 378 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -40112,7 +40284,7 @@ exports.AStarNode = AStarNode;
 
 
 /***/ }),
-/* 381 */
+/* 379 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -40153,7 +40325,7 @@ exports.AStarCalculator = AStarCalculator;
 
 
 /***/ }),
-/* 382 */
+/* 380 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -40209,7 +40381,7 @@ exports.ReloadContentParameters = ReloadContentParameters;
 
 
 /***/ }),
-/* 383 */
+/* 381 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -40277,7 +40449,7 @@ exports.ToolboxTouchDragEventsHandler = ToolboxTouchDragEventsHandler;
 
 
 /***/ }),
-/* 384 */
+/* 382 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -40298,7 +40470,6 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ToolboxPointerDragEventsHandler = void 0;
 var dom_1 = __webpack_require__(23);
-var browser_1 = __webpack_require__(17);
 var ToolboxDragEventsHandlerBase_1 = __webpack_require__(105);
 var IDragEventsHandler_1 = __webpack_require__(106);
 var ToolboxPointerDragEventsHandler = /** @class */ (function (_super) {
@@ -40322,7 +40493,7 @@ var ToolboxPointerDragEventsHandler = /** @class */ (function (_super) {
         configurable: true
     });
     ToolboxPointerDragEventsHandler.prototype.isTouchEvent = function (evt) {
-        return browser_1.Browser.TouchUI || evt.pointerType === "touch";
+        return this.isTouchUIEnabled || evt.pointerType === "touch";
     };
     ToolboxPointerDragEventsHandler.prototype.attach = function (source) {
         _super.prototype.attach.call(this, source);
@@ -40350,7 +40521,7 @@ exports.ToolboxPointerDragEventsHandler = ToolboxPointerDragEventsHandler;
 
 
 /***/ }),
-/* 385 */
+/* 383 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -40370,7 +40541,6 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ToolboxMouseDragEventsHandler = void 0;
-var browser_1 = __webpack_require__(17);
 var ToolboxDragEventsHandlerBase_1 = __webpack_require__(105);
 var ToolboxMouseDragEventsHandler = /** @class */ (function (_super) {
     __extends(ToolboxMouseDragEventsHandler, _super);
@@ -40393,7 +40563,7 @@ var ToolboxMouseDragEventsHandler = /** @class */ (function (_super) {
         configurable: true
     });
     ToolboxMouseDragEventsHandler.prototype.isTouchEvent = function (evt) {
-        return browser_1.Browser.TouchUI;
+        return this.isTouchUIEnabled;
     };
     ToolboxMouseDragEventsHandler.prototype.attach = function (source) {
         _super.prototype.attach.call(this, source);
@@ -40415,7 +40585,7 @@ exports.ToolboxMouseDragEventsHandler = ToolboxMouseDragEventsHandler;
 
 
 /***/ }),
-/* 386 */
+/* 384 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -40435,8 +40605,8 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RenderManagerTouchDragEventsHandler = void 0;
-var evt_1 = __webpack_require__(43);
-var point_1 = __webpack_require__(0);
+var evt_1 = __webpack_require__(44);
+var point_1 = __webpack_require__(1);
 var Utils_1 = __webpack_require__(16);
 var RenderManagerDragEventsHandlerBase_1 = __webpack_require__(107);
 var IDragEventsHandler_1 = __webpack_require__(106);
@@ -40544,7 +40714,7 @@ exports.RenderManagerTouchDragEventsHandler = RenderManagerTouchDragEventsHandle
 
 
 /***/ }),
-/* 387 */
+/* 385 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -40565,7 +40735,6 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RenderManagerPointerDragEventsHandler = void 0;
 var dom_1 = __webpack_require__(23);
-var browser_1 = __webpack_require__(17);
 var Utils_1 = __webpack_require__(16);
 var RenderManagerDragEventsHandlerBase_1 = __webpack_require__(107);
 var IDragEventsHandler_1 = __webpack_require__(106);
@@ -40600,7 +40769,7 @@ var RenderManagerPointerDragEventsHandler = /** @class */ (function (_super) {
         configurable: true
     });
     RenderManagerPointerDragEventsHandler.prototype.isTouchEvent = function (evt) {
-        return browser_1.Browser.TouchUI || evt.pointerType === "touch";
+        return this.isTouchUIEnabled || evt.pointerType === "touch";
     };
     RenderManagerPointerDragEventsHandler.prototype.attach = function (source) {
         _super.prototype.attach.call(this, source);
@@ -40626,7 +40795,7 @@ exports.RenderManagerPointerDragEventsHandler = RenderManagerPointerDragEventsHa
 
 
 /***/ }),
-/* 388 */
+/* 386 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -40646,7 +40815,6 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RenderManagerMouseDragEventsHandler = void 0;
-var browser_1 = __webpack_require__(17);
 var Utils_1 = __webpack_require__(16);
 var RenderManagerDragEventsHandlerBase_1 = __webpack_require__(107);
 var RenderManagerMouseDragEventsHandler = /** @class */ (function (_super) {
@@ -40680,7 +40848,7 @@ var RenderManagerMouseDragEventsHandler = /** @class */ (function (_super) {
         configurable: true
     });
     RenderManagerMouseDragEventsHandler.prototype.isTouchEvent = function (evt) {
-        return browser_1.Browser.TouchUI;
+        return this.isTouchUIEnabled;
     };
     RenderManagerMouseDragEventsHandler.prototype.onDownCore = function (evt, element) {
         _super.prototype.onDownCore.call(this, evt, element);
@@ -40692,7 +40860,7 @@ exports.RenderManagerMouseDragEventsHandler = RenderManagerMouseDragEventsHandle
 
 
 /***/ }),
-/* 389 */
+/* 387 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin

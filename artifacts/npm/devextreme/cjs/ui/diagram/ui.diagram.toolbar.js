@@ -1,7 +1,7 @@
 /**
 * DevExtreme (cjs/ui/diagram/ui.diagram.toolbar.js)
 * Version: 21.2.0
-* Build date: Wed Jul 28 2021
+* Build date: Thu Jul 29 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
@@ -374,10 +374,9 @@ var DiagramToolbar = /*#__PURE__*/function (_DiagramPanel) {
   _proto._onItemContentReady = function _onItemContentReady(widget, item, actionHandler) {
     var _this6 = this;
 
-    var _getDiagram = (0, _diagram2.getDiagram)(),
-        Browser = _getDiagram.Browser;
-
     if ((widget.NAME === 'dxButton' || widget.NAME === 'dxTextBox') && item.items) {
+      var isTouchMode = this._isTouchMode();
+
       var $menuContainer = (0, _renderer.default)('<div>').appendTo(this.$element());
       widget._contextMenu = this._createComponent($menuContainer, _context_menu.default, {
         items: item.items,
@@ -385,7 +384,7 @@ var DiagramToolbar = /*#__PURE__*/function (_DiagramPanel) {
         cssClass: _uiDiagram2.default.getContextMenuCssClass(),
         showEvent: '',
         closeOnOutsideClick: function closeOnOutsideClick(e) {
-          return !Browser.TouchUI && (0, _renderer.default)(e.target).closest(widget._contextMenu._dropDownButtonElement).length === 0;
+          return !isTouchMode && (0, _renderer.default)(e.target).closest(widget._contextMenu._dropDownButtonElement).length === 0;
         },
         focusStateEnabled: false,
         position: {
@@ -426,7 +425,7 @@ var DiagramToolbar = /*#__PURE__*/function (_DiagramPanel) {
         }
       }); // prevent showing context menu by toggle "close" click
 
-      if (!Browser.TouchUI) {
+      if (!isTouchMode) {
         widget._contextMenu._dropDownButtonElement = widget.$element(); // i.e. widget.NAME === 'dxButton'
 
         if (widget.NAME === 'dxTextBox') {
@@ -434,6 +433,22 @@ var DiagramToolbar = /*#__PURE__*/function (_DiagramPanel) {
         }
       }
     }
+  };
+
+  _proto._isTouchMode = function _isTouchMode() {
+    var _getDiagram = (0, _diagram2.getDiagram)(),
+        Browser = _getDiagram.Browser;
+
+    if (Browser.TouchUI) {
+      return true;
+    }
+
+    if (!(0, _window.hasWindow)()) {
+      return false;
+    }
+
+    var window = (0, _window.getWindow)();
+    return window.navigator && window.navigator.maxTouchPoints > 0;
   };
 
   _proto._onContextMenuInitialized = function _onContextMenuInitialized(widget, item, rootWidget) {

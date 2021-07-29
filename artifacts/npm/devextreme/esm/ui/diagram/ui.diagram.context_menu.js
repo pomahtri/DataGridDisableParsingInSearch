@@ -1,7 +1,7 @@
 /**
 * DevExtreme (esm/ui/diagram/ui.diagram.context_menu.js)
 * Version: 21.2.0
-* Build date: Wed Jul 28 2021
+* Build date: Thu Jul 29 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
@@ -13,6 +13,7 @@ import DiagramCommandsManager from './diagram.commands_manager';
 import DiagramMenuHelper from './ui.diagram.menu_helper';
 import DiagramBar from './diagram.bar';
 import { getDiagram } from './diagram.importer';
+import { hasWindow, getWindow } from '../../core/utils/window';
 var DIAGRAM_TOUCHBAR_CLASS = 'dx-diagram-touchbar';
 var DIAGRAM_TOUCHBAR_OVERLAY_CLASS = 'dx-diagram-touchbar-overlay';
 var DIAGRAM_TOUCHBAR_TARGET_CLASS = 'dx-diagram-touchbar-target';
@@ -139,7 +140,17 @@ class DiagramContextMenuWrapper extends Widget {
     var {
       Browser
     } = getDiagram();
-    return Browser.TouchUI;
+
+    if (Browser.TouchUI) {
+      return true;
+    }
+
+    if (!hasWindow()) {
+      return false;
+    }
+
+    var window = getWindow();
+    return window.navigator && window.navigator.maxTouchPoints > 0;
   }
 
   _onItemClick(itemData) {

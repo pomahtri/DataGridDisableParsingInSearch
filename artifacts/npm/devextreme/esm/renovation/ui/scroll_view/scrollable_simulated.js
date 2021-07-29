@@ -1,7 +1,7 @@
 /**
 * DevExtreme (esm/renovation/ui/scroll_view/scrollable_simulated.js)
 * Version: 21.2.0
-* Build date: Wed Jul 28 2021
+* Build date: Thu Jul 29 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
@@ -27,12 +27,12 @@ import eventsEngine from "../../../events/core/events_engine";
 import { ScrollDirection } from "./utils/scroll_direction";
 import { DIRECTION_VERTICAL, DIRECTION_HORIZONTAL, SCROLLABLE_SIMULATED_CLASS, SCROLLABLE_CONTAINER_CLASS, SCROLLABLE_CONTENT_CLASS, SCROLLABLE_WRAPPER_CLASS, SCROLLVIEW_CONTENT_CLASS, SCROLLABLE_DISABLED_CLASS, SCROLLABLE_SCROLLBARS_ALWAYSVISIBLE, SCROLL_LINE_HEIGHT, SCROLLABLE_SCROLLBAR_CLASS, DIRECTION_BOTH, KEY_CODES, VALIDATE_WHEEL_TIMEOUT, TopPocketState } from "./common/consts";
 import { getElementOffset } from "../../utils/get_element_offset";
-import getElementComputedStyle from "../../utils/get_computed_style";
+import { getElementComputedStyle } from "./utils/get_element_computed_style";
 import { TopPocket } from "./top_pocket";
 import { BottomPocket } from "./bottom_pocket";
 import { dxScrollInit, dxScrollStart, dxScrollMove, dxScrollEnd, dxScrollStop, dxScrollCancel, keyDown } from "../../../events/short";
 import { getOffsetDistance } from "./utils/get_offset_distance";
-import { restoreLocation } from "./utils/restore_location";
+import { convertToLocation } from "./utils/convert_location";
 import { getScrollTopMax } from "./utils/get_scroll_top_max";
 import { getScrollLeftMax } from "./utils/get_scroll_left_max";
 import { inRange } from "../../../core/utils/math";
@@ -273,6 +273,9 @@ export class ScrollableSimulated extends InfernoComponent {
     this.effectDisabledState = this.effectDisabledState.bind(this);
     this.effectResetInactiveState = this.effectResetInactiveState.bind(this);
     this.updateScrollbarSize = this.updateScrollbarSize.bind(this);
+    this.scrollByLocation = this.scrollByLocation.bind(this);
+    this.calcScrollByDeltaY = this.calcScrollByDeltaY.bind(this);
+    this.calcScrollByDeltaX = this.calcScrollByDeltaX.bind(this);
     this.updateHandler = this.updateHandler.bind(this);
     this.handleScroll = this.handleScroll.bind(this);
     this.startLoading = this.startLoading.bind(this);
@@ -460,6 +463,51 @@ export class ScrollableSimulated extends InfernoComponent {
       scrollableOffsetTop: this.scrollableOffset.top
     }));
     this.updateSizes();
+  }
+
+  scrollByLocation(location) {
+    var {
+      left,
+      top
+    } = location;
+
+    if (!isDefined(top)) {
+      top = 0;
+    }
+
+    if (!isDefined(left)) {
+      left = 0;
+    }
+
+    if (top === 0 && left === 0) {
+      return;
+    }
+
+    this.updateHandler();
+    this.prepareDirections(true);
+    this.onStart();
+    this.eventHandler(scrollbar => scrollbar.scrollByHandler({
+      x: this.calcScrollByDeltaX(left),
+      y: this.calcScrollByDeltaY(top)
+    }));
+  }
+
+  calcScrollByDeltaY(top) {
+    if (this.direction.isVertical) {
+      var scrollbar = this.vScrollbarRef.current;
+      return scrollbar.getLocationWithinRange(top + this.state.vScrollLocation) - this.state.vScrollLocation;
+    }
+
+    return top;
+  }
+
+  calcScrollByDeltaX(left) {
+    if (this.direction.isHorizontal) {
+      var scrollbar = this.hScrollbarRef.current;
+      return scrollbar.getLocationWithinRange(left + this.state.hScrollLocation) - this.state.hScrollLocation;
+    }
+
+    return left;
   }
 
   updateHandler() {
@@ -1174,34 +1222,7 @@ export class ScrollableSimulated extends InfernoComponent {
   }
 
   scrollBy(distance) {
-    var location = restoreLocation(distance, this.props.direction);
-
-    if (!location.top && !location.left) {
-      return;
-    }
-
-    this.updateHandler();
-
-    if (this.direction.isVertical) {
-      var scrollbar = this.vScrollbarRef.current;
-      location.top = scrollbar.getLocationWithinRange(location.top + this.state.vScrollLocation) - this.state.vScrollLocation;
-    }
-
-    if (this.direction.isHorizontal) {
-      var _scrollbar = this.hScrollbarRef.current;
-      location.left = _scrollbar.getLocationWithinRange(location.left + this.state.hScrollLocation) - this.state.hScrollLocation;
-    }
-
-    this.prepareDirections(true);
-    this.onStart();
-    this.eventHandler(scrollbar => {
-      var _location$left, _location$top;
-
-      return scrollbar.scrollByHandler({
-        x: (_location$left = location.left) !== null && _location$left !== void 0 ? _location$left : 0,
-        y: (_location$top = location.top) !== null && _location$top !== void 0 ? _location$top : 0
-      });
-    });
+    this.scrollByLocation(convertToLocation(distance, this.props.direction));
   }
 
   scrollTo(targetLocation) {
@@ -1242,11 +1263,15 @@ export class ScrollableSimulated extends InfernoComponent {
       containerEl.scrollTop += distance.top;
     }
 
+    var {
+      scrollLeft,
+      scrollTop
+    } = containerEl;
     this.setState(state => _extends({}, state, {
-      vScrollLocation: -containerEl.scrollTop
+      vScrollLocation: -scrollTop
     }));
     this.setState(state => _extends({}, state, {
-      hScrollLocation: -containerEl.scrollLeft
+      hScrollLocation: -scrollLeft
     }));
   }
 
@@ -1349,6 +1374,9 @@ export class ScrollableSimulated extends InfernoComponent {
       bottomPocketRef: this.bottomPocketRef,
       vScrollbarRef: this.vScrollbarRef,
       hScrollbarRef: this.hScrollbarRef,
+      scrollByLocation: this.scrollByLocation,
+      calcScrollByDeltaY: this.calcScrollByDeltaY,
+      calcScrollByDeltaX: this.calcScrollByDeltaX,
       updateHandler: this.updateHandler,
       handleScroll: this.handleScroll,
       startLoading: this.startLoading,

@@ -1,7 +1,7 @@
 /*!
 * DevExtreme (dx.messages.nl.js)
 * Version: 21.2.0
-* Build date: Wed Jul 28 2021
+* Build date: Thu Jul 29 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
@@ -508,7 +508,10 @@
             "dxGantt-zoomIn": "Inzoomen",
             "dxGantt-zoomOut": "Uitzoomen",
             "dxGantt-fullScreen": "Volledig scherm",
-            "dxGantt-quarter": "TODO"
+            "dxGantt-quarter": "TODO",
+            "dxGantt-sortingAscendingText": "Sorteer Oplopend",
+            "dxGantt-sortingDescendingText": "Sorteer Aflopend",
+            "dxGantt-sortingClearText": "Sortering wissen"
         }
     });
 }));

@@ -1,6 +1,6 @@
 import $ from '../../core/renderer';
 import { isDefined } from '../../core/utils/type';
-import { WIDGET_CLASS, FIELD_ITEM_LABEL_TEXT_CLASS, HIDDEN_LABEL_CLASS, FIELD_ITEM_OPTIONAL_MARK_CLASS, FIELD_ITEM_REQUIRED_MARK_CLASS, FIELD_ITEM_LABEL_CONTENT_CLASS, FIELD_ITEM_LABEL_LOCATION_CLASS, FIELD_ITEM_LABEL_CLASS, FIELD_ITEM_HELP_TEXT_CLASS } from './constants';
+import { WIDGET_CLASS, FIELD_ITEM_LABEL_TEXT_CLASS, HIDDEN_LABEL_CLASS, FIELD_ITEM_OPTIONAL_MARK_CLASS, FIELD_ITEM_REQUIRED_MARK_CLASS, FIELD_ITEM_LABEL_CONTENT_CLASS, FIELD_ITEM_LABEL_LOCATION_CLASS, FIELD_ITEM_LABEL_CLASS, FIELD_ITEM_HELP_TEXT_CLASS, FIELD_BUTTON_ITEM_CLASS, FIELD_ITEM_CLASS } from './constants';
 export var createItemPathByIndex = (index, isTabs) => "".concat(isTabs ? 'tabs' : 'items', "[").concat(index, "]");
 export var concatPaths = (path1, path2) => {
   if (isDefined(path1) && isDefined(path2)) {
@@ -93,4 +93,33 @@ function _renderLabelMark(_ref2) {
   }
 
   return $('<span>').addClass(isRequiredMark ? FIELD_ITEM_REQUIRED_MARK_CLASS : FIELD_ITEM_OPTIONAL_MARK_CLASS).text(String.fromCharCode(160) + (isRequiredMark ? requiredMark : optionalMark));
+}
+
+export function convertAlignmentToJustifyContent(verticalAlignment) {
+  switch (verticalAlignment) {
+    case 'center':
+      return 'center';
+
+    case 'bottom':
+      return 'flex-end';
+
+    default:
+      return 'flex-start';
+  }
+}
+export function convertAlignmentToTextAlign(horizontalAlignment) {
+  return isDefined(horizontalAlignment) ? horizontalAlignment : 'right';
+}
+export function adjustContainerAsButtonItem(_ref3) {
+  var {
+    $container,
+    justifyContent,
+    textAlign,
+    cssItemClass,
+    targetColIndex
+  } = _ref3;
+  // TODO: try to create $container in this function and return it
+  $container.addClass(FIELD_BUTTON_ITEM_CLASS).css('textAlign', textAlign).addClass(FIELD_ITEM_CLASS).addClass(cssItemClass).addClass(isDefined(targetColIndex) ? 'dx-col-' + targetColIndex : ''); // TODO: try to avoid changes in $container.parent() and adjust the created $elements only
+
+  $container.parent().css('justifyContent', justifyContent);
 }

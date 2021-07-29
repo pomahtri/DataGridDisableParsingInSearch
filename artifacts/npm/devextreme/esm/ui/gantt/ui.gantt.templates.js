@@ -1,7 +1,7 @@
 /**
 * DevExtreme (esm/ui/gantt/ui.gantt.templates.js)
 * Version: 21.2.0
-* Build date: Wed Jul 28 2021
+* Build date: Thu Jul 29 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
@@ -18,10 +18,13 @@ export class GanttTemplatesManager {
 
     var template = taskTooltipContentTemplateOption && this._gantt._getTemplate(taskTooltipContentTemplateOption);
 
-    var createTemplateFunction = template && ((container, item) => {
+    var createTemplateFunction = template && ((container, item, callback) => {
       template.render({
         model: this._gantt.getTaskDataByCoreData(item),
-        container: getPublicElement($(container))
+        container: getPublicElement($(container)),
+        onRendered: () => {
+          callback();
+        }
       });
       return isTooltipShowing;
     });
@@ -34,12 +37,12 @@ export class GanttTemplatesManager {
 
     var template = taskTooltipContentTemplateOption && this._gantt._getTemplate(taskTooltipContentTemplateOption);
 
-    var createTemplateFunction = template && ((container, item, callback, posX) => {
+    var createTemplateFunction = template && ((container, item, callback) => {
       template.render({
         model: item,
         container: getPublicElement($(container)),
         onRendered: () => {
-          callback(posX);
+          callback();
         }
       });
       return isTooltipShowing;
@@ -53,12 +56,12 @@ export class GanttTemplatesManager {
 
     var template = taskTooltipContentTemplateOption && this._gantt._getTemplate(taskTooltipContentTemplateOption);
 
-    var createTemplateFunction = template && ((container, item, callback, posX) => {
+    var createTemplateFunction = template && ((container, item, callback) => {
       template.render({
         model: item,
         container: getPublicElement($(container)),
         onRendered: () => {
-          callback(posX);
+          callback();
         }
       });
       return isTooltipShowing;

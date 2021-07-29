@@ -122,10 +122,17 @@ var DataOption = /*#__PURE__*/function (_Component) {
   };
 
   _proto._reloadDataSource = function _reloadDataSource() {
-    var isArray = !!this._getStore()._array;
+    return this._dataSource.load();
+  };
 
-    if (!isArray) {
-      this._dataSource.load();
+  _proto.dispose = function dispose() {
+    this._disposeDataSource();
+  };
+
+  _proto._optionChanged = function _optionChanged(args) {
+    switch (args.name) {
+      case 'dataSource':
+        break;
     }
   };
 

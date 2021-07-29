@@ -64,7 +64,8 @@ var OverlapStrategy = /*#__PURE__*/function (_DrawerStrategy) {
       },
       visible: true,
       propagateOutsideClick: true,
-      copyRootClassesToWrapper: true
+      copyRootClassesToWrapper: true,
+      _observeContentResize: false
     });
   };
 

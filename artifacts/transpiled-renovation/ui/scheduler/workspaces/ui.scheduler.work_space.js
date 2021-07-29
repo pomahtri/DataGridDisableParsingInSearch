@@ -441,7 +441,7 @@ var SchedulerWorkSpace = /*#__PURE__*/function (_WidgetObserver) {
 
     var config = {
       useKeyboard: false,
-      showScrollbar: false,
+      showScrollbar: 'never',
       direction: 'horizontal',
       useNative: false,
       updateManually: true,
@@ -576,10 +576,6 @@ var SchedulerWorkSpace = /*#__PURE__*/function (_WidgetObserver) {
   };
 
   _proto.onDataSourceChanged = function onDataSourceChanged() {};
-
-  _proto.preRenderAppointments = function preRenderAppointments(options) {
-    this.option('allDayExpanded', options.allDayExpanded);
-  };
 
   _proto.isGroupedAllDayPanel = function isGroupedAllDayPanel() {
     return (0, _base.calculateIsGroupedAllDayPanel)(this.option('groups'), this.option('groupOrientation'), this.isAllDayPanelVisible);
@@ -2504,7 +2500,7 @@ var SchedulerWorkSpace = /*#__PURE__*/function (_WidgetObserver) {
     var $timePanelScrollable = (0, _renderer.default)('<div>').addClass(SCHEDULER_SIDEBAR_SCROLLABLE_CLASS).appendTo(this.$element());
     this._sidebarScrollable = this._createComponent($timePanelScrollable, _ui2.default, {
       useKeyboard: false,
-      showScrollbar: false,
+      showScrollbar: 'never',
       direction: 'vertical',
       useNative: false,
       updateManually: true,

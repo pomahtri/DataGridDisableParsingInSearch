@@ -1,7 +1,7 @@
 /**
 * DevExtreme (cjs/ui/scheduler/appointments/rendering_strategies/strategy_agenda.js)
 * Version: 21.2.0
-* Build date: Wed Jul 28 2021
+* Build date: Thu Jul 29 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
@@ -21,6 +21,10 @@ var _strategy = _interopRequireDefault(require("./strategy.base"));
 var _expressionUtils = require("../../expressionUtils");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; _setPrototypeOf(subClass, superClass); }
 
@@ -55,6 +59,7 @@ var AgendaRenderingStrategy = /*#__PURE__*/function (_BaseRenderingStrateg) {
   _proto.createTaskPositionMap = function createTaskPositionMap(appointments) {
     var height;
     var appointmentsByResources;
+    this.calculateRows(appointments, this.agendaDuration, this.currentDate);
 
     if (appointments.length) {
       height = this.instance.fire('getAgendaVerticalStepHeight');
@@ -164,7 +169,8 @@ var AgendaRenderingStrategy = /*#__PURE__*/function (_BaseRenderingStrateg) {
 
   _proto.getCollectorLeftOffset = function getCollectorLeftOffset() {};
 
-  _proto.getCollectorTopOffset = function getCollectorTopOffset() {};
+  _proto.getCollectorTopOffset = function getCollectorTopOffset() {} // TODO: get rid of an extra 'needClearSettings' argument
+  ;
 
   _proto.calculateRows = function calculateRows(appointments, agendaDuration, currentDate, needClearSettings) {
     this._rows = [];
@@ -265,6 +271,18 @@ var AgendaRenderingStrategy = /*#__PURE__*/function (_BaseRenderingStrateg) {
       };
     }.bind(this);
   };
+
+  _createClass(AgendaRenderingStrategy, [{
+    key: "agendaDuration",
+    get: function get() {
+      return this.options.agendaDuration;
+    }
+  }, {
+    key: "currentDate",
+    get: function get() {
+      return this.options.currentDate;
+    }
+  }]);
 
   return AgendaRenderingStrategy;
 }(_strategy.default);

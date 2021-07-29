@@ -14,6 +14,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -25,8 +27,6 @@ function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symb
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
 var isEmpty = function isEmpty(entity) {
   return Array.isArray(entity) && !entity.length;
@@ -70,9 +70,7 @@ var intersection = function intersection(a, b) {
 exports.intersection = intersection;
 
 var uniqueValues = function uniqueValues(data) {
-  return data.filter(function (item, position) {
-    return data.indexOf(item) === position;
-  });
+  return _toConsumableArray(new Set(data));
 };
 
 exports.uniqueValues = uniqueValues;
@@ -82,17 +80,15 @@ var removeDuplicates = function removeDuplicates(from, what) {
     return [];
   }
 
+  var result = from.slice();
+
   if (!Array.isArray(what) || what.length === 0) {
-    return from.slice();
+    return result;
   }
 
-  var result = [];
-  (0, _iterator.each)(from, function (_, value) {
-    var index = inArray(value, what);
-
-    if (index === -1) {
-      result.push(value);
-    }
+  (0, _iterator.each)(what, function (_, value) {
+    var index = inArray(value, result);
+    result.splice(index, 1);
   });
   return result;
 };

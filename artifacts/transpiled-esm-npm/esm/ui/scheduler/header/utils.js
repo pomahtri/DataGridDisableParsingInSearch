@@ -1,6 +1,10 @@
 import dateUtils from '../../../core/utils/date';
 import dateLocalization from '../../../localization/date';
-import { isFunction } from '../../../core/utils/type';
+import messageLocalization from '../../../localization/message';
+import { camelize } from '../../../core/utils/inflector';
+import { isFunction, isObject } from '../../../core/utils/type';
+import errors from '../../../core/errors';
+import { VIEWS } from '../constants';
 var DAY_FORMAT = 'd';
 var DAYS_IN_WORK_WEEK = 5;
 var {
@@ -318,4 +322,68 @@ export var getCaption = (options, isShort, customizationFunction) => {
     endDate,
     text
   };
+};
+var STEP_MAP = {
+  day: 'day',
+  week: 'week',
+  workWeek: 'workWeek',
+  month: 'month',
+  timelineDay: 'day',
+  timelineWeek: 'week',
+  timelineWorkWeek: 'workWeek',
+  timelineMonth: 'month',
+  agenda: 'agenda'
+};
+export var getStep = view => {
+  return STEP_MAP[getViewType(view)];
+};
+export var getViewType = view => {
+  if (isObject(view) && view.type) {
+    return view.type;
+  }
+
+  return view;
+};
+export var getViewName = view => {
+  if (isObject(view)) {
+    return view.name ? view.name : view.type;
+  }
+
+  return view;
+};
+export var getViewText = view => {
+  if (view.name) return view.name;
+  var viewName = camelize(view.type || view, true);
+  return messageLocalization.format('dxScheduler-switcher' + viewName);
+};
+
+var isValidView = view => {
+  return Object.values(VIEWS).includes(view);
+};
+
+export var validateViews = views => {
+  views.forEach(view => {
+    var viewType = getViewType(view);
+
+    if (!isValidView(viewType)) {
+      errors.log('W0008', viewType);
+    }
+  });
+};
+export var formatViews = views => {
+  validateViews(views);
+  return views.map(view => {
+    var text = getViewText(view);
+    var type = getViewType(view);
+    var name = getViewName(view);
+    return {
+      text,
+      name,
+      view: {
+        text,
+        type,
+        name
+      }
+    };
+  });
 };

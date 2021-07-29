@@ -3,6 +3,9 @@
 exports.getLabelWidthByText = getLabelWidthByText;
 exports.renderLabel = renderLabel;
 exports.renderHelpText = renderHelpText;
+exports.convertAlignmentToJustifyContent = convertAlignmentToJustifyContent;
+exports.convertAlignmentToTextAlign = convertAlignmentToTextAlign;
+exports.adjustContainerAsButtonItem = adjustContainerAsButtonItem;
 exports.getItemPath = exports.isFullPathContainsTabs = exports.tryGetTabPath = exports.getOptionNameFromFullName = exports.getFullOptionName = exports.isExpectedItem = exports.getTextWithoutSpaces = exports.concatPaths = exports.createItemPathByIndex = void 0;
 
 var _renderer = _interopRequireDefault(require("../../core/renderer"));
@@ -155,4 +158,33 @@ function _renderLabelMark(_ref2) {
   }
 
   return (0, _renderer.default)('<span>').addClass(isRequiredMark ? _constants.FIELD_ITEM_REQUIRED_MARK_CLASS : _constants.FIELD_ITEM_OPTIONAL_MARK_CLASS).text(String.fromCharCode(160) + (isRequiredMark ? requiredMark : optionalMark));
+}
+
+function convertAlignmentToJustifyContent(verticalAlignment) {
+  switch (verticalAlignment) {
+    case 'center':
+      return 'center';
+
+    case 'bottom':
+      return 'flex-end';
+
+    default:
+      return 'flex-start';
+  }
+}
+
+function convertAlignmentToTextAlign(horizontalAlignment) {
+  return (0, _type.isDefined)(horizontalAlignment) ? horizontalAlignment : 'right';
+}
+
+function adjustContainerAsButtonItem(_ref3) {
+  var $container = _ref3.$container,
+      justifyContent = _ref3.justifyContent,
+      textAlign = _ref3.textAlign,
+      cssItemClass = _ref3.cssItemClass,
+      targetColIndex = _ref3.targetColIndex;
+  // TODO: try to create $container in this function and return it
+  $container.addClass(_constants.FIELD_BUTTON_ITEM_CLASS).css('textAlign', textAlign).addClass(_constants.FIELD_ITEM_CLASS).addClass(cssItemClass).addClass((0, _type.isDefined)(targetColIndex) ? 'dx-col-' + targetColIndex : ''); // TODO: try to avoid changes in $container.parent() and adjust the created $elements only
+
+  $container.parent().css('justifyContent', justifyContent);
 }

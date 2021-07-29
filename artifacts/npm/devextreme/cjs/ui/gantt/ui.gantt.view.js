@@ -1,7 +1,7 @@
 /**
 * DevExtreme (cjs/ui/gantt/ui.gantt.view.js)
 * Version: 21.2.0
-* Build date: Wed Jul 28 2021
+* Build date: Thu Jul 29 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
@@ -79,7 +79,8 @@ var GanttView = /*#__PURE__*/function (_Widget) {
       taskTooltipContentTemplate: this.option('taskTooltipContentTemplate'),
       taskProgressTooltipContentTemplate: this.option('taskProgressTooltipContentTemplate'),
       taskTimeTooltipContentTemplate: this.option('taskTimeTooltipContentTemplate'),
-      taskContentTemplate: this.option('taskContentTemplate')
+      taskContentTemplate: this.option('taskContentTemplate'),
+      sorting: this.option('sorting')
     });
 
     this._selectTask(this.option('selectedRowKey'));
@@ -235,6 +236,8 @@ var GanttView = /*#__PURE__*/function (_Widget) {
       case 'dependencies':
       case 'resources':
       case 'resourceAssignments':
+        this._sortOptions = undefined;
+
         this._update();
 
         break;
@@ -313,6 +316,11 @@ var GanttView = /*#__PURE__*/function (_Widget) {
 
         break;
 
+      case 'sorting':
+        this._sort(args.value);
+
+        break;
+
       default:
         _Widget.prototype._optionChanged.call(this, args);
 
@@ -329,7 +337,28 @@ var GanttView = /*#__PURE__*/function (_Widget) {
   };
 
   _proto.getGanttTasksData = function getGanttTasksData() {
-    return this.option('tasks');
+    var tasks = this.option('tasks');
+    var sortingOptions = this.getSortingOptions();
+
+    if (sortingOptions !== null && sortingOptions !== void 0 && sortingOptions.sortedItems && sortingOptions !== null && sortingOptions !== void 0 && sortingOptions.sortColumn) {
+      return sortingOptions.sortedItems;
+    }
+
+    return tasks;
+  };
+
+  _proto._sort = function _sort(args) {
+    this._sortOptions = args;
+
+    this._update(true);
+
+    var selectedRowKey = this.option('selectedRowKey');
+
+    this._selectTask(selectedRowKey);
+  };
+
+  _proto.getSortingOptions = function getSortingOptions() {
+    return this._sortOptions;
   };
 
   _proto.getGanttDependenciesData = function getGanttDependenciesData() {

@@ -1,7 +1,7 @@
 /**
 * DevExtreme (esm/ui/data_grid/ui.data_grid.summary.js)
 * Version: 21.2.0
-* Build date: Wed Jul 28 2021
+* Build date: Thu Jul 29 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
@@ -387,15 +387,15 @@ gridCore.registerModule('summary', {
         skipEmptyValues: true,
         recalculateWhileEditing: false,
         texts: {
-          sum: messageLocalization.getFormatter('dxDataGrid-summarySum'),
-          sumOtherColumn: messageLocalization.getFormatter('dxDataGrid-summarySumOtherColumn'),
-          min: messageLocalization.getFormatter('dxDataGrid-summaryMin'),
-          minOtherColumn: messageLocalization.getFormatter('dxDataGrid-summaryMinOtherColumn'),
-          max: messageLocalization.getFormatter('dxDataGrid-summaryMax'),
-          maxOtherColumn: messageLocalization.getFormatter('dxDataGrid-summaryMaxOtherColumn'),
-          avg: messageLocalization.getFormatter('dxDataGrid-summaryAvg'),
-          avgOtherColumn: messageLocalization.getFormatter('dxDataGrid-summaryAvgOtherColumn'),
-          count: messageLocalization.getFormatter('dxDataGrid-summaryCount')
+          sum: messageLocalization.format('dxDataGrid-summarySum'),
+          sumOtherColumn: messageLocalization.format('dxDataGrid-summarySumOtherColumn'),
+          min: messageLocalization.format('dxDataGrid-summaryMin'),
+          minOtherColumn: messageLocalization.format('dxDataGrid-summaryMinOtherColumn'),
+          max: messageLocalization.format('dxDataGrid-summaryMax'),
+          maxOtherColumn: messageLocalization.format('dxDataGrid-summaryMaxOtherColumn'),
+          avg: messageLocalization.format('dxDataGrid-summaryAvg'),
+          avgOtherColumn: messageLocalization.format('dxDataGrid-summaryAvgOtherColumn'),
+          count: messageLocalization.format('dxDataGrid-summaryCount')
         }
       },
       sortByGroupSummaryInfo: undefined

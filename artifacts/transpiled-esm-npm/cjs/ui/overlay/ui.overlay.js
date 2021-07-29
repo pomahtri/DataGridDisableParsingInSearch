@@ -68,6 +68,10 @@ var _browser = _interopRequireDefault(require("../../core/utils/browser"));
 
 var zIndexPool = _interopRequireWildcard(require("./z_index"));
 
+var _resize_observer = _interopRequireDefault(require("./resize_observer"));
+
+var _version = require("../../core/utils/version");
+
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
@@ -152,6 +156,8 @@ ready(function () {
 
 var Overlay = _ui.default.inherit({
   _supportedKeys: function _supportedKeys() {
+    var _this = this;
+
     var offsetSize = 5;
 
     var move = function move(top, left, e) {
@@ -176,14 +182,22 @@ var Overlay = _ui.default.inherit({
       escape: function escape() {
         this.hide();
       },
-      upArrow: move.bind(this, -offsetSize, 0),
-      downArrow: move.bind(this, offsetSize, 0),
-      leftArrow: move.bind(this, 0, -offsetSize),
-      rightArrow: move.bind(this, 0, offsetSize)
+      upArrow: function upArrow(e) {
+        move.call(_this, -offsetSize, 0, e);
+      },
+      downArrow: function downArrow(e) {
+        move.call(_this, offsetSize, 0, e);
+      },
+      leftArrow: function leftArrow(e) {
+        move.call(_this, 0, -offsetSize, e);
+      },
+      rightArrow: function rightArrow(e) {
+        move.call(_this, 0, offsetSize, e);
+      }
     });
   },
   _getDefaultOptions: function _getDefaultOptions() {
-    var _this = this;
+    var _this2 = this;
 
     return (0, _extend.extend)(this.callBase(), {
       /**
@@ -244,7 +258,7 @@ var Overlay = _ui.default.inherit({
       target: undefined,
       container: undefined,
       hideTopOverlayHandler: function hideTopOverlayHandler() {
-        _this.hide();
+        _this2.hide();
       },
       closeOnTargetScroll: false,
       onPositioned: null,
@@ -255,7 +269,8 @@ var Overlay = _ui.default.inherit({
       propagateOutsideClick: false,
       ignoreChildEvents: true,
       _checkParentVisibility: true,
-      _fixWrapperPosition: false
+      _fixWrapperPosition: false,
+      _observeContentResize: true
     });
   },
   _defaultOptionsRules: function _defaultOptionsRules() {
@@ -268,6 +283,17 @@ var Overlay = _ui.default.inherit({
         height: null,
         animation: null,
         _checkParentVisibility: false
+      }
+    }, {
+      device: function device() {
+        var device = _devices.default.real();
+
+        var platform = device.platform;
+        var version = device.version;
+        return platform === 'ios' && (0, _version.compare)(version, '13.3') <= 0 || platform === 'android' && (0, _version.compare)(version, '4.4.4') <= 0;
+      },
+      options: {
+        _observeContentResize: false
       }
     }]);
   },
@@ -325,6 +351,10 @@ var Overlay = _ui.default.inherit({
     this._toggleViewPortSubscription(true);
 
     this._initHideTopOverlayHandler(this.option('hideTopOverlayHandler'));
+
+    this._initResizeObserver();
+
+    this._updateResizeCallbackSkipCondition();
   },
   _initOptions: function _initOptions(options) {
     this._initTarget(options.target);
@@ -376,21 +406,84 @@ var Overlay = _ui.default.inherit({
     this._hideTopOverlayHandler = handler;
   },
   _initActions: function _initActions() {
-    var _this2 = this;
+    var _this3 = this;
 
     this._actions = {};
     (0, _iterator.each)(ACTIONS, function (_, action) {
-      _this2._actions[action] = _this2._createActionByOption(action, {
+      _this3._actions[action] = _this3._createActionByOption(action, {
         excludeValidators: ['disabled', 'readOnly']
       }) || _common.noop;
     });
   },
   _initCloseOnOutsideClickHandler: function _initCloseOnOutsideClickHandler() {
-    var that = this;
+    var _this4 = this;
 
     this._proxiedDocumentDownHandler = function () {
-      return that._documentDownHandler.apply(that, arguments);
+      return _this4._documentDownHandler.apply(_this4, arguments);
     };
+  },
+  _initResizeObserver: function _initResizeObserver() {
+    var _this5 = this;
+
+    if (!this.option('_observeContentResize')) {
+      return;
+    }
+
+    this._resizeObserver = new _resize_observer.default({
+      callback: function callback() {
+        _this5._renderGeometry({
+          shouldOnlyReposition: true
+        });
+      },
+      shouldSkipCallback: function shouldSkipCallback(entries) {
+        return _this5._shouldSkipResizeCallback(entries);
+      }
+    });
+  },
+  _areContentDimensionsRendered: function _areContentDimensionsRendered(entries) {
+    var _entries$0$contentBox, _this$_renderedDimens3, _this$_renderedDimens4;
+
+    var contentBox = (_entries$0$contentBox = entries[0].contentBoxSize) === null || _entries$0$contentBox === void 0 ? void 0 : _entries$0$contentBox[0];
+
+    if (contentBox) {
+      var _this$_renderedDimens, _this$_renderedDimens2;
+
+      return parseInt(contentBox.inlineSize, 10) === ((_this$_renderedDimens = this._renderedDimensions) === null || _this$_renderedDimens === void 0 ? void 0 : _this$_renderedDimens.width) && parseInt(contentBox.blockSize, 10) === ((_this$_renderedDimens2 = this._renderedDimensions) === null || _this$_renderedDimens2 === void 0 ? void 0 : _this$_renderedDimens2.height);
+    }
+
+    var contentRect = entries[0].contentRect;
+    return parseInt(contentRect.width, 10) === ((_this$_renderedDimens3 = this._renderedDimensions) === null || _this$_renderedDimens3 === void 0 ? void 0 : _this$_renderedDimens3.width) && parseInt(contentRect.height, 10) === ((_this$_renderedDimens4 = this._renderedDimensions) === null || _this$_renderedDimens4 === void 0 ? void 0 : _this$_renderedDimens4.height);
+  },
+  _updateResizeCallbackSkipCondition: function _updateResizeCallbackSkipCondition() {
+    var _this6 = this;
+
+    var doesShowAnimationChangeDimensions = this._doesShowAnimationChangeDimensions();
+
+    this._shouldSkipResizeCallback = function (entries) {
+      return doesShowAnimationChangeDimensions && _this6._showAnimationProcessing || _this6._areContentDimensionsRendered(entries);
+    };
+  },
+  _doesShowAnimationChangeDimensions: function _doesShowAnimationChangeDimensions() {
+    var animation = this.option('animation');
+    return ['to', 'from'].some(function (prop) {
+      var _animation$show;
+
+      var config = animation === null || animation === void 0 ? void 0 : (_animation$show = animation.show) === null || _animation$show === void 0 ? void 0 : _animation$show[prop];
+      return (0, _type.isObject)(config) && ('width' in config || 'height' in config);
+    });
+  },
+  _observeContentResize: function _observeContentResize(shouldObserve) {
+    if (!this.option('_observeContentResize')) {
+      return;
+    }
+
+    var contentElement = this._$content.get(0);
+
+    if (shouldObserve) {
+      this._resizeObserver.observe(contentElement);
+    } else {
+      this._resizeObserver.unobserve(contentElement);
+    }
   },
   _initMarkup: function _initMarkup() {
     this.callBase();
@@ -456,10 +549,15 @@ var Overlay = _ui.default.inherit({
     return Overlay.baseZIndex();
   },
   _toggleViewPortSubscription: function _toggleViewPortSubscription(toggle) {
+    var _this7 = this;
+
     viewPortChanged.remove(this._viewPortChangeHandle);
 
     if (toggle) {
-      this._viewPortChangeHandle = this._viewPortChangeHandler.bind(this);
+      this._viewPortChangeHandle = function () {
+        _this7._viewPortChangeHandler.apply(_this7, arguments);
+      };
+
       viewPortChanged.add(this._viewPortChangeHandle);
     }
   },
@@ -479,6 +577,8 @@ var Overlay = _ui.default.inherit({
     this._customWrapperClass = classNames;
   },
   _renderVisibilityAnimate: function _renderVisibilityAnimate(visible) {
+    this._observeContentResize(visible);
+
     this._stopAnimation();
 
     return visible ? this._show() : this._hide();
@@ -492,19 +592,67 @@ var Overlay = _ui.default.inherit({
     if ((0, _type.isFunction)(animation)) animation = animation.call(this);
     return animation;
   },
-  _show: function _show() {
-    var _this3 = this;
+  _animateShowing: function _animateShowing() {
+    var _this$_getAnimationCo,
+        _showAnimation$start,
+        _showAnimation$comple,
+        _this8 = this;
 
-    var that = this;
-    var deferred = new _deferred.Deferred();
+    var animation = (_this$_getAnimationCo = this._getAnimationConfig()) !== null && _this$_getAnimationCo !== void 0 ? _this$_getAnimationCo : {};
+
+    var showAnimation = this._normalizeAnimation(animation.show, 'to');
+
+    var startShowAnimation = (_showAnimation$start = showAnimation === null || showAnimation === void 0 ? void 0 : showAnimation.start) !== null && _showAnimation$start !== void 0 ? _showAnimation$start : _common.noop;
+    var completeShowAnimation = (_showAnimation$comple = showAnimation === null || showAnimation === void 0 ? void 0 : showAnimation.complete) !== null && _showAnimation$comple !== void 0 ? _showAnimation$comple : _common.noop;
+
+    this._animate(showAnimation, function () {
+      if (_this8._isAnimationPaused) {
+        return;
+      }
+
+      if (_this8.option('focusStateEnabled')) {
+        _events_engine.default.trigger(_this8._focusTarget(), 'focus');
+      }
+
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      completeShowAnimation.call.apply(completeShowAnimation, [_this8].concat(args));
+      _this8._showAnimationProcessing = false;
+      _this8._isShown = true;
+
+      _this8._actions.onShown();
+
+      _this8._toggleSafariScrolling();
+
+      _this8._showingDeferred.resolve();
+    }, function () {
+      if (_this8._isAnimationPaused) {
+        return;
+      }
+
+      for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+        args[_key2] = arguments[_key2];
+      }
+
+      startShowAnimation.call.apply(startShowAnimation, [_this8].concat(args));
+      _this8._showAnimationProcessing = true;
+    });
+  },
+  _show: function _show() {
+    var _this9 = this;
+
+    this._showingDeferred = new _deferred.Deferred();
     this._parentHidden = this._isParentHidden();
-    deferred.done(function () {
-      delete that._parentHidden;
+
+    this._showingDeferred.done(function () {
+      delete _this9._parentHidden;
     });
 
     if (this._parentHidden) {
       this._isHidden = true;
-      return deferred.resolve();
+      return this._showingDeferred.resolve();
     }
 
     if (this._currentVisible) {
@@ -516,44 +664,23 @@ var Overlay = _ui.default.inherit({
 
     this._normalizePosition();
 
-    var animation = that._getAnimationConfig() || {};
-
-    var showAnimation = this._normalizeAnimation(animation.show, 'to');
-
-    var startShowAnimation = showAnimation && showAnimation.start || _common.noop;
-    var completeShowAnimation = showAnimation && showAnimation.complete || _common.noop;
-
     if (this._isHidingActionCanceled) {
       delete this._isHidingActionCanceled;
-      deferred.resolve();
+
+      this._showingDeferred.resolve();
     } else {
       var show = function show() {
-        _this3._renderVisibility(true);
+        _this9._renderVisibility(true);
 
-        if (_this3._isShowingActionCanceled) {
-          delete _this3._isShowingActionCanceled;
-          deferred.resolve();
+        if (_this9._isShowingActionCanceled) {
+          delete _this9._isShowingActionCanceled;
+
+          _this9._showingDeferred.resolve();
+
           return;
         }
 
-        _this3._animate(showAnimation, function () {
-          if (that.option('focusStateEnabled')) {
-            _events_engine.default.trigger(that._focusTarget(), 'focus');
-          }
-
-          completeShowAnimation.apply(this, arguments);
-          that._showAnimationProcessing = false;
-          that._isShown = true;
-
-          that._actions.onShown();
-
-          that._toggleSafariScrolling();
-
-          deferred.resolve();
-        }, function () {
-          startShowAnimation.apply(this, arguments);
-          that._showAnimationProcessing = true;
-        });
+        _this9._animateShowing();
       };
 
       if (this.option('templatesRenderAsynchronously')) {
@@ -565,7 +692,7 @@ var Overlay = _ui.default.inherit({
       }
     }
 
-    return deferred.promise();
+    return this._showingDeferred.promise();
   },
   _normalizeAnimation: function _normalizeAnimation(animation, prop) {
     if (animation) {
@@ -582,35 +709,69 @@ var Overlay = _ui.default.inherit({
 
     return animation;
   },
+  _animateHiding: function _animateHiding() {
+    var _this$_getAnimationCo2,
+        _hideAnimation$start,
+        _hideAnimation$comple,
+        _this10 = this;
+
+    var animation = (_this$_getAnimationCo2 = this._getAnimationConfig()) !== null && _this$_getAnimationCo2 !== void 0 ? _this$_getAnimationCo2 : {};
+
+    var hideAnimation = this._normalizeAnimation(animation.hide, 'from');
+
+    var startHideAnimation = (_hideAnimation$start = hideAnimation === null || hideAnimation === void 0 ? void 0 : hideAnimation.start) !== null && _hideAnimation$start !== void 0 ? _hideAnimation$start : _common.noop;
+    var completeHideAnimation = (_hideAnimation$comple = hideAnimation === null || hideAnimation === void 0 ? void 0 : hideAnimation.complete) !== null && _hideAnimation$comple !== void 0 ? _hideAnimation$comple : _common.noop;
+
+    this._animate(hideAnimation, function () {
+      var _this10$_actions;
+
+      _this10._$content.css('pointerEvents', '');
+
+      _this10._renderVisibility(false);
+
+      for (var _len3 = arguments.length, args = new Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+        args[_key3] = arguments[_key3];
+      }
+
+      completeHideAnimation.call.apply(completeHideAnimation, [_this10].concat(args));
+      _this10._hideAnimationProcessing = false;
+      (_this10$_actions = _this10._actions) === null || _this10$_actions === void 0 ? void 0 : _this10$_actions.onHidden();
+
+      _this10._hidingDeferred.resolve();
+    }, function () {
+      _this10._$content.css('pointerEvents', 'none');
+
+      for (var _len4 = arguments.length, args = new Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
+        args[_key4] = arguments[_key4];
+      }
+
+      startHideAnimation.call.apply(startHideAnimation, [_this10].concat(args));
+      _this10._hideAnimationProcessing = true;
+    });
+  },
   _hide: function _hide() {
     if (!this._currentVisible) {
       return new _deferred.Deferred().resolve().promise();
     }
 
     this._currentVisible = false;
-    var that = this;
-    var deferred = new _deferred.Deferred();
-    var animation = that._getAnimationConfig() || {};
-
-    var hideAnimation = this._normalizeAnimation(animation.hide, 'from');
-
-    var startHideAnimation = hideAnimation && hideAnimation.start || _common.noop;
-    var completeHideAnimation = hideAnimation && hideAnimation.complete || _common.noop;
+    this._hidingDeferred = new _deferred.Deferred();
     var hidingArgs = {
       cancel: false
     };
 
     if (this._isShowingActionCanceled) {
-      deferred.resolve();
+      this._hidingDeferred.resolve();
     } else {
       this._actions.onHiding(hidingArgs);
 
-      that._toggleSafariScrolling();
+      this._toggleSafariScrolling();
 
       if (hidingArgs.cancel) {
         this._isHidingActionCanceled = true;
         this.option('visible', true);
-        deferred.resolve();
+
+        this._hidingDeferred.resolve();
       } else {
         this._forceFocusLost();
 
@@ -620,27 +781,11 @@ var Overlay = _ui.default.inherit({
 
         this._stopShowTimer();
 
-        this._animate(hideAnimation, function () {
-          var _that$_actions;
-
-          that._$content.css('pointerEvents', '');
-
-          that._renderVisibility(false);
-
-          completeHideAnimation.apply(this, arguments);
-          that._hideAnimationProcessing = false;
-          (_that$_actions = that._actions) === null || _that$_actions === void 0 ? void 0 : _that$_actions.onHidden();
-          deferred.resolve();
-        }, function () {
-          that._$content.css('pointerEvents', 'none');
-
-          startHideAnimation.apply(this, arguments);
-          that._hideAnimationProcessing = true;
-        });
+        this._animateHiding();
       }
     }
 
-    return deferred.promise();
+    return this._hidingDeferred.promise();
   },
   _forceFocusLost: function _forceFocusLost() {
     var activeElement = _dom_adapter.default.getActiveElement();
@@ -751,10 +896,10 @@ var Overlay = _ui.default.inherit({
     this._toggleTabTerminator(visible && this.option('shading'));
   },
   _initTabTerminatorHandler: function _initTabTerminatorHandler() {
-    var that = this;
+    var _this11 = this;
 
     this._proxiedTabTerminatorHandler = function () {
-      that._tabKeyHandler.apply(that, arguments);
+      _this11._tabKeyHandler.apply(_this11, arguments);
     };
   },
   _toggleTabTerminator: function _toggleTabTerminator(enabled) {
@@ -833,7 +978,7 @@ var Overlay = _ui.default.inherit({
     }
   },
   _toggleParentsScrollSubscription: function _toggleParentsScrollSubscription(subscribe) {
-    var _this4 = this;
+    var _this12 = this;
 
     if (!this._position) {
       return;
@@ -849,7 +994,7 @@ var Overlay = _ui.default.inherit({
     }
 
     this._proxiedTargetParentsScrollHandler = this._proxiedTargetParentsScrollHandler || function (e) {
-      _this4._targetParentsScrollHandler(e);
+      _this12._targetParentsScrollHandler(e);
     };
 
     _events_engine.default.off((0, _renderer.default)().add(this._$prevTargetParents), scrollEvent, this._proxiedTargetParentsScrollHandler);
@@ -931,7 +1076,7 @@ var Overlay = _ui.default.inherit({
     return isHidden || !_dom_adapter.default.getBody().contains($parent.get(0));
   },
   _renderContentImpl: function _renderContentImpl() {
-    var _this5 = this;
+    var _this13 = this;
 
     var whenContentRendered = new _deferred.Deferred();
     var contentTemplateOption = this.option('contentTemplate');
@@ -955,13 +1100,15 @@ var Overlay = _ui.default.inherit({
     this._renderScrollTerminator();
 
     whenContentRendered.done(function () {
-      if (_this5.option('visible')) {
-        _this5._moveToContainer();
+      if (_this13.option('visible')) {
+        _this13._moveToContainer();
       }
     });
     return whenContentRendered.promise();
   },
   _renderDrag: function _renderDrag() {
+    var _this14 = this;
+
     var $dragTarget = this._getDragTarget();
 
     if (!$dragTarget) {
@@ -979,32 +1126,50 @@ var Overlay = _ui.default.inherit({
       return;
     }
 
-    _events_engine.default.on($dragTarget, startEventName, this._dragStartHandler.bind(this));
+    _events_engine.default.on($dragTarget, startEventName, function (e) {
+      _this14._dragStartHandler(e);
+    });
 
-    _events_engine.default.on($dragTarget, updateEventName, this._dragUpdateHandler.bind(this));
+    _events_engine.default.on($dragTarget, updateEventName, function (e) {
+      _this14._dragUpdateHandler(e);
+    });
   },
   _renderResize: function _renderResize() {
+    var _this15 = this;
+
     this._resizable = this._createComponent(this._$content, _resizable.default, {
       handles: this.option('resizeEnabled') ? 'all' : 'none',
-      onResizeEnd: this._resizeEndHandler.bind(this),
-      onResize: this._actions.onResize.bind(this),
-      onResizeStart: this._actions.onResizeStart.bind(this),
+      onResizeEnd: function onResizeEnd(e) {
+        _this15._resizeEndHandler(e);
+
+        _this15._observeContentResize(true);
+      },
+      onResize: function onResize(e) {
+        _this15._actions.onResize(e);
+      },
+      onResizeStart: function onResizeStart(e) {
+        _this15._observeContentResize(false);
+
+        _this15._actions.onResizeStart(e);
+      },
       minHeight: 100,
       minWidth: 100,
       area: this._getDragResizeContainer()
     });
   },
-  _resizeEndHandler: function _resizeEndHandler() {
+  _resizeEndHandler: function _resizeEndHandler(e) {
     this._positionChangeHandled = true;
 
     var width = this._resizable.option('width');
 
     var height = this._resizable.option('height');
 
-    width && this.option('width', width);
-    height && this.option('height', height);
+    width && this._setOptionWithoutOptionChange('width', width);
+    height && this._setOptionWithoutOptionChange('height', height);
 
-    this._actions.onResizeEnd();
+    this._renderGeometry();
+
+    this._actions.onResizeEnd(e);
   },
   _renderScrollTerminator: function _renderScrollTerminator() {
     var $scrollTerminator = this._$wrapper;
@@ -1102,11 +1267,20 @@ var Overlay = _ui.default.inherit({
   },
   _changePosition: function _changePosition(offset) {
     var position = (0, _translator.locate)(this._$content);
-    (0, _translator.move)(this._$content, {
+    var resultPosition = {
       left: position.left + offset.left,
       top: position.top + offset.top
-    });
+    };
+    (0, _translator.move)(this._$content, resultPosition);
     this._positionChangeHandled = true;
+    return {
+      h: {
+        location: resultPosition.left
+      },
+      v: {
+        location: resultPosition.top
+      }
+    };
   },
   _allowedOffsets: function _allowedOffsets() {
     var position = (0, _translator.locate)(this._$content);
@@ -1150,25 +1324,51 @@ var Overlay = _ui.default.inherit({
 
     this._$wrapper.appendTo(renderContainer);
   },
-  _renderGeometry: function _renderGeometry(isDimensionChanged) {
-    if (this.option('visible') && (0, _window.hasWindow)()) {
-      this._renderGeometryImpl(isDimensionChanged);
+  _renderGeometry: function _renderGeometry(options) {
+    var _this$option2 = this.option(),
+        visible = _this$option2.visible,
+        _observeContentResize = _this$option2._observeContentResize;
+
+    if (visible && (0, _window.hasWindow)()) {
+      var isAnimated = this._showAnimationProcessing;
+      var shouldRepeatAnimation = isAnimated && !(options !== null && options !== void 0 && options.forceStopAnimation) && _observeContentResize;
+      this._isAnimationPaused = shouldRepeatAnimation || undefined;
+
+      this._stopAnimation();
+
+      if (options !== null && options !== void 0 && options.shouldOnlyReposition) {
+        this._positionContent();
+      } else {
+        this._renderGeometryImpl();
+      }
+
+      if (shouldRepeatAnimation) {
+        this._animateShowing();
+
+        this._isAnimationPaused = undefined;
+      }
     }
   },
-  _renderGeometryImpl: function _renderGeometryImpl(isDimensionChanged) {
-    this._stopAnimation();
+  _cacheDimensions: function _cacheDimensions() {
+    if (!this.option('_observeContentResize')) {
+      return;
+    }
 
+    this._renderedDimensions = {
+      width: parseInt(this._$content.width(), 10),
+      height: parseInt(this._$content.height(), 10)
+    };
+  },
+  _renderGeometryImpl: function _renderGeometryImpl() {
     this._normalizePosition();
 
     this._renderWrapper();
 
     this._renderDimensions();
 
-    var resultPosition = this._renderPosition();
+    this._cacheDimensions();
 
-    this._actions.onPositioned({
-      position: resultPosition
-    });
+    this._positionContent();
   },
   _styleWrapperPosition: function _styleWrapperPosition() {
     var useFixed = this._isContainerWindow() || this.option('_fixWrapperPosition');
@@ -1273,10 +1473,12 @@ var Overlay = _ui.default.inherit({
     });
   },
   _renderPosition: function _renderPosition() {
+    var resultPosition;
+
     if (this._positionChangeHandled) {
       var allowedOffsets = this._allowedOffsets();
 
-      this._changePosition({
+      resultPosition = this._changePosition({
         top: (0, _math.fitIntoRange)(0, -allowedOffsets.top, allowedOffsets.bottom),
         left: (0, _math.fitIntoRange)(0, -allowedOffsets.left, allowedOffsets.right)
       });
@@ -1287,10 +1489,17 @@ var Overlay = _ui.default.inherit({
 
       var position = this._transformStringPosition(this._position, POSITION_ALIASES);
 
-      var resultPosition = _position.default.setup(this._$content, position);
-
-      return resultPosition;
+      resultPosition = _position.default.setup(this._$content, position);
     }
+
+    return resultPosition;
+  },
+  _positionContent: function _positionContent() {
+    var resultPosition = this._renderPosition();
+
+    this._actions.onPositioned({
+      position: resultPosition
+    });
   },
   _transformStringPosition: function _transformStringPosition(position, positionAliases) {
     if ((0, _type.isString)(position)) {
@@ -1308,10 +1517,10 @@ var Overlay = _ui.default.inherit({
     return this._$content;
   },
   _attachKeyboardEvents: function _attachKeyboardEvents() {
-    var _this6 = this;
+    var _this16 = this;
 
     this._keyboardListenerId = _short.keyboard.on(this._$content, null, function (opts) {
-      return _this6._keyboardHandler(opts);
+      return _this16._keyboardHandler(opts);
     });
   },
   _keyboardHandler: function _keyboardHandler(options) {
@@ -1335,7 +1544,7 @@ var Overlay = _ui.default.inherit({
     }
   },
   _dimensionChanged: function _dimensionChanged() {
-    this._renderGeometry(true);
+    this._renderGeometry();
   },
   _clean: function _clean() {
     if (!this._contentAlreadyRendered) {
@@ -1356,6 +1565,11 @@ var Overlay = _ui.default.inherit({
     this._asyncShowTimeout = null;
   },
   _dispose: function _dispose() {
+    var _this$_resizeObserver;
+
+    (_this$_resizeObserver = this._resizeObserver) === null || _this$_resizeObserver === void 0 ? void 0 : _this$_resizeObserver.disconnect();
+    this._resizeObserver = undefined;
+
     _fx.default.stop(this._$content, false);
 
     clearTimeout(this._deferShowTimer);
@@ -1388,7 +1602,7 @@ var Overlay = _ui.default.inherit({
     this._$content.toggleClass(RTL_DIRECTION_CLASS, rtl);
   },
   _optionChanged: function _optionChanged(args) {
-    var _this7 = this;
+    var _this17 = this;
 
     var value = args.value;
 
@@ -1447,11 +1661,11 @@ var Overlay = _ui.default.inherit({
 
       case 'visible':
         this._renderVisibilityAnimate(value).done(function () {
-          if (!_this7._animateDeferred) {
+          if (!_this17._animateDeferred) {
             return;
           }
 
-          _this7._animateDeferred.resolveWith(_this7);
+          _this17._animateDeferred.resolveWith(_this17);
         });
 
         break;
@@ -1502,8 +1716,13 @@ var Overlay = _ui.default.inherit({
         break;
 
       case 'closeOnOutsideClick':
-      case 'animation':
       case 'propagateOutsideClick':
+      case '_observeContentResize':
+        break;
+
+      case 'animation':
+        this._updateResizeCallbackSkipCondition();
+
         break;
 
       case 'rtlEnabled':
@@ -1526,7 +1745,7 @@ var Overlay = _ui.default.inherit({
     }
   },
   toggle: function toggle(showing) {
-    var _this8 = this;
+    var _this18 = this;
 
     showing = showing === undefined ? !this.option('visible') : showing;
     var result = new _deferred.Deferred();
@@ -1539,8 +1758,8 @@ var Overlay = _ui.default.inherit({
     this._animateDeferred = animateDeferred;
     this.option('visible', showing);
     animateDeferred.promise().done(function () {
-      delete _this8._animateDeferred;
-      result.resolveWith(_this8, [_this8.option('visible')]);
+      delete _this18._animateDeferred;
+      result.resolveWith(_this18, [_this18.option('visible')]);
     });
     return result.promise();
   },
@@ -1558,7 +1777,9 @@ var Overlay = _ui.default.inherit({
   },
   repaint: function repaint() {
     if (this._contentAlreadyRendered) {
-      this._renderGeometry();
+      this._renderGeometry({
+        forceStopAnimation: true
+      });
 
       (0, _visibility_change.triggerResizeEvent)(this._$content);
     } else {

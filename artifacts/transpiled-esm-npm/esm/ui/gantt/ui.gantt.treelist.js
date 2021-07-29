@@ -30,9 +30,7 @@ export class GanttTreeList {
         mode: GanttHelper.getSelectionMode(this._gantt.option('allowSelection'))
       },
       selectedRowKeys: GanttHelper.getArrayFromOneElement(this._gantt.option('selectedRowKey')),
-      sorting: {
-        mode: 'none'
-      },
+      sorting: this._gantt.option('sorting'),
       scrolling: {
         showScrollbar: 'onHover',
         mode: 'virtual'
@@ -69,12 +67,36 @@ export class GanttTreeList {
     return this._treeList;
   }
 
+  onAfterTreeListCreate() {
+    if (this._postponedGanttInitRequired) {
+      this._initGanttOnContentReady({
+        component: this._treeList
+      });
+
+      delete this._postponedGanttInitRequired;
+    }
+  }
+
   _onContentReady(e) {
+    var hasTreeList = !!this._treeList;
+
+    if (hasTreeList) {
+      this._initGanttOnContentReady(e);
+    } else {
+      this._postponedGanttInitRequired = true;
+    }
+  }
+
+  _initGanttOnContentReady(e) {
     if (e.component.getDataSource()) {
       this._gantt._initGanttView();
 
       this._initScrollSync(e.component);
     }
+
+    this._gantt._sort();
+
+    this._gantt._sizeHelper.updateGanttRowHeights();
   }
 
   _onSelectionChanged(e) {
@@ -103,6 +125,10 @@ export class GanttTreeList {
 
   _onContextMenuPreparing(e) {
     var _e$row, _e$row2;
+
+    if (e.target === 'header') {
+      return;
+    }
 
     if (((_e$row = e.row) === null || _e$row === void 0 ? void 0 : _e$row.rowType) === 'data') {
       this.setOption('selectedRowKeys', [e.row.data[this._gantt.option('tasks.keyExpr')]]);
@@ -182,18 +208,15 @@ export class GanttTreeList {
     }
   }
 
-  updateDataSource() {
-    var forceUpdate = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+  updateDataSource(data) {
+    var forceUpdate = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
 
     if (!this._skipUpdateTreeListDataSource()) {
-      var dataSource = this._gantt.option('tasks.dataSource');
-
-      var storeArray = this._gantt._tasksOption._getStore()._array || dataSource.items && dataSource.items();
-      this.setOption('dataSource', storeArray ? storeArray : dataSource);
+      this.setOption('dataSource', data);
     } else if (forceUpdate) {
-      var data = this._treeList.option('dataSource');
+      var _data = this._treeList.option('dataSource');
 
-      this._gantt._onParentTasksRecalculated(data);
+      this._gantt._onParentTasksRecalculated(_data);
     }
   }
 
@@ -247,12 +270,42 @@ export class GanttTreeList {
     return columns;
   }
 
+  getSortedItems() {
+    var rootNode = this._treeList.getRootNode();
+
+    if (!rootNode) {
+      return undefined;
+    }
+
+    var resultArray = GanttHelper.convertTreeToList(rootNode);
+    var getters = GanttHelper.compileGettersByOption(this._gantt.option(GANTT_TASKS));
+
+    var validatedData = this._gantt._validateSourceData(GANTT_TASKS, resultArray);
+
+    var mappedData = validatedData.map(GanttHelper.prepareMapHandler(getters));
+    return mappedData;
+  }
+
   setOption(optionName, value) {
     this._treeList && this._treeList.option(optionName, value);
   }
 
   getOption(optionName) {
     return this._treeList.option(optionName);
+  }
+
+  onTaskInserted(insertedId, parentId) {
+    if (isDefined(parentId)) {
+      var expandedRowKeys = this.getOption('expandedRowKeys');
+
+      if (expandedRowKeys.indexOf(parentId) === -1) {
+        expandedRowKeys.push(parentId);
+        this.setOption('expandedRowKeys', expandedRowKeys);
+      }
+    }
+
+    this.selectRows(GanttHelper.getArrayFromOneElement(insertedId));
+    this.setOption('focusedRowKey', insertedId);
   }
 
 }

@@ -1,7 +1,7 @@
 /**
 * DevExtreme (esm/ui/grid_core/ui.grid_core.selection.js)
 * Version: 21.2.0
-* Build date: Wed Jul 28 2021
+* Build date: Thu Jul 29 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
@@ -142,6 +142,7 @@ var SelectionController = gridCore.Controller.inherit(function () {
         deferred: selectionOptions.deferred,
         maxFilterLengthInRequest: selectionOptions.maxFilterLengthInRequest,
         selectionFilter: this.option('selectionFilter'),
+        ignoreDisabledItems: true,
         key: function key() {
           return dataController === null || dataController === void 0 ? void 0 : dataController.key();
         },

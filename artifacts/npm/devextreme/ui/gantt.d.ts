@@ -1,7 +1,7 @@
 /**
 * DevExtreme (ui/gantt.d.ts)
 * Version: 21.2.0
-* Build date: Wed Jul 28 2021
+* Build date: Thu Jul 29 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
@@ -370,6 +370,12 @@ export interface dxGanttOptions extends WidgetOptions<dxGantt> {
        */
        enablePredecessorGap?: boolean
     };
+    /**
+     * @docid
+     * @type object
+     * @public
+     */
+     sorting?: Sorting;
     /**
      * @docid
      * @default null
@@ -1207,6 +1213,40 @@ export interface dxGanttStripLine {
      * @public
      */
     title?: string;
+}
+
+/**
+ * @docid
+ * @type object
+ * @namespace DevExpress.ui
+ */
+export interface Sorting {
+    /**
+     * @docid
+     * @default "Sort Ascending"
+     */
+    ascendingText?: string,
+    /**
+     * @docid
+     * @default "Clear Sorting"
+     */
+    clearText?: string,
+    /**
+     * @docid
+     * @default "Sort Descending"
+     */
+    descendingText?: string,
+    /**
+     * @docid
+     * @type Enums.GanttSortingMode|string
+     * @default "none"
+     */
+    mode?: 'multiple' | 'none' | 'single',
+    /**
+     * @docid 
+     * @default false
+     */
+    showSortIndexes?: boolean
 }
 
 /** @public */

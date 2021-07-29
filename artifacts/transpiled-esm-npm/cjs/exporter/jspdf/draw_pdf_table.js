@@ -62,6 +62,11 @@ function drawPdfTable(doc, table) {
         throw 'cell._rect is required';
       }
 
+      if ((0, _type.isDefined)(cell.backgroundColor)) {
+        doc.setFillColor(cell.backgroundColor);
+        doc.rect(cell._rect.x, cell._rect.y, cell._rect.w, cell._rect.h, 'F');
+      }
+
       if ((0, _type.isDefined)(cell.text) && cell.text !== '') {
         // TODO: use cell.text.trim() ?
         var textY = cell._rect.y + cell._rect.h / 2;

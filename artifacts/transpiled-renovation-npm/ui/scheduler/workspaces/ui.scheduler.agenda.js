@@ -536,12 +536,6 @@ var SchedulerAgenda = /*#__PURE__*/function (_WorkSpace) {
     return this.renderingStrategy.calculateRows(appointments, this.option('agendaDuration'), this.option('currentDate'));
   };
 
-  _proto.preRenderAppointments = function preRenderAppointments(options) {
-    _WorkSpace.prototype.preRenderAppointments.call(this, options);
-
-    this._calculateRows(options.appointments);
-  };
-
   _proto.onDataSourceChanged = function onDataSourceChanged(appointments) {
     _WorkSpace.prototype.onDataSourceChanged.call(this);
 

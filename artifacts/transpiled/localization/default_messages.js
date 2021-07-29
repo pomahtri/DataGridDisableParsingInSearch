@@ -567,7 +567,10 @@ var defaultMessages = {
     "dxGantt-zoomIn": "Zoom In",
     "dxGantt-zoomOut": "Zoom Out",
     "dxGantt-fullScreen": "Full Screen",
-    "dxGantt-quarter": "Q{0}"
+    "dxGantt-quarter": "Q{0}",
+    "dxGantt-sortingAscendingText": "Sort Ascending",
+    "dxGantt-sortingDescendingText": "Sort Descending",
+    "dxGantt-sortingClearText": "Clear Sorting"
   }
 };
 exports.defaultMessages = defaultMessages;

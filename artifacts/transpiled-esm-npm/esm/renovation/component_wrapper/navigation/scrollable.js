@@ -10,9 +10,7 @@ export class ScrollableWrapper extends Component {
     return new Deferred().resolve();
   }
 
-  _visibilityChanged() {
-    super.repaint();
-  }
+  _visibilityChanged() {}
 
   _container() {
     return this.$element().find(".dx-scrollable-container").eq(0);

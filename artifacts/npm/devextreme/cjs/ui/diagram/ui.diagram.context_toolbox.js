@@ -1,7 +1,7 @@
 /**
 * DevExtreme (cjs/ui/diagram/ui.diagram.context_toolbox.js)
 * Version: 21.2.0
-* Build date: Wed Jul 28 2021
+* Build date: Thu Jul 29 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
@@ -17,6 +17,8 @@ var _ui = _interopRequireDefault(require("../widget/ui.widget"));
 var _popover = _interopRequireDefault(require("../popover"));
 
 var _diagram = require("./diagram.importer");
+
+var _window = require("../../core/utils/window");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -102,13 +104,9 @@ var DiagramContextToolbox = /*#__PURE__*/function (_Widget) {
 
     this._$popoverTargetElement = (0, _renderer.default)('<div>').addClass(DIAGRAM_CONTEXT_TOOLBOX_TARGET_CLASS).appendTo(this.$element());
     var $popoverElement = (0, _renderer.default)('<div>').appendTo(this.$element());
-
-    var _getDiagram = (0, _diagram.getDiagram)(),
-        Browser = _getDiagram.Browser;
-
     var popoverClass = DIAGRAM_CONTEXT_TOOLBOX_CLASS;
 
-    if (Browser.TouchUI) {
+    if (this._isTouchMode()) {
       popoverClass += ' ' + DIAGRAM_TOUCH_CONTEXT_TOOLBOX_CLASS;
     }
 
@@ -119,6 +117,22 @@ var DiagramContextToolbox = /*#__PURE__*/function (_Widget) {
         class: popoverClass
       }
     });
+  };
+
+  _proto._isTouchMode = function _isTouchMode() {
+    var _getDiagram = (0, _diagram.getDiagram)(),
+        Browser = _getDiagram.Browser;
+
+    if (Browser.TouchUI) {
+      return true;
+    }
+
+    if (!(0, _window.hasWindow)()) {
+      return false;
+    }
+
+    var window = (0, _window.getWindow)();
+    return window.navigator && window.navigator.maxTouchPoints > 0;
   };
 
   _proto._show = function _show(x, y, side, category, callback) {

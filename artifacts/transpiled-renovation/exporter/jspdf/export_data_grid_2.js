@@ -32,6 +32,7 @@ function exportDataGrid(doc, dataGrid, options) {
       var pdfGrid = new _pdf_grid.PdfGrid(options.splitToTablesByColumns, options.columnWidths);
       pdfGrid.startNewTable(options.drawTableBorder, options.topLeft);
       var dataRowsCount = dataProvider.getRowsCount();
+      var rowOptions = options.rowOptions || {};
       var currentRowInfo;
       var prevRowInfo;
 
@@ -40,6 +41,7 @@ function exportDataGrid(doc, dataGrid, options) {
         currentRowInfo = (0, _export_data_grid_row_info.createRowInfo)({
           dataProvider: dataProvider,
           rowIndex: rowIndex,
+          rowOptions: rowOptions,
           prevRowInfo: prevRowInfo
         });
         var currentRowPdfCells = [];
@@ -70,7 +72,7 @@ function exportDataGrid(doc, dataGrid, options) {
           pdfGrid.startNewTable(options.drawTableBorder, tableTopLeft, null, null, firstColumnWidth);
         }
 
-        var rowHeight = null; // TODO: Default Value
+        var rowHeight = currentRowInfo.rowHeight; // TODO: Default Value
 
         if (options.onRowExporting) {
           var args = {

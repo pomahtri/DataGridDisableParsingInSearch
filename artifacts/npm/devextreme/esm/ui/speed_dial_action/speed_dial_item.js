@@ -1,7 +1,7 @@
 /**
 * DevExtreme (esm/ui/speed_dial_action/speed_dial_item.js)
 * Version: 21.2.0
-* Build date: Wed Jul 28 2021
+* Build date: Thu Jul 29 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
@@ -15,6 +15,7 @@ import { getImageContainer } from '../../core/utils/icon';
 import Overlay from '../overlay/ui.overlay';
 import { render } from '../widget/utils.ink_ripple';
 import { isMaterial } from '../themes';
+import { isPlainObject } from '../../core/utils/type';
 var FAB_CLASS = 'dx-fa-button';
 var FAB_ICON_CLASS = 'dx-fa-button-icon';
 var FAB_LABEL_CLASS = 'dx-fa-button-label';
@@ -75,7 +76,22 @@ class SpeedDialItem extends Overlay {
   }
 
   _isPositionLeft(position) {
-    var currentLocation = position ? position.at ? position.at.x ? position.at.x : position.at : typeof position === 'string' ? position : '' : '';
+    var currentLocation = '';
+
+    if (position) {
+      if (isPlainObject(position) && position.at) {
+        if (position.at.x) {
+          currentLocation = position.at.x;
+        } else {
+          currentLocation = position.at;
+        }
+      } else {
+        if (typeof position === 'string') {
+          currentLocation = position;
+        }
+      }
+    }
+
     return currentLocation.split(' ')[0] === 'left';
   }
 

@@ -134,6 +134,7 @@ var SelectionController = gridCore.Controller.inherit(function () {
         deferred: selectionOptions.deferred,
         maxFilterLengthInRequest: selectionOptions.maxFilterLengthInRequest,
         selectionFilter: this.option('selectionFilter'),
+        ignoreDisabledItems: true,
         key: function key() {
           return dataController === null || dataController === void 0 ? void 0 : dataController.key();
         },

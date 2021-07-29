@@ -14,11 +14,9 @@ var _extend = require("../../core/utils/extend");
 
 var _date2 = _interopRequireDefault(require("../../localization/date"));
 
-var _utils = _interopRequireDefault(require("./utils.timeZone"));
-
 var _classes = require("./classes");
 
-var _utils2 = require("./utils");
+var _utils = require("./utils");
 
 var _instanceFactory = require("./instanceFactory");
 
@@ -74,7 +72,7 @@ var subscribes = {
     this.showAppointmentPopup(options.data, false, targetedData);
   },
   updateAppointmentAfterResize: function updateAppointmentAfterResize(options) {
-    var info = _utils2.utils.dataAccessors.getAppointmentInfo(options.$appointment);
+    var info = _utils.utils.dataAccessors.getAppointmentInfo(options.$appointment);
 
     var exceptionDate = info.sourceAppointment.exceptionDate;
 
@@ -93,7 +91,7 @@ var subscribes = {
         rawAppointment = _ref.rawAppointment,
         coordinates = _ref.coordinates;
 
-    var info = _utils2.utils.dataAccessors.getAppointmentInfo(element);
+    var info = _utils.utils.dataAccessors.getAppointmentInfo(element);
 
     var appointment = (0, _appointmentAdapter.createAppointmentAdapter)(this.key, rawAppointment);
     var targetedAppointment = (0, _appointmentAdapter.createAppointmentAdapter)(this.key, (0, _extend.extend)({}, rawAppointment, this._getUpdatedData(rawAppointment)));
@@ -227,9 +225,6 @@ var subscribes = {
   getCellHeight: function getCellHeight() {
     return this.getWorkSpace().getCellHeight();
   },
-  getRenderingStrategy: function getRenderingStrategy() {
-    return this._getAppointmentsRenderingStrategy();
-  },
   getMaxAppointmentCountPerCellByType: function getMaxAppointmentCountPerCellByType(isAllDay) {
     return this.getRenderingStrategyInstance()._getMaxAppointmentCountPerCellByType(isAllDay);
   },
@@ -341,9 +336,6 @@ var subscribes = {
   getEndViewDate: function getEndViewDate() {
     return this.getEndViewDate();
   },
-  getMaxAppointmentsPerCell: function getMaxAppointmentsPerCell() {
-    return this.getMaxAppointmentsPerCell();
-  },
   forceMaxAppointmentPerCell: function forceMaxAppointmentPerCell() {
     return this.forceMaxAppointmentPerCell();
   },
@@ -367,53 +359,6 @@ var subscribes = {
   },
   getTargetedAppointmentData: function getTargetedAppointmentData(appointment, element) {
     return this.getTargetedAppointment(appointment, element);
-  },
-  getAppointmentDurationInMs: function getAppointmentDurationInMs(options) {
-    var startDate = options.startDate;
-    var endDate = options.endDate;
-    var allDay = options.allDay;
-    var appointmentDuration = endDate.getTime() - startDate.getTime();
-    var dayDuration = toMs('day');
-
-    var visibleDayDuration = this._workSpace.getVisibleDayDuration();
-
-    var result = 0;
-
-    if (allDay) {
-      var ceilQuantityOfDays = Math.ceil(appointmentDuration / dayDuration);
-      result = ceilQuantityOfDays * visibleDayDuration;
-    } else {
-      var isDifferentDates = !_utils.default.isSameAppointmentDates(startDate, endDate);
-      var floorQuantityOfDays = Math.floor(appointmentDuration / dayDuration);
-      var tailDuration;
-
-      if (isDifferentDates) {
-        var startDateEndHour = new Date(new Date(startDate).setHours(this.option('endDayHour'), 0, 0));
-        var hiddenDayDuration = dayDuration - visibleDayDuration - (startDate.getTime() > startDateEndHour.getTime() ? startDate.getTime() - startDateEndHour.getTime() : 0);
-        tailDuration = appointmentDuration - (floorQuantityOfDays ? floorQuantityOfDays * dayDuration : hiddenDayDuration);
-        var startDayTime = this.option('startDayHour') * toMs('hour');
-
-        var endPartDuration = endDate - _date.default.trimTime(endDate);
-
-        if (endPartDuration < startDayTime) {
-          if (floorQuantityOfDays) {
-            tailDuration -= hiddenDayDuration;
-          }
-
-          tailDuration += startDayTime - endPartDuration;
-        }
-      } else {
-        tailDuration = appointmentDuration % dayDuration;
-      }
-
-      if (tailDuration > visibleDayDuration) {
-        tailDuration = visibleDayDuration;
-      }
-
-      result = floorQuantityOfDays * visibleDayDuration + tailDuration || toMs('minute');
-    }
-
-    return result;
   },
   getEndDayHour: function getEndDayHour() {
     return this._workSpace.option('endDayHour') || this.option('endDayHour');

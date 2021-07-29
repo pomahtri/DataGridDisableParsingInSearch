@@ -2,6 +2,7 @@ import $ from '../../core/renderer';
 import Widget from '../widget/ui.widget';
 import Popover from '../popover';
 import { getDiagram } from './diagram.importer';
+import { hasWindow, getWindow } from '../../core/utils/window';
 var DIAGRAM_CONTEXT_TOOLBOX_TARGET_CLASS = 'dx-diagram-context-toolbox-target';
 var DIAGRAM_CONTEXT_TOOLBOX_CLASS = 'dx-diagram-context-toolbox';
 var DIAGRAM_TOUCH_CONTEXT_TOOLBOX_CLASS = 'dx-diagram-touch-context-toolbox';
@@ -72,12 +73,9 @@ class DiagramContextToolbox extends Widget {
 
     this._$popoverTargetElement = $('<div>').addClass(DIAGRAM_CONTEXT_TOOLBOX_TARGET_CLASS).appendTo(this.$element());
     var $popoverElement = $('<div>').appendTo(this.$element());
-    var {
-      Browser
-    } = getDiagram();
     var popoverClass = DIAGRAM_CONTEXT_TOOLBOX_CLASS;
 
-    if (Browser.TouchUI) {
+    if (this._isTouchMode()) {
       popoverClass += ' ' + DIAGRAM_TOUCH_CONTEXT_TOOLBOX_CLASS;
     }
 
@@ -88,6 +86,23 @@ class DiagramContextToolbox extends Widget {
         class: popoverClass
       }
     });
+  }
+
+  _isTouchMode() {
+    var {
+      Browser
+    } = getDiagram();
+
+    if (Browser.TouchUI) {
+      return true;
+    }
+
+    if (!hasWindow()) {
+      return false;
+    }
+
+    var window = getWindow();
+    return window.navigator && window.navigator.maxTouchPoints > 0;
   }
 
   _show(x, y, side, category, callback) {

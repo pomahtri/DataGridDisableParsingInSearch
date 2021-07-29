@@ -1,12 +1,12 @@
-import getElementComputedStyle from "../../../utils/get_computed_style";
+import { getElementComputedStyle } from "./get_element_computed_style";
 export function getTranslateValues(element) {
-  var _getElementComputedSt, _getElementComputedSt2;
+  var _getElementComputedSt;
 
   if (!element) return {
     left: 0,
     top: 0
   };
-  var matrix = (_getElementComputedSt = (_getElementComputedSt2 = getElementComputedStyle(element)) === null || _getElementComputedSt2 === void 0 ? void 0 : _getElementComputedSt2.transform) !== null && _getElementComputedSt !== void 0 ? _getElementComputedSt : "";
+  var matrix = (_getElementComputedSt = getElementComputedStyle(element).transform) !== null && _getElementComputedSt !== void 0 ? _getElementComputedSt : "";
   var regex = /matrix.*\((.+)\)/;
   var matrixValues = regex.exec(matrix);
 

@@ -68,8 +68,8 @@ export default Class.inherit({
     this.options.selectionFilter = value;
     filterIsChanged && this.onSelectionChanged();
   },
-  setSelection: function setSelection(keys) {
-    return this.selectedItemKeys(keys);
+  setSelection: function setSelection(keys, updatedKeys) {
+    return this.selectedItemKeys(keys, false, false, false, updatedKeys);
   },
   select: function select(keys) {
     return this.selectedItemKeys(keys, true);
@@ -77,14 +77,14 @@ export default Class.inherit({
   deselect: function deselect(keys) {
     return this.selectedItemKeys(keys, true, true);
   },
-  selectedItemKeys: function selectedItemKeys(keys, preserve, isDeselect, isSelectAll) {
+  selectedItemKeys: function selectedItemKeys(keys, preserve, isDeselect, isSelectAll, updatedKeys) {
     var _keys;
 
     var that = this;
     keys = (_keys = keys) !== null && _keys !== void 0 ? _keys : [];
     keys = Array.isArray(keys) ? keys : [keys];
     that.validate();
-    return this._selectionStrategy.selectedItemKeys(keys, preserve, isDeselect, isSelectAll);
+    return this._selectionStrategy.selectedItemKeys(keys, preserve, isDeselect, isSelectAll, updatedKeys);
   },
   clearSelection: function clearSelection() {
     return this.selectedItemKeys([]);

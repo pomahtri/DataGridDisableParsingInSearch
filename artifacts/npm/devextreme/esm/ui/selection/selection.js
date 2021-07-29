@@ -1,7 +1,7 @@
 /**
 * DevExtreme (esm/ui/selection/selection.js)
 * Version: 21.2.0
-* Build date: Wed Jul 28 2021
+* Build date: Thu Jul 29 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
@@ -76,8 +76,8 @@ export default Class.inherit({
     this.options.selectionFilter = value;
     filterIsChanged && this.onSelectionChanged();
   },
-  setSelection: function setSelection(keys) {
-    return this.selectedItemKeys(keys);
+  setSelection: function setSelection(keys, updatedKeys) {
+    return this.selectedItemKeys(keys, false, false, false, updatedKeys);
   },
   select: function select(keys) {
     return this.selectedItemKeys(keys, true);
@@ -85,14 +85,14 @@ export default Class.inherit({
   deselect: function deselect(keys) {
     return this.selectedItemKeys(keys, true, true);
   },
-  selectedItemKeys: function selectedItemKeys(keys, preserve, isDeselect, isSelectAll) {
+  selectedItemKeys: function selectedItemKeys(keys, preserve, isDeselect, isSelectAll, updatedKeys) {
     var _keys;
 
     var that = this;
     keys = (_keys = keys) !== null && _keys !== void 0 ? _keys : [];
     keys = Array.isArray(keys) ? keys : [keys];
     that.validate();
-    return this._selectionStrategy.selectedItemKeys(keys, preserve, isDeselect, isSelectAll);
+    return this._selectionStrategy.selectedItemKeys(keys, preserve, isDeselect, isSelectAll, updatedKeys);
   },
   clearSelection: function clearSelection() {
     return this.selectedItemKeys([]);

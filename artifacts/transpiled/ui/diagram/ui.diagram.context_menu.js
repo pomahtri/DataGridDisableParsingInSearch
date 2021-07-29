@@ -16,6 +16,8 @@ var _diagram2 = _interopRequireDefault(require("./diagram.bar"));
 
 var _diagram3 = require("./diagram.importer");
 
+var _window = require("../../core/utils/window");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; _setPrototypeOf(subClass, superClass); }
@@ -156,7 +158,16 @@ var DiagramContextMenuWrapper = /*#__PURE__*/function (_Widget) {
     var _getDiagram = (0, _diagram3.getDiagram)(),
         Browser = _getDiagram.Browser;
 
-    return Browser.TouchUI;
+    if (Browser.TouchUI) {
+      return true;
+    }
+
+    if (!(0, _window.hasWindow)()) {
+      return false;
+    }
+
+    var window = (0, _window.getWindow)();
+    return window.navigator && window.navigator.maxTouchPoints > 0;
   };
 
   _proto._onItemClick = function _onItemClick(itemData) {

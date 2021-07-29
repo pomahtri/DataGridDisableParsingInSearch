@@ -1,7 +1,7 @@
 /**
 * DevExtreme (cjs/renovation/component_wrapper/navigation/scrollable.js)
 * Version: 21.2.0
-* Build date: Wed Jul 28 2021
+* Build date: Thu Jul 29 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
@@ -38,9 +38,7 @@ var ScrollableWrapper = /*#__PURE__*/function (_Component) {
     return new _deferred.Deferred().resolve();
   };
 
-  _proto._visibilityChanged = function _visibilityChanged() {
-    _Component.prototype.repaint.call(this);
-  };
+  _proto._visibilityChanged = function _visibilityChanged() {};
 
   _proto._container = function _container() {
     return this.$element().find(".dx-scrollable-container").eq(0);

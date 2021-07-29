@@ -1,7 +1,7 @@
 /**
 * DevExtreme (esm/renovation/ui/grids/data_grid/common/data_grid_props.js)
 * Version: 21.2.0
-* Build date: Wed Jul 28 2021
+* Build date: Thu Jul 29 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
@@ -27,6 +27,19 @@ export var DataGridEditing = {
   refreshMode: "full",
   selectTextOnEditStart: false,
   startEditAction: "click",
+  texts: {
+    editRow: messageLocalization.format("dxDataGrid-editingEditRow"),
+    saveAllChanges: messageLocalization.format("dxDataGrid-editingSaveAllChanges"),
+    saveRowChanges: messageLocalization.format("dxDataGrid-editingSaveRowChanges"),
+    cancelAllChanges: messageLocalization.format("dxDataGrid-editingCancelAllChanges"),
+    cancelRowChanges: messageLocalization.format("dxDataGrid-editingCancelRowChanges"),
+    addRow: messageLocalization.format("dxDataGrid-editingAddRow"),
+    deleteRow: messageLocalization.format("dxDataGrid-editingDeleteRow"),
+    undeleteRow: messageLocalization.format("dxDataGrid-editingUndeleteRow"),
+    confirmDeleteMessage: messageLocalization.format("dxDataGrid-editingConfirmDeleteMessage"),
+    confirmDeleteTitle: "",
+    validationCancelChanges: messageLocalization.format("dxDataGrid-validationCancelChanges")
+  },
   useIcons: false,
   defaultChanges: [],
   changesChange: () => {},
@@ -77,7 +90,20 @@ export var DataGridProps = _extends({}, BaseWidgetProps, {
     startEditAction: "click",
     editRowKey: null,
     editColumnName: null,
-    changes: []
+    changes: [],
+    texts: {
+      editRow: messageLocalization.format("dxDataGrid-editingEditRow"),
+      saveAllChanges: messageLocalization.format("dxDataGrid-editingSaveAllChanges"),
+      saveRowChanges: messageLocalization.format("dxDataGrid-editingSaveRowChanges"),
+      cancelAllChanges: messageLocalization.format("dxDataGrid-editingCancelAllChanges"),
+      cancelRowChanges: messageLocalization.format("dxDataGrid-editingCancelRowChanges"),
+      addRow: messageLocalization.format("dxDataGrid-editingAddRow"),
+      deleteRow: messageLocalization.format("dxDataGrid-editingDeleteRow"),
+      undeleteRow: messageLocalization.format("dxDataGrid-editingUndeleteRow"),
+      confirmDeleteMessage: messageLocalization.format("dxDataGrid-editingConfirmDeleteMessage"),
+      confirmDeleteTitle: "",
+      validationCancelChanges: messageLocalization.format("dxDataGrid-validationCancelChanges")
+    }
   },
   export: {
     enabled: false,
@@ -128,7 +154,9 @@ export var DataGridProps = _extends({}, BaseWidgetProps, {
     columnRenderingMode: "standard",
     columnPageSize: 5,
     columnRenderingThreshold: 300,
-    useNative: "auto"
+    useNative: "auto",
+    newMode: false,
+    minGap: 1
   },
   selection: {
     mode: "none",
@@ -145,15 +173,15 @@ export var DataGridProps = _extends({}, BaseWidgetProps, {
     skipEmptyValues: true,
     recalculateWhileEditing: false,
     texts: {
-      sum: messageLocalization.getFormatter("dxDataGrid-summarySum")(),
-      sumOtherColumn: messageLocalization.getFormatter("dxDataGrid-summarySumOtherColumn")(),
-      min: messageLocalization.getFormatter("dxDataGrid-summaryMin")(),
-      minOtherColumn: messageLocalization.getFormatter("dxDataGrid-summaryMinOtherColumn")(),
-      max: messageLocalization.getFormatter("dxDataGrid-summaryMax")(),
-      maxOtherColumn: messageLocalization.getFormatter("dxDataGrid-summaryMaxOtherColumn")(),
-      avg: messageLocalization.getFormatter("dxDataGrid-summaryAvg")(),
-      avgOtherColumn: messageLocalization.getFormatter("dxDataGrid-summaryAvgOtherColumn")(),
-      count: messageLocalization.getFormatter("dxDataGrid-summaryCount")()
+      sum: messageLocalization.format("dxDataGrid-summarySum"),
+      sumOtherColumn: messageLocalization.format("dxDataGrid-summarySumOtherColumn"),
+      min: messageLocalization.format("dxDataGrid-summaryMin"),
+      minOtherColumn: messageLocalization.format("dxDataGrid-summaryMinOtherColumn"),
+      max: messageLocalization.format("dxDataGrid-summaryMax"),
+      maxOtherColumn: messageLocalization.format("dxDataGrid-summaryMaxOtherColumn"),
+      avg: messageLocalization.format("dxDataGrid-summaryAvg"),
+      avgOtherColumn: messageLocalization.format("dxDataGrid-summaryAvgOtherColumn"),
+      count: messageLocalization.format("dxDataGrid-summaryCount")
     }
   },
   columnChooser: {
@@ -318,7 +346,7 @@ export var DataGridProps = _extends({}, BaseWidgetProps, {
   showRowLines: false,
   twoWayBindingEnabled: true,
   wordWrapEnabled: false,
-  loadingTimeout: 30,
+  loadingTimeout: 0,
   commonColumnSettings: {
     allowExporting: true,
     allowFiltering: true,
@@ -329,6 +357,9 @@ export var DataGridProps = _extends({}, BaseWidgetProps, {
     trueText: messageLocalization.format("dxDataGrid-trueText"),
     falseText: messageLocalization.format("dxDataGrid-falseText")
   },
+  adaptColumnWidthByRatio: true,
+  regenerateColumnsByVisibleItems: false,
+  useLegacyKeyboardNavigation: false,
   defaultFilterValue: null,
   filterValueChange: () => {},
   defaultFocusedColumnIndex: -1,

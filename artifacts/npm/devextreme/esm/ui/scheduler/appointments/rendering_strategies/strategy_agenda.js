@@ -1,7 +1,7 @@
 /**
 * DevExtreme (esm/ui/scheduler/appointments/rendering_strategies/strategy_agenda.js)
 * Version: 21.2.0
-* Build date: Wed Jul 28 2021
+* Build date: Thu Jul 29 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
@@ -13,6 +13,14 @@ import BaseRenderingStrategy from './strategy.base';
 import { ExpressionUtils } from '../../expressionUtils';
 
 class AgendaRenderingStrategy extends BaseRenderingStrategy {
+  get agendaDuration() {
+    return this.options.agendaDuration;
+  }
+
+  get currentDate() {
+    return this.options.currentDate;
+  }
+
   getAppointmentMinSize() {}
 
   getDeltaTime() {}
@@ -33,6 +41,7 @@ class AgendaRenderingStrategy extends BaseRenderingStrategy {
   createTaskPositionMap(appointments) {
     var height;
     var appointmentsByResources;
+    this.calculateRows(appointments, this.agendaDuration, this.currentDate);
 
     if (appointments.length) {
       height = this.instance.fire('getAgendaVerticalStepHeight');
@@ -142,7 +151,8 @@ class AgendaRenderingStrategy extends BaseRenderingStrategy {
 
   getCollectorLeftOffset() {}
 
-  getCollectorTopOffset() {}
+  getCollectorTopOffset() {} // TODO: get rid of an extra 'needClearSettings' argument
+
 
   calculateRows(appointments, agendaDuration, currentDate, needClearSettings) {
     this._rows = [];

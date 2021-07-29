@@ -1,7 +1,7 @@
 /**
 * DevExtreme (cjs/ui/grid_core/ui.grid_core.virtual_scrolling.js)
 * Version: 21.2.0
-* Build date: Wed Jul 28 2021
+* Build date: Thu Jul 29 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
@@ -1248,10 +1248,18 @@ var virtualScrollingModule = {
           bottomItemIndex: function bottomItemIndex() {
             var viewportParams = this._loadViewportParams;
             return viewportParams && viewportParams.skip + viewportParams.take;
+          },
+          virtualItemsCount: function virtualItemsCount() {
+            var rowsScrollController = this._rowsScrollController;
+
+            if (rowsScrollController) {
+              return rowsScrollController.virtualItemsCount.apply(rowsScrollController, arguments);
+            }
+
+            var dataSource = this._dataSource;
+            return dataSource === null || dataSource === void 0 ? void 0 : dataSource.virtualItemsCount.apply(dataSource, arguments);
           }
         };
-
-        _uiGrid_core2.default.proxyMethod(members, 'virtualItemsCount');
 
         _uiGrid_core2.default.proxyMethod(members, 'getVirtualContentSize');
 

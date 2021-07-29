@@ -263,7 +263,7 @@ var Scrollbar = /*#__PURE__*/function (_InfernoComponent) {
   };
 
   _proto.riseReachBottom = function riseReachBottom() {
-    if (this.props.forceGeneratePockets && this.state.wasInit && !this.state.isScrolling && this.inRange && !(this.state.pendingBounceAnimator || this.state.pendingInertiaAnimator) && this.isReachBottom && !this.state.pendingReachBottom && !this.state.onReachBottomWasFiredOnce) {
+    if (this.props.forceGeneratePockets && this.state.wasInit && !this.state.isScrolling && this.inRange && !(this.state.pendingBounceAnimator || this.state.pendingInertiaAnimator) && this.isReachBottom && !this.state.pendingReachBottom && !this.state.onReachBottomWasFiredOnce && this.props.containerSize && this.props.contentSize) {
       this.setState(function (state) {
         return _extends({}, state, {
           onReachBottomWasFiredOnce: true

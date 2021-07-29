@@ -1,7 +1,7 @@
 /*!
 * DevExtreme (dx.messages.ja.js)
 * Version: 21.2.0
-* Build date: Wed Jul 28 2021
+* Build date: Thu Jul 29 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
@@ -582,7 +582,10 @@
             "dxGantt-zoomIn": "拡大",
             "dxGantt-zoomOut": "縮小",
             "dxGantt-fullScreen": "全画面表示",
-            "dxGantt-quarter": "Q{0}"
+            "dxGantt-quarter": "Q{0}",
+            "dxGantt-sortingAscendingText": "昇順に並べ替え",
+            "dxGantt-sortingDescendingText": "降順に並べ替え",
+            "dxGantt-sortingClearText": "並べ替えをクリア"
         }
     });
 }));

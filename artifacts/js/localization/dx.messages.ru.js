@@ -1,7 +1,7 @@
 /*!
 * DevExtreme (dx.messages.ru.js)
 * Version: 21.2.0
-* Build date: Wed Jul 28 2021
+* Build date: Thu Jul 29 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
@@ -582,7 +582,10 @@
             "dxGantt-zoomIn": "Увеличить масштаб",
             "dxGantt-zoomOut": "Уменьшить масштаб",
             "dxGantt-fullScreen": "Полноэкранный режим",
-            "dxGantt-quarter": "{0}-й кв."
+            "dxGantt-quarter": "{0}-й кв.",
+            "dxGantt-sortingAscendingText": "Сортировать по возрастанию",
+            "dxGantt-sortingDescendingText": "Сортировать по убыванию",
+            "dxGantt-sortingClearText": "Сбросить сортировку"
         }
     });
 }));

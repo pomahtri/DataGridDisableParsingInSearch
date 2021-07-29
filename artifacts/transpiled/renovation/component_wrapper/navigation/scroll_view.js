@@ -22,7 +22,9 @@ var ScrollViewWrapper = /*#__PURE__*/function (_Component) {
   var _proto = ScrollViewWrapper.prototype;
 
   _proto.update = function update() {
-    this.viewRef.updateHandler();
+    var _this$viewRef;
+
+    (_this$viewRef = this.viewRef) === null || _this$viewRef === void 0 ? void 0 : _this$viewRef.updateHandler();
     return new _deferred.Deferred().resolve();
   };
 

@@ -33,26 +33,22 @@ export var intersection = function intersection(a, b) {
   return result;
 };
 export var uniqueValues = function uniqueValues(data) {
-  return data.filter(function (item, position) {
-    return data.indexOf(item) === position;
-  });
+  return [...new Set(data)];
 };
 export var removeDuplicates = function removeDuplicates(from, what) {
   if (!Array.isArray(from) || from.length === 0) {
     return [];
   }
 
+  var result = from.slice();
+
   if (!Array.isArray(what) || what.length === 0) {
-    return from.slice();
+    return result;
   }
 
-  var result = [];
-  each(from, function (_, value) {
-    var index = inArray(value, what);
-
-    if (index === -1) {
-      result.push(value);
-    }
+  each(what, function (_, value) {
+    var index = inArray(value, result);
+    result.splice(index, 1);
   });
   return result;
 };

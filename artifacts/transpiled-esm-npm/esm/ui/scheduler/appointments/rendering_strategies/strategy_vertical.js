@@ -227,7 +227,7 @@ class VerticalRenderingStrategy extends BaseAppointmentsStrategy {
   }
 
   _calculateVerticalGeometryConfig(coordinates) {
-    var overlappingMode = this.instance.fire('getMaxAppointmentsPerCell');
+    var overlappingMode = this.maxAppointmentsPerCell;
 
     var offsets = this._getOffsets();
 
@@ -303,10 +303,8 @@ class VerticalRenderingStrategy extends BaseAppointmentsStrategy {
       normalizedEndDate
     } = position.info.appointment;
     var allDay = ExpressionUtils.getField(this.key, 'allDay', appointment);
-
-    var fullDuration = this._getAppointmentDurationInMs(startDate, normalizedEndDate, allDay);
-
-    var durationInMinutes = this._adjustDurationByDaylightDiff(fullDuration, startDate, normalizedEndDate) / toMs('minute');
+    var duration = this.getAppointmentDurationInMs(startDate, normalizedEndDate, allDay);
+    var durationInMinutes = this._adjustDurationByDaylightDiff(duration, startDate, normalizedEndDate) / toMs('minute');
 
     var height = durationInMinutes * this._getMinuteHeight();
 

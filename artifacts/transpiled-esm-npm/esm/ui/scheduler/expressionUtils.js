@@ -1,5 +1,5 @@
 import { isDefined } from '../../core/utils/type';
-import { getAppointmentDataProvider, getModel } from './instanceFactory';
+import { getAppointmentDataProvider, getModelProvider } from './instanceFactory';
 export var ExpressionUtils = {
   getField: (key, field, obj) => {
     var dataAccessors = getAppointmentDataProvider(key).getDataAccessors();
@@ -12,7 +12,9 @@ export var ExpressionUtils = {
     var {
       dataAccessors
     } = getAppointmentDataProvider(key);
-    var model = getModel(key);
+    var {
+      model
+    } = getModelProvider(key);
 
     if (!isDefined(dataAccessors.setter[field])) {
       return;

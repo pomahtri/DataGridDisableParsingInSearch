@@ -4,6 +4,7 @@ var _excluded = ["accessKey", "activeStateEnabled", "className", "defaultValue",
 import { createVNode, createComponentVNode, normalizeProps } from "inferno";
 import { InfernoEffect, InfernoWrapperComponent, normalizeStyles } from "@devextreme/vdom";
 import { createDefaultOptionRules, convertRulesToOptions } from "../../../core/options/utils";
+import getElementComputedStyle from "../../utils/get_computed_style";
 import { isMaterial, current } from "../../../ui/themes";
 import devices from "../../../core/devices";
 import Guid from "../../../core/guid";
@@ -144,13 +145,36 @@ export class CheckBox extends InfernoWrapperComponent {
       iconWidth
     } = this.props;
 
-    if (iconElement !== null && iconElement !== undefined) {
-      var width = typeof iconWidth === "number" ? iconWidth : iconElement.offsetWidth;
-      var height = typeof iconHeight === "number" ? iconHeight : iconElement.offsetHeight;
-      var defaultFontSize = 16;
-      var defaultIconSize = isMaterial(current()) ? 18 : 22;
-      var iconSize = width > 0 && height > 0 ? Math.min(width, height) : defaultIconSize;
+    if (iconElement) {
+      var _current;
+
+      var isCompactTheme = (_current = current()) === null || _current === void 0 ? void 0 : _current.includes("compact");
+      var defaultFontSize = isCompactTheme ? 12 : 16;
+      var isMaterialTheme = isMaterial(current());
+      var defaultIconSize = isMaterialTheme ? 18 : 22;
+
+      if (isCompactTheme) {
+        defaultIconSize = 16;
+      }
+
       var iconFontSizeRatio = defaultFontSize / defaultIconSize;
+
+      var getIconComputedStyle = () => {
+        var _getElementComputedSt;
+
+        var computedStyle = (_getElementComputedSt = getElementComputedStyle(iconElement)) !== null && _getElementComputedSt !== void 0 ? _getElementComputedSt : {
+          width: "".concat(defaultIconSize, "px"),
+          height: "".concat(defaultIconSize, "px")
+        };
+
+        getIconComputedStyle = () => computedStyle;
+
+        return computedStyle;
+      };
+
+      var width = typeof iconWidth === "number" ? iconWidth : parseInt(getIconComputedStyle().width, 10);
+      var height = typeof iconHeight === "number" ? iconHeight : parseInt(getIconComputedStyle().height, 10);
+      var iconSize = Math.min(width, height);
       var calculatedFontSize = "".concat(Math.ceil(iconSize * iconFontSizeRatio), "px");
       iconElement.style.fontSize = calculatedFontSize;
     }

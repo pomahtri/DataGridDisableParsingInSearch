@@ -1,7 +1,7 @@
 /**
 * DevExtreme (renovation/ui/grids/data_grid/data_grid.js)
 * Version: 21.2.0
-* Build date: Wed Jul 28 2021
+* Build date: Thu Jul 29 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
@@ -33,10 +33,12 @@ var _utils = require("../../../../core/options/utils");
 
 var _devices = _interopRequireDefault(require("../../../../core/devices"));
 
+var _browser = _interopRequireDefault(require("../../../../core/utils/browser"));
+
 var _themes = require("../../../../ui/themes");
 
 var _excluded = ["onOptionChanged"],
-    _excluded2 = ["accessKey", "activeStateEnabled", "allowColumnReordering", "allowColumnResizing", "autoNavigateToFocusedRow", "cacheEnabled", "cellHintEnabled", "className", "columnAutoWidth", "columnChooser", "columnFixing", "columnHidingEnabled", "columnMinWidth", "columnResizingMode", "columnWidth", "columns", "commonColumnSettings", "customizeColumns", "customizeExportData", "dataSource", "dateSerializationFormat", "defaultFilterValue", "defaultFocusedColumnIndex", "defaultFocusedRowIndex", "defaultFocusedRowKey", "defaultSelectedRowKeys", "defaultSelectionFilter", "disabled", "editing", "errorRowEnabled", "export", "filterBuilder", "filterBuilderPopup", "filterPanel", "filterRow", "filterSyncEnabled", "filterValue", "filterValueChange", "focusStateEnabled", "focusedColumnIndex", "focusedColumnIndexChange", "focusedRowEnabled", "focusedRowIndex", "focusedRowIndexChange", "focusedRowKey", "focusedRowKeyChange", "groupPanel", "grouping", "headerFilter", "height", "highlightChanges", "hint", "hoverStateEnabled", "keyExpr", "keyboardNavigation", "loadPanel", "loadingTimeout", "masterDetail", "noDataText", "onAdaptiveDetailRowPreparing", "onCellClick", "onCellDblClick", "onCellHoverChanged", "onCellPrepared", "onClick", "onContextMenuPreparing", "onDataErrorOccurred", "onEditingStart", "onEditorPrepared", "onEditorPreparing", "onExported", "onExporting", "onFileSaving", "onFocusedCellChanged", "onFocusedCellChanging", "onFocusedRowChanged", "onFocusedRowChanging", "onInitNewRow", "onKeyDown", "onRowClick", "onRowCollapsed", "onRowCollapsing", "onRowDblClick", "onRowExpanded", "onRowExpanding", "onRowInserted", "onRowInserting", "onRowPrepared", "onRowRemoved", "onRowRemoving", "onRowUpdated", "onRowUpdating", "onRowValidating", "onSaved", "onSaving", "onSelectionChanged", "onToolbarPreparing", "pager", "paging", "remoteOperations", "renderAsync", "repaintChangesOnly", "rowAlternationEnabled", "rowDragging", "rowTemplate", "rtlEnabled", "scrolling", "searchPanel", "selectedRowKeys", "selectedRowKeysChange", "selection", "selectionFilter", "selectionFilterChange", "showBorders", "showColumnHeaders", "showColumnLines", "showRowLines", "sortByGroupSummaryInfo", "sorting", "stateStoring", "summary", "tabIndex", "toolbar", "twoWayBindingEnabled", "useKeyboard", "visible", "width", "wordWrapEnabled"];
+    _excluded2 = ["accessKey", "activeStateEnabled", "adaptColumnWidthByRatio", "allowColumnReordering", "allowColumnResizing", "autoNavigateToFocusedRow", "cacheEnabled", "cellHintEnabled", "className", "columnAutoWidth", "columnChooser", "columnFixing", "columnHidingEnabled", "columnMinWidth", "columnResizingMode", "columnWidth", "columns", "commonColumnSettings", "customizeColumns", "customizeExportData", "dataSource", "dateSerializationFormat", "defaultFilterValue", "defaultFocusedColumnIndex", "defaultFocusedRowIndex", "defaultFocusedRowKey", "defaultSelectedRowKeys", "defaultSelectionFilter", "disabled", "editing", "errorRowEnabled", "export", "filterBuilder", "filterBuilderPopup", "filterPanel", "filterRow", "filterSyncEnabled", "filterValue", "filterValueChange", "focusStateEnabled", "focusedColumnIndex", "focusedColumnIndexChange", "focusedRowEnabled", "focusedRowIndex", "focusedRowIndexChange", "focusedRowKey", "focusedRowKeyChange", "groupPanel", "grouping", "headerFilter", "height", "highlightChanges", "hint", "hoverStateEnabled", "keyExpr", "keyboardNavigation", "loadPanel", "loadingTimeout", "masterDetail", "noDataText", "onAdaptiveDetailRowPreparing", "onCellClick", "onCellDblClick", "onCellHoverChanged", "onCellPrepared", "onClick", "onContextMenuPreparing", "onDataErrorOccurred", "onEditingStart", "onEditorPrepared", "onEditorPreparing", "onExported", "onExporting", "onFileSaving", "onFocusedCellChanged", "onFocusedCellChanging", "onFocusedRowChanged", "onFocusedRowChanging", "onInitNewRow", "onKeyDown", "onRowClick", "onRowCollapsed", "onRowCollapsing", "onRowDblClick", "onRowExpanded", "onRowExpanding", "onRowInserted", "onRowInserting", "onRowPrepared", "onRowRemoved", "onRowRemoving", "onRowUpdated", "onRowUpdating", "onRowValidating", "onSaved", "onSaving", "onSelectionChanged", "onToolbarPreparing", "pager", "paging", "regenerateColumnsByVisibleItems", "remoteOperations", "renderAsync", "repaintChangesOnly", "rowAlternationEnabled", "rowDragging", "rowTemplate", "rtlEnabled", "scrolling", "searchPanel", "selectedRowKeys", "selectedRowKeysChange", "selection", "selectionFilter", "selectionFilterChange", "showBorders", "showColumnHeaders", "showColumnLines", "showRowLines", "sortByGroupSummaryInfo", "sorting", "stateStoring", "summary", "tabIndex", "toolbar", "twoWayBindingEnabled", "useKeyboard", "useLegacyKeyboardNavigation", "visible", "width", "wordWrapEnabled"];
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -151,6 +153,13 @@ var defaultOptionRules = (0, _utils.createDefaultOptionRules)([{
     editing: {
       useIcons: true
     }
+  }
+}, {
+  device: function device() {
+    return _browser.default.webkit === true;
+  },
+  options: {
+    loadingTimeout: 30
   }
 }]);
 exports.defaultOptionRules = defaultOptionRules;
@@ -975,6 +984,7 @@ var DataGrid = /*#__PURE__*/function (_InfernoWrapperCompon) {
       }),
           accessKey = _this$props$filterVal2.accessKey,
           activeStateEnabled = _this$props$filterVal2.activeStateEnabled,
+          adaptColumnWidthByRatio = _this$props$filterVal2.adaptColumnWidthByRatio,
           allowColumnReordering = _this$props$filterVal2.allowColumnReordering,
           allowColumnResizing = _this$props$filterVal2.allowColumnResizing,
           autoNavigateToFocusedRow = _this$props$filterVal2.autoNavigateToFocusedRow,
@@ -1072,6 +1082,7 @@ var DataGrid = /*#__PURE__*/function (_InfernoWrapperCompon) {
           onToolbarPreparing = _this$props$filterVal2.onToolbarPreparing,
           pager = _this$props$filterVal2.pager,
           paging = _this$props$filterVal2.paging,
+          regenerateColumnsByVisibleItems = _this$props$filterVal2.regenerateColumnsByVisibleItems,
           remoteOperations = _this$props$filterVal2.remoteOperations,
           renderAsync = _this$props$filterVal2.renderAsync,
           repaintChangesOnly = _this$props$filterVal2.repaintChangesOnly,
@@ -1098,6 +1109,7 @@ var DataGrid = /*#__PURE__*/function (_InfernoWrapperCompon) {
           toolbar = _this$props$filterVal2.toolbar,
           twoWayBindingEnabled = _this$props$filterVal2.twoWayBindingEnabled,
           useKeyboard = _this$props$filterVal2.useKeyboard,
+          useLegacyKeyboardNavigation = _this$props$filterVal2.useLegacyKeyboardNavigation,
           visible = _this$props$filterVal2.visible,
           width = _this$props$filterVal2.width,
           wordWrapEnabled = _this$props$filterVal2.wordWrapEnabled,

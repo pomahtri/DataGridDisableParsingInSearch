@@ -201,7 +201,7 @@ export class Scrollbar extends InfernoComponent {
   }
 
   riseReachBottom() {
-    if (this.props.forceGeneratePockets && this.state.wasInit && !this.state.isScrolling && this.inRange && !(this.state.pendingBounceAnimator || this.state.pendingInertiaAnimator) && this.isReachBottom && !this.state.pendingReachBottom && !this.state.onReachBottomWasFiredOnce) {
+    if (this.props.forceGeneratePockets && this.state.wasInit && !this.state.isScrolling && this.inRange && !(this.state.pendingBounceAnimator || this.state.pendingInertiaAnimator) && this.isReachBottom && !this.state.pendingReachBottom && !this.state.onReachBottomWasFiredOnce && this.props.containerSize && this.props.contentSize) {
       this.setState(state => _extends({}, state, {
         onReachBottomWasFiredOnce: true
       }));

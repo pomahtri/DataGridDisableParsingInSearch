@@ -14,6 +14,10 @@ var _expressionUtils = require("../../expressionUtils");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
@@ -47,6 +51,7 @@ var AgendaRenderingStrategy = /*#__PURE__*/function (_BaseRenderingStrateg) {
   _proto.createTaskPositionMap = function createTaskPositionMap(appointments) {
     var height;
     var appointmentsByResources;
+    this.calculateRows(appointments, this.agendaDuration, this.currentDate);
 
     if (appointments.length) {
       height = this.instance.fire('getAgendaVerticalStepHeight');
@@ -156,7 +161,8 @@ var AgendaRenderingStrategy = /*#__PURE__*/function (_BaseRenderingStrateg) {
 
   _proto.getCollectorLeftOffset = function getCollectorLeftOffset() {};
 
-  _proto.getCollectorTopOffset = function getCollectorTopOffset() {};
+  _proto.getCollectorTopOffset = function getCollectorTopOffset() {} // TODO: get rid of an extra 'needClearSettings' argument
+  ;
 
   _proto.calculateRows = function calculateRows(appointments, agendaDuration, currentDate, needClearSettings) {
     this._rows = [];
@@ -257,6 +263,18 @@ var AgendaRenderingStrategy = /*#__PURE__*/function (_BaseRenderingStrateg) {
       };
     }.bind(this);
   };
+
+  _createClass(AgendaRenderingStrategy, [{
+    key: "agendaDuration",
+    get: function get() {
+      return this.options.agendaDuration;
+    }
+  }, {
+    key: "currentDate",
+    get: function get() {
+      return this.options.currentDate;
+    }
+  }]);
 
   return AgendaRenderingStrategy;
 }(_strategy.default);

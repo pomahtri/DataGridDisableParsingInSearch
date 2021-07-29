@@ -24,7 +24,7 @@ var _fx = _interopRequireDefault(require("../../animation/fx"));
 
 var _translator = require("../../animation/translator");
 
-var _restore_location = require("../../renovation/ui/scroll_view/utils/restore_location");
+var _convert_location = require("../../renovation/ui/scroll_view/utils/convert_location");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -204,11 +204,14 @@ var DateViewRoller = /*#__PURE__*/function (_Scrollable) {
   };
 
   _proto._moveTo = function _moveTo(targetLocation) {
-    targetLocation = (0, _restore_location.restoreLocation)(targetLocation);
+    var _convertToLocation = (0, _convert_location.convertToLocation)(targetLocation),
+        top = _convertToLocation.top,
+        left = _convertToLocation.left;
+
     var location = this.scrollOffset();
     var delta = {
-      x: location.left + targetLocation.left,
-      y: location.top + targetLocation.top
+      x: location.left + left,
+      y: location.top + top
     };
 
     if (this._isVisible() && (delta.x || delta.y)) {

@@ -1,7 +1,7 @@
 /**
 * DevExtreme (cjs/ui/diagram/ui.diagram.context_menu.js)
 * Version: 21.2.0
-* Build date: Wed Jul 28 2021
+* Build date: Thu Jul 29 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
@@ -23,6 +23,8 @@ var _uiDiagram = _interopRequireDefault(require("./ui.diagram.menu_helper"));
 var _diagram2 = _interopRequireDefault(require("./diagram.bar"));
 
 var _diagram3 = require("./diagram.importer");
+
+var _window = require("../../core/utils/window");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -164,7 +166,16 @@ var DiagramContextMenuWrapper = /*#__PURE__*/function (_Widget) {
     var _getDiagram = (0, _diagram3.getDiagram)(),
         Browser = _getDiagram.Browser;
 
-    return Browser.TouchUI;
+    if (Browser.TouchUI) {
+      return true;
+    }
+
+    if (!(0, _window.hasWindow)()) {
+      return false;
+    }
+
+    var window = (0, _window.getWindow)();
+    return window.navigator && window.navigator.maxTouchPoints > 0;
   };
 
   _proto._onItemClick = function _onItemClick(itemData) {

@@ -294,7 +294,7 @@ var AdaptiveColumnsController = _uiGrid_core.default.ViewController.inherit({
           containerWidth: containerWidth
         });
       } else {
-        return widthOption;
+        return parseFloat(widthOption);
       }
     } else {
       var columnAutoWidth = this.option('columnAutoWidth');

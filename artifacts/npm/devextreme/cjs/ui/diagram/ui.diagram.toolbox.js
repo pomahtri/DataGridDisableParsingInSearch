@@ -1,7 +1,7 @@
 /**
 * DevExtreme (cjs/ui/diagram/ui.diagram.toolbox.js)
 * Version: 21.2.0
-* Build date: Wed Jul 28 2021
+* Build date: Thu Jul 29 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
@@ -303,10 +303,7 @@ var DiagramToolbox = /*#__PURE__*/function (_DiagramFloatingPanel) {
   _proto._createTooltips = function _createTooltips(targets) {
     var _this3 = this;
 
-    var _getDiagram = (0, _diagram.getDiagram)(),
-        Browser = _getDiagram.Browser;
-
-    if (Browser.TouchUI) return;
+    if (this._isTouchMode()) return;
     var $container = this.$element();
     targets.each(function (index, element) {
       var $target = (0, _renderer.default)(element);
@@ -337,6 +334,22 @@ var DiagramToolbox = /*#__PURE__*/function (_DiagramFloatingPanel) {
         });
       }
     });
+  };
+
+  _proto._isTouchMode = function _isTouchMode() {
+    var _getDiagram = (0, _diagram.getDiagram)(),
+        Browser = _getDiagram.Browser;
+
+    if (Browser.TouchUI) {
+      return true;
+    }
+
+    if (!(0, _window.hasWindow)()) {
+      return false;
+    }
+
+    var window = (0, _window.getWindow)();
+    return window.navigator && window.navigator.maxTouchPoints > 0;
   };
 
   _proto._renderAccordion = function _renderAccordion($container) {

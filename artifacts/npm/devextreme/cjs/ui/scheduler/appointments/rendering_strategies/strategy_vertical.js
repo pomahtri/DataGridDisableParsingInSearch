@@ -1,7 +1,7 @@
 /**
 * DevExtreme (cjs/ui/scheduler/appointments/rendering_strategies/strategy_vertical.js)
 * Version: 21.2.0
-* Build date: Wed Jul 28 2021
+* Build date: Thu Jul 29 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
@@ -258,7 +258,7 @@ var VerticalRenderingStrategy = /*#__PURE__*/function (_BaseAppointmentsStra) {
   };
 
   _proto._calculateVerticalGeometryConfig = function _calculateVerticalGeometryConfig(coordinates) {
-    var overlappingMode = this.instance.fire('getMaxAppointmentsPerCell');
+    var overlappingMode = this.maxAppointmentsPerCell;
 
     var offsets = this._getOffsets();
 
@@ -333,9 +333,8 @@ var VerticalRenderingStrategy = /*#__PURE__*/function (_BaseAppointmentsStra) {
 
     var allDay = _expressionUtils.ExpressionUtils.getField(this.key, 'allDay', appointment);
 
-    var fullDuration = this._getAppointmentDurationInMs(startDate, normalizedEndDate, allDay);
-
-    var durationInMinutes = this._adjustDurationByDaylightDiff(fullDuration, startDate, normalizedEndDate) / toMs('minute');
+    var duration = this.getAppointmentDurationInMs(startDate, normalizedEndDate, allDay);
+    var durationInMinutes = this._adjustDurationByDaylightDiff(duration, startDate, normalizedEndDate) / toMs('minute');
 
     var height = durationInMinutes * this._getMinuteHeight();
 

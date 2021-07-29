@@ -1,7 +1,7 @@
 /**
 * DevExtreme (esm/ui/selection/selection.strategy.standard.js)
 * Version: 21.2.0
-* Build date: Wed Jul 28 2021
+* Build date: Thu Jul 29 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
@@ -147,15 +147,23 @@ export default SelectionStrategy.inherit({
 
     return ((_this$_lastLoadDeferr = this._lastLoadDeferred) === null || _this$_lastLoadDeferr === void 0 ? void 0 : _this$_lastLoadDeferr.state()) === 'pending';
   },
-  _concatRequestsItems: function _concatRequestsItems(keys, isDeselect, oldRequestItems) {
+  _concatRequestsItems: function _concatRequestsItems(keys, isDeselect, oldRequestItems, updatedKeys) {
+    var selectedItems;
     var deselectedItems = isDeselect ? keys : [];
+
+    if (updatedKeys) {
+      selectedItems = updatedKeys;
+    } else {
+      selectedItems = removeDuplicates(keys, this.options.selectedItemKeys);
+    }
+
     return {
-      addedItems: oldRequestItems.added.concat(removeDuplicates(keys, this.options.selectedItemKeys)),
+      addedItems: oldRequestItems.added.concat(selectedItems),
       removedItems: oldRequestItems.removed.concat(deselectedItems),
       keys: keys
     };
   },
-  _collectLastRequestData: function _collectLastRequestData(keys, isDeselect, isSelectAll) {
+  _collectLastRequestData: function _collectLastRequestData(keys, isDeselect, isSelectAll, updatedKeys) {
     var isDeselectAll = isDeselect && isSelectAll;
     var oldRequestItems = {
       added: [],
@@ -167,7 +175,7 @@ export default SelectionStrategy.inherit({
     var lastRequestData = multiSelectEnabled ? this._lastRequestData : {};
 
     if (multiSelectEnabled) {
-      if (this._requestInProgress()) {
+      if (this._shouldMergeWithLastRequest) {
         if (isDeselectAll) {
           this._lastLoadDeferred.reject();
 
@@ -179,12 +187,10 @@ export default SelectionStrategy.inherit({
           if (!isDeselect) {
             this._lastLoadDeferred.reject();
           }
-        } else {
-          lastRequestData = {};
         }
       }
 
-      lastRequestData = this._concatRequestsItems(keys, isDeselect, oldRequestItems);
+      lastRequestData = this._concatRequestsItems(keys, isDeselect, oldRequestItems, this._shouldMergeWithLastRequest ? undefined : updatedKeys);
     }
 
     return lastRequestData;
@@ -192,7 +198,7 @@ export default SelectionStrategy.inherit({
   _updateKeysByLastRequestData: function _updateKeysByLastRequestData(keys, isDeselect, isSelectAll) {
     var currentKeys = keys;
 
-    if (this._isMultiSelectEnabled() && !isDeselect && !isSelectAll) {
+    if (this._isMultiSelectEnabled() && this._shouldMergeWithLastRequest && !isDeselect && !isSelectAll) {
       var _this$_lastRequestDat, _this$_lastRequestDat2;
 
       currentKeys = removeDuplicates(keys.concat((_this$_lastRequestDat = this._lastRequestData) === null || _this$_lastRequestDat === void 0 ? void 0 : _this$_lastRequestDat.addedItems), (_this$_lastRequestDat2 = this._lastRequestData) === null || _this$_lastRequestDat2 === void 0 ? void 0 : _this$_lastRequestDat2.removedItems);
@@ -201,22 +207,25 @@ export default SelectionStrategy.inherit({
 
     return currentKeys;
   },
-  _loadSelectedItems: function _loadSelectedItems(keys, isDeselect, isSelectAll) {
+  _loadSelectedItems: function _loadSelectedItems(keys, isDeselect, isSelectAll, updatedKeys) {
     var that = this;
     var deferred = new Deferred();
-    this._lastRequestData = this._collectLastRequestData(keys, isDeselect, isSelectAll);
+    this._shouldMergeWithLastRequest = this._requestInProgress();
+    this._lastRequestData = this._collectLastRequestData(keys, isDeselect, isSelectAll, updatedKeys);
     when(that._lastLoadDeferred).always(function () {
       var currentKeys = that._updateKeysByLastRequestData(keys, isDeselect, isSelectAll);
+
+      that._shouldMergeWithLastRequest = false;
 
       that._loadSelectedItemsCore(currentKeys, isDeselect, isSelectAll).done(deferred.resolve).fail(deferred.reject);
     });
     that._lastLoadDeferred = deferred;
     return deferred;
   },
-  selectedItemKeys: function selectedItemKeys(keys, preserve, isDeselect, isSelectAll) {
+  selectedItemKeys: function selectedItemKeys(keys, preserve, isDeselect, isSelectAll, updatedKeys) {
     var that = this;
 
-    var deferred = that._loadSelectedItems(keys, isDeselect, isSelectAll);
+    var deferred = that._loadSelectedItems(keys, isDeselect, isSelectAll, updatedKeys);
 
     deferred.done(function (items) {
       if (preserve) {
@@ -230,7 +239,7 @@ export default SelectionStrategy.inherit({
     return deferred;
   },
   addSelectedItem: function addSelectedItem(key, itemData) {
-    if (isDefined(itemData) && itemData.disabled) {
+    if (isDefined(itemData) && !this.options.ignoreDisabledItems && itemData.disabled) {
       if (this.options.disabledItemKeys.indexOf(key) === -1) {
         this.options.disabledItemKeys.push(key);
       }
@@ -361,7 +370,9 @@ export default SelectionStrategy.inherit({
     var shouldCheckPending = checkPending && this._lastRequestData && this._requestInProgress();
 
     if (shouldCheckPending) {
-      return this._lastRequestData.addedItems && this._lastRequestData.addedItems.indexOf(key) !== -1;
+      var _this$_lastRequestDat3;
+
+      return ((_this$_lastRequestDat3 = this._lastRequestData.addedItems) === null || _this$_lastRequestDat3 === void 0 ? void 0 : _this$_lastRequestDat3.indexOf(key)) !== -1;
     } else {
       return false;
     }

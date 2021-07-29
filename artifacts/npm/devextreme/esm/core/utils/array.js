@@ -1,7 +1,7 @@
 /**
 * DevExtreme (esm/core/utils/array.js)
 * Version: 21.2.0
-* Build date: Wed Jul 28 2021
+* Build date: Thu Jul 29 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
@@ -41,26 +41,22 @@ export var intersection = function intersection(a, b) {
   return result;
 };
 export var uniqueValues = function uniqueValues(data) {
-  return data.filter(function (item, position) {
-    return data.indexOf(item) === position;
-  });
+  return [...new Set(data)];
 };
 export var removeDuplicates = function removeDuplicates(from, what) {
   if (!Array.isArray(from) || from.length === 0) {
     return [];
   }
 
+  var result = from.slice();
+
   if (!Array.isArray(what) || what.length === 0) {
-    return from.slice();
+    return result;
   }
 
-  var result = [];
-  each(from, function (_, value) {
-    var index = inArray(value, what);
-
-    if (index === -1) {
-      result.push(value);
-    }
+  each(what, function (_, value) {
+    var index = inArray(value, result);
+    result.splice(index, 1);
   });
   return result;
 };

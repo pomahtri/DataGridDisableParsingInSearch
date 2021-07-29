@@ -2,7 +2,9 @@ import Component from "../common/component";
 import { Deferred } from "../../../core/utils/deferred";
 export class ScrollViewWrapper extends Component {
   update() {
-    this.viewRef.updateHandler();
+    var _this$viewRef;
+
+    (_this$viewRef = this.viewRef) === null || _this$viewRef === void 0 ? void 0 : _this$viewRef.updateHandler();
     return new Deferred().resolve();
   }
 

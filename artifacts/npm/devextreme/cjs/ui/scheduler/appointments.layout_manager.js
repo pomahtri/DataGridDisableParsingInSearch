@@ -1,7 +1,7 @@
 /**
 * DevExtreme (cjs/ui/scheduler/appointments.layout_manager.js)
 * Version: 21.2.0
-* Build date: Wed Jul 28 2021
+* Build date: Thu Jul 29 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
@@ -22,9 +22,15 @@ var _strategy_horizontal_month = _interopRequireDefault(require("./appointments/
 
 var _strategy_agenda = _interopRequireDefault(require("./appointments/rendering_strategies/strategy_agenda"));
 
+var _instanceFactory = require("./instanceFactory");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 var RENDERING_STRATEGIES = {
   'horizontal': _strategy_horizontal.default,
@@ -35,9 +41,8 @@ var RENDERING_STRATEGIES = {
 };
 
 var AppointmentLayoutManager = /*#__PURE__*/function () {
-  function AppointmentLayoutManager(instance, renderingStrategy) {
+  function AppointmentLayoutManager(instance) {
     this.instance = instance;
-    renderingStrategy && this.initRenderingStrategy(renderingStrategy);
   }
 
   var _proto = AppointmentLayoutManager.prototype;
@@ -58,35 +63,43 @@ var AppointmentLayoutManager = /*#__PURE__*/function () {
     }
   };
 
-  _proto.initRenderingStrategy = function initRenderingStrategy(renderingStrategy) {
+  _proto._initRenderingStrategy = function _initRenderingStrategy() {
     var _this = this;
 
-    var Strategy = RENDERING_STRATEGIES[renderingStrategy];
+    var Strategy = RENDERING_STRATEGIES[this.viewRenderingStrategyName];
+    var workspace = this.instance.getWorkSpace();
     this._renderingStrategyInstance = new Strategy({
-      key: this.instance.key,
       instance: this.instance,
-      isAdaptive: this.instance.option('adaptivityEnabled'),
-      rtlEnabled: this.instance.option('rtlEnabled'),
+      key: this.instance.key,
+      adaptivityEnabled: this.modelProvider.adaptivityEnabled,
+      rtlEnabled: this.modelProvider.rtlEnabled,
+      startDayHour: this.modelProvider.startDayHour,
+      endDayHour: this.modelProvider.endDayHour,
+      maxAppointmentsPerCell: this.modelProvider.maxAppointmentsPerCell,
+      agendaDuration: workspace.option('agendaDuration'),
+      currentDate: this.modelProvider.currentDate,
       isVirtualScrolling: function isVirtualScrolling() {
         return _this.instance.isVirtualScrolling;
       },
       getIsGroupedByDate: function getIsGroupedByDate() {
-        return _this.instance._workSpace ? _this.instance._workSpace.isGroupedByDate() : false;
+        return workspace.isGroupedByDate();
       },
       getCellWidth: function getCellWidth() {
-        return _this.instance._workSpace ? _this.instance._workSpace.getCellWidth() : 0;
+        return workspace.getCellWidth();
       },
       getCellHeight: function getCellHeight() {
-        return _this.instance._workSpace ? _this.instance._workSpace.getCellHeight() : 0;
+        return workspace.getCellHeight();
       },
       getAllDayHeight: function getAllDayHeight() {
-        return _this.instance._workSpace ? _this.instance._workSpace.getAllDayHeight() : 0;
+        return workspace.getAllDayHeight();
       },
       getResizableStep: function getResizableStep() {
-        return _this.instance._workSpace ? _this.instance._workSpace.positionHelper.getResizableStep() : 0;
+        return workspace.positionHelper.getResizableStep();
+      },
+      getVisibleDayDuration: function getVisibleDayDuration() {
+        return workspace.getVisibleDayDuration();
       }
     });
-    this.renderingStrategy = renderingStrategy;
   };
 
   _proto.createAppointmentsMap = function createAppointmentsMap(items) {
@@ -102,7 +115,10 @@ var AppointmentLayoutManager = /*#__PURE__*/function () {
       }
     });
     var appointments = items ? items.slice() : [];
-    this._positionMap = this._renderingStrategyInstance.createTaskPositionMap(appointments);
+
+    this._initRenderingStrategy();
+
+    this._positionMap = this.getRenderingStrategyInstance().createTaskPositionMap(appointments);
     return this._createAppointmentsMapCore(appointments, this._positionMap);
   };
 
@@ -112,24 +128,24 @@ var AppointmentLayoutManager = /*#__PURE__*/function () {
     var _this$instance$getWor = this.instance.getWorkSpace(),
         virtualScrollingDispatcher = _this$instance$getWor.virtualScrollingDispatcher;
 
-    var virtualCellCount = virtualScrollingDispatcher.leftVirtualCellsCount;
-    var virtualRowCount = virtualScrollingDispatcher.topVirtualRowsCount;
+    var cellCountInsideLeftVirtualCell = virtualScrollingDispatcher.cellCountInsideLeftVirtualCell,
+        cellCountInsideTopVirtualRow = virtualScrollingDispatcher.cellCountInsideTopVirtualRow;
     return list.map(function (data, index) {
-      if (!_this3._renderingStrategyInstance.keepAppointmentSettings()) {
+      if (!_this3.getRenderingStrategyInstance().keepAppointmentSettings()) {
         delete data.settings;
       }
 
       var appointmentSettings = positionMap[index];
       appointmentSettings.forEach(function (settings) {
-        settings.direction = _this3.renderingStrategy === 'vertical' && !settings.allDay ? 'vertical' : 'horizontal';
+        settings.direction = _this3.viewRenderingStrategyName === 'vertical' && !settings.allDay ? 'vertical' : 'horizontal';
+        settings.topVirtualCellCount = cellCountInsideTopVirtualRow;
+        settings.leftVirtualCellCount = cellCountInsideLeftVirtualCell;
       });
       return {
         itemData: data,
         settings: appointmentSettings,
         needRepaint: true,
-        needRemove: false,
-        virtualCellCount: virtualCellCount,
-        virtualRowCount: virtualRowCount
+        needRemove: false
       };
     });
   };
@@ -152,15 +168,21 @@ var AppointmentLayoutManager = /*#__PURE__*/function () {
     }
 
     var createSettingsToCompare = function createSettingsToCompare(settings, index) {
-      var virtualCellCount = settings.virtualCellCount || 0;
-      var virtualRowCount = settings.virtualRowCount || 0;
-      var columnIndex = settings[index].columnIndex + virtualCellCount;
-      var rowIndex = settings[index].rowIndex + virtualRowCount;
-      return _extends({}, settings[index], {
+      var currentSetting = settings[index];
+      var leftVirtualCellCount = currentSetting.leftVirtualCellCount || 0;
+      var topVirtualCellCount = currentSetting.topVirtualCellCount || 0;
+      var columnIndex = currentSetting.columnIndex + leftVirtualCellCount;
+      var rowIndex = currentSetting.rowIndex + topVirtualCellCount;
+      var hMax = currentSetting.reduced ? currentSetting.hMax : undefined;
+      var vMax = currentSetting.reduced ? currentSetting.vMax : undefined;
+      return _extends({}, currentSetting, {
         columnIndex: columnIndex,
         rowIndex: rowIndex,
-        virtualCellCount: -1,
-        virtualRowCount: -1
+        topVirtualCellCount: undefined,
+        leftVirtualCellCount: undefined,
+        hMax: hMax,
+        vMax: vMax,
+        info: {}
       });
     };
 
@@ -213,7 +235,7 @@ var AppointmentLayoutManager = /*#__PURE__*/function () {
   _proto.getRepaintedAppointments = function getRepaintedAppointments(currentAppointments, sourceAppointments) {
     var _this4 = this;
 
-    if (sourceAppointments.length === 0 || this.renderingStrategy === 'agenda') {
+    if (sourceAppointments.length === 0 || this.viewRenderingStrategyName === 'agenda') {
       return currentAppointments;
     }
 
@@ -228,8 +250,24 @@ var AppointmentLayoutManager = /*#__PURE__*/function () {
   };
 
   _proto.getRenderingStrategyInstance = function getRenderingStrategyInstance() {
+    if (!this._renderingStrategyInstance) {
+      this._initRenderingStrategy();
+    }
+
     return this._renderingStrategyInstance;
   };
+
+  _createClass(AppointmentLayoutManager, [{
+    key: "modelProvider",
+    get: function get() {
+      return (0, _instanceFactory.getModelProvider)(this.instance.key);
+    }
+  }, {
+    key: "viewRenderingStrategyName",
+    get: function get() {
+      return this.modelProvider.getViewRenderingStrategyName();
+    }
+  }]);
 
   return AppointmentLayoutManager;
 }();

@@ -38,7 +38,7 @@ var _consts = require("./common/consts");
 
 var _get_element_offset = require("../../utils/get_element_offset");
 
-var _get_computed_style = _interopRequireDefault(require("../../utils/get_computed_style"));
+var _get_element_computed_style = require("./utils/get_element_computed_style");
 
 var _top_pocket = require("./top_pocket");
 
@@ -48,7 +48,7 @@ var _short = require("../../../events/short");
 
 var _get_offset_distance = require("./utils/get_offset_distance");
 
-var _restore_location = require("./utils/restore_location");
+var _convert_location = require("./utils/convert_location");
 
 var _get_scroll_top_max = require("./utils/get_scroll_top_max");
 
@@ -321,6 +321,9 @@ var ScrollableSimulated = /*#__PURE__*/function (_InfernoComponent) {
     _this.effectDisabledState = _this.effectDisabledState.bind(_assertThisInitialized(_this));
     _this.effectResetInactiveState = _this.effectResetInactiveState.bind(_assertThisInitialized(_this));
     _this.updateScrollbarSize = _this.updateScrollbarSize.bind(_assertThisInitialized(_this));
+    _this.scrollByLocation = _this.scrollByLocation.bind(_assertThisInitialized(_this));
+    _this.calcScrollByDeltaY = _this.calcScrollByDeltaY.bind(_assertThisInitialized(_this));
+    _this.calcScrollByDeltaX = _this.calcScrollByDeltaX.bind(_assertThisInitialized(_this));
     _this.updateHandler = _this.updateHandler.bind(_assertThisInitialized(_this));
     _this.handleScroll = _this.handleScroll.bind(_assertThisInitialized(_this));
     _this.startLoading = _this.startLoading.bind(_assertThisInitialized(_this));
@@ -564,6 +567,53 @@ var ScrollableSimulated = /*#__PURE__*/function (_InfernoComponent) {
       });
     });
     this.updateSizes();
+  };
+
+  _proto.scrollByLocation = function scrollByLocation(location) {
+    var _this12 = this;
+
+    var left = location.left,
+        top = location.top;
+
+    if (!(0, _type.isDefined)(top)) {
+      top = 0;
+    }
+
+    if (!(0, _type.isDefined)(left)) {
+      left = 0;
+    }
+
+    if (top === 0 && left === 0) {
+      return;
+    }
+
+    this.updateHandler();
+    this.prepareDirections(true);
+    this.onStart();
+    this.eventHandler(function (scrollbar) {
+      return scrollbar.scrollByHandler({
+        x: _this12.calcScrollByDeltaX(left),
+        y: _this12.calcScrollByDeltaY(top)
+      });
+    });
+  };
+
+  _proto.calcScrollByDeltaY = function calcScrollByDeltaY(top) {
+    if (this.direction.isVertical) {
+      var scrollbar = this.vScrollbarRef.current;
+      return scrollbar.getLocationWithinRange(top + this.state.vScrollLocation) - this.state.vScrollLocation;
+    }
+
+    return top;
+  };
+
+  _proto.calcScrollByDeltaX = function calcScrollByDeltaX(left) {
+    if (this.direction.isHorizontal) {
+      var scrollbar = this.hScrollbarRef.current;
+      return scrollbar.getLocationWithinRange(left + this.state.hScrollLocation) - this.state.hScrollLocation;
+    }
+
+    return left;
   };
 
   _proto.updateHandler = function updateHandler() {
@@ -1133,7 +1183,7 @@ var ScrollableSimulated = /*#__PURE__*/function (_InfernoComponent) {
   };
 
   _proto.updateSizes = function updateSizes() {
-    var _this12 = this;
+    var _this13 = this;
 
     var containerEl = this.containerElement;
     var contentEl = this.contentRef.current;
@@ -1195,7 +1245,7 @@ var ScrollableSimulated = /*#__PURE__*/function (_InfernoComponent) {
 
     this.setState(function (state) {
       return _extends({}, state, {
-        contentPaddingBottom: (0, _get_element_padding.getElementPaddingBottom)(_this12.contentRef.current)
+        contentPaddingBottom: (0, _get_element_padding.getElementPaddingBottom)(_this13.contentRef.current)
       });
     });
   };
@@ -1228,34 +1278,7 @@ var ScrollableSimulated = /*#__PURE__*/function (_InfernoComponent) {
   };
 
   _proto.scrollBy = function scrollBy(distance) {
-    var location = (0, _restore_location.restoreLocation)(distance, this.props.direction);
-
-    if (!location.top && !location.left) {
-      return;
-    }
-
-    this.updateHandler();
-
-    if (this.direction.isVertical) {
-      var scrollbar = this.vScrollbarRef.current;
-      location.top = scrollbar.getLocationWithinRange(location.top + this.state.vScrollLocation) - this.state.vScrollLocation;
-    }
-
-    if (this.direction.isHorizontal) {
-      var _scrollbar = this.hScrollbarRef.current;
-      location.left = _scrollbar.getLocationWithinRange(location.left + this.state.hScrollLocation) - this.state.hScrollLocation;
-    }
-
-    this.prepareDirections(true);
-    this.onStart();
-    this.eventHandler(function (scrollbar) {
-      var _location$left, _location$top;
-
-      return scrollbar.scrollByHandler({
-        x: (_location$left = location.left) !== null && _location$left !== void 0 ? _location$left : 0,
-        y: (_location$top = location.top) !== null && _location$top !== void 0 ? _location$top : 0
-      });
-    });
+    this.scrollByLocation((0, _convert_location.convertToLocation)(distance, this.props.direction));
   };
 
   _proto.scrollTo = function scrollTo(targetLocation) {
@@ -1292,14 +1315,16 @@ var ScrollableSimulated = /*#__PURE__*/function (_InfernoComponent) {
       containerEl.scrollTop += distance.top;
     }
 
+    var scrollLeft = containerEl.scrollLeft,
+        scrollTop = containerEl.scrollTop;
     this.setState(function (state) {
       return _extends({}, state, {
-        vScrollLocation: -containerEl.scrollTop
+        vScrollLocation: -scrollTop
       });
     });
     this.setState(function (state) {
       return _extends({}, state, {
-        hScrollLocation: -containerEl.scrollLeft
+        hScrollLocation: -scrollLeft
       });
     });
   };
@@ -1402,6 +1427,9 @@ var ScrollableSimulated = /*#__PURE__*/function (_InfernoComponent) {
       bottomPocketRef: this.bottomPocketRef,
       vScrollbarRef: this.vScrollbarRef,
       hScrollbarRef: this.hScrollbarRef,
+      scrollByLocation: this.scrollByLocation,
+      calcScrollByDeltaY: this.calcScrollByDeltaY,
+      calcScrollByDeltaX: this.calcScrollByDeltaX,
       updateHandler: this.updateHandler,
       handleScroll: this.handleScroll,
       startLoading: this.startLoading,
@@ -1493,7 +1521,7 @@ var ScrollableSimulated = /*#__PURE__*/function (_InfernoComponent) {
         return 0;
       }
 
-      var isOverflowHidden = (0, _get_computed_style.default)(this.contentRef.current).overflowX === "hidden";
+      var isOverflowHidden = (0, _get_element_computed_style.getElementComputedStyle)(this.contentRef.current).overflowX === "hidden";
 
       if (isOverflowHidden) {
         return this.state.contentClientWidth;
@@ -1511,7 +1539,7 @@ var ScrollableSimulated = /*#__PURE__*/function (_InfernoComponent) {
         return 0;
       }
 
-      var isOverflowHidden = (0, _get_computed_style.default)(this.contentRef.current).overflowY === "hidden";
+      var isOverflowHidden = (0, _get_element_computed_style.getElementComputedStyle)(this.contentRef.current).overflowY === "hidden";
 
       if (isOverflowHidden) {
         return this.state.contentClientHeight;

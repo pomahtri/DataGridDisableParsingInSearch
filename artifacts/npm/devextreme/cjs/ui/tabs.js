@@ -1,7 +1,7 @@
 /**
 * DevExtreme (cjs/ui/tabs.js)
 * Version: 21.2.0
-* Build date: Wed Jul 28 2021
+* Build date: Thu Jul 29 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
@@ -314,7 +314,7 @@ var Tabs = _uiCollection_widget.default.inherit({
     var $itemContainer = this.$element().wrapInner((0, _renderer.default)('<div>').addClass(TABS_SCROLLABLE_CLASS)).children();
     this._scrollable = this._createComponent($itemContainer, _ui.default, {
       direction: 'horizontal',
-      showScrollbar: false,
+      showScrollbar: 'never',
       useKeyboard: false,
       useNative: false,
       scrollByContent: this.option('scrollByContent'),

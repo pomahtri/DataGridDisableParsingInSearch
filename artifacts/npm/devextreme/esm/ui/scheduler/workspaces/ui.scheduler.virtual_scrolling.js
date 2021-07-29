@@ -1,7 +1,7 @@
 /**
 * DevExtreme (esm/ui/scheduler/workspaces/ui.scheduler.virtual_scrolling.js)
 * Version: 21.2.0
-* Build date: Wed Jul 28 2021
+* Build date: Thu Jul 29 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
@@ -104,16 +104,30 @@ export default class VirtualScrollingDispatcher {
     return this.width ? this.workspace.$element().width() : getWindow().innerWidth;
   }
 
-  get topVirtualRowsCount() {
+  get cellCountInsideTopVirtualRow() {
     var _this$verticalScrolli;
 
-    return ((_this$verticalScrolli = this.verticalScrollingState) === null || _this$verticalScrolli === void 0 ? void 0 : _this$verticalScrolli.virtualItemCountBefore) > 0 ? 1 : 0;
+    return ((_this$verticalScrolli = this.verticalScrollingState) === null || _this$verticalScrolli === void 0 ? void 0 : _this$verticalScrolli.virtualItemCountBefore) || 0;
+  }
+
+  get cellCountInsideLeftVirtualCell() {
+    var _this$horizontalScrol;
+
+    return ((_this$horizontalScrol = this.horizontalScrollingState) === null || _this$horizontalScrol === void 0 ? void 0 : _this$horizontalScrol.virtualItemCountBefore) || 0;
+  }
+
+  get cellCountInsideRightVirtualCell() {
+    var _this$horizontalScrol2;
+
+    return ((_this$horizontalScrol2 = this.horizontalScrollingState) === null || _this$horizontalScrol2 === void 0 ? void 0 : _this$horizontalScrol2.virtualItemCountAfter) || 0;
+  }
+
+  get topVirtualRowsCount() {
+    return this.cellCountInsideTopVirtualRow > 0 ? 1 : 0;
   }
 
   get leftVirtualCellsCount() {
-    var _this$horizontalScrol, _this$horizontalScrol2;
-
-    var virtualItemsCount = !this.isRTL ? (_this$horizontalScrol = this.horizontalScrollingState) === null || _this$horizontalScrol === void 0 ? void 0 : _this$horizontalScrol.virtualItemCountBefore : (_this$horizontalScrol2 = this.horizontalScrollingState) === null || _this$horizontalScrol2 === void 0 ? void 0 : _this$horizontalScrol2.virtualItemCountAfter;
+    var virtualItemsCount = !this.isRTL ? this.cellCountInsideLeftVirtualCell : this.cellCountInsideRightVirtualCell;
     return virtualItemsCount > 0 ? 1 : 0;
   }
 

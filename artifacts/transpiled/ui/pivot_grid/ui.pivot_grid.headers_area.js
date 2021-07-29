@@ -107,7 +107,7 @@ var HorizontalHeadersArea = _uiPivot_grid.AreaItem.inherit({
       this._groupElement.dxScrollable({
         useNative: false,
         useSimulatedScrollbar: false,
-        showScrollbar: false,
+        showScrollbar: 'never',
         bounceEnabled: false,
         direction: 'horizontal',
         updateManually: true
@@ -119,7 +119,7 @@ var HorizontalHeadersArea = _uiPivot_grid.AreaItem.inherit({
     var groupAlignment = that.option('rtlEnabled') ? 'right' : 'left';
 
     if (that._groupWidth) {
-      that.groupWidth(that._groupWidth - scrollBarWidth);
+      that.setGroupWidth(that._groupWidth - scrollBarWidth);
     }
 
     if (that._scrollBarWidth) {
@@ -202,7 +202,7 @@ var VerticalHeadersArea = HorizontalHeadersArea.inherit({
       this._groupElement.dxScrollable({
         useNative: false,
         useSimulatedScrollbar: false,
-        showScrollbar: false,
+        showScrollbar: 'never',
         bounceEnabled: false,
         direction: 'vertical',
         updateManually: true
@@ -213,7 +213,7 @@ var VerticalHeadersArea = HorizontalHeadersArea.inherit({
     var that = this;
 
     if (that._groupHeight) {
-      that.groupHeight(that._groupHeight - scrollBarWidth);
+      that.setGroupHeight(that._groupHeight - scrollBarWidth);
     }
 
     if (that._scrollBarWidth) {

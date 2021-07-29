@@ -759,7 +759,7 @@ var CollectionWidget = _uiCollection_widget.default.inherit({
     } else {
       var selectedItemKeys = this.option('selectedItemKeys') || [];
 
-      this._selection.setSelection([].concat(_toConsumableArray(selectedItemKeys), [key]));
+      this._selection.setSelection([].concat(_toConsumableArray(selectedItemKeys), [key]), [key]);
     }
   },
 

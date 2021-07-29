@@ -1,7 +1,7 @@
 /**
 * DevExtreme (cjs/ui/data_grid/ui.data_grid.summary.js)
 * Version: 21.2.0
-* Build date: Wed Jul 28 2021
+* Build date: Thu Jul 29 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
@@ -420,15 +420,15 @@ _uiData_grid.default.registerModule('summary', {
         skipEmptyValues: true,
         recalculateWhileEditing: false,
         texts: {
-          sum: _message.default.getFormatter('dxDataGrid-summarySum'),
-          sumOtherColumn: _message.default.getFormatter('dxDataGrid-summarySumOtherColumn'),
-          min: _message.default.getFormatter('dxDataGrid-summaryMin'),
-          minOtherColumn: _message.default.getFormatter('dxDataGrid-summaryMinOtherColumn'),
-          max: _message.default.getFormatter('dxDataGrid-summaryMax'),
-          maxOtherColumn: _message.default.getFormatter('dxDataGrid-summaryMaxOtherColumn'),
-          avg: _message.default.getFormatter('dxDataGrid-summaryAvg'),
-          avgOtherColumn: _message.default.getFormatter('dxDataGrid-summaryAvgOtherColumn'),
-          count: _message.default.getFormatter('dxDataGrid-summaryCount')
+          sum: _message.default.format('dxDataGrid-summarySum'),
+          sumOtherColumn: _message.default.format('dxDataGrid-summarySumOtherColumn'),
+          min: _message.default.format('dxDataGrid-summaryMin'),
+          minOtherColumn: _message.default.format('dxDataGrid-summaryMinOtherColumn'),
+          max: _message.default.format('dxDataGrid-summaryMax'),
+          maxOtherColumn: _message.default.format('dxDataGrid-summaryMaxOtherColumn'),
+          avg: _message.default.format('dxDataGrid-summaryAvg'),
+          avgOtherColumn: _message.default.format('dxDataGrid-summaryAvgOtherColumn'),
+          count: _message.default.format('dxDataGrid-summaryCount')
         }
       },
       sortByGroupSummaryInfo: undefined

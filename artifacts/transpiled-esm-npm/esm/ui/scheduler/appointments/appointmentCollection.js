@@ -59,6 +59,12 @@ class SchedulerAppointments extends CollectionWidget {
     }
   }
 
+  _dispose() {
+    clearTimeout(this._appointmentClickTimeout);
+
+    super._dispose();
+  }
+
   _supportedKeys() {
     var parent = super._supportedKeys();
 

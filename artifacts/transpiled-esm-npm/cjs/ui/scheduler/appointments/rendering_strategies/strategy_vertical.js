@@ -250,7 +250,7 @@ var VerticalRenderingStrategy = /*#__PURE__*/function (_BaseAppointmentsStra) {
   };
 
   _proto._calculateVerticalGeometryConfig = function _calculateVerticalGeometryConfig(coordinates) {
-    var overlappingMode = this.instance.fire('getMaxAppointmentsPerCell');
+    var overlappingMode = this.maxAppointmentsPerCell;
 
     var offsets = this._getOffsets();
 
@@ -325,9 +325,8 @@ var VerticalRenderingStrategy = /*#__PURE__*/function (_BaseAppointmentsStra) {
 
     var allDay = _expressionUtils.ExpressionUtils.getField(this.key, 'allDay', appointment);
 
-    var fullDuration = this._getAppointmentDurationInMs(startDate, normalizedEndDate, allDay);
-
-    var durationInMinutes = this._adjustDurationByDaylightDiff(fullDuration, startDate, normalizedEndDate) / toMs('minute');
+    var duration = this.getAppointmentDurationInMs(startDate, normalizedEndDate, allDay);
+    var durationInMinutes = this._adjustDurationByDaylightDiff(duration, startDate, normalizedEndDate) / toMs('minute');
 
     var height = durationInMinutes * this._getMinuteHeight();
 

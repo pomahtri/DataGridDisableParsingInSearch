@@ -14,9 +14,11 @@ var Names = {
 };
 var factoryInstances = {};
 var tailIndex = -1;
+export var generateKey = key => {
+  return isDefined(key) ? key : ++tailIndex;
+};
 export var createFactoryInstances = options => {
-  var key = isDefined(options.key) ? options.key : ++tailIndex;
-  createModel(key, options.model);
+  var key = generateKey(options.key);
   createModelProvider(key, options.model);
   var timeZoneCalculator = createTimeZoneCalculator(key, options.timeZone);
   var resourceManager = createResourceManager(key, options.resources);
@@ -77,14 +79,12 @@ var createTimeZoneCalculator = (key, currentTimeZone) => {
   });
 };
 
-var createModel = (key, options) => {
-  return createInstance(Names.model, key, () => options);
+export var createModelProvider = (key, model) => {
+  return createInstance(Names.modelProvider, key, () => {
+    var modelProvider = getInstance(Names.modelProvider, key);
+    return isDefined(modelProvider) ? modelProvider : new ModelProvider(model);
+  });
 };
-
-var createModelProvider = (key, options) => {
-  return createInstance(Names.modelProvider, key, () => new ModelProvider(options));
-};
-
 export var disposeFactoryInstances = key => {
   Object.getOwnPropertyNames(Names).forEach(name => {
     removeInstance(name, key);
@@ -96,5 +96,4 @@ export var getAppointmentDataProvider = function getAppointmentDataProvider() {
   return getInstance(Names.appointmentDataProvider, key);
 };
 export var getTimeZoneCalculator = key => getInstance(Names.timeZoneCalculator, key);
-export var getModel = key => getInstance(Names.model, key);
 export var getModelProvider = key => getInstance(Names.modelProvider, key);

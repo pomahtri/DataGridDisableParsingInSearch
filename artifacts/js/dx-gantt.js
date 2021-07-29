@@ -1,7 +1,7 @@
 /*!
  * DevExpress Gantt (dx-gantt)
- * Version: 3.1.2
- * Build date: Thu Jul 15 2021
+ * Version: 3.1.4
+ * Build date: Mon Jul 26 2021
  * 
  * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
  * Read about DevExpress licensing here: https://www.devexpress.com/Support/EULAs
@@ -5058,7 +5058,7 @@ var GanttView = (function () {
         this.onWindowResizelHandler = this.onBrowserWindowResize.bind(this);
         window.addEventListener("resize", this.onWindowResizelHandler);
         this.updateView();
-        setTimeout(function () {
+        this._scrollTimeOut = setTimeout(function () {
             _this.scrollLeftByViewType();
         }, 0);
         this.initializeStripLinesUpdater();
@@ -5423,6 +5423,7 @@ var GanttView = (function () {
         window.removeEventListener("resize", this.onWindowResizelHandler);
         this.clearStripLinesUpdater();
         this.renderHelper.reset();
+        clearTimeout(this._scrollTimeOut);
     };
     GanttView.prototype.checkAndProcessModelChanges = function () {
         var tasks = this.ganttOwner.getGanttTasksData();
@@ -6649,7 +6650,8 @@ var TaskEditController = (function () {
         }
     };
     TaskEditController.prototype.displayProgressEdit = function () {
-        if (!this.viewItem.isCustom && this.canUpdateTask()) {
+        var isEditingAllowed = this.ganttSettings.editing.enabled || this.ganttSettings.editing.allowTaskUpdate;
+        if (!this.viewItem.isCustom && this.canUpdateTask() && isEditingAllowed) {
             this.progressEdit.style.display = "block";
             this.progressEdit.style.left = ((this.task.progress / 100) * this.wrapInfo.size.width - (this.progressEdit.offsetWidth / 2)) + "px";
         }
@@ -10609,25 +10611,28 @@ var TaskEditTooltip = (function () {
         }
         this.baseElement.appendChild(this.defaultTooltip);
     };
+    TaskEditTooltip.prototype.setDefaultProgressTooltip = function (progress) {
+        this.defaultTooltip = document.createElement("DIV");
+        this.defaultTooltip.className = TaskEditTooltip.CLASSNAMES.TASK_EDIT_TOOLTIP_DEFAULT;
+        this.defaultTooltip.innerText = progress + "%";
+        this.baseElement.appendChild(this.defaultTooltip);
+    };
+    TaskEditTooltip.prototype.setDefaultTimeTooltip = function (start, end) {
+        this.defaultTooltip = document.createElement("DIV");
+        this.defaultTooltip.className = TaskEditTooltip.CLASSNAMES.TASK_EDIT_TOOLTIP_DEFAULT;
+        this.defaultTooltip.appendChild(this.getTimeContent(start, end));
+        this.baseElement.appendChild(this.defaultTooltip);
+    };
     TaskEditTooltip.prototype.showInfo = function (task, posX, delay) {
         var _this = this;
         if (delay === void 0) { delay = 0; }
         var tooltipTemplateFunction = this.taskTooltipContentTemplate;
-        var isTooltipShowing = true;
         this.destroyTemplate(this.baseElement);
         if (tooltipTemplateFunction)
-            isTooltipShowing = tooltipTemplateFunction(this.baseElement, task);
-        else
+            tooltipTemplateFunction(this.baseElement, task, function () { _this.showTooltip(posX, false, delay); });
+        else {
             this.setDefaultTooltip(task);
-        isTooltipShowing = isTooltipShowing && !!this.baseElement.innerHTML;
-        if (isTooltipShowing) {
-            var showInfoFunc = function () {
-                _this.show(posX, false);
-            };
-            if (delay)
-                this.timerId = setTimeout(showInfoFunc, delay);
-            else
-                showInfoFunc();
+            this.showTooltip(posX, false, delay);
         }
     };
     TaskEditTooltip.prototype.showProgress = function (progress, posX) {
@@ -10635,12 +10640,9 @@ var TaskEditTooltip = (function () {
         var tooltipTemplateFunction = this.taskProgressTooltipContentTemplate;
         this.destroyTemplate(this.baseElement);
         if (tooltipTemplateFunction)
-            tooltipTemplateFunction(this.baseElement, { progress: progress }, function (posX) { _this.showTooltip(posX); }, posX);
+            tooltipTemplateFunction(this.baseElement, { progress: progress }, function () { _this.showTooltip(posX); });
         else {
-            this.defaultTooltip = document.createElement("DIV");
-            this.defaultTooltip.className = TaskEditTooltip.CLASSNAMES.TASK_EDIT_TOOLTIP_DEFAULT;
-            this.defaultTooltip.innerText = progress + "%";
-            this.baseElement.appendChild(this.defaultTooltip);
+            this.setDefaultProgressTooltip(progress);
             this.show(posX);
         }
     };
@@ -10649,18 +10651,26 @@ var TaskEditTooltip = (function () {
         var tooltipTemplateFunction = this.taskTimeTooltipContentTemplate;
         this.destroyTemplate(this.baseElement);
         if (tooltipTemplateFunction)
-            tooltipTemplateFunction(this.baseElement, { start: start, end: end }, function (posX) { _this.showTooltip(posX); }, posX);
+            tooltipTemplateFunction(this.baseElement, { start: start, end: end }, function () { _this.showTooltip(posX); });
         else {
-            this.defaultTooltip = document.createElement("DIV");
-            this.defaultTooltip.className = TaskEditTooltip.CLASSNAMES.TASK_EDIT_TOOLTIP_DEFAULT;
-            this.defaultTooltip.appendChild(this.getTimeContent(start, end));
-            this.baseElement.appendChild(this.defaultTooltip);
+            this.setDefaultTimeTooltip(start, end);
             this.show(posX);
         }
     };
-    TaskEditTooltip.prototype.showTooltip = function (posX) {
-        if (this.baseElement)
-            this.show(posX);
+    TaskEditTooltip.prototype.showTooltip = function (posX, autoHide, delay) {
+        var _this = this;
+        var _a;
+        if (autoHide === void 0) { autoHide = true; }
+        if (delay === void 0) { delay = 0; }
+        if ((_a = this.baseElement) === null || _a === void 0 ? void 0 : _a.innerHTML) {
+            var showInfoFunc = function () {
+                _this.show(posX, autoHide);
+            };
+            if (delay)
+                this.timerId = setTimeout(showInfoFunc, delay);
+            else
+                showInfoFunc();
+        }
     };
     TaskEditTooltip.prototype.show = function (posX, autoHide) {
         var _this = this;
@@ -10689,7 +10699,7 @@ var TaskEditTooltip = (function () {
             if (this.timerId)
                 clearTimeout(this.timerId);
             this.timerId = setTimeout(function () {
-                _this.baseElement.style.display = "none";
+                _this.hide();
             }, 1500);
         }
     };
@@ -17932,6 +17942,9 @@ var CustomTaskRender = (function () {
         if (forceRender === void 0) { forceRender = false; }
         this._renderHelper.recreateConnectorLineElement(dependencyId, forceRender);
     };
+    CustomTaskRender.prototype.createTaskSelectionElement = function (taskIndex) {
+        this._taskRender.createTaskSelectionElement(taskIndex);
+    };
     CustomTaskRender.prototype.createCustomTaskElement = function (index, taskTemplateFunction) {
         var _this = this;
         var viewItem = this.getViewItem(index);
@@ -17970,6 +17983,8 @@ var CustomTaskRender = (function () {
                 taskDependencies.forEach(function (d) { return _this.recreateConnectorLineElement(d.internalId, true); });
             }
         }
+        if (viewItem.selected)
+            this.createTaskSelectionElement(taskIndex);
     };
     CustomTaskRender.prototype.createCustomTaskInformation = function (index) {
         var task = this.getTask(index);

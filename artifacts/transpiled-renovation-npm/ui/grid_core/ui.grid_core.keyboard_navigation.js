@@ -1555,11 +1555,13 @@ var KeyboardNavigationController = _uiGrid_core.default.ViewController.inherit({
     return this._isCellValid($cell);
   },
   _isLastRow: function _isLastRow(rowIndex) {
+    var dataController = this._dataController;
+
     if (this._isVirtualRowRender()) {
-      return rowIndex >= this._dataController.totalItemsCount() - 1;
+      return rowIndex >= dataController.getMaxRowIndex();
     }
 
-    return rowIndex === this._dataController.items().length - 1;
+    return rowIndex === dataController.items().length - 1;
   },
   _isFirstValidCell: function _isFirstValidCell(cellPosition) {
     var isFirstValidCell = false;
@@ -2459,6 +2461,16 @@ var keyboardNavigationModule = {
               editorFactory.refocus();
             }
           }
+        },
+        getMaxRowIndex: function getMaxRowIndex() {
+          var result = this.items().length - 1;
+          var virtualItemsCount = this.virtualItemsCount();
+
+          if (virtualItemsCount) {
+            result += virtualItemsCount.begin + virtualItemsCount.end;
+          }
+
+          return result;
         }
       },
       adaptiveColumns: {

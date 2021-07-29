@@ -1,7 +1,7 @@
 /**
 * DevExtreme (cjs/exporter/jspdf/draw_pdf_table.js)
 * Version: 21.2.0
-* Build date: Wed Jul 28 2021
+* Build date: Thu Jul 29 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
@@ -68,6 +68,11 @@ function drawPdfTable(doc, table) {
 
       if (!(0, _type.isDefined)(cell._rect)) {
         throw 'cell._rect is required';
+      }
+
+      if ((0, _type.isDefined)(cell.backgroundColor)) {
+        doc.setFillColor(cell.backgroundColor);
+        doc.rect(cell._rect.x, cell._rect.y, cell._rect.w, cell._rect.h, 'F');
       }
 
       if ((0, _type.isDefined)(cell.text) && cell.text !== '') {

@@ -1,6 +1,6 @@
 "use strict";
 
-exports.getModelProvider = exports.getModel = exports.getTimeZoneCalculator = exports.getAppointmentDataProvider = exports.getResourceManager = exports.disposeFactoryInstances = exports.createInstance = exports.createFactoryInstances = void 0;
+exports.getModelProvider = exports.getTimeZoneCalculator = exports.getAppointmentDataProvider = exports.getResourceManager = exports.disposeFactoryInstances = exports.createModelProvider = exports.createInstance = exports.createFactoryInstances = exports.generateKey = void 0;
 
 var _type = require("../../core/utils/type");
 
@@ -28,9 +28,14 @@ var Names = {
 var factoryInstances = {};
 var tailIndex = -1;
 
+var generateKey = function generateKey(key) {
+  return (0, _type.isDefined)(key) ? key : ++tailIndex;
+};
+
+exports.generateKey = generateKey;
+
 var createFactoryInstances = function createFactoryInstances(options) {
-  var key = (0, _type.isDefined)(options.key) ? options.key : ++tailIndex;
-  createModel(key, options.model);
+  var key = generateKey(options.key);
   createModelProvider(key, options.model);
   var timeZoneCalculator = createTimeZoneCalculator(key, options.timeZone);
   var resourceManager = createResourceManager(key, options.resources);
@@ -102,17 +107,14 @@ var createTimeZoneCalculator = function createTimeZoneCalculator(key, currentTim
   });
 };
 
-var createModel = function createModel(key, options) {
-  return createInstance(Names.model, key, function () {
-    return options;
+var createModelProvider = function createModelProvider(key, model) {
+  return createInstance(Names.modelProvider, key, function () {
+    var modelProvider = getInstance(Names.modelProvider, key);
+    return (0, _type.isDefined)(modelProvider) ? modelProvider : new _modelProvider.ModelProvider(model);
   });
 };
 
-var createModelProvider = function createModelProvider(key, options) {
-  return createInstance(Names.modelProvider, key, function () {
-    return new _modelProvider.ModelProvider(options);
-  });
-};
+exports.createModelProvider = createModelProvider;
 
 var disposeFactoryInstances = function disposeFactoryInstances(key) {
   Object.getOwnPropertyNames(Names).forEach(function (name) {
@@ -140,12 +142,6 @@ var getTimeZoneCalculator = function getTimeZoneCalculator(key) {
 };
 
 exports.getTimeZoneCalculator = getTimeZoneCalculator;
-
-var getModel = function getModel(key) {
-  return getInstance(Names.model, key);
-};
-
-exports.getModel = getModel;
 
 var getModelProvider = function getModelProvider(key) {
   return getInstance(Names.modelProvider, key);

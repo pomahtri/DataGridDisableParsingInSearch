@@ -1,7 +1,7 @@
 /**
 * DevExtreme (cjs/ui/gantt/ui.gantt.data.option.js)
 * Version: 21.2.0
-* Build date: Wed Jul 28 2021
+* Build date: Thu Jul 29 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
@@ -130,10 +130,17 @@ var DataOption = /*#__PURE__*/function (_Component) {
   };
 
   _proto._reloadDataSource = function _reloadDataSource() {
-    var isArray = !!this._getStore()._array;
+    return this._dataSource.load();
+  };
 
-    if (!isArray) {
-      this._dataSource.load();
+  _proto.dispose = function dispose() {
+    this._disposeDataSource();
+  };
+
+  _proto._optionChanged = function _optionChanged(args) {
+    switch (args.name) {
+      case 'dataSource':
+        break;
     }
   };
 

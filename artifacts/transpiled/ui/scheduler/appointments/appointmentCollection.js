@@ -99,6 +99,12 @@ var SchedulerAppointments = /*#__PURE__*/function (_CollectionWidget) {
     }
   };
 
+  _proto._dispose = function _dispose() {
+    clearTimeout(this._appointmentClickTimeout);
+
+    _CollectionWidget.prototype._dispose.call(this);
+  };
+
   _proto._supportedKeys = function _supportedKeys() {
     var parent = _CollectionWidget.prototype._supportedKeys.call(this);
 

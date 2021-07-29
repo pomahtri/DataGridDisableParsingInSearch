@@ -1,7 +1,7 @@
 /**
 * DevExtreme (cjs/ui/pivot_grid/ui.pivot_grid.headers_area.js)
 * Version: 21.2.0
-* Build date: Wed Jul 28 2021
+* Build date: Thu Jul 29 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
@@ -115,7 +115,7 @@ var HorizontalHeadersArea = _uiPivot_grid.AreaItem.inherit({
       this._groupElement.dxScrollable({
         useNative: false,
         useSimulatedScrollbar: false,
-        showScrollbar: false,
+        showScrollbar: 'never',
         bounceEnabled: false,
         direction: 'horizontal',
         updateManually: true
@@ -127,7 +127,7 @@ var HorizontalHeadersArea = _uiPivot_grid.AreaItem.inherit({
     var groupAlignment = that.option('rtlEnabled') ? 'right' : 'left';
 
     if (that._groupWidth) {
-      that.groupWidth(that._groupWidth - scrollBarWidth);
+      that.setGroupWidth(that._groupWidth - scrollBarWidth);
     }
 
     if (that._scrollBarWidth) {
@@ -210,7 +210,7 @@ var VerticalHeadersArea = HorizontalHeadersArea.inherit({
       this._groupElement.dxScrollable({
         useNative: false,
         useSimulatedScrollbar: false,
-        showScrollbar: false,
+        showScrollbar: 'never',
         bounceEnabled: false,
         direction: 'vertical',
         updateManually: true
@@ -221,7 +221,7 @@ var VerticalHeadersArea = HorizontalHeadersArea.inherit({
     var that = this;
 
     if (that._groupHeight) {
-      that.groupHeight(that._groupHeight - scrollBarWidth);
+      that.setGroupHeight(that._groupHeight - scrollBarWidth);
     }
 
     if (that._scrollBarWidth) {

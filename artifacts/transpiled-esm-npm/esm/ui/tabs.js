@@ -275,7 +275,7 @@ var Tabs = CollectionWidget.inherit({
     var $itemContainer = this.$element().wrapInner($('<div>').addClass(TABS_SCROLLABLE_CLASS)).children();
     this._scrollable = this._createComponent($itemContainer, Scrollable, {
       direction: 'horizontal',
-      showScrollbar: false,
+      showScrollbar: 'never',
       useKeyboard: false,
       useNative: false,
       scrollByContent: this.option('scrollByContent'),

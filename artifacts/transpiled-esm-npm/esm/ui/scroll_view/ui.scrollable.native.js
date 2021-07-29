@@ -25,7 +25,6 @@ var NativeStrategy = Class.inherit({
     this._$content = scrollable._$content;
     this._direction = scrollable.option('direction');
     this._useSimulatedScrollbar = scrollable.option('useSimulatedScrollbar');
-    this._showScrollbar = scrollable.option('showScrollbar');
     this.option = scrollable.option.bind(scrollable);
     this._createActionByOption = scrollable._createActionByOption.bind(scrollable);
     this._isLocked = scrollable._isLocked.bind(scrollable);
@@ -38,15 +37,15 @@ var NativeStrategy = Class.inherit({
     var device = devices.real();
     var deviceType = device.platform;
 
-    this._$element.addClass(SCROLLABLE_NATIVE_CLASS).addClass(SCROLLABLE_NATIVE_CLASS + '-' + deviceType).toggleClass(SCROLLABLE_SCROLLBARS_HIDDEN, !this._showScrollbar);
+    this._$element.addClass(SCROLLABLE_NATIVE_CLASS).addClass(SCROLLABLE_NATIVE_CLASS + '-' + deviceType).toggleClass(SCROLLABLE_SCROLLBARS_HIDDEN, !this._isScrollbarVisible());
 
-    if (this._showScrollbar && this._useSimulatedScrollbar) {
+    if (this._isScrollbarVisible() && this._useSimulatedScrollbar) {
       this._renderScrollbars();
     }
   },
   updateRtlPosition: function updateRtlPosition(isFirstRender) {
     if (isFirstRender && this.option('rtlEnabled')) {
-      if (this._showScrollbar && this._useSimulatedScrollbar) {
+      if (this._isScrollbarVisible() && this._useSimulatedScrollbar) {
         this._moveScrollbars();
       }
     }
@@ -139,6 +138,12 @@ var NativeStrategy = Class.inherit({
   },
   _isReachedRight: function _isReachedRight(left) {
     return this._isDirection(HORIZONTAL) ? Math.abs(left) >= this._getMaxOffset().left : undefined;
+  },
+  _isScrollbarVisible: function _isScrollbarVisible() {
+    var {
+      showScrollbar
+    } = this.option();
+    return showScrollbar !== 'never' && showScrollbar !== false;
   },
   handleScroll: function handleScroll(e) {
     this._eventForUserAction = e;

@@ -1,7 +1,7 @@
 /**
 * DevExtreme (cjs/ui/grid_core/ui.grid_core.keyboard_navigation.js)
 * Version: 21.2.0
-* Build date: Wed Jul 28 2021
+* Build date: Thu Jul 29 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
@@ -1563,11 +1563,13 @@ var KeyboardNavigationController = _uiGrid_core.default.ViewController.inherit({
     return this._isCellValid($cell);
   },
   _isLastRow: function _isLastRow(rowIndex) {
+    var dataController = this._dataController;
+
     if (this._isVirtualRowRender()) {
-      return rowIndex >= this._dataController.totalItemsCount() - 1;
+      return rowIndex >= dataController.getMaxRowIndex();
     }
 
-    return rowIndex === this._dataController.items().length - 1;
+    return rowIndex === dataController.items().length - 1;
   },
   _isFirstValidCell: function _isFirstValidCell(cellPosition) {
     var isFirstValidCell = false;
@@ -2467,6 +2469,16 @@ var keyboardNavigationModule = {
               editorFactory.refocus();
             }
           }
+        },
+        getMaxRowIndex: function getMaxRowIndex() {
+          var result = this.items().length - 1;
+          var virtualItemsCount = this.virtualItemsCount();
+
+          if (virtualItemsCount) {
+            result += virtualItemsCount.begin + virtualItemsCount.end;
+          }
+
+          return result;
         }
       },
       adaptiveColumns: {

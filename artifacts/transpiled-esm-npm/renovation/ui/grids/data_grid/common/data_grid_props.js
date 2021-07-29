@@ -33,6 +33,19 @@ var DataGridEditing = {
   refreshMode: "full",
   selectTextOnEditStart: false,
   startEditAction: "click",
+  texts: {
+    editRow: _message.default.format("dxDataGrid-editingEditRow"),
+    saveAllChanges: _message.default.format("dxDataGrid-editingSaveAllChanges"),
+    saveRowChanges: _message.default.format("dxDataGrid-editingSaveRowChanges"),
+    cancelAllChanges: _message.default.format("dxDataGrid-editingCancelAllChanges"),
+    cancelRowChanges: _message.default.format("dxDataGrid-editingCancelRowChanges"),
+    addRow: _message.default.format("dxDataGrid-editingAddRow"),
+    deleteRow: _message.default.format("dxDataGrid-editingDeleteRow"),
+    undeleteRow: _message.default.format("dxDataGrid-editingUndeleteRow"),
+    confirmDeleteMessage: _message.default.format("dxDataGrid-editingConfirmDeleteMessage"),
+    confirmDeleteTitle: "",
+    validationCancelChanges: _message.default.format("dxDataGrid-validationCancelChanges")
+  },
   useIcons: false,
   defaultChanges: [],
   changesChange: function changesChange() {},
@@ -110,7 +123,20 @@ var DataGridProps = _extends({}, _base_props.BaseWidgetProps, {
     startEditAction: "click",
     editRowKey: null,
     editColumnName: null,
-    changes: []
+    changes: [],
+    texts: {
+      editRow: _message.default.format("dxDataGrid-editingEditRow"),
+      saveAllChanges: _message.default.format("dxDataGrid-editingSaveAllChanges"),
+      saveRowChanges: _message.default.format("dxDataGrid-editingSaveRowChanges"),
+      cancelAllChanges: _message.default.format("dxDataGrid-editingCancelAllChanges"),
+      cancelRowChanges: _message.default.format("dxDataGrid-editingCancelRowChanges"),
+      addRow: _message.default.format("dxDataGrid-editingAddRow"),
+      deleteRow: _message.default.format("dxDataGrid-editingDeleteRow"),
+      undeleteRow: _message.default.format("dxDataGrid-editingUndeleteRow"),
+      confirmDeleteMessage: _message.default.format("dxDataGrid-editingConfirmDeleteMessage"),
+      confirmDeleteTitle: "",
+      validationCancelChanges: _message.default.format("dxDataGrid-validationCancelChanges")
+    }
   },
   export: {
     enabled: false,
@@ -161,7 +187,9 @@ var DataGridProps = _extends({}, _base_props.BaseWidgetProps, {
     columnRenderingMode: "standard",
     columnPageSize: 5,
     columnRenderingThreshold: 300,
-    useNative: "auto"
+    useNative: "auto",
+    newMode: false,
+    minGap: 1
   },
   selection: {
     mode: "none",
@@ -178,15 +206,15 @@ var DataGridProps = _extends({}, _base_props.BaseWidgetProps, {
     skipEmptyValues: true,
     recalculateWhileEditing: false,
     texts: {
-      sum: _message.default.getFormatter("dxDataGrid-summarySum")(),
-      sumOtherColumn: _message.default.getFormatter("dxDataGrid-summarySumOtherColumn")(),
-      min: _message.default.getFormatter("dxDataGrid-summaryMin")(),
-      minOtherColumn: _message.default.getFormatter("dxDataGrid-summaryMinOtherColumn")(),
-      max: _message.default.getFormatter("dxDataGrid-summaryMax")(),
-      maxOtherColumn: _message.default.getFormatter("dxDataGrid-summaryMaxOtherColumn")(),
-      avg: _message.default.getFormatter("dxDataGrid-summaryAvg")(),
-      avgOtherColumn: _message.default.getFormatter("dxDataGrid-summaryAvgOtherColumn")(),
-      count: _message.default.getFormatter("dxDataGrid-summaryCount")()
+      sum: _message.default.format("dxDataGrid-summarySum"),
+      sumOtherColumn: _message.default.format("dxDataGrid-summarySumOtherColumn"),
+      min: _message.default.format("dxDataGrid-summaryMin"),
+      minOtherColumn: _message.default.format("dxDataGrid-summaryMinOtherColumn"),
+      max: _message.default.format("dxDataGrid-summaryMax"),
+      maxOtherColumn: _message.default.format("dxDataGrid-summaryMaxOtherColumn"),
+      avg: _message.default.format("dxDataGrid-summaryAvg"),
+      avgOtherColumn: _message.default.format("dxDataGrid-summaryAvgOtherColumn"),
+      count: _message.default.format("dxDataGrid-summaryCount")
     }
   },
   columnChooser: {
@@ -351,7 +379,7 @@ var DataGridProps = _extends({}, _base_props.BaseWidgetProps, {
   showRowLines: false,
   twoWayBindingEnabled: true,
   wordWrapEnabled: false,
-  loadingTimeout: 30,
+  loadingTimeout: 0,
   commonColumnSettings: {
     allowExporting: true,
     allowFiltering: true,
@@ -362,6 +390,9 @@ var DataGridProps = _extends({}, _base_props.BaseWidgetProps, {
     trueText: _message.default.format("dxDataGrid-trueText"),
     falseText: _message.default.format("dxDataGrid-falseText")
   },
+  adaptColumnWidthByRatio: true,
+  regenerateColumnsByVisibleItems: false,
+  useLegacyKeyboardNavigation: false,
   defaultFilterValue: null,
   filterValueChange: function filterValueChange() {},
   defaultFocusedColumnIndex: -1,

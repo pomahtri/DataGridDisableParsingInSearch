@@ -5,6 +5,7 @@ import DiagramCommandsManager from './diagram.commands_manager';
 import DiagramMenuHelper from './ui.diagram.menu_helper';
 import DiagramBar from './diagram.bar';
 import { getDiagram } from './diagram.importer';
+import { hasWindow, getWindow } from '../../core/utils/window';
 var DIAGRAM_TOUCHBAR_CLASS = 'dx-diagram-touchbar';
 var DIAGRAM_TOUCHBAR_OVERLAY_CLASS = 'dx-diagram-touchbar-overlay';
 var DIAGRAM_TOUCHBAR_TARGET_CLASS = 'dx-diagram-touchbar-target';
@@ -131,7 +132,17 @@ class DiagramContextMenuWrapper extends Widget {
     var {
       Browser
     } = getDiagram();
-    return Browser.TouchUI;
+
+    if (Browser.TouchUI) {
+      return true;
+    }
+
+    if (!hasWindow()) {
+      return false;
+    }
+
+    var window = getWindow();
+    return window.navigator && window.navigator.maxTouchPoints > 0;
   }
 
   _onItemClick(itemData) {

@@ -1,12 +1,13 @@
 /**
 * DevExtreme (esm/ui/gantt/ui.gantt.helper.js)
 * Version: 21.2.0
-* Build date: Wed Jul 28 2021
+* Build date: Thu Jul 29 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
 */
 import { compileGetter, compileSetter } from '../../core/utils/data';
+import messageLocalization from '../../localization/message';
 export var GanttHelper = {
   prepareMapHandler(getters) {
     return data => {
@@ -87,6 +88,38 @@ export var GanttHelper = {
 
   getSelectionMode(allowSelection) {
     return allowSelection ? 'single' : 'none';
+  },
+
+  convertTreeToList(root) {
+    var stack = [];
+    var array = [];
+    var hashMap = {};
+    stack.push(root);
+
+    while (stack.length !== 0) {
+      var node = stack.pop();
+
+      if (!node.children || node.children.length === 0) {
+        GanttHelper.visitNode(node, hashMap, array);
+      } else {
+        array.push(node.data);
+        var childrenCount = node.children.length - 1;
+
+        for (var i = childrenCount; i >= 0; i--) {
+          stack.push(node.children[i]);
+        }
+      }
+    }
+
+    array.shift();
+    return array;
+  },
+
+  visitNode(node, hashMap, array) {
+    if (!hashMap[node.key]) {
+      hashMap[node.key] = true;
+      array.push(node.data);
+    }
   },
 
   getDefaultOptions() {
@@ -187,7 +220,14 @@ export var GanttHelper = {
       taskProgressTooltipContentTemplate: null,
       taskTimeTooltipContentTemplate: null,
       taskContentTemplate: null,
-      rootValue: 0
+      rootValue: 0,
+      sorting: {
+        ascendingText: messageLocalization.format('dxGantt-sortingAscendingText'),
+        descendingText: messageLocalization.format('dxGantt-sortingDescendingText'),
+        clearText: messageLocalization.format('dxGantt-sortingClearText'),
+        mode: 'none',
+        showSortIndexes: false
+      }
     };
   }
 

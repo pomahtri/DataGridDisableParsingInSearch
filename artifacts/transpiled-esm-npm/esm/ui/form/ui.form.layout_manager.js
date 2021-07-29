@@ -23,13 +23,13 @@ import Widget from '../widget/ui.widget';
 import Validator from '../validator';
 import ResponsiveBox from '../responsive_box';
 import { isMaterial } from '../themes';
-import { FIELD_ITEM_CLASS, FLEX_LAYOUT_CLASS, LAYOUT_MANAGER_ONE_COLUMN, FIELD_ITEM_OPTIONAL_CLASS, FIELD_ITEM_REQUIRED_CLASS, FIELD_ITEM_CONTENT_WRAPPER_CLASS, FORM_LAYOUT_MANAGER_CLASS, LABEL_VERTICAL_ALIGNMENT_CLASS, LABEL_HORIZONTAL_ALIGNMENT_CLASS, FIELD_ITEM_LABEL_ALIGN_CLASS, FIELD_ITEM_CONTENT_LOCATION_CLASS, FIELD_ITEM_CONTENT_CLASS, FIELD_EMPTY_ITEM_CLASS, FIELD_BUTTON_ITEM_CLASS, SINGLE_COLUMN_ITEM_CONTENT, ROOT_SIMPLE_ITEM_CLASS } from './constants';
+import { FIELD_ITEM_CLASS, FLEX_LAYOUT_CLASS, LAYOUT_MANAGER_ONE_COLUMN, FIELD_ITEM_OPTIONAL_CLASS, FIELD_ITEM_REQUIRED_CLASS, FIELD_ITEM_CONTENT_WRAPPER_CLASS, FORM_LAYOUT_MANAGER_CLASS, LABEL_VERTICAL_ALIGNMENT_CLASS, LABEL_HORIZONTAL_ALIGNMENT_CLASS, FIELD_ITEM_LABEL_ALIGN_CLASS, FIELD_ITEM_CONTENT_LOCATION_CLASS, FIELD_ITEM_CONTENT_CLASS, FIELD_EMPTY_ITEM_CLASS, SINGLE_COLUMN_ITEM_CONTENT, ROOT_SIMPLE_ITEM_CLASS } from './constants';
 import '../text_box';
 import '../number_box';
 import '../check_box';
 import '../date_box';
 import '../button';
-import { renderLabel, renderHelpText } from './ui.form.utils';
+import { renderLabel, renderHelpText, adjustContainerAsButtonItem, convertAlignmentToJustifyContent, convertAlignmentToTextAlign } from './ui.form.utils';
 var FORM_EDITOR_BY_DEFAULT = 'dxTextBox';
 var LAYOUT_MANAGER_FIRST_ROW_CLASS = 'dx-first-row';
 var LAYOUT_MANAGER_LAST_ROW_CLASS = 'dx-last-row';
@@ -533,45 +533,30 @@ var LayoutManager = Widget.inherit({
   _renderEmptyItem: function _renderEmptyItem($container) {
     return $container.addClass(FIELD_EMPTY_ITEM_CLASS).html('&nbsp;');
   },
-  _getButtonHorizontalAlignment: function _getButtonHorizontalAlignment(item) {
-    if (isDefined(item.horizontalAlignment)) {
-      return item.horizontalAlignment;
-    }
-
-    return 'right';
-  },
-  _getButtonVerticalAlignment: function _getButtonVerticalAlignment(item) {
-    switch (item.verticalAlignment) {
-      case 'center':
-        return 'center';
-
-      case 'bottom':
-        return 'flex-end';
-
-      default:
-        return 'flex-start';
-    }
-  },
   _renderButtonItem: function _renderButtonItem(item, $container) {
-    var $button = $('<div>').appendTo($container);
-    var defaultOptions = {
-      validationGroup: this.option('validationGroup')
-    };
-    $container.addClass(FIELD_BUTTON_ITEM_CLASS).css('textAlign', this._getButtonHorizontalAlignment(item));
-    $container.parent().css('justifyContent', this._getButtonVerticalAlignment(item));
+    // TODO: try to create $container in this function and return it
+    adjustContainerAsButtonItem({
+      $container,
+      justifyContent: convertAlignmentToJustifyContent(item.verticalAlignment),
+      textAlign: convertAlignmentToTextAlign(item.horizontalAlignment),
+      cssItemClass: this.option('cssItemClass'),
+      targetColIndex: item.col
+    });
+    var $button = $('<div>');
+    $container.append($button);
 
-    var instance = this._createComponent($button, 'dxButton', extend(defaultOptions, item.buttonOptions));
+    var buttonWidget = this._createComponent($button, 'dxButton', extend({
+      validationGroup: this.option('validationGroup')
+    }, item.buttonOptions)); // TODO: try to remove '_itemsRunTimeInfo' from 'render' function
+
 
     this._itemsRunTimeInfo.add({
       item,
-      widgetInstance: instance,
+      widgetInstance: buttonWidget,
+      // TODO: try to remove 'widgetInstance'
       guid: item.guid,
       $itemContainer: $container
     });
-
-    this._addItemClasses($container, item.col);
-
-    return $button;
   },
   _addItemClasses: function _addItemClasses($item, column) {
     $item.addClass(FIELD_ITEM_CLASS).addClass(this.option('cssItemClass')).addClass(isDefined(column) ? 'dx-col-' + column : '');

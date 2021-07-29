@@ -1,7 +1,7 @@
 /**
 * DevExtreme (esm/exporter/jspdf/export_data_grid_2.js)
 * Version: 21.2.0
-* Build date: Wed Jul 28 2021
+* Build date: Thu Jul 29 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
@@ -33,6 +33,7 @@ function exportDataGrid(doc, dataGrid, options) {
       var pdfGrid = new PdfGrid(options.splitToTablesByColumns, options.columnWidths);
       pdfGrid.startNewTable(options.drawTableBorder, options.topLeft);
       var dataRowsCount = dataProvider.getRowsCount();
+      var rowOptions = options.rowOptions || {};
       var currentRowInfo;
       var prevRowInfo;
 
@@ -41,6 +42,7 @@ function exportDataGrid(doc, dataGrid, options) {
         currentRowInfo = createRowInfo({
           dataProvider,
           rowIndex,
+          rowOptions,
           prevRowInfo
         });
         var currentRowPdfCells = [];
@@ -71,7 +73,7 @@ function exportDataGrid(doc, dataGrid, options) {
           pdfGrid.startNewTable(options.drawTableBorder, tableTopLeft, null, null, firstColumnWidth);
         }
 
-        var rowHeight = null; // TODO: Default Value
+        var rowHeight = currentRowInfo.rowHeight; // TODO: Default Value
 
         if (options.onRowExporting) {
           var args = {

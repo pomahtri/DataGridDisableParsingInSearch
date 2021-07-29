@@ -1,7 +1,7 @@
 /**
 * DevExtreme (esm/ui/scheduler/appointments/rendering_strategies/strategy_horizontal.js)
 * Version: 21.2.0
-* Build date: Wed Jul 28 2021
+* Build date: Thu Jul 29 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
@@ -26,12 +26,10 @@ class HorizontalRenderingStrategy extends BaseAppointmentsStrategy {
     var {
       normalizedEndDate
     } = position.info.appointment;
-
-    var appointmentDuration = this._getAppointmentDurationInMs(startDate, normalizedEndDate, allDay);
-
-    appointmentDuration = this._adjustDurationByDaylightDiff(appointmentDuration, startDate, normalizedEndDate);
+    var duration = this.getAppointmentDurationInMs(startDate, normalizedEndDate, allDay);
+    duration = this._adjustDurationByDaylightDiff(duration, startDate, normalizedEndDate);
     var cellDuration = this.instance.getAppointmentDurationInMinutes() * toMs('minute');
-    var durationInCells = appointmentDuration / cellDuration;
+    var durationInCells = duration / cellDuration;
     var width = this.cropAppointmentWidth(durationInCells * cellWidth, cellWidth);
     return width;
   }

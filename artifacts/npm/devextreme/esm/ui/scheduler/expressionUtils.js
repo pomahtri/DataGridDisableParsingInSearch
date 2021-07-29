@@ -1,13 +1,13 @@
 /**
 * DevExtreme (esm/ui/scheduler/expressionUtils.js)
 * Version: 21.2.0
-* Build date: Wed Jul 28 2021
+* Build date: Thu Jul 29 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
 */
 import { isDefined } from '../../core/utils/type';
-import { getAppointmentDataProvider, getModel } from './instanceFactory';
+import { getAppointmentDataProvider, getModelProvider } from './instanceFactory';
 export var ExpressionUtils = {
   getField: (key, field, obj) => {
     var dataAccessors = getAppointmentDataProvider(key).getDataAccessors();
@@ -20,7 +20,9 @@ export var ExpressionUtils = {
     var {
       dataAccessors
     } = getAppointmentDataProvider(key);
-    var model = getModel(key);
+    var {
+      model
+    } = getModelProvider(key);
 
     if (!isDefined(dataAccessors.setter[field])) {
       return;
